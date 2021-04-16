@@ -43,7 +43,7 @@
 - MATLAB
 - Tensorflow, PyTorch, AzureAI
 
-**Github link:** https://github.com/edwardyang12
+**Github link:** https://github.com/catothe1stelder
 
 #### **Edward Yang**:
 *Hey, I’m Edward! I’m a second year computer science major from Warren College. In my spare time, I enjoy playing video games, cooking, and hanging out with friends. Through this project, I hope to gain a stronger understanding of web development and how software is developed in industry.*
