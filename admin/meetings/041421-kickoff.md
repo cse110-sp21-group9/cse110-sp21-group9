@@ -33,7 +33,7 @@ Topic | Who  | Notes |
 ---------- | ---- | ----- |
 Team Name  | Everyone  |• Edmund Leibert III's suggests a vaporwave/cyberpunk theme name<br> • Everyone else chooses Pokemon as there theme lol<br> • Voting happens for team name <br> • Powellmon wins!<br>
 Team Brand  | Everyone  |• Retrowave theme is discarded, we are going with pokemon<br> • Motto: *"gotta code them all"*<br> • Want to focus on simple, aesthetically pleasing solutions to cherish people's memories <br>
-Review of Assigned Tasks | Everyone  |• Why Google Docs? Easier for collaboration
+Review of Assigned Tasks | Everyone  |• Why Google Docs? Easier for collaboration <br> • Defined team expectations and responsibilities<br> • Hammered out our team contract agreement
 
 **Old Items**
 Topic | Who  | Notes |
