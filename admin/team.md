@@ -24,6 +24,7 @@
 
 #### **Daisuke Chon**:
 *Good day all. I’m Daisuke. I’m a third year economics and computer science double major from Sixth College. I’m into martial arts, video games, manga/anime, vtubers, and cooking. I also run UCSD’s Kendo and Iaido clubs where we practice Japanese swordsmanship. (It’s actually a lot less cringy than it sounds) I hope this class will teach me how teamwork works in a professional software development setting as well as allow me to contribute my best effort to this group’s numerous projects.*
+
 **Skills:**
 - Java
 - C/C++
