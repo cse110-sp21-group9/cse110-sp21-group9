@@ -14,6 +14,7 @@
 ### **II.** ***Who We Are***:
 #### **Alan Wang**:
 *Hey, I’m Alan! I’m a second year computer science major from Warren College. In my spare time, I enjoy playing video games, reading manga, and watching anime. Through this project, I hope to gain a greater understanding of what software engineering roles exist out there and how they all work together.*
+
 **Skills:**
 - Java
 - Python
@@ -32,6 +33,7 @@
 
 #### **Edmund Leibert III**:
 *Hello, internet! My name is Edmund Leibert and I am a second year transfer (almost done!) at Sixth College. Currently I am an undergraduate student majoring in Compute Engineering, but intend to stay an extra year at UCSD to get a master's in Machine Learning & Data Science. In my free time when I am not coding, I love to surf, skateboard at night, design 3d art, kickbox, and weightlift. I am also an avid cooker, so please send me your fmaily recipies! Overall, I look forward to be a team leader on this project and can't wait to see what we together accomplish. Til then, take care!*
+
 **Skills:**
 - Javascript,HTML,CSS (AngularJS, Bootstrap, Node.js)
 - PHP (Laravel)
@@ -44,25 +46,28 @@
 
 #### **Edward Yang**:
 *Hey, I’m Edward! I’m a second year computer science major from Warren College. In my spare time, I enjoy playing video games, cooking, and hanging out with friends. Through this project, I hope to gain a stronger understanding of web development and how software is developed in industry.*
+
 **Skills:**
-Java
-Python
-Tensorflow, numpy, pytorch, opencv, scikit (AI stuff haha)
-HTML/ CSS/ JS
+- Java
+- Python
+- Tensorflow, numpy, pytorch, opencv, scikit (AI stuff haha)
+- HTML/ CSS/ JS
 
 **Github link:** https://github.com/edwardyang12
 
 #### **Elisa Brooks**:
 *Hi, I’m Elisa! A little about myself, I’m a second-year computer science major in Warren College and a San Diego native. In my spare time, I like to go on food adventures with my friends. I went into college not knowing anything about computer science or the different depths and job positions there are so I love that this class serves as a mini model of what work will be like later on in my career! I hope to gain more hands-on experience with web development and other technical work skills that will help me in future internships.* 
+
 **Skills:**
 - TML/CSS/JS
 - Python
 - Java
--  
+  
 **Github:** https://github.com/e3brooks  
 
 #### **Etienne Robin**:
 *Hi, I’m Etienne! I’m a second-year student majoring in computer engineering from Warren College. My hobbies include playing with electronics, watching science videos, playing video games, gardening, and sometimes baking. In this class, I’m really looking forward to learning about how software is created in the industry, so that I can be more prepared for internships. I’m also working forward to make this project a success!*
+
 **Skills:**
 - Java
 - C++/C
