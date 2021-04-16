@@ -1,4 +1,6 @@
-# Powellmon (Team 9)						
+# Powellmon (Team 9)
+<img src="branding/logo.png" width=300 align=center>  
+
 	“Gotta code ‘em all!”
 
 ## Our values:
