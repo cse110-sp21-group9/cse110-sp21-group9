@@ -22,27 +22,16 @@ People who attended the meeting:
 Item | Description
 ---- | ----
 BuJo Overview | • Discuss high level what makes a BuJo and what the MVP for one entails<br>
-Task Assignment | • Edward - notetaking w/ otter <br> • Etienne- Head of research
- <br> • Alan - Research + help with notes  <br> • Daisuke- Project Pitch <br>• Kenny- Research  <br> • Edmund- chill this week  <br>
+Task Assignment | • Edward - notetaking w/ otter <br> • Etienne- Head of research <br> • Alan - Research + help with notes  <br> • Daisuke- Project Pitch <br>• Kenny- Research  <br> • Edmund- chill this week  <br>
 Action Items for next time | • Each person comes up with at least one user story by next meeting
- <br> • Each person comes up with a wireframe
- <br>
-• Each person comes up with a feature  (1 to 2 minute speech on why you think your feature is needed
-) (Bonus if you have a roadmap on how this feature could be implemented )
- <br>
-• Next sunday meeting will be 2 hours and have all tasks completed by sunday
- <br>
+ <br> • Each person comes up with a wireframe <br> • Each person comes up with a feature  (1 to 2 minute speech on why you think your feature is needed) (Bonus if you have a roadmap on how this feature could be implemented ) <br> • Next sunday meeting will be 2 hours and have all tasks completed by sunday <br>
 
 ## IV. Discussion Items
 
 **New Items**
 Topic | Who  | Notes |
 ---------- | ---- | ----- |
-MVP for BuJo
- | Everyone | • Planner features  <br>
- • Grid you can customize/ input stuff on <br>
- • Different types of bullets  <br>
- • CRUD(create dates, add or remove bullets, migration capability) <br>
+MVP for BuJo | Everyone | • Planner features  <br> • Grid you can customize/ input stuff on <br> • Different types of bullets  <br> • CRUD(create dates, add or remove bullets, migration capability) <br>
  Other features | Everyone | • Audio/ videos  <br> • Handwriting/ typing functionality <br>
 
 **Old Items**
