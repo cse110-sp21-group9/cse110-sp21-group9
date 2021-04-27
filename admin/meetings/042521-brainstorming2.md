@@ -65,8 +65,8 @@ MVP for BuJo | Everyone | • Planner features  <br> • Grid you can customize/
 • Other important features <br>
 • Proposed features <br>
 • Additional extra features <br>
-- Miro board link: https://miro.com/welcomeonboard/iP9aivudPaLiblLcOglD4Z0Q3mqaCUiNW8Q0GUJTZQ0cMNEiXwMzOE5DCsIiOAci 
+- Miro board link: https://miro.com/app/board/o9J_lHlYETY=/
 - Figma link for wireframes/personas: 
-https://www.figma.com/team_invite/redeem/wfViANN8A0ARciKhU77zxS 
+https://www.figma.com/team_invite/redeem/wfViANN8A0ARciKhU77zxS
 
 ###### Future discussion items...
