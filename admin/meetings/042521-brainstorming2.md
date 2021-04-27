@@ -21,7 +21,7 @@ People who attended the meeting:
 
 Item | Description
 ---- | ----
-Brainstorming | • Brainstorming meeting canvas assignment<br>
+Brainstorming | • Brainstorming meeting canvas assignment<br> • What feature ideas did everyone come up with?<br> • What wireframes did everyone come up with?<br> • What user stories did everyone come up with?<br> • What features should we add to the BuJo?<br> • How should we implement these features?<br> •  Populated miro board with ideas<br>
 Task Assignment | • Edward - send out survey to gauge everyone’s skills in frontend/ backend etc. <br> • Edmund/ Edward - fix up submission stuff for tomorrow + github pull request person <br> • Daisuke, Kenny, Etienne, Edmund - Finalize Figma Wireframe for site <br> • Edmund - gantt chart for tasks <br> • Edward, Edmund, Evan - compartmentalize functionality <br> • Edward, Alan -  Write brainstorming meeting notes <br> • Everyone- start exporting meeting notes into github as well as all idea documents/artifacts! <br>
 Action Items for next time | • Add your feature ideas/wireframes/user personas to Miro(have it finished by tonight) <br> • Read Shape Up to prepare for starting pitch <br> • Respond to Edward’s skills survey (coming out later) <br> • Fill in daily standups or else Daisuke will think you’re free that day  <br> • Put in all user profiles on github as pdfs (pull request stuff) (due later) <br> • Overarching Decisions meeting on Wednesday <br> • Git conventions meeting on Thursday (Edmund, Edward, Evan) <br>
 

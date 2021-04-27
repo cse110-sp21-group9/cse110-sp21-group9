@@ -2,11 +2,11 @@
 
 # Meeting Minutes ~ Kickoff
 ## I. Meeting Information
-**Meeting Purpose:** Kickoff Meeting (*Also for Canvas Assingment*)
-**Meeting Date/Time:** April 14th, 2021, 4:00pm - 4:45pm
-**Timezone:** Pacific Standard Time (UTC−07:00)   
-**Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/my/edmund.leibert.iii)  
-**Note Taker:** Edmund Leibert III
+**Meeting Purpose:** Kickoff Meeting (*Also for Canvas Assingment*)  
+**Meeting Date/Time:** April 14th, 2021, 4:00pm - 4:45pm  
+**Timezone:** Pacific Standard Time (UTC−07:00)  
+**Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/my/edmund.leibert.iii)   
+**Note Taker:** Edmund Leibert III  
 
 ## II. Attendees
 People who attended the meeting:
