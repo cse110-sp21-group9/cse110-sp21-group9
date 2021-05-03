@@ -23,7 +23,7 @@ Item | Description
 ---- | ----
 Assign software development roles | • What roles should everyone have for our project?<br>
 Identify problem, solution, and audience | • What problem should we focus on?<br> • What is our solution to this problem? <br> • What is our target audience? <br> 
-Task Assignment | • Daisuke/Kenny/Etienne/Edward - Project Pitch(due monday next week) <br> • Daisuke/Elisa/Evan/Kenny - Finalize Figma Wireframe for site <br> • Edmund - Gantt chart for tasks <br> • Edward/Edmund/Evan - compartmentalize functionality <br> • Edward, Edmund, Evan - compartmentalize functionality <br> •  
+Task Assignment | • Daisuke/Kenny/Etienne/Edward - Project Pitch(due monday next week) <br> • Daisuke/Elisa/Evan/Kenny - Finalize Figma Wireframe for site <br> • Edmund - Gantt chart for tasks <br> • Edward/Edmund/Evan - compartmentalize functionality <br> 
 Action Items for next time | • Add your feature ideas/wireframes/user personas to Miro(have it finished by tonight) <br> • Have a meeting on Friday for Gantt chart stuff/project functionality? <br> • Read Github conventions to prepare for this meeting <br> https://www.conventionalcommits.org/en/v1.0.0/  
 
 
@@ -32,14 +32,7 @@ Action Items for next time | • Add your feature ideas/wireframes/user personas
 **New Items**
 Topic | Who  | Notes |
 ---------- | ---- | ----- |
-Assign software development roles| Everyone | Main Roles:<br>
-Edmund (back end lead)<br>
-Kenny (front end lead)<br> 
-Evan/ Daisuke/ Etienne (Developers)<br>
-Elisa (Design)<br>
-Edward (Unit tester)<br>
-Alan (Pipeline person)<br>
-Positions are tentative, can switch around if necessary, we get tired<br>
+Assign software development roles| Everyone | Main Roles:<br>Edmund (back end lead)<br>Kenny (front end lead)<br> Evan/ Daisuke/ Etienne (Developers)<br>Elisa (Design)<br>Edward (Unit tester)<br>Alan (Pipeline person)<br>Positions are tentative, can switch around if necessary, we get tired<br>
 Identify problem, solution, and audience| Everyone | • Problem: Physical bujo is user unfriendly<br>
 - Have to flip through sections, not enough space/time
 - Handwriting takes longer than typing
