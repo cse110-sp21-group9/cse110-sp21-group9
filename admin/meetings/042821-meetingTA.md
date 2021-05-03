@@ -1,6 +1,4 @@
-
-
-# Meeting Minutes ~ 042121-meetingTA
+# Meeting Minutes ~ 042821-meetingTA
 ## I. Meeting Information
 **Meeting Purpose:** Weekly Meeting with TA  
 **Meeting Date/Time:** April 28th, 2021, 3:00pm - 3:45pm  
