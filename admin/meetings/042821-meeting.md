@@ -33,23 +33,9 @@ Action Items for next time | • Add your feature ideas/wireframes/user personas
 Topic | Who  | Notes |
 ---------- | ---- | ----- |
 Assign software development roles| Everyone | Main Roles:<br>Edmund (back end lead)<br>Kenny (front end lead)<br> Evan/ Daisuke/ Etienne (Developers)<br>Elisa (Design)<br>Edward (Unit tester)<br>Alan (Pipeline person)<br>Positions are tentative, can switch around if necessary, we get tired<br>
-Identify problem, solution, and audience| Everyone | • Problem: Physical bujo is user unfriendly<br>
-- Have to flip through sections, not enough space/time
-- Handwriting takes longer than typing
-- Can only have so much stylization
-• Solution: electronic bujo that strives to get rid of inefficiencies of physical one<br>
-Features:<br>
-- Essential information available at a glance
-- Easily navigable UI 
-- ‘Infinite’ space to write down stuff
-- Easy data tracker set up/updating
-- Intuitive input?
-- Custom themes? 
-- Handwriting support? (lower priority) 
-• Target Audience:<br>
-- People who already use a physical bujo
-- People who want to get into bullet journaling
-- People who can handle tech(average millenial) 
+Identify problem, solution, and audience| Everyone | • Problem: Physical bujo is user unfriendly<br>   • Have to flip through sections, not enough space/time<br>   • Handwriting takes longer than typing<br>   • Can only have so much stylization<br>
+• Solution: electronic bujo that strives to get rid of inefficiencies of physical one<br>• Features:<br>   • Essential information available at a glance<br>   • Easily navigable UI<br>   • ‘Infinite’ space to write down stuff<br>   • Easy data tracker set up/updating<br>   • Intuitive input?<br>   • Custom themes?<br>   • Handwriting support? (lower priority)<br>
+• Target Audience:<br>   • People who already use a physical bujo<br> • People who want to get into bullet journaling<br>   • People who can handle tech(average millenial)<br> 
 
 
 
