@@ -2,11 +2,11 @@
 
 # Meeting Minutes ~ 042121-meetingTA
 ## I. Meeting Information
-**Meeting Purpose:** Weekly Meeting with TA
-**Meeting Date/Time:** April 28th, 2021, 3:00pm - 3:45pm
-**Timezone:** Pacific Standard Time (UTC−07:00)
-**Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/j/98413787650)
-**Note Taker:** Edward Yang/Alan Wang
+**Meeting Purpose:** Weekly Meeting with TA  
+**Meeting Date/Time:** April 28th, 2021, 3:00pm - 3:45pm  
+**Timezone:** Pacific Standard Time (UTC−07:00)  
+**Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/j/98413787650)  
+**Note Taker:** Edward Yang/Alan Wang  
 
 ## II. Attendees
 People who attended the meeting:
