@@ -32,8 +32,7 @@ Task Assignment | • Who should complete each task? <br>
 Topic | Who  | Notes |
 ---------- | ---- | ----- |
 Review advice from TA meeting| Everyone | • TA said our wireframes were good<br> • Needed more info on our backend/data layer<br>• Testing can be done by Edward + whoever coded the tested feature
-Action items/Task assignment| Everyone | Main Roles:<br>Edmund (back end lead)<br>• Investigate login feature<br>• Create style guide<br>Kenny (front end lead)<br>• HTML for calendar display<br> Evan/ Daisuke/ Etienne (Developers)<br>• CRUD Development<br>• Daisuke: Create ADR Document <br>Elisa (Design)<br>• HTML for calendar display<br>Edward (Unit tester)<br>• Tests for CI/CD pipeline<br>Alan (Pipeline person)<br>• Tests for CI/CD pipeline<br>• Positions are tentative, can switch around if necessary, we get tired<br>• Start moving everything to repo<br>
-
+Action items/Task assignment| Everyone | Main Roles:<br>Edmund (back end lead)<br>• Investigate login feature<br>• Create style guide<br>Kenny (front end lead)<br>• HTML for calendar display<br> Evan/ Daisuke/ Etienne (Developers)<br>• CRUD Development<br>• Daisuke: Create ADR Document <br>Elisa (Design)<br>• HTML for calendar display<br>Edward (Unit tester)<br>• Tests for CI/CD pipeline<br>Alan (Pipeline person)<br>• Tests for CI/CD pipeline<br>
 **Old Items**
 Topic | Who  | Notes |
 ----- | ---- | ----- |
@@ -54,5 +53,7 @@ Topic | Who  | Notes |
 - Miro board link: https://miro.com/app/board/o9J_lHlYETY=/
 - Figma link for wireframes/personas: 
 https://www.figma.com/team_invite/redeem/wfViANN8A0ARciKhU77zxS
+- Positions are tentative, can switch around if necessary, we get tired
+- Start moving everything to repo
 
 ###### Future discussion items...
