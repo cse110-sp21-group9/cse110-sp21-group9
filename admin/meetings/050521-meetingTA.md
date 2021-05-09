@@ -48,6 +48,10 @@ N/A  | N/A  | N/A |
 | Done? | Item | Responsible  | Due Date  | Description  |
 | ----- | ---- | ------------ | --------- | --------- |
 | ✔️   | Project pitch | Everyone | 5-3-2021  | All tasks due on that date |
+|    | Meet with TA | Evan/Daisuke| 5-9-2021  | Meet with TA to discuss virtualization/data layer in further depth, he needs more information|
+|    | Start creating UI | Frontend team | 5-9-2021  | Starting creating interface based off of wireframes<br>Try to get homepage done asap, then move to other pages<br>Only html is fine |
+|    | Reevaluate backend strategy | Backend team | 5-9-2021  | Look into login feature/database |
+|    | Setup CI/CD pipeline| Pipeline team | 5-9-2021  | Setup CI/CD pipeline so we can develop/canvas assignment |
 
 ## VI. Other Notes & Information
 - TA will put CI/CD pipeline resources in slack
