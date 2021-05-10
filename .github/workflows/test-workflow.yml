@@ -1,4 +1,4 @@
-name: Testing workflow for CI/CD pipeline
+name: Test workflow for CI/CD pipeline
 on: 
   push: 
     paths: 
