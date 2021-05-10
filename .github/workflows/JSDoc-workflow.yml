@@ -13,8 +13,8 @@ jobs:
     steps: 
       - name: Checkout code
         uses: actions/checkout@v2
-          with:
-            ref: ${{ github.head_ref }}
+        with:
+          ref: ${{ github.head_ref }}
         
       - name: Generate JSDocs
         uses: andstor/jsdoc-action@v1
