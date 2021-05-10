@@ -1,0 +1,18 @@
+# Workflow for testing portion of CI/CD pipeline
+# Runs codacy quality scan on source code and automatic unit tests
+name: Testing workflow
+on: 
+  push: 
+    paths: 
+    - 'source/**'
+jobs: 
+  codacy-scan: #Run codacy scan
+    name: Codacy Analysis CLI
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@main
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
+
