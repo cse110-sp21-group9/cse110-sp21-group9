@@ -15,6 +15,25 @@ jobs:
         uses: codacy/codacy-analysis-cli-action@master
         with: 
           directory: /home/runner/work/cse110-sp21-group9/cse110-sp21-group9/source/
+  unit-test: 
+    name: Automated unit tests
+    needs: codacy-scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: npm install, and test
+        run: |
+          npm install
+          npm test
+        env:
+          CI: true
     
 
   
