@@ -1,0 +1,23 @@
+{
+  "name": "cse110-sp21-group9",
+  "version": "1.0.0",
+  "description": "Repo for CSE 110 Team Powellmon (Group 9)",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "git config core.hooksPath ./git-hooks",
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cse110-sp21-group9/cse110-sp21-group9.git"
+  },
+  "author": "Powellmon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cse110-sp21-group9/cse110-sp21-group9/issues"
+  },
+  "homepage": "https://github.com/cse110-sp21-group9/cse110-sp21-group9#readme",
+  "devDependencies": {
+    "eslint": "^7.26.0"
+  }
+}
