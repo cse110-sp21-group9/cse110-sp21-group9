@@ -14,7 +14,7 @@ jobs:
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
         with: 
-          directory: ./source/
+          directory: /home/runner/work/cse110-sp21-group9/cse110-sp21-group9/source/
     
 
   
