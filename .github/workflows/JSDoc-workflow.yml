@@ -13,6 +13,8 @@ jobs:
     steps: 
       - name: Checkout code
         uses: actions/checkout@v2
+          with:
+            ref: ${{ github.head_ref }}
         
       - name: Generate JSDocs
         uses: andstor/jsdoc-action@v1
@@ -22,7 +24,6 @@ jobs:
           output_dir: ./docs
 
       - name: Push JSDocs
-        uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${GITHUB_REF##*/}
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with: 
+          commit_message: (Automated) Push JSDocs 
