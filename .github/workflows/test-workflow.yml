@@ -1,10 +1,11 @@
-name: Test workflow for CI/CD pipeline
+# Code quality and test workflow for CI/CD pipeline
+name: Code Quality/Test workflow
 on: 
   push: 
     paths: 
     - 'source/**'
 jobs: 
-  codacy-scan: 
+  codacy-scan: #Run codacy code quality scan
     name: Codacy Analysis CLI
     runs-on: ubuntu-latest
     steps: 
@@ -15,7 +16,7 @@ jobs:
         uses: codacy/codacy-analysis-cli-action@master
         with: 
           directory: /home/runner/work/cse110-sp21-group9/cse110-sp21-group9/source/
-  unit-test: 
+  unit-test: #Run automated unit tests
     name: Automated unit tests
     needs: codacy-scan
     runs-on: ubuntu-latest
