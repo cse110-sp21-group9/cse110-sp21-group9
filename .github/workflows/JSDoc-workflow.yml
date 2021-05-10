@@ -1,0 +1,21 @@
+#JSDoc generation workflow for CI/CD pipeline
+name: JSDoc generation workflow 
+on: 
+  push:
+    paths: 
+    - 'source/**'
+    branches:
+    - '**-release'
+jobs:
+  create-docs: # Create JSDocs from source folder 
+    name: Create JSDocs
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Generate JSDocs
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./source
+          recurse: true
+          output_dir: ./docs
