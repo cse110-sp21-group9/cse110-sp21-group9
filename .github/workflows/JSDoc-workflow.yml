@@ -9,6 +9,7 @@ on:
 jobs:
   create-docs: # Create JSDocs from source folder 
     name: Create JSDocs
+    runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
         uses: actions/checkout@v2
