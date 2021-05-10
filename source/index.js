@@ -8,7 +8,6 @@ function sum(a, b) {
     return a + b;
 }
 
-
 let a = 1;
 let d = 2;
 let c = sum(a, d); 
