@@ -9,7 +9,7 @@ function sum(a, b) {
 }
 
 let a = 1;
-let d = 2;
-let c = sum(a, d); 
+let b = 2;
+let c = sum(a, b); 
 console.log(c);
 module.exports = sum;
