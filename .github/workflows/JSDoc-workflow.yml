@@ -13,6 +13,8 @@ jobs:
     steps: 
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
         
       - name: Generate JSDocs
         uses: andstor/jsdoc-action@v1
@@ -20,3 +22,8 @@ jobs:
           source_dir: ./source
           recurse: true
           output_dir: ./docs
+
+      - name: Push JSDocs
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with: 
+          commit_message: (Automated) Push JSDocs 
