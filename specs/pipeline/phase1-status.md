@@ -30,3 +30,6 @@ This step is not currently implemented yet. We plan to implement this step in ph
 
 ### Packaging/deployment
 The final step in our pipeline is packaging and deployment, which occurs after the code has arrived at the production/main branch and passed all tests. This step is not currently implemented yet. We plan to implement this step in phase 2. 
+
+## Demo video
+Video demo of our phase 1 pipeline can be found [here](https://www.youtube.com/watch?v=YNwufPw2_48)
