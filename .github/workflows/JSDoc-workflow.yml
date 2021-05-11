@@ -22,7 +22,6 @@ jobs:
           source_dir: ./source
           recurse: true
           output_dir: ./docs
-          front_page: ./docs/Documentation.md
 
       - name: Push JSDocs
         uses: stefanzweifel/git-auto-commit-action@v4
