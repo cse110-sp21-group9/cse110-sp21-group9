@@ -1,4 +1,4 @@
-# Meeting Minutes ~ 042821-meetingTA
+# Meeting Minutes ~ 050521-meetingTA
 ## I. Meeting Information
 **Meeting Purpose:** Weekly Meeting with TA  
 **Meeting Date/Time:** May 5th, 2021, 3:00pm - 3:45pm  
@@ -30,9 +30,9 @@ Action Items for next time | • Meet with TA to discuss virtualization/data lay
 **New Items**
 Topic | Who  | Notes |
 ---------- | ---- | ----- |
-Reviewed project pitch with TA | Everyone | • Wireframing looked good <br> • TA had concerns about virtualization/data layer, needs more info <br> • 
-Advice - backend | TA | • Learning curve may be high for creating backend <br> • Consider couchDB/pouchDB (similar to mongoDB in that uses JSON format) to address out concerns about local data storage <br> 
-Advice - load balancing| TA | • Can use load balancing/cloud computing for project <br> • Uses virtualization - idea is similar to abstraction where we make a physical resource virtually accessible in a bigger capacity <br>  • May need to use cloud in an abstract way (black box)<br>• This is a big rabbit hole, should wait for professor's lecture on this, can keep everything local for it to work<br> 
+Reviewed project pitch with TA | Everyone | • Wireframing looked good <br> • TA had concerns about virtualization/data layer, needs more info <br> •
+Advice - backend | TA | • Learning curve may be high for creating backend <br> • Consider couchDB/pouchDB (similar to mongoDB in that uses JSON format) to address out concerns about local data storage <br>
+Advice - load balancing| TA | • Can use load balancing/cloud computing for project <br> • Uses virtualization - idea is similar to abstraction where we make a physical resource virtually accessible in a bigger capacity <br>  • May need to use cloud in an abstract way (black box)<br>• This is a big rabbit hole, should wait for professor's lecture on this, can keep everything local for it to work<br>
 Advice - Login feature| TA | • Login feature can be done, doesn't have to be a nogo<br> • Depends on how simple/complicated you make it<br> • Experiment with firebase auth/etc<br>
 Advice - Login feature| TA | • Login feature can be done, doesn't have to be a nogo<br> • Depends on how simple/complicated you make it<br> • Experiment with firebase auth/etc<br>
 Advice - Testing| TA | • Account for testing in Gantt chart<br> • Probably won't be able to do stylized themes/customization<br> • Will need to go through multiple levels of testing  (unit -> unit component -> integration -> system -> acceptance)<br>• Manual testing will probably be the last thing after automated testing (acceptance level)<br>• Unit testing can be covered while coding (E.g. coders need to create/pass 2 unit test cases for each story point)<br>  
