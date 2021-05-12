@@ -1,155 +1,68 @@
 <!DOCTYPE html>
-<html lang = "en">
-  <head>
-    <meta charset = "UTF-8" />
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0" />
-    <title>Basic Crud</title>
-    <script type = "module" src = "something.js"></script>
-  </head>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bujo Demo</title>
+		<script type="module" src="bulCRUD.js"></script>
+		<!-- <link rel="stylesheet" href="style.css"> -->
+	</head>
 
-  <body>
-    <!--Date of when bullet is created is implied. You would change date of bullet by moving it to another day-->
-    <!--Write bullets in freefrom-->
-    <h1>Create/Update/Delete Bullet 1</h1>
-			<form id = "bulletspace">
-        <textarea rows = "25" columns = "200" id = "bujo"></textarea>
-        <br>
-				<button>Cancel</button>
-				<button id="saveAdd" value="false">Save</button>
-			</form>
-    
-    <!--And then the bullet would show up upon submit-->
-    <!--Edit and Deletion would then be pop up dialogues with confirmations-->
-    <h1>Create Bullet 2</h1>
-      <ul id = "output"></ul>
-      <form id = "bulletspace2"></form>
-        <form method="dialog">
-          <label for="content">Text: </label>
-          <input type="text" id="content"><br>
-          <label for = "date">Date: </label>
-          <input type = "datetime" id = "date" > <br>
-          <label for = "tags" >Tags: </label>
-          <input type = "text" id = "tags" >
-          <button>Cancel</button>
-          <button id="saveAdd" value="false">Save</button>
-      </form>
-
-      <!--User would select bullet to delete themselves-->
-      <dialog id = "deleteBullet">
-        <form method="dialog">
-          <h2> Delete Bullet? </h2>
-          <button>Cancel</button>
-          <button id="confirm" value="false">Ok</button>
-        </form>
-      </dialog>
-
-    <!--User would select bullet to delete themselves-->      
-      <dialog id="editBullet">
-        <form method="dialog">
-          <label for = "editContent">Edit Text: </label>
-          <input type = "text" id = "editContent"><br>
-          <!--Its probably better if you can transplant bullets with ctrl+c, ctrl,+v-->
-          <label for = "editdate">Edit Date: </label>
-          <!--set to datetime to signify bullets for a specific hour-->
-          <input type = "datetime" id = "date" > <br>
-          <label for = "editTags" >Edit Tags: </label>
-          <input type = "text" id="editTags">
-          <button>Cancel</button>
-          <button id="editSaveAdd" value = "false">Save</button>
-        </form>
-      </dialog>
-
-      <!--Write in freeform sso creation, updation, and deletion is naturally there. Date is implied-->
-     <h1>Create/Update/Delete Note</h1>
-			<form id = "bulletspace">
-        <textarea rows = "25" columns = "200" id = "bujo"></textarea>
-        <br>
-				<button>Cancel</button>
-				<button id="saveAdd" value="false">Save</button>
-			</form>
-    
-    <h1>Create/Update/Delete Task</h1>
-      <form id="addTaskForm">
-        <label for="title">Title: </label>
-        <input type="text" id="title" name="title" value="title"><br>
-        
-        <label for="date">Due Date: </label> 
-        <input type="date" id="date" name="date"><br>
-
-        <label for="tags">Tags: </label>
-        <input type="text" id="task-tags">
-        
-        <!-- task status when added is always "not started" -->
-
-        <h3>Current Status:</h3>
-        <input type="radio" id="completed" name="status" value="completed">
-        <label for="completed">Completed</label><br>
-        <input type="radio" id="in-process" name="status" value="in-process">
-        <label for="in-process">In Process</label><br>
-        <input type="radio" id="not-started" name="status" value="not-started">
-        <label for="not-started">Not Started</label><br><br>
-        
-        <textarea rows="25" columns="200" id="description">Description...</textarea><br>
-        
-        <button type="button">Cancel</button>
-        <button id="saveTask" type="button">Save</button>
-      </form>
-
-      <dialog id="deleteTask">
-        <form method="dialog">
-          <h2>Delete Task?</h2>
-          <button>Cancel</button>
-          <button id="confirm" value="false">Ok</button>
-        </form>
-      </dialog>
-
-      <dialog id="editTask">
-        <form method="dialog">
-          <h2>Edit Task</h2>
-
-          <label for="title">Title: </label>
-          <input type="text" id="title" name="title" value="title"><br>
-          
-          <label for="date">Due Date: </label> 
-          <input type="date" id="date" name="date"><br>
-  
-          <label for="tags">Tags: </label>
-          <input type="text" id="task-tags">
-  
-          <h3>Current Status:</h3>
-          <input type="radio" id="completed" name="status" value="completed">
-          <label for="completed">Completed</label><br>
-          <input type="radio" id="in-process" name="status" value="in-process">
-          <label for="in-process">In Process</label><br>
-          <input type="radio" id="not-started" name="status" value="not-started">
-          <label for="not-started">Not Started</label><br><br>
-          
-          <!-- the description would have an implied value that was stored from before -->
-          <textarea rows="25" columns="200" id="description">value that was stored earlier</textarea><br>
-          
-          <button type="button">Cancel</button>
-          <button id="editSave" type="button">Save</button>
-        </form>
-      </dialog>
-
-
-		<dialog id="deleteBlog">
+	<body>
+		<h1>Bullet Journal</h1>
+		<ul id="output"></ul>
+		<button id="addBulletBut">Add Bullet</button>
+		<dialog id="bujoSpace">
 			<form method="dialog">
-	    	<h2> Delete blog? </h2>
+				<!--Is title a good name? Probably not-->
+				<label for="title">Title: </label>
+				<input type="text" id="title"><br>
+
+				<label for="type">Type: </label>
+				<select name="bulletType" id="type">
+					<option value="Event">Event</option>
+					<option value="Task">Task</option>
+					<option value="Note">Note</option>
+					<option value="Misc">Misc</option>
+				</select> <br>
+				<div id = "tags">
+					<label for = "tags">Tag: </label>
+				</div>
+
+
+
+			
+			
+				<label for="time">Time and date: </label>
+				<input type="datetime-local" id="time"
+					value="2020-06-12T19:30"
+					min="2020-01-01T00:00" max="2030-01-01T00:00"><br>
+					
+				<textarea name="desc" rows="10" cols="30">What is this for?</textarea><br>
+
+
+				<button>Cancel</button>
+				<button id="saveAdd" value="false">Save</button>
+
+			</form>
+		</dialog>
+		<dialog id="deleteBullet">
+			<form method="dialog">
+	    	<h2> Delete bullet? </h2>
 
 				<button>Cancel</button>
 				<button id="okConfirm" value="false">Ok</button>
 
 			</form>
     </dialog>
-		<dialog id="EditBlog">
+		<dialog id="EditBullet">
 			<form method="dialog">
 				<label for="edittitle">Title: </label>
 				<input type="text" id="edittitle"><br>
 				<label for="editdate">Date: </label>
 				<input type="text" id="editdate" ><br>
-				<label for="editsummary">Summary: </label>
-				<input type="text" id="editsummary" >
+				<label for="editdesc">Content: </label>
+				<input type="text" id="editdesc" >
 
 				<button>Cancel</button>
 				<button id="editSaveAdd" value="false">Save</button>
@@ -157,92 +70,20 @@
 			</form>
 		</dialog>
 
+		<!-- This is what each <bullet-entry> will look like.
+			 The 'id' will be hidden from the user.
+			 TODO: we should change this later to how we actually want it to look -->
+		<template id="bulletTemplate">
+			<article class="bulletEntry">
+				<p class="bulletTitle">bullet title here</p>
+				<p class="bulletType">type of bullet</p>
+				<p class="bulletDate">mm/dd/yyyy</p>
+				<p class="bulletDescription">blah blah blah...</p>
+				<p class="bulletTag">tag1 tag2 tag3...</p>
+			</article>
+		</template>
 
-
-    <h1>Add Tracker</h1>
-    <form method="dialog">
-      <label for="title">Title: </label>
-      <input type = "text" id = "title"><br>
-      <label for="metric">What do you want to track?</label>
-      <input type = "text" id = "metric"><br>
-      <h2>Timescale</h2>
-      <input type="radio" id="daily" name="Timescale" value="daily">
-      <label for="daily">Daily</label><br>
-      <input type="radio" id="weekly" name="Timescale" value="weekly">
-      <label for="weekly">Weekly</label><br>
-      <input type="radio" id="monthly" name="Timescale" value="monthly">
-      <label for="monthly">Monthly</label><br>
-      <input type="radio" id="yearly" name="Timescale" value="yearly">
-      <label for="yearly">Yearly</label><br><br>
-      <button>Cancel</button>
-      <button id="confirm" value = "false">Create new Tracker</button>
-      </form>
-      
-      <h2>Add new entry to tracker</h2>
-      <form method="dialog">
-        <label for = "addDate">For which date: </label>
-        <input type = "date" id = "addDate"><br>
-        <label for = "y-val">*insert y-var name* value: </label>
-        <input type = "number" id="y-val"><br>
-        <label for = "desc">Add Description:</label>
-        <input type = "text" id = "desc"><br>
-        <button>Cancel</button>
-        <button id="confirm" value = "false">Create new Entry</button>
-      </form>
-      
-      <!--A box suggesting this should probably pop up upon clicking an entry-->
-      <h2>Edit entry in tracker</h2>
-      <form method="dialog">
-        <label for = "findDate">For which date: </label>
-        <input type = "date" id = "findDate"><br>
-        <label for = "newY">Modify *y-var name* value: </label>
-        <input type = "number" id = "newY"><br>
-        <label for = "newDesc">Add new description:</label>
-        <input type = "text" id = "newDesc"><br>
-        <button>Cancel</button>
-        <button id="confirm" value = "false">Edit Entry</button>
-      </form>
-      
-      <!--And maybe add a confirmation dialog popup-->
-      <h2>Delete entry from tracker</h2>
-      <form method="dialog"></form>
-        <label for = "delDate">For which date: </label>
-        <input type = "date" id = "delDate"><br>
-        <button>Cancel</button>
-        <button id="confirm" value="false">Delete Entry</button>
-        </form>
-      </dialog>
-      </form>
-
-    <h1>Edit Tracker</h1>
-     <form method="dialog">
-      <label for="edTitle">Edit Title: </label>
-      <input type = "text" id = "edTitle" value = "some title"><br>
-      <label for="edMetric">Edit Metric: </label>
-      <input type = "text" id = "edMetric" value = "some metric"><br>
-      <h2>Edit Timescale</h2>
-      <input type="radio" id="daily" name="Timescale" value="daily">
-      <label for="daily">Daily</label><br>
-      <input type="radio" id="weekly" name="Timescale" value="weekly">
-      <label for="weekly">Weekly</label><br>
-      <input type="radio" id="monthly" name="Timescale" value="monthly">
-      <label for="monthly">Monthly</label><br>
-      <input type="radio" id="yearly" name="Timescale" value="yearly">
-      <label for="yearly">Yearly</label><br><br>
-      <button>Cancel</button>
-      <button id="confirm" value = "false">Confirm Edits</button>
-      </form>   
-
-    <h1>Remove Tracker</h1>
-    <form method="dialog">
-      <button>Cancel</button>
-      <button id="confirm" value = "false">Confirm removal</button>
-      </form>
-      
-  </body>
-</html>
-
-
-
+		<!-- bullet-entry web component -->
+		<script src="./bullet.js" type="module"></script>
   </body>
 </html>

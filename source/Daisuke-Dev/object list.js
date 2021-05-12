@@ -1,4 +1,4 @@
-var Bullet = {
+var bullet = {
   date = someDate,
   text = privateText,
   bulletType = 'blackDot',
@@ -16,7 +16,7 @@ var Task = {
   title = aTitle,
   date = someDate,
   desc = someDescription,
-  status = 'completed', //Also includes "pending" and "not started" maybe
+  status = 'completed', //Also includes "pending" and "not started" maybe, 'rolling'
   tag = [tag1, tag2],
 };
 
