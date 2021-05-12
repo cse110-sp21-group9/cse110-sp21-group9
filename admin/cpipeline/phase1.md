@@ -1,6 +1,6 @@
 # Powellmon CI/CD Pipeline Phase 1 Status 
 ## Pipeline diagram
-![Pipeline diagram](pipeline-phase1.drawio.png)
+![Pipeline diagram](phase1.drawio.png)
 
 ## Steps 
 ### ESLint Style/Linting checks 
