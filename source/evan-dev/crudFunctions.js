@@ -1,5 +1,7 @@
 /*
     most of the code in here should be considered wip
+    TODO: Create more comprehensive ID system
+          Extend created bullet object to do events and tasks on top of the currently available notes
 */
 
 let runTimeBullets = {};
@@ -77,8 +79,6 @@ function makeNoteBullet(objData, dateDate, lstTags, intID)
     };
 }
 
-//hack
-//is there a better way to do this?
 function updateBulletInStorage(objBullet)
 {
     runTimeBullets[objBullet.ID] = objBullet;
@@ -100,11 +100,12 @@ function writeBulletToStorage(objBullet)
 
 function deleteBulletFromStorage(intID)
 {
+    intID = Number(intID);
     localStorage.removeItem(intID);
+    //possibly can be made more efficient or just outsource to API
     let bulletIDs = readArrayFromStorage("bulletIDs");
     const bulletIndex = bulletIDs.indexOf(intID);
     bulletIDs.splice(bulletIndex, 1);
-    console.log(bulletIDs);
     writeArrayToStorage("bulletIDs", bulletIDs);
 }
 
@@ -134,6 +135,7 @@ function fillRunTimeBullets()
     runTimeUpToDate = true;
 }
 
+//Can be made more efficient or just outsource to API
 function writeArrayToStorage(strKey, lstArray)
 {
     localStorage.setItem(strKey, JSON.stringify({array: lstArray}));

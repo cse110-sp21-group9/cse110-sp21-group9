@@ -32,7 +32,9 @@ let editType   = document.getElementById('edittype');
 let editTags   = document.getElementById('edittag');
 */
 
+
 crud.initCrudRuntime();
+//TODO: Write a date getter function to pass into here
 let bulletsToLoad = crud.getBulletsByDateRange("2020-06-12T19:00", "2020-06-12T20:00");
 for (const bullet of bulletsToLoad)
 {
@@ -41,7 +43,7 @@ for (const bullet of bulletsToLoad)
 
 /* on click set save button to true */
 saveBtn.addEventListener('click', function (){
-    saveBtn.value = "true";
+  saveBtn.value = "true";
 });
 
 /* on click show new blog box */
@@ -51,12 +53,12 @@ formButton.addEventListener('click', function () {
 
 /* on click set edit save to true */
 editSave.addEventListener('click', function (){
-    editSave.value = "true";
+  editSave.value = "true";
 });
 
 /* on click set confirm button to true */
 confirmBtn.addEventListener('click', function (){
-    confirmBtn.value = "true";
+  confirmBtn.value = "true";
 });
 
 /* opens the delete dialog box */
@@ -83,7 +85,7 @@ function openEditDialog(elemEntry)
   editTitle.value = entryBullet.data.title;
   editDate.value  = entryBullet.date;
   editDesc.value  = entryBullet.data.note;
-
+  //TODO:Add funcitonality to edit type and tags
   editBullet.onclose = () => {editBulletEntry(elemEntry);};
   editBullet.showModal();
 }
