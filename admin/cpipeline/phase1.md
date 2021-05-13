@@ -33,3 +33,6 @@ The final step in our pipeline is packaging and deployment, which occurs after t
 
 ## Demo video
 Video demo of our phase 1 pipeline can be found [here](https://www.youtube.com/watch?v=YNwufPw2_48)
+
+## Phase 2 pipeline
+phase2.drawio.png contains a revised version of this pipeline (as of 5/11/2021)

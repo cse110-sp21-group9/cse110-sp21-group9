@@ -5,7 +5,7 @@ on:
     paths: 
     - 'source/**'
     branches:
-    - '**-release'
+    - 'staging'
 jobs:
   create-docs: # Create JSDocs from source folder 
     name: Create JSDocs

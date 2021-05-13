@@ -4,6 +4,9 @@ on:
   push: 
     paths: 
     - 'source/**'
+    branches:
+    - '**-release'
+    - 'staging'
 jobs: 
   codacy-scan: #Run codacy code quality scan
     name: Codacy Analysis CLI
