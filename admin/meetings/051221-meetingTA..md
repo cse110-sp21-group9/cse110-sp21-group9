@@ -60,4 +60,4 @@ N/A  | N/A  | N/A |
 ###### Future discussion items...
 - Assigning development tasks to team members
 - Use of staging branch in pipeline
-- Full calendar API 
+- Full calendar API
