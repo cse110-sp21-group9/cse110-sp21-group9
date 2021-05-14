@@ -30,8 +30,7 @@ Action Items for next time | • Kenny - Talk to Sanat about full calendar <br>�
 **New Items**
 Topic | Who  | Notes |
 ---------- | ---- | ----- |
-Update TA on progress| Everyone | • Discussed CI/CD pipeline<br> • Need to start moving user story/issue backlog to Github issues<br> • Different from Gantt chart, breakdown of what individual people need to do<br>
-• Create issues on Github and assign them to specific people<br>
+Update TA on progress| Everyone | • Discussed CI/CD pipeline<br> • Need to start moving user story/issue backlog to Github issues<br> • Different from Gantt chart, breakdown of what individual people need to do<br> • Create issues on Github and assign them to specific people<br>
 Advice - using full calendar | TA | • Can use API but can’t lift their code into our repo<br> • Ok to use snippets of someone else’s frontend code, but not all of it<br> • Sanat needs to make sure that its ok
 Advice - communication| TA | • Other teams are breaking away from overall teams because they communicate better<br> • They communicate with TA more, know more, can communicate with their team members<br> • Should have meeting and iron out backend tasks, assign to people<br> • Restructure and reorganize team depending on what each week calls for <br>
 Advice - Login feature| TA | • Login feature can be done, doesn't have to be a nogo<br> • Depends on how simple/complicated you make it<br> • Experiment with firebase auth/etc<br>
