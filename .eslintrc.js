@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     "semi": ["error","always"],
     "space-before-function-paren": ["error", "never"],
-    "no-var": "error"
+    "no-var": "error",
+    "prefer-const": "warn"
   }
 };
