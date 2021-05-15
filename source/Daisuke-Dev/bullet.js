@@ -1,5 +1,8 @@
-// <bullet-entry> custom component
-// to be subclassed later by notes, tasks, events, etc.
+/**
+ * <bullet-entry> custom component
+ * to be subclassed later by notes, tasks, events, etc.
+ * It uses the template with id="bulletTemplate" in crud.html
+ */
 class BulletEntry extends HTMLElement {
   constructor(title, type, date, description, tag) {
     super();

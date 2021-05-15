@@ -1,39 +1,49 @@
 //import "./DOMPurify/dist/purify.min.js";
 
+import * as crud from "./crudFunctions.js"
+
 /* get elements from html page */
 //buttons and general writing space
-var formButton = document.getElementById('addBulletBut');
-var bujoSpace = document.getElementById('bujoSpace');
-var saveBtn = document.getElementById('saveAdd');
+let formButton = document.getElementById('addBulletBut');
+let bujoSpace  = document.getElementById('bujoSpace');
+let saveBtn    = document.getElementById('saveAdd');
 
 //creation inputs
-var titleInput = document.getElementById('title');
-var typeInput = document.getElementById('type');
-var dateInput = document.getElementById('time');
-var descInput = document.querySelector("[name = 'desc']");
-//var tagInput = document.getElementById('tag');
+let titleInput = document.getElementById('title');
+let typeInput  = document.getElementById('type');
+let dateInput  = document.getElementById('time');
+let descInput  = document.querySelector("[name = 'desc']");
 
 //output of creation
-var output = document.getElementById("output");
+let output     = document.getElementById("output");
 
 //deletion stuff
-var confirmBox = document.getElementById('deleteBullet');
-var confirmBtn = document.getElementById('okConfirm');
+let confirmBox = document.getElementById('deleteBullet');
+let confirmBtn = document.getElementById('okConfirm');
 
 //edit inputs
-var ebul = document.getElementById('EditBullet');
-var esave = document.getElementById('editSaveAdd');
-var etitle = document.getElementById('edittitle');
-var etype = document.getElementById('edittype');
-var edate = document.getElementById('editdate');
-var edesc = document.getElementById('editdesc');
-var etag = document.getElementById('edittag');
+let editBullet = document.getElementById('EditBullet');
+let editSave   = document.getElementById('editSaveAdd');
+let editTitle  = document.getElementById('edittitle');
+let editDate   = document.getElementById('editdate');
+let editDesc   = document.getElementById('editdesc');
+/* not implemented currently
+let editType   = document.getElementById('edittype');
+let editTags   = document.getElementById('edittag');
+*/
 
 
+crud.initCrudRuntime();
+//TODO: Write a date getter function to pass into here
+let bulletsToLoad = crud.getBulletsByDateRange("2020-06-12T19:00", "2020-06-12T20:00");
+for (const bullet of bulletsToLoad)
+{
+  output.append(createBulletEntryElem(bullet.ID));
+}
 
 /* on click set save button to true */
 saveBtn.addEventListener('click', function (){
-    saveBtn.value = "true";
+  saveBtn.value = "true";
 });
 
 /* on click show new blog box */
@@ -42,193 +52,135 @@ formButton.addEventListener('click', function () {
 });
 
 /* on click set edit save to true */
-esave.addEventListener('click', function (){
-    esave.value = "true";
+editSave.addEventListener('click', function (){
+  editSave.value = "true";
 });
 
 /* on click set confirm button to true */
 confirmBtn.addEventListener('click', function (){
-    confirmBtn.value = "true";
+  confirmBtn.value = "true";
 });
 
-/* opens delete dialog box and deletes selection if confirmBtn is true */
-function delet(id){
+/* opens the delete dialog box */
+function openDeleteDialog(elemEntry){
+  confirmBox.onclose = () => {deleteBulletEntry(elemEntry);};
   confirmBox.showModal();
-  confirmBox.addEventListener('close', function temp(){
-    id = globid;
-    if (confirmBtn.value=="true"){
-      // title.splice(id, 1);
-      // date.splice(id, 1);
-      // summary.splice(id, 1);
-      localStorage.removeItem(id+"title");
-      localStorage.removeItem(id+"time");
-      localStorage.removeItem(id+"desc");
-      localStorage.removeItem(id+"type");
-      //localStorage.removeItem(id+"tag");
-      confirmBtn.value="false";
-      var array = localStorage.getItem("list");
-      array = array.split(",");
-      var i = 0;
-      while(array[i]!=id.toString()){
-        i = i+1;
-      }
-      array.splice(i,1);
-      localStorage.setItem("list",array);
-      render();
-    }
-    confirmBox.removeEventListener('close',temp);
-  });
+}
 
+/* companion function to openDeleteDialog, removes the event listener and deletes the entry if ok was clicked */
+function deleteBulletEntry(elemEntry)
+{
+  confirmBox.onclose = null;
+  if (confirmBtn.value == "false") return;
+  confirmBtn.value = false;
+  crud.deleteBulletById(elemEntry.id);
+  elemEntry.remove();
 }
 
 /* opens edit dialog box and saves eddits if esave is true */
-function edit(id){
-  ebul.showModal();
-  // etitle.value = title[id];
-  // edate.value = date[id];
-  // esummary.value = summary[id];
-  etitle.value = localStorage.getItem(id+"title");
-  edate.value = localStorage.getItem(id+"time");
-  edesc.value = localStorage.getItem(id+"desc");
-  etype.value = localStorage.getItem(id+"type");
-  etag.value = localStorage.getItem(id+"tag");
+function openEditDialog(elemEntry)
+{
+  let entryBullet = crud.getBulletById(elemEntry.id);
 
-
-  ebul.addEventListener('close', function temp(){
-    id = globid;
-    if(esave.value=="true"){
-      // title[id] = DOMPurify.sanitize(etitle.value);
-      // date[id] = DOMPurify.sanitize(edate.value);
-      // summary[id] = DOMPurify.sanitize(esummary.value);
-      localStorage.setItem(id+"title", etitle.value);
-      localStorage.setItem(id+"date", edate.value);
-      localStorage.setItem(id+"desc", edesc.value);
-      localStorage.setItem(id+"type", etype.value);
-      //localStorage.setItem(id+"tag", etag.value);
-      esave.value = "false";
-      render();
-    }
-    ebul.removeEventListener('close',temp);
-  });
-
+  editTitle.value = entryBullet.data.title;
+  editDate.value  = entryBullet.date;
+  editDesc.value  = entryBullet.data.note;
+  //TODO:Add funcitonality to edit type and tags
+  editBullet.onclose = () => {editBulletEntry(elemEntry);};
+  editBullet.showModal();
 }
 
-/* renders blog list  */
-function render(){
-  output.innerHTML = "";
-  // for (var i =0; i < title.length; i++) {
-  // for(var i=0; i< localStorage.length/3; i++){
-  var array = localStorage.getItem("list");
-  if(!array || array==""){
-    output.append(document.createTextNode("Bullet Journal is Empty"));
-    return;
-  }
-  array = array.split(",");
-  array.forEach(function(item,index){
-    var i = parseInt(item);
-    var temp = document.createElement('li');
+function editBulletEntry(elemEntry)
+{
+  if (editSave.value == "false") return;
+  editSave.value = false;
 
-    //render title of bullet
-    var bold = document.createElement('b');
-    bold.append(document.createTextNode('Title: '));
-    temp.append(bold);
-    temp.append(document.createTextNode(title[i]));
-    temp.append(document.createTextNode(localStorage.getItem(i+"title")));
-    localStorage.setItem(i+"title", title[i]);
+  crud.setBulletAttributes(elemEntry.id, {
+      title: editTitle.value, 
+      note: editDesc.value
+    }, null, editDate.value);
 
-    //render date and time bullet was created
-    bold = document.createElement('b');
-    bold.append(document.createTextNode(' Date: '));
-    temp.append(bold);
-    temp.append(document.createTextNode(time[i]));
-    temp.append(document.createTextNode(localStorage.getItem(i+"time")));
-    localStorage.setItem(i+"time", time[i]);
+  elemEntry.parentNode.replaceChild(createBulletEntryElem(elemEntry.id), elemEntry);
 
-    //render description for bullet
-    bold = document.createElement('b');
-    bold.append(document.createTextNode(' Desc: '));
-    temp.append(bold);
-    temp.append(document.createTextNode(desc[i]));
-    temp.append(document.createTextNode(localStorage.getItem(i+"desc")));
-    localStorage.setItem(i+"desc", desc[i]);
-
-    //render bullet type
-    bold = document.createElement('b');
-    bold.append(document.createTextNode(' Type: '));
-    temp.append(bold);
-    temp.append(document.createTextNode(type[i]));
-    temp.append(document.createTextNode(localStorage.getItem(i+"type")));
-    localStorage.setItem(i+"type", type[i]);
-
-    //render bullet's tags
-    bold = document.createElement('b');
-    bold.append(document.createTextNode(' Tag: '));
-    temp.append(bold);
-    temp.append(document.createTextNode(tag[i]));
-    temp.append(document.createTextNode(localStorage.getItem(i+"tag")));
-    localStorage.setItem(i+"tag", type[i]);
-
-    //render edit button
-    var x = document.createElement("BUTTON");
-    x.id= i;
-    x.style="outline:none; background-color: Transparent; border: none;";
-    x.className = "edit";
-    var t = document.createTextNode("Edit");
-    x.appendChild(t);
-    temp.append(x);
-
-    //render delete button
-    var x = document.createElement("BUTTON");
-    x.id= i;
-    x.style="outline:none; background-color: Transparent; border: none;";
-    x.className = "delete";
-    var t = document.createTextNode("Delete");
-    x.appendChild(t);
-    temp.append(x);
-    output.append(temp);
-  });
-
-  //add functionality to given buttons
-  var tempButtons = document.getElementsByClassName("delete");
-  Array.from(tempButtons).forEach((btn) => {
-    btn.addEventListener('click', () => {
-      delet(btn.id);
-    });
-  });
-  var tempButtons = document.getElementsByClassName("edit");
-  Array.from(tempButtons).forEach((btn) => {
-    btn.addEventListener('click', () => {
-      edit(btn.id);
-    });
-  });
-
+  editBullet.onclose = null;
 }
 
-/* add listener for inserting new blog posts */
+//helper function to add text to bullet entry
+function appendTextNode(strTitle, strText, elemParent)
+{
+  let elemBold = document.createElement('b');
+
+  elemBold.append(document.createTextNode(strTitle));
+  elemParent.append(elemBold);
+  elemParent.append(document.createTextNode(strText));
+}
+
+//helper function to add buttons to bullet entry
+function appendButton(strDisp, strStyle, strClass, elemParent)
+{
+  let elemButton = document.createElement("BUTTON");
+  let elemText = document.createTextNode(strDisp);
+
+  elemButton.style = strStyle;
+  elemButton.className = strClass;
+  elemButton.appendChild(elemText);
+  elemParent.append(elemButton);
+
+  return elemButton;
+}
+
+/* create a bullet entry element */
+function createBulletEntryElem(intBulletID){
+  let newEntry = document.createElement('li');
+  let div = document.createElement("div");
+  let bullet = crud.getBulletById(intBulletID);
+
+  newEntry.id = intBulletID;
+  div.style = "margin: 10px; padding: 5px; border: 5px solid black"
+
+  newEntry.append(div);
+
+  //create and append title of bullet
+  appendTextNode("Title: ", bullet.data.title, div);
+
+  //create and append date and time bullet was created
+  appendTextNode(" Date: ", bullet.date, div);
+
+  //create and append description for bullet
+  appendTextNode(" Note: ", bullet.data.note, div);
+
+  //create and append bullet type
+  appendTextNode(" Type: ", bullet.type, div);
+
+  //create and append bullet's tags
+  appendTextNode(" Tags: ", bullet.tags, div);
+
+  //create and append edit button
+  let editButton = appendButton("Edit", "", "edit", div);
+  editButton.addEventListener("click", ()=>{openEditDialog(newEntry)});
+
+  //create and append delete button
+  let deleteButton = appendButton("Delete", "", "del", div);
+  deleteButton.addEventListener("click", ()=>{openDeleteDialog(newEntry)});
+
+  return newEntry;
+}
+
+/* if user confirms make new bullet and add it to page */
 bujoSpace.addEventListener('close', function (){
-  if(saveBtn.value=="true"){
-    var i = 0;
-    while(localStorage.getItem(i+"title")){
-      i = i+1;
-    }
-    saveBtn.value = "false";
-    localStorage.setItem(i+"title", titleInput.value);
-    localStorage.setItem(i+"time", dateInput.value);
-    localStorage.setItem(i+"desc", descInput.value);
-    localStorage.setItem(i+"type", typeInput.value);
-    //localStorage.setItem(i+"tag", tagInput.value);
-    var array = localStorage.getItem("list");
-    if(!array || array==""){
-      array = [i.toString()];
-      localStorage.setItem("list",array);
-      render();
-      return;
-    }
-    array = array.split(",");
-    array.push(i.toString());
-    localStorage.setItem("list",array);
-    render();
-  }
-});
 
-render();
+  //make sure the user confirmed
+  if(saveBtn.value=="false") return;
+  saveBtn.value = false;
+
+  //make a new bullet with the crud functions
+  let newBulletID = crud.createBullet(
+    {title: titleInput.value, note: descInput.value},
+    "note",
+    dateInput.value,
+    []
+  );
+
+  //add the bullet to the DOM
+  output.append(createBulletEntryElem(newBulletID));
+});
