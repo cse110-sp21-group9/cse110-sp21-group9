@@ -1,5 +1,4 @@
 //import "./DOMPurify/dist/purify.min.js";
-
 import * as crud from "./crudFunctions.js"
 
 /* get elements from html page */
@@ -13,9 +12,12 @@ let titleInput = document.getElementById('title');
 let typeInput  = document.getElementById('type');
 let dateInput  = document.getElementById('time');
 let descInput  = document.querySelector("[name = 'desc']");
+let tagInput   = document.getElementById('tags');
 
 //output of creation
-let output     = document.getElementById("output");
+let eventOut   = document.getElementById('eventlist');
+let taskOut    = document.getElementById('tasklist');
+let noteOut = document.getElementById('notelist');
 
 //deletion stuff
 let confirmBox = document.getElementById('deleteBullet');
@@ -27,10 +29,8 @@ let editSave   = document.getElementById('editSaveAdd');
 let editTitle  = document.getElementById('edittitle');
 let editDate   = document.getElementById('editdate');
 let editDesc   = document.getElementById('editdesc');
-/* not implemented currently
 let editType   = document.getElementById('edittype');
 let editTags   = document.getElementById('edittag');
-*/
 
 
 crud.initCrudRuntime();
@@ -38,7 +38,17 @@ crud.initCrudRuntime();
 let bulletsToLoad = crud.getBulletsByDateRange("2020-06-12T19:00", "2020-06-12T20:00");
 for (const bullet of bulletsToLoad)
 {
-  output.append(createBulletEntryElem(bullet.ID));
+  if(bullet.type === "note") {
+    noteOut.append(createBulletEntryElem(bullet.ID));
+  }
+
+  else if(bullet.type === "event") {
+    eventOut.append(createBulletEntryElem(bullet.ID));
+  }
+
+  else if(bullet.type === "task") {
+    taskOut.append(createBulletEntryElem(bullet.ID));
+  }
 }
 
 /* on click set save button to true */
@@ -77,7 +87,7 @@ function deleteBulletEntry(elemEntry)
   elemEntry.remove();
 }
 
-/* opens edit dialog box and saves eddits if esave is true */
+/* opens edit dialog box and saves edits if esave is true */
 function openEditDialog(elemEntry)
 {
   let entryBullet = crud.getBulletById(elemEntry.id);
@@ -85,7 +95,8 @@ function openEditDialog(elemEntry)
   editTitle.value = entryBullet.data.title;
   editDate.value  = entryBullet.date;
   editDesc.value  = entryBullet.data.note;
-  //TODO:Add funcitonality to edit type and tags
+  editTags.value = entryBullet.tags;
+  //TODO:Add functionality to edit type and tags
   editBullet.onclose = () => {editBulletEntry(elemEntry);};
   editBullet.showModal();
 }
@@ -129,7 +140,11 @@ function appendButton(strDisp, strStyle, strClass, elemParent)
   return elemButton;
 }
 
-/* create a bullet entry element */
+/**
+ * create a bullet entry element 
+ * @param {number} intBulletID - the bullet's numerical ID
+ * @return {li} a list (bullet) object
+ */
 function createBulletEntryElem(intBulletID){
   let newEntry = document.createElement('li');
   let div = document.createElement("div");
@@ -173,14 +188,28 @@ bujoSpace.addEventListener('close', function (){
   if(saveBtn.value=="false") return;
   saveBtn.value = false;
 
+  //make tag array for new bullet
+  let newBulletTags = crud.getCheckBoxResults();
+  let newBulletType = crud.getType();
+  console.log(newBulletType);
   //make a new bullet with the crud functions
   let newBulletID = crud.createBullet(
     {title: titleInput.value, note: descInput.value},
-    "note",
+    newBulletType,
     dateInput.value,
-    []
+    newBulletTags
   );
 
   //add the bullet to the DOM
-  output.append(createBulletEntryElem(newBulletID));
+  if(newBulletType === "Note") {
+    noteOut.append(createBulletEntryElem(newBulletID));
+  }
+
+  else if(newBulletType === "Event") {
+    eventOut.append(createBulletEntryElem(newBulletID));
+  }
+
+  else if(newBulletType === "Task") {
+    taskOut.append(createBulletEntryElem(newBulletID));
+  }
 });

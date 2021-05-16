@@ -2,6 +2,7 @@
     most of the code in here should be considered wip
     TODO: Create more comprehensive ID system
           Extend created bullet object to do events and tasks on top of the currently available notes
+    Completed: Add type and tag functionality
 */
 
 let runTimeBullets = {};
@@ -23,6 +24,7 @@ export function setBulletAttributes(intID, objData = null, strType=null, dateDat
     updateBulletInStorage(bullet);
 }
 
+
 export function getBulletsByDateRange(dateStart, dateEnd, objOption=null)
 {
     let bulletsToReturn = [];
@@ -39,11 +41,18 @@ export function getBulletById(intID, objOption=null)
     return runTimeBullets[intID];
 }
 
-//makes a new bullet and adds it to storage
+/**
+ * Creates a bullet object
+ * @param {string} objData - Bullet description 
+ * @param {string} strType - The bullet's type
+ * @param {date} dateDate - Date bullet was created
+ * @param {Number} intID - Bullet's ID
+ * @returns the created bullet object's ID
+ */
 export function createBullet(objData, strType, dateDate, lstTags)
 {
     let bullet;
-    if (strType === "note")
+    if (strType === "Note")
     {
         lastID++;
         bullet = makeNoteBullet(objData, dateDate, lstTags, lastID);
@@ -51,8 +60,24 @@ export function createBullet(objData, strType, dateDate, lstTags)
         writeBulletToStorage(bullet);
     }
 
-    //todo write ids into local storage array for later querying
+    //might need to collect more user input info for this
+    //EG: Date and Time of Event
+    else if(strType === "Event") {
+        lastID++;
+        bullet = makeEventBullet(objData, dateDate, lstTags, lastID);
+        localStorage.setItem("lastID", lastID);
+        writeBulletToStorage(bullet);
+    }
 
+  else if(strType === "Task") {
+        lastID++;
+        bullet = makeTaskBullet(objData, dateDate, lstTags, lastID);
+        localStorage.setItem("lastID", lastID);
+        writeBulletToStorage(bullet);
+        
+    }
+
+    //todo write ids into local storage array for later querying
     return bullet.ID;
 }
 
@@ -65,15 +90,60 @@ export function deleteBulletById(intID)
 export function initCrudRuntime()
 {
     fillRunTimeBullets();
+    updateTags();
+    editTags();
 }
 
-//helper function for creating note bullets
+/**
+ * Helper function for creating Note Bullets
+ * @param {string} objData - Bullet description 
+ * @param {date} dateDate - Date bullet was created
+ * @param {array} lstTags - List of tags associated with bullet
+ * @param {Number} intID - Bullet's ID
+ * @returns A Note Bullet object containing all param info
+ */
 function makeNoteBullet(objData, dateDate, lstTags, intID)
 {
     return {
         ID: intID,
         date: dateDate,
         type: "note",
+        tags: lstTags,
+        data: objData,
+    };
+}
+
+/** TODO: Might need more parameters
+ * Helper function for creating Event Bullets
+ * @param {string} objData - Bullet description
+ * @param {date} dateDate - Date bullet was created
+ * @param {array} lstTags - List of tags associated with bullet
+ * @param {Number} intID - Bullet's ID
+ * @returns An Event Bullet object containing all param info
+ */
+function makeEventBullet(objData, dateDate, lstTags, intID) {
+    return {
+        ID: intID,
+        date: dateDate,
+        type: "event",
+        tags: lstTags,
+        data: objData,
+    };
+}
+
+/** TODO: Might need more parameters
+ * Helper function for creating Task Bullets
+ * @param {string} objData - Bullet Description
+ * @param {date} dateDate - Date bullet was created
+ * @param {array} lstTags - List of tags associated with bullet
+ * @param {Number} intID - Bullet's ID 
+ * @returns A Task Bullet object containing all param info
+ */
+function makeTaskBullet(objData, dateDate, lstTags, intID) {
+    return {
+        ID: intID,
+        date: dateDate,
+        type: "task",
         tags: lstTags,
         data: objData,
     };
@@ -98,6 +168,10 @@ function writeBulletToStorage(objBullet)
     writeArrayToStorage("bulletIDs", bulletIDs);
 }
 
+/**
+ * Deletes a bullet from storage
+ * @param {Number} intID - ID of the bullet we want to delet
+ */
 function deleteBulletFromStorage(intID)
 {
     intID = Number(intID);
@@ -146,3 +220,91 @@ function readArrayFromStorage(strArrayKey)
     let array = localStorage.getItem(strArrayKey);
     return JSON.parse(array)["array"];
 }
+
+/**
+ * Creates a checklist in the dialog form of all the tags we have established in tagList
+ * @return null
+ */
+let tagList = ['School', 'Sports', 'extras'];
+function updateTags() {
+    //taglist is already defined
+    let checkList = document.getElementById('tags');
+    for(const tag in tagList){
+        //create checkbox
+        let options = document.createElement("input");
+        //specify element attributes
+        options.setAttribute('type', 'checkbox');
+        options.setAttribute('value', tagList[tag]);       
+        options.setAttribute('name', tagList[tag]);
+
+        //create label for checkbox and define attributes
+        let label = document.createElement('label');
+        label.setAttribute('for', tagList[tag]);
+
+        //append text to the label
+        label.appendChild(document.createTextNode(tagList[tag]));
+
+        //append checkbox and label to the form
+        checkList.appendChild(options);
+        checkList.appendChild(label);
+    }
+}
+
+/**
+ * Get the results of the created tag checkboxes to display on the CRUD app.
+ * @returns an array containing the names of all tags that the user selected
+ */
+//this function takes the user's specified tag entries and loads it onto the bullet object we are creating
+export function getCheckBoxResults() {
+    let chosenTags = [];
+    if(tagList.size == 0) {
+        return chosenTags;
+    }
+    
+    let options = document.querySelectorAll('input[type = "checkbox"]:checked');
+    for (let checkbox of options) {
+        chosenTags.push(checkbox.value);
+    }
+    return chosenTags;
+}
+
+
+/**
+ * Creates a checklist in the "EditBullet" dialog form to change which tags this bullet has
+ * The checkboxes should be properly checked according to the bullet's stored tags
+ * @return null
+ */
+function editTags() {
+    var checkList = document.getElementById('edittag');
+
+    // using tagList defined earlier
+    for(const tag in tagList){
+        //create checkbox
+        var options = document.createElement("input");
+        //specify element attributes
+        options.setAttribute('type', 'checkbox');
+        options.setAttribute('value', tagList[tag]);       
+        options.setAttribute('name', tagList[tag]);        
+
+        //create label for checkbox and define attributes
+        var label = document.createElement('label');
+        label.setAttribute('for', tagList[tag]);
+
+        //append text to the label
+        label.appendChild(document.createTextNode(tagList[tag]));
+
+        //append checkbox and label to the form
+        checkList.appendChild(options);
+        checkList.appendChild(label);
+    }
+}
+
+/**
+ * Gets a bullet's selected type from the creation dialog
+ * @returns The bullet's selected type
+ */
+export function getType() {
+    let opt = document.getElementById('type').value;
+    return opt;
+}
+

@@ -11,7 +11,23 @@
 
 	<body>
 		<h1>Bullet Journal</h1>
-		<ul id="output"></ul>
+
+		<div id = "Events">
+		<h2>Events</h2>
+		<ul id = "eventlist"></ul>
+		</div>
+
+		<div id = "Tasks">
+		<h2>Tasks</h2>
+		<ul id = "tasklist"></ul>
+		</div>
+
+		<h2>Notes</h2>
+		<div id = "Notes">
+		<ul id = "notelist"></ul>
+		</div>
+
+		<!--Button to create a bullet-->
 		<button id="addBulletBut">Add Bullet</button>
 		<dialog id="bujoSpace">
 			<form method="dialog">
@@ -43,6 +59,8 @@
 
 			</form>
 		</dialog>
+		
+		<!--Dialog option to delete a bullet-->
 		<dialog id="deleteBullet">
 			<form method="dialog">
 	    	<h2> Delete bullet? </h2>
@@ -52,6 +70,8 @@
 
 			</form>
     </dialog>
+
+		<!--Dialog option to edit a bullet-->
 		<dialog id="EditBullet">
 			<form method="dialog">
 				<label for="edittitle">Title: </label>
@@ -60,6 +80,10 @@
 				<input type="text" id="editdate" ><br>
 				<label for="editdesc">Content: </label>
 				<input type="text" id="editdesc" >
+
+				<div id="edittag">
+					<label for="edittag">Tag: </label>
+				</div>
 
 				<button>Cancel</button>
 				<button id="editSaveAdd" value="false">Save</button>
