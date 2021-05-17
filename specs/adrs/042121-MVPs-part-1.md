@@ -1,9 +1,11 @@
 # MVPs Part 1
-Status: accepted
-Deciders: Daisuke, Edward, Etienne, Evan, Elisa, Kenny, Alan
+Status: Completed
+
+Deciders: Alan, Daisuke, Edward, Etienne, Evan, Elisa, Kenny
+
 Date: 4/21/2021 @ 4PM
 
-## Need to decide which features are the bare minimum that we need to implemetn
+## Need to decide which features are the bare minimum that we need to implement
 - We were tasked with creating a bullet journal. 
 - We also wanted to know what was the most important features we had to have in this journal if we had only a week to actually implement it.
 

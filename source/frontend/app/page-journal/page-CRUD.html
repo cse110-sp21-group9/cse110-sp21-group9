@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bujo Demo</title>
+		<script type="module" src="blog.js"></script>
+		<script type="module" src="bullet.js"></script>
+		<!-- <link rel="stylesheet" href="style.css"> -->
+	</head>
+
+	<body>
+		<h1>Bullet Journal</h1>
+
+		<div id = "Events">
+		<h2>Events</h2>
+		<ul id = "eventlist"></ul>
+		</div>
+
+		<div id = "Tasks">
+		<h2>Tasks</h2>
+		<ul id = "tasklist"></ul>
+		</div>
+
+		<h2>Notes</h2>
+		<div id = "Notes">
+		<ul id = "notelist"></ul>
+		</div>
+
+		<!--Button to create a bullet-->
+		<button id="addBulletBut">Add Bullet</button>
+		<dialog id="bujoSpace">
+			<form method="dialog">
+				<!--Is title a good name? Probably not-->
+				<label for="title">Title: </label>
+				<input type="text" id="title"><br>
+
+				<label for="type">Type: </label>
+				<select name="bulletType" id="type">
+					<option value="Event">Event</option>
+					<option value="Task">Task</option>
+					<option value="Note">Note</option>
+					<option value="Misc">Misc</option>
+				</select> <br>
+				<div id = "tags">
+					<label for = "tags">Tag: </label>
+				</div>
+
+				<label for="time">Time and date: </label>
+				<input type="datetime-local" id="time"
+					value="2020-06-12T19:30"
+					min="2020-01-01T00:00" max="2030-01-01T00:00"><br>
+					
+				<textarea name="desc" rows="10" cols="30">What is this for?</textarea><br>
+
+
+				<button>Cancel</button>
+				<button id="saveAdd" value="false">Save</button>
+
+			</form>
+		</dialog>
+	
+		<!--Button and dialog option to create a tag-->
+		<button id="createtag">Create New Tag</button>
+		<dialog id="tagcreation">
+			<form method = "dialog">
+				<label for="tagname">Title: </label>
+				<input type="text" id="tagname"><br>
+
+				<button>Cancel</button>
+				<button id="saveTag" value="false">Save</button>
+			</form>
+		</dialog>
+		
+		<!--Dialog option to delete a bullet-->
+		<dialog id="deleteBullet">
+			<form method="dialog">
+	    	<h2> Delete bullet? </h2>
+
+				<button>Cancel</button>
+				<button id="okConfirm" value="false">Ok</button>
+
+			</form>
+    </dialog>
+
+		<!--Dialog option to edit a bullet-->
+		<dialog id="EditBullet">
+			<form method="dialog">
+				<label for="edittitle">Title: </label>
+				<input type="text" id="edittitle"><br>
+				<label for="editdate">Date: </label>
+				<input type="text" id="editdate" ><br>
+				<label for="editdesc">Content: </label>
+				<input type="text" id="editdesc" >
+
+				<div id="edittag">
+					<label for="edittag">Tag: </label>
+				</div>
+
+				<button>Cancel</button>
+				<button id="editSaveAdd" value="false">Save</button>
+
+			</form>
+		</dialog>
+
+		<!-- This is what each <bullet-entry> will look like.
+			 The 'id' will be hidden from the user.
+			 TODO: we should change this later to how we actually want it to look -->
+		<template id="bulletTemplate">
+			<article class="bulletEntry">
+				<p class="bulletTitle">bullet title here</p>
+				<p class="bulletType">type of bullet</p>
+				<p class="bulletDate">mm/dd/yyyy</p>
+				<p class="bulletDescription">blah blah blah...</p>
+				<p class="bulletTag">tag1 tag2 tag3...</p>
+			</article>
+		</template>
+		
+  </body>
+</html>

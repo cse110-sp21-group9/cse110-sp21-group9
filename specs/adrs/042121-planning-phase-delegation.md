@@ -1,6 +1,8 @@
 # Planning Phase Delegation
-Status: accepted
-Deciders: Daisuke, Edward, Etienne, Evan, Elisa, Kenny, Alan
+Status: Completed
+
+Deciders: Alan, Daisuke, Edward, Etienne, Evan, Elisa, Kenny
+
 Date: 4/21/2021 @ 4PM
 
 ## Need to decide who should do what to plan out the bullet journal
