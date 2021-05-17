@@ -1,6 +1,6 @@
-# Meeting Minutes ~ 051621-Sprint 1 Review meeting
+# Meeting Minutes ~ 051621-Sprint 1 Review meeting  
 ## I. Meeting Information
-**Meeting Purpose:** Weekly Group meeting/Sprint 1 Review meeting
+**Meeting Purpose:** Weekly Group meeting/Sprint 1 Review meeting  
 **Meeting Date/Time:** May 16th, 2021, 5:00pm - 5:50pm  
 **Timezone:** Pacific Standard Time (UTC−07:00)  
 **Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/j/98413787650)  
@@ -41,14 +41,11 @@ Sprint Review| Elisa | • Tinkered with bootstrap to create a homepage, sign-in
 Sprint Review| Etienne | • Worked on CRUD with Daisuke and Evan <br> • Set up Retrium for retrospectives<br> • Looked into Google Calendar API, concluded that it's not necessary right now <br>
 Sprint Review| Evan | • Decided style guide for everyone <br> • Got Bullet functionality working for CRUD<br> • Worked with Kenny and Edmund on backend <br> • Looked into hashing/caching passwords
 Sprint Review| Kenny | • Set up database with basic model <br> • Created Login and create account page <br> • Database creates user IDs that can be linked to each journal 
-
 Retros | Everyone| • Will use Retrium to conduct retros<br> • Daisuke, Etienne, and Elisa will decide on a format<br> • Retro will occur before next team meeting on Wednesday<br>
 Team Status Video | Everyone| • Edmund, Evan, and Kenny will handle video<br> • Can use zoom recording of this meeting to help
 Plans for next sprint | Everyone| • Will decide on tasking next Wednesday meeting<br>
-
 Calendar | Everyone | • Full calendar was a no-go<br> • Will need ot come up with an alternate API or make ourselves<br><br>Format:<br> • Calendar linked to the journal<br> • Grid displaying bullets corresponding to day of bullet<br> • Users edit bullets on calendar by clicking on each day and editing journal entries for that day<br> • Can abstract +- 3 years from now 2018 - 2021 - 2024<br> • Javascript may have a date model we can use<br>
 Week view | Everyone | • Now a rabbit hole, will get to if we have time<br>
-
 Action items/Task assignment| Everyone | see action items section |
 
 **Old Items**
@@ -64,7 +61,6 @@ Topic | Who  | Notes |
 |  ✔️ | Design/styling | Elisa | 5-16-2021  | • Style demo/main page, login page<br> • Can move on to other pages if you have time <br> • Can use native css or Bootstrap |
 |  ✔️ | Update CI/CD pipeline| Alan/Edward | 5-16-2021  | • Add staging branch for testing to pipeline<br>|
 | ✔️ | Decide on file structure| Alan/Edward | 5-16-2021  | • Meet to decide on file structure for storing project files, now that we're starting to dev|
-
 |    | Integrate apiStub.js with mongoDB (backend)| Kenny, Evan | 5-23-2021  | • Come to an agreement on how Evan's API can be integrated with mongoDB in the backend, then implement<br> • Have agreement done by this sunday(5-16)<br> • Have implementation done by next sunday(5-23) |
 |    | Help with development | Alan/Edward | 5-16-2021  | • Assist development team with anything they need help with |
 |    | Get Demo ready | Everyone| 5-17-2021  | • integrate frontend/login with mongoDB<br> • add functionality with APIs |
