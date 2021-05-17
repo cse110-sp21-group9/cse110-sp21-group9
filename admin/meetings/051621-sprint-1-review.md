@@ -44,7 +44,7 @@ Sprint Review| Kenny | • Set up database with basic model <br> • Created Log
 Retros | Everyone| • Will use Retrium to conduct retros<br> • Daisuke, Etienne, and Elisa will decide on a format<br> • Retro will occur before next team meeting on Wednesday<br>
 Team Status Video | Everyone| • Edmund, Evan, and Kenny will handle video<br> • Can use zoom recording of this meeting to help
 Plans for next sprint | Everyone| • Will decide on tasking next Wednesday meeting<br>
-Calendar | Everyone | • Full calendar was a no-go<br> • Will need ot come up with an alternate API or make ourselves<br><br>Format:<br> • Calendar linked to the journal<br> • Grid displaying bullets corresponding to day of bullet<br> • Users edit bullets on calendar by clicking on each day and editing journal entries for that day<br> • Can abstract +- 3 years from now 2018 - 2021 - 2024<br> • Javascript may have a date model we can use<br>
+Calendar | Everyone | • Full calendar was a no-go<br> • Will need to come up with an alternate API or make ourselves<br><br>Format:<br> • Calendar linked to the journal<br> • Grid displaying bullets corresponding to day of bullet<br> • Users edit bullets on calendar by clicking on each day and editing journal entries for that day<br> • Can abstract +- 3 years from now 2018 - 2021 - 2024<br> • Javascript may have a date model we can use<br>
 Week view | Everyone | • Now a rabbit hole, will get to if we have time<br>
 Action items/Task assignment| Everyone | see action items section |
 
