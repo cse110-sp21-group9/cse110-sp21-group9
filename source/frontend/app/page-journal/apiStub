@@ -40,7 +40,7 @@ function setBulletDate(id, date, option){}                //=> sets the date for
 //should type changing be allowed?
 function setBulletType(id, type, option){}                //=> sets the type for the bullet
 //how should tags work?
-function setBulletAttributes(id, data = null, type=null, date=null, tags=null) //=> set one or more attributes of a bullet
+function setBulletAttributes(id, data = null, type=null, date=null, tags=null){} //=> set one or more attributes of a bullet
 
 
 function createBullet(data, type, date, tags){}           //=> returns the id of the created bullet;
