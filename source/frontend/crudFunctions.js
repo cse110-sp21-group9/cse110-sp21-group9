@@ -6,6 +6,7 @@
 */
 
 let runTimeBullets = {};
+let tagList = [];
 let runTimeUpToDate = false;
 let lastID; //this is bad
 
@@ -206,7 +207,23 @@ function fillRunTimeBullets()
         console.log("loaded bullet object: ", runTimeBullets[ID]);
     }
 
+    //makes sure tags are also loaded 
+    fillRunTimeTags();
+
     runTimeUpToDate = true;
+}
+
+/**
+ * loads tags from storage
+ * @return null
+ */
+function fillRunTimeTags() {
+    let tags = localStorage.getItem("tags");
+    console.log(tags);
+    if(tagList == null || tagList == "null") {
+        tagList = [];
+    }
+    console.log("loaded tags: ", tagList);
 }
 
 //Can be made more efficient or just outsource to API
@@ -225,7 +242,6 @@ function readArrayFromStorage(strArrayKey)
  * Creates a checklist in the dialog form of all the tags we have established in tagList
  * @return null
  */
-let tagList = ['School', 'Sports', 'extras'];
 function updateTags() {
     //taglist is already defined
     let checkList = document.getElementById('tags');
@@ -308,3 +324,14 @@ export function getType() {
     return opt;
 }
 
+/**
+ * Creates a tag based on user's input
+ * @param {string} tagName - The tag's name
+ * @return null
+ */
+export function createTag(tagName) {
+    tagList.push(tagName);
+    console.log(tagList);
+    localStorage.setItem("tags", tagList);
+    updateTags();
+} 

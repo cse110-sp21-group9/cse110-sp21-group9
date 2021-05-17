@@ -17,11 +17,17 @@ let tagInput   = document.getElementById('tags');
 //output of creation
 let eventOut   = document.getElementById('eventlist');
 let taskOut    = document.getElementById('tasklist');
-let noteOut = document.getElementById('notelist');
+let noteOut    = document.getElementById('notelist');
 
 //deletion stuff
 let confirmBox = document.getElementById('deleteBullet');
 let confirmBtn = document.getElementById('okConfirm');
+
+//tag creation stuff
+let tagBtn     = document.getElementById('createtag');
+let tagBox     = document.getElementById('tagcreation');
+let tagAddBtn  = document.getElementById('saveTag');
+let tagName    = document.getElementById('tagname'); 
 
 //edit inputs
 let editBullet = document.getElementById('EditBullet');
@@ -50,6 +56,16 @@ for (const bullet of bulletsToLoad)
     taskOut.append(createBulletEntryElem(bullet.ID));
   }
 }
+
+/* on click show new tag box */
+tagBtn.addEventListener('click', function (){
+  tagBox.showModal();
+});
+
+/* on click set tag add button to true */
+tagAddBtn.addEventListener('click', function() {
+  tagAddBtn.value = "true";
+});
 
 /* on click set save button to true */
 saveBtn.addEventListener('click', function (){
@@ -181,6 +197,20 @@ function createBulletEntryElem(intBulletID){
   return newEntry;
 }
 
+/* if user confirms making new tag, add it to list */
+tagBox.addEventListener('close', function() {
+  //make sure user confirmed
+  if(tagAddBtn.value == "false") return;
+  console.log(tagAddBtn.value);
+  tagAddBtn.value = false;
+
+  //add tag's string to list
+  crud.createTag(tagName.value);
+
+  //maybe add a confirmation box
+})
+
+
 /* if user confirms make new bullet and add it to page */
 bujoSpace.addEventListener('close', function (){
 
@@ -191,6 +221,7 @@ bujoSpace.addEventListener('close', function (){
   //make tag array for new bullet
   let newBulletTags = crud.getCheckBoxResults();
   let newBulletType = crud.getType();
+
   console.log(newBulletType);
   //make a new bullet with the crud functions
   let newBulletID = crud.createBullet(
