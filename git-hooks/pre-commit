@@ -1,5 +1,5 @@
 #!/bin/sh
-# Soure: https://github.com/kaczor6418/git-hooks-example/tree/master
+# Source: https://github.com/kaczor6418/git-hooks-example/tree/master
 SRC="^source/.*.js$"
 linter_exit_code=1
 staged_js_files=$(git diff --cached --diff-filter=d --name-only | grep $SRC)
