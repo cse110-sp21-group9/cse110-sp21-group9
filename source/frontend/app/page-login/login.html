@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+
+
+<body>
+    <label for="username-input">Username</label>
+    <div class="form-group">
+        <input type=username class="form-control" placeholder="Enter Username" id="username-input">
+    </div>
+
+
+    <label for="password-input">Password</label>
+    <div class="form-group">
+        <input type=password class="form-control" placeholder="Enter Password" id="password-input">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary">Create an Account</button>
+
+    <!-- TODO: set hidden = false if incorrect password/username was inputted -->
+    <p class="text-danger" hidden="true">Incorrect Username or Password</p>
+</body>
+
+</html>
