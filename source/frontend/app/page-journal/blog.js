@@ -39,6 +39,9 @@ const editDesc = document.getElementById('editdesc');
 const editTags = document.getElementById('edittag');
 
 crud.initCrudRuntime();
+
+
+
 // TODO: Write a date getter function to pass into here
 let bulletsToLoad = crud.getBulletsByDateRange('2020-06-12T19:00', '2020-06-12T20:00');
 for (const bullet of bulletsToLoad) {
@@ -68,8 +71,8 @@ saveBtn.addEventListener('click', function() {
 
 /* on click show new blog box */
 formButton.addEventListener('click', function() {
-  bujoSpace.showModal();
-});
+  console.log("Dialog opened!");
+}); 
 
 /* on click set edit save to true */
 editSave.addEventListener('click', function() {

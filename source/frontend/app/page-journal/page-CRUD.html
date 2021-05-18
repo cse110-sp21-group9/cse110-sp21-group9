@@ -6,14 +6,23 @@
 		<title>Bujo Demo</title>
 		<script type="module" src="blog.js"></script>
 		<script type="module" src="bullet.js"></script>
+		<link rel="stylesheet" href="style.css">	
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<!-- <link rel="stylesheet" href="style.css"> -->
+	
+		<style>
+			body {
+				background-image: url(../../assets/bujo-studio-background.jpeg);
+			} 
+		  </style>
+	
 	</head>
 
 	<body>
+		<!--Navigation bar-->
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<a class="navbar-brand" href="../page-homepage/homepage.html">BuJo Studio</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -34,6 +43,7 @@
 			</div>  
 		  </nav>
 
+        <!--Shows CRUD works (delete later) -->
 		<h1>Bullet Journal</h1>
 
 		<div id = "Events">
@@ -51,38 +61,51 @@
 			<ul id = "notelist"></ul>
 		</div>
 
-		<!--Button to create a bullet-->
-		<button id="addBulletBut">Add Bullet</button>
-		<dialog id="bujoSpace">
-			<form method="dialog">
-				<!--Is title a good name? Probably not-->
-				<label for="title">Title: </label>
-				<input type="text" id="title"><br>
-
-				<label for="type">Type: </label>
-				<select name="bulletType" id="type">
-					<option value="Event">Event</option>
-					<option value="Task">Task</option>
-					<option value="Note">Note</option>
-					<option value="Misc">Misc</option>
-				</select> <br>
-				<div id = "tags">
-					<label for = "tags">Tag: </label>
+		<!-- Button trigger modal -->
+		<button id="addBulletBut" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter">
+			Add Entry
+		</button>
+		<!--Styled Modal-->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Add Entry</h5>
 				</div>
+				<div class="modal-body">
+					<form method="dialog">
+						<!--Is title a good name? Probably not-->
+						<label for="title">Title: </label>
+						<input type="text" id="title"><br>
+		
+						<label for="type">Type: </label>
+						<select name="bulletType" id="type">
+							<option value="Event">Event</option>
+							<option value="Task">Task</option>
+							<option value="Note">Note</option>
+							<option value="Misc">Misc</option>
+						</select> <br>
+						<div id = "tags">
+							<label for = "tags">Tag: </label>
+						</div>
+		
+						<label for="time">Time and date: </label>
+						<input type="datetime-local" id="time"
+							value="2020-06-12T19:30"
+							min="2020-01-01T00:00" max="2030-01-01T00:00"><br>
+							
+						<textarea class="sticky-note" name="desc" rows="10" cols="30">What is this for?</textarea><br>
+						<div class="modal-body">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button id="saveAdd" type="button" class="btn btn-secondary" data-dismiss="modal" value="false">Create</button>
+						</div>
+		
+					</form>
+				</div>
+			  </div>
+			</div>
+		</div>
 
-				<label for="time">Time and date: </label>
-				<input type="datetime-local" id="time"
-					value="2020-06-12T19:30"
-					min="2020-01-01T00:00" max="2030-01-01T00:00"><br>
-					
-				<textarea name="desc" rows="10" cols="30">What is this for?</textarea><br>
-
-
-				<button>Cancel</button>
-				<button id="saveAdd" value="false">Save</button>
-
-			</form>
-		</dialog>
 	
 		<!--Button and dialog option to create a tag-->
 		<button id="createtag">Create New Tag</button>
