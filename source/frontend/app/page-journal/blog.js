@@ -1,10 +1,11 @@
+/* eslint-env jquery */
 // import "./DOMPurify/dist/purify.min.js";
 import * as crud from './crudFunctions.js';
 
 /* get elements from html page */
 // buttons and general writing space
 const formButton = document.getElementById('addBulletBut');
-const bujoSpace = document.getElementById('bujoSpace');
+// const bujoSpace = document.getElementById('bujoSpace');
 const saveBtn = document.getElementById('saveAdd');
 
 // creation inputs
@@ -25,7 +26,7 @@ const confirmBtn = document.getElementById('okConfirm');
 
 // tag creation stuff
 const tagBtn = document.getElementById('createtag');
-const tagBox = document.getElementById('tagcreation');
+// const tagBox = document.getElementById('tagcreation');
 const tagAddBtn = document.getElementById('saveTag');
 const tagName = document.getElementById('tagname');
 
@@ -53,27 +54,20 @@ for (const bullet of bulletsToLoad) {
 
 /* on click show new tag box */
 tagBtn.addEventListener('click', function() {
-  tagBox.showModal();
+  $('#tagcreation').modal('toggle');
 });
 
-/* on click set tag add button to true */
+/* if user confirms making new tag, add it to list */
 tagAddBtn.addEventListener('click', function() {
-  tagAddBtn.value = 'true';
-});
-
-/* on click set save button to true */
-saveBtn.addEventListener('click', function() {
-  saveBtn.value = 'true';
+  // add tag's string to list
+  crud.createTag(tagName.value);
+  $('#tagcreation').modal('toggle');
+  // maybe add a confirmation box
 });
 
 /* on click show new blog box */
 formButton.addEventListener('click', function() {
-  bujoSpace.showModal();
-});
-
-/* on click set edit save to true */
-editSave.addEventListener('click', function() {
-  editSave.value = 'true';
+  $('bujoSpace').modal('toggle');
 });
 
 /* on click set confirm button to true */
@@ -83,8 +77,10 @@ confirmBtn.addEventListener('click', function() {
 
 /* opens the delete dialog box */
 function openDeleteDialog(elemEntry) {
-  confirmBox.onclose = () => { deleteBulletEntry(elemEntry); };
-  confirmBox.showModal();
+  confirmBtn.addEventListener('click', function() {
+    deleteBulletEntry(elemEntry);
+    $('#deleteBullet').modal('toggle');
+  });
 }
 
 /* companion function to openDeleteDialog, removes the event listener and deletes the entry if ok was clicked */
@@ -104,15 +100,15 @@ function openEditDialog(elemEntry) {
   editDate.value = entryBullet.date;
   editDesc.value = entryBullet.data.note;
   editTags.value = entryBullet.tags;
+
+  editSave.addEventListener('click', function() {
+    editBulletEntry(elemEntry);
+    $('#EditBullet').modal('toggle');
+  });
   // TODO:Add functionality to edit type and tags
-  editBullet.onclose = () => { editBulletEntry(elemEntry); };
-  editBullet.showModal();
 }
 
 function editBulletEntry(elemEntry) {
-  if (editSave.value === 'false') return;
-  editSave.value = false;
-
   crud.setBulletAttributes(elemEntry.id, {
     title: editTitle.value,
     note: editDesc.value
@@ -176,35 +172,24 @@ function createBulletEntryElem(intBulletID) {
   appendTextNode(' Tags: ', bullet.tags, div);
 
   // create and append edit button
-  let editButton = appendButton('Edit', '', 'edit', div);
-  editButton.addEventListener('click', () => { openEditDialog(newEntry); });
+  let editButton = appendButton('Edit', '', 'btn btn-secondary', div);
+  editButton.addEventListener('click', () => {
+    $('#EditBullet').modal('toggle');
+    openEditDialog(newEntry);
+  });
 
   // create and append delete button
-  let deleteButton = appendButton('Delete', '', 'del', div);
-  deleteButton.addEventListener('click', () => { openDeleteDialog(newEntry); });
+  let deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
+  deleteButton.addEventListener('click', () => {
+    $('#deleteBullet').modal('toggle');
+    openDeleteDialog(newEntry);
+  });
 
   return newEntry;
 }
 
-/* if user confirms making new tag, add it to list */
-tagBox.addEventListener('close', function() {
-  // make sure user confirmed
-  if (tagAddBtn.value === 'false') return;
-  console.log(tagAddBtn.value);
-  tagAddBtn.value = false;
-
-  // add tag's string to list
-  crud.createTag(tagName.value);
-
-  // maybe add a confirmation box
-});
-
 /* if user confirms make new bullet and add it to page */
-bujoSpace.addEventListener('close', function() {
-  // make sure the user confirmed
-  if (saveBtn.value === 'false') return;
-  saveBtn.value = false;
-
+saveBtn.addEventListener('click', function() {
   // make tag array for new bullet
   let newBulletTags = crud.getCheckBoxResults();
   let newBulletType = crud.getType();
@@ -226,4 +211,6 @@ bujoSpace.addEventListener('close', function() {
   } else if (newBulletType === 'Task') {
     taskOut.append(createBulletEntryElem(newBulletID));
   }
+
+  $('#bujoSpace').modal('toggle');
 });

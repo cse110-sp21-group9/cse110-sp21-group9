@@ -10,7 +10,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<!-- <link rel="stylesheet" href="style.css"> -->
+		<!--<link rel="stylesheet" href="style.css">-->
 	</head>
 
 	<body>
@@ -32,7 +32,7 @@
 				</li>    
 			  </ul>
 			</div>  
-		  </nav>
+		</nav>
 
 		<h1>Bullet Journal</h1>
 
@@ -51,82 +51,140 @@
 			<ul id = "notelist"></ul>
 		</div>
 
-		<!--Button to create a bullet-->
-		<button id="addBulletBut">Add Bullet</button>
-		<dialog id="bujoSpace">
-			<form method="dialog">
+		<!--Modal to create a bullet-->
+		<button id="addBulletBut" class = "btn btn-primary" >Add Bullet</button>
+		<div id="bujoSpace" class = "modal fade" tabindex = "-1" role = "dialog" aria-labelledby = "addBullet" aria-hidden = "true">
+		<div class = "modal-dialog modal-dialog-centered" role = "document">
+		<div class = "modal-content">
+			<div class = "modal-header">
+				<h4 class = "modal-title">Add Bullet</h4>
+			</div>
+			<div class = "modal-body">
+				<form method="dialog">
 				<!--Is title a good name? Probably not-->
-				<label for="title">Title: </label>
-				<input type="text" id="title"><br>
+					<label for="title">Title: </label>
+					<input type="text" id="title"><br>
 
-				<label for="type">Type: </label>
-				<select name="bulletType" id="type">
-					<option value="Event">Event</option>
-					<option value="Task">Task</option>
-					<option value="Note">Note</option>
-					<option value="Misc">Misc</option>
-				</select> <br>
-				<div id = "tags">
-					<label for = "tags">Tag: </label>
-				</div>
-
-				<label for="time">Time and date: </label>
-				<input type="datetime-local" id="time"
+					<label for="type">Type: </label>
+					<select name="bulletType" id="type">
+						<option value="Event">Event</option>
+						<option value="Task">Task</option>
+						<option value="Note">Note</option>
+						<option value="Misc">Misc</option>
+					</select> <br>
+					<div id = "tags">
+						<label for = "tags">Tag: </label>
+					</div>
+					<label for="time">Time and date: </label>
+					<input type="datetime-local" id="time"
 					value="2020-06-12T19:30"
 					min="2020-01-01T00:00" max="2030-01-01T00:00"><br>
 					
-				<textarea name="desc" rows="10" cols="30">What is this for?</textarea><br>
-
-
-				<button>Cancel</button>
-				<button id="saveAdd" value="false">Save</button>
-
-			</form>
-		</dialog>
+					<textarea name="desc" rows="10" cols="30">What is this for?</textarea><br>
+				</form>
+		  </div>
+			<div class = "modal-footer">
+				<button id = "canceladd" class = "btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<button id="saveAdd" class = "btn btn-primary" value="false">Save</button>
+		  </div>
+		</div>
+		</div>
+		</div>
 	
-		<!--Button and dialog option to create a tag-->
-		<button id="createtag">Create New Tag</button>
-		<dialog id="tagcreation">
-			<form method = "dialog">
-				<label for="tagname">Title: </label>
-				<input type="text" id="tagname"><br>
+		<!--Modal option to create a tag-->
+		<button id="createtag" class = "btn btn-primary">Tags</button>
 
-				<button>Cancel</button>
-				<button id="saveTag" value="false">Save</button>
-			</form>
-		</dialog>
+		<div id="tagcreation" class = "modal fade" tabindex = "-1" role = "dialog" aria-labelledby = "tagbox" aria-hidden = "true">
+		<div class = "modal-dialog modal-dialog-centered" role = "document">
+		<div class = "modal-content">
+			<div class = "modal-header">
+				<h3 class = "modal-title">Tags</h3>
+			</div>
+			<div class = "modal-body">
+				<form method = "dialog">
+					<label for="tagname">Title: </label>
+					<input type="text" id="tagname"><br>
+				</form>
+		  </div>
+			<div class = "modal-footer">
+				<button id = "tagcancel" class = "btn btn-secondary" data-dismiss = "modal">Cancel</button>
+				<button id="saveTag" class = "btn btn-primary" value="false">Save</button>
+			</div>
+		</div>
+		</div>
+		</div>
 		
-		<!--Dialog option to delete a bullet-->
-		<dialog id="deleteBullet">
-			<form method="dialog">
-	    	<h2> Delete bullet? </h2>
-
-				<button>Cancel</button>
-				<button id="okConfirm" value="false">Ok</button>
-
-			</form>
-    </dialog>
+		<!--Modal option to delete a bullet-->
+		<div class = "modal fade" id="deleteBullet" tabindex = "-1" role = "dialog" aria-labelledby = "bulletDelete" aria-hidden = "true">
+		<div class = "modal-dialog modal-dialog-centered" role = "document">
+		<div class = "modal-content">
+			<div class = "modal-header">
+				<h4 class = "modal-title">Delete Bullet?</h4>
+		  </div>
+			<div class = "modal-body">
+				<form method="dialog">
+					<button id = "canceldelete" class = "btn btn-secondary" data-dismiss = "modal">Cancel</button>
+					<button id="okConfirm" class = "btn btn-primary" value="false">Ok</button>
+				</form>
+			</div>
+   		</div>
+		</div>
+		</div>
 
 		<!--Dialog option to edit a bullet-->
-		<dialog id="EditBullet">
-			<form method="dialog">
-				<label for="edittitle">Title: </label>
-				<input type="text" id="edittitle"><br>
-				<label for="editdate">Date: </label>
-				<input type="text" id="editdate" ><br>
-				<label for="editdesc">Content: </label>
-				<input type="text" id="editdesc" >
+		<div class = "modal fade" id="EditBullet" tabindex = "-1" role = "dialog">
+		<div class = "modal-dialog modal-dialog-centered" role = "document">
+		<div class = "modal-content">
+			<div class = "modal-header">
+				<h4 class = "modal-title" id = "editBulletTitle">Edit Bullet</h4>
+		  </div>
+			<div class = "modal-body">
+				<form method="dialog">
+					<label for="edittitle">Title: </label>
+					<input type="text" id="edittitle"><br>
+					<label for="editdate">Date: </label>
+					<input type="text" id="editdate" ><br>
+					<label for="editdesc">Content: </label>
+					<input type="text" id="editdesc" >
 
-				<div id="edittag">
-					<label for="edittag">Tag: </label>
-				</div>
+					<div id="edittag">
+						<label for="edittag">Tag: </label>
+					</div>
+				
+				</form>
+		  </div>
+		  <div class = "modal-footer">
+				<button id = "canceledit" class= "btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<button id="editSaveAdd" class = "btn btn-primary" value="false">Save</button>
+			</div>
+			</div>
+		</div>
+		</div>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+	  Launch demo modal
+		</button>
 
-				<button>Cancel</button>
-				<button id="editSaveAdd" value="false">Save</button>
-
-			</form>
-		</dialog>
-
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"  id="exampleModalLongTitle">Modal title</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 		<!-- This is what each <bullet-entry> will look like.
 			 The 'id' will be hidden from the user.
 			 TODO: we should change this later to how we actually want it to look -->
