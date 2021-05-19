@@ -37,8 +37,7 @@ function getTrackerBulletsByTag(tag, option){}              //=> List of tracker
 
 function setBulletData(id, data, option){}                  //=> sets the data object for the bullet
 function setBulletDate(id, date, option){}                  //=> sets the date for the bullet
-//how should tags work?
-function setBulletAttributes(id, data = null, type=null, date=null, tags=null) //=> set one or more attributes of a bullet
+function setBulletTags(id, tags, option){}                  //=> sets the tags for the bullet
 
 function createBullet(data, type, date, tags){}             //=> returns the id of the created bullet;
 
