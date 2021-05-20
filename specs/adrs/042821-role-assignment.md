@@ -1,6 +1,8 @@
 # Role Assignment
-Status: accepted
+Status: Accepted
+
 Deciders: Edmund, Daisuke, Alan, Edward, Etienne, Evan, Elisa, Kenny
+
 Date: 4/28/2021 @ 4PM
 
 ## We needed to figure out who was best suited for which job out of a list of several.

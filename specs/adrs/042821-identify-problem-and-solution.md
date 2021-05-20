@@ -1,6 +1,8 @@
 # Identify Problem and Solution
-Status: accepted
+Status: Completed
+
 Deciders: Alan, Daisuke, Elisa, Edmund, Edward, Etienne, Evan, Kenny
+
 Date: 4/28/2021 @ 4PM
 
 ## We needed to identify what the problem was we were solving and what the solution was for our project pitch
