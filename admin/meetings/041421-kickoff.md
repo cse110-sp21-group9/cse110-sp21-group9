@@ -2,11 +2,11 @@
 
 # Meeting Minutes ~ Kickoff
 ## I. Meeting Information
-**Meeting Purpose:** Kickoff Meeting (*Also for Canvas Assingment*)
-**Meeting Date/Time:** April 14th, 2021, 4:00pm - 4:45pm
-**Timezone:** Pacific Standard Time (UTC−07:00)   
-**Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/my/edmund.leibert.iii)  
-**Note Taker:** Edmund Leibert III
+**Meeting Purpose:** Kickoff Meeting (*Also for Canvas Assingment*)  
+**Meeting Date/Time:** April 14th, 2021, 4:00pm - 4:45pm  
+**Timezone:** Pacific Standard Time (UTC−07:00)  
+**Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/my/edmund.leibert.iii)   
+**Note Taker:** Edmund Leibert III  
 
 ## II. Attendees
 People who attended the meeting:
@@ -33,7 +33,7 @@ Topic | Who  | Notes |
 ---------- | ---- | ----- |
 Team Name  | Everyone  |• Edmund Leibert III's suggests a vaporwave/cyberpunk theme name<br> • Everyone else chooses Pokemon as there theme lol<br> • Voting happens for team name <br> • Powellmon wins!<br>
 Team Brand  | Everyone  |• Retrowave theme is discarded, we are going with pokemon<br> • Motto: *"gotta code them all"*<br> • Want to focus on simple, aesthetically pleasing solutions to cherish people's memories <br>
-Review of Assigned Tasks | Everyone  |• Why Google Docs? Easier for collaboration
+Review of Assigned Tasks | Everyone  |• Why Google Docs? Easier for collaboration <br> • Defined team expectations and responsibilities<br> • Hammered out our team contract agreement
 
 **Old Items**
 Topic | Who  | Notes |
