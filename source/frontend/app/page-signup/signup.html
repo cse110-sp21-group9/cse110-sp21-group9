@@ -51,32 +51,42 @@
             <i class="fas fa-user-circle fa-5x" id="avatar"></i>
           </div>
 
-          <h1 class="h3 mb-3 font-weight-normal text-center">Welcome Back!</h1>
-
-          <div class="container text-center" >
-            <p>Don't have an account? <a href="../page-signup/signup.html">Sign up for Free!</a></p>
-          </div>
+          <h1 class="h3 mb-3 font-weight-normal text-center">Hello, Friend!</h1>
+          <p class="text-center">Enter your details and start your journey with BuJo Studio Today.</p>
         
           <div class="container">
+
             <i class="fas fa-user"></i>
+            <label for="uname"><b>Name</b></label>
+            <input class="input-field col-md-7" type="text" placeholder= "First Name" name="fname" style = "width: 200px; padding-right: 20px" required>
+
+            <i class="fas fa-birthday-cake" style = "padding-left: 20px"></i>
+            <label for="uname"><b>Birthday</b></label>
+            <input class="input-field col-md-4" type="date" name="DoB" required><br>
+
+            <i class="far fa-id-card"></i>
             <label for="uname"><b>Username</b></label>
             <input class="input-field" type="text" placeholder= "Enter Username" name="uname" required>
+
+
+            <i class="fas fa-envelope"></i>
+            <label for="uname"><b>Email</b></label>
+            <input class="input-field" type="text" placeholder= "Enter email" name="email" required>
 
             <i class="fas fa-lock"></i>
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="psw" required>
-            <button type="submit" class="btn btn-lg btn-secondary btn-block" type="submit">Sign in</button>
-            <div class = "mt-2 col-md-12"></div>
-            <div class = "mt-2 col-md-12"></div>
-            <a class = "btn btn-lg btn-google btn-block btn-primary" href = "#">
-            <img src = "https://img.icons8.com/color/16/000000/google-logo.png">  Signup Using Google</a>
+
+            <i class="fas fa-lock"></i>
+            <label for="psw"><b>Confirm Password</b></label>
+            <input type="password" placeholder="Repeat Password" name="psw" required>
+        
+            <button type="submit" class="btn btn-lg btn-secondary btn-block" type="submit">Sign me up!</button>
             <label>
-              <input type="checkbox" checked="checked" name="remember"> Remember me
+              <input type="checkbox" checked="checked" name="remember"> I agree to the <b>Terms of the User</b>
             </label>
-            <span class="psw">Forgot <a href="#">password?</a></span>
+            <p class="text-center">Already have an account? <a href="../page-login/login.html">Login Here!</a></p>
           </div>
-        
-          <!--Remember to account for wrong usernames and passwords-->
-        
-      </form>
-</body>
+      
+    </body>
+    </html>
