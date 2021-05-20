@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <meta charset = "UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bujo Demo</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+    <script type = "module" src = "sidebar.js"></script>
+    <link rel = "stylesheet" href = "style.css">
+  </head>
+  <body>
+    <!--Sidebar-->
+    <div id="mySidebar" class="sidebar">
+      <!--Make sure close button is next to title-->
+      <div id = "title">
+        <object data = "bujo-logo.svg" id = "logo"></object>
+        <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
+      </div>
+      <!--Remember to put in icons-->
+      <a href="#">Dashboard</a>
+      <a href="#">Calendar</a>
+      <a href="#">Tasks</a>
+      <a href="#">Habit Tracker</a>
+      <a href="#">Journal</a>
+      <div id = "sidebarbottom">
+        <a href = "#">Settings</a>
+      </div> 
+    </div>
+
+    <div id="main">
+      <!--Try to make it change color on hover-->
+      <div id = "openbtn" class = "hamburger" style = "display: inline-block">
+        <div class = "hamburger-bar"></div>
+        <div class = "hamburger-bar"></div>
+        <div class = "hamburger-bar"></div>
+      </div>
+      <!--Search bar. Remember to format correctly-->
+      <div id = "searchbar" style = "display: inline-block">
+        <label for = "search">Search</label>
+        <input type = "text">
+      </div>
+      <!--Remember to give proper icon-->
+      <div style = "text-align: right; display: inline-block">
+        <h1 class = "text-align: right">Welcome back, "insert name here"</h1>
+      </div>
+     <br>
+
+     <!--Calendar widget-->
+    <!--<template id = "calendar">-->
+      <div id = "calendar">
+       <h3>Calendar</h3>
+       <!--I guess dump a calendar object here?-->
+      </div>
+    <!--</template>
+
+     <!--Task list widget-->
+    <!--<template id = "tasklist">-->
+     <div id = "tasklist" style = "text-align: left">
+      <h3 style = "text-align: left;">Tasks</h3>
+        <!--Dump a checklist here here-->
+        <div id = 'taskboxes'>
+          <label for = "task1">Walk Dog</label>
+          <input type = 'checkbox' id = 'task1' >
+        </div>
+     </div>
+    <!--</template>-->
+
+    <!--Weather Widget(?)-->
+    <!--template id = "weather"-->
+      <div id = "weather" style = "text-align: right">
+        <h3>Weather</h3>
+      </div>
+    <!--/template-->
+
+    <!--Tracker Widget-->
+    <div id = "tracker">
+        <h3>Tracker</h3>
+    </div>
+
+    <!--Journal Widget-->
+    <!--template id = 'journal'-->
+      <div id = "journal" style = "text-align: right">
+        <h3>Journal</h3>
+      </div>
+    <!--/template-->
+
+    </div>
+  </body>
+</html>

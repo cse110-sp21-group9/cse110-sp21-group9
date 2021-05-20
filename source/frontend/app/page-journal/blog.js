@@ -67,7 +67,7 @@ tagAddBtn.addEventListener('click', function() {
 
 /* on click show new blog box */
 formButton.addEventListener('click', function() {
-  $('bujoSpace').modal('toggle');
+  $('#bujoSpace').modal('toggle');
 });
 
 /* on click set confirm button to true */
