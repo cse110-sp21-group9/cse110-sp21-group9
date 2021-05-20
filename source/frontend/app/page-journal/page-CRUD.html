@@ -6,15 +6,36 @@
 		<title>Bujo Demo</title>
 		<script type="module" src="blog.js"></script>
 		<script type="module" src="bullet.js"></script>
+		<script type="module" src="sidebar.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<!--<link rel="stylesheet" href="style.css">-->
+		<link rel="stylesheet" href="style.css">
 	</head>
 
 	<body>
-		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!--Sidebar-->
+    <div id="mySidebar" class="sidebar">
+      <!--Make sure close button is next to title-->
+      <div id = "title">
+        <object data = "bujo-logo.svg" id = "logo"></object>
+        <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
+      </div>
+      <!--Remember to put in icons-->
+      <a href="#">Dashboard</a>
+      <a href="#">Calendar</a>
+      <a href="#">Tasks</a>
+      <a href="#">Habit Tracker</a>
+      <a href="#">Journal</a>
+      <div id = "sidebarbottom">
+        <a href = "#">Settings</a>
+      </div> 
+    </div>
+
+
+		<div id = "main">
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<a class="navbar-brand" href="../page-homepage/homepage.html">BuJo Studio</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			  <span class="navbar-toggler-icon"></span>
@@ -33,6 +54,13 @@
 			  </ul>
 			</div>  
 		</nav>
+
+		 <!--Try to make it change color on hover-->
+     <div id = "openbtn" class = "hamburger" style = "display: inline-block">
+      <div class = "hamburger-bar"></div>
+      <div class = "hamburger-bar"></div>
+      <div class = "hamburger-bar"></div>
+     </div>
 
 		<h1>Bullet Journal</h1>
 
@@ -160,31 +188,8 @@
 			</div>
 		</div>
 		</div>
-		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-	  Launch demo modal
-		</button>
+		</div>
 
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
-	  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"  id="exampleModalLongTitle">Modal title</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 		<!-- This is what each <bullet-entry> will look like.
 			 The 'id' will be hidden from the user.
 			 TODO: we should change this later to how we actually want it to look -->
