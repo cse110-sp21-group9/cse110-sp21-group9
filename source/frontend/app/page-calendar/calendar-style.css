@@ -10,11 +10,12 @@ table {
     width: auto;
 }
 
-td {
-    text-align: center;
+tbody td {
+    vertical-align: top;
+    text-align: left;
     border: 1px solid #333;
-    width: 5rem;
-    height: 4rem;
+    width: 10rem;
+    height: 8rem;
 }
 
 thead {
@@ -26,8 +27,3 @@ thead {
     height: 3rem;
 }
 
-/*
-tfoot {
-
-}
-*/
