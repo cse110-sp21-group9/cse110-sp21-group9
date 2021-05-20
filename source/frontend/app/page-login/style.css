@@ -2,6 +2,7 @@
 form {
     border: 3px solid #E0E9ED;
     background-color: white;
+    border-radius: 6px;
   }
   
   /* Full-width inputs */
@@ -33,7 +34,8 @@ form {
     padding-top: 16px;
   }
 
-  
+
+
   
   /* Change styles for span and cancel button on extra small screens */
   @media screen and (max-width: 300px) {

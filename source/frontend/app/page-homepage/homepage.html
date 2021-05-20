@@ -2,56 +2,60 @@
 
 <head>
   <title>BuJo Studio</title>
-  <link rel="icon" type="image/jpeg" href="elisaPic.JPG">
+  <link rel="icon" type="image/jpeg" href="/source/frontend/assets/mini-logo.svg">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 
-  <style>
-    body {
-        background-image: url(../../assets/bujo-studio-background.jpeg);
-    } 
-  </style>
-  
+
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="../page-homepage/homepage.html">BuJo Studio</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">FAQ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../page-login/login.html">Login</a>
-            </li>    
-          </ul>
-        </div>  
-      </nav>
 
-    <div class="row h-100 text-center"> 
-      <div class="col-6 align-self-center">
-      </div>
-        <div class="container">
-            <h1 class="display-4">Welcome to BuJo Studio!</h1>
-            <div class="badge text-wrap col-8">
-                <p class="lead text-center">Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu</p>
-            </div>
-            <p class="lead">
-                <a href="../page-signup/signup.html" class="btn btn-lg btn-secondary">Let's Get Started!</a>
-              </p>
-        </div>
+
+  <nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <a class="navbar-brand" href="../page-homepage/homepage.html"> <img
+        src="/source/frontend/assets/bujo-logo.svg" /></a>
+
+
+    <div class="ml-auto">
+      <a href="../page-login/login.html"><button type="submit" class="btn btn-primary btn-sm mr-1">Login</button></a>
+      <a href="../page-signup/signup.html"> <button type="submit" class="btn btn-primary btn-sm mr-1">Sign
+          up</button></a>
     </div>
+
+  </nav>
+
+  <div class="row h-100 text-center">
+    <div class="col-4 align-self-center">
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h1 class="display-5">Welcome to BuJo Studio!</h1>
+          <div class="badge text-wrap col-10">
+            <p class="lead text-center">Developed by designer Ryder Caroll, bullet journaling is a method of personal organization that 
+              allows a person to keep track of a daily to-do list, keep a monthly calendar, record goals, and write down notes in a single notebook. 
+              Traditional bullet journaling can be time-consuming and overwhelming. 
+              With BuJo Studio, you can enjoy all of the benefits that bullet journaling has to offer with ease. 
+            </p>
+          </div>
+          <p class="lead">
+            <a href="../page-signup/signup.html" class="btn btn-lg btn-secondary">Let's Get Started!</a>
+          </p>
+        </div>
+        <div class="col-md-8">
+          <!-- screen template not loading idk why -->
+          <img src="/source/frontend/assets/screen-template.png"/>
+          image of laptop/phone screen here
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 </body>
 
 </html>
