@@ -8,8 +8,11 @@ const forwardyear = document.getElementById("forwardyear");
 
 var yearIn = 2021;
 var monthIn = 5;
+
 const monthNames = {1:"January",2:"Feburuary",3:"March",4:"April",5:"May",6:"June",7:"July",
     8:"August",9:"September",10: "October",11: "November",12:"December"};
+
+const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 backmonth.innerHTML = "<img src='back.png' alt='back' width='32' height='32'/>";
 backyear.innerHTML = "<img src='back.png' alt='back' width='32' height='32'/>";
@@ -21,10 +24,12 @@ forwardyear.innerHTML = "<img src='forward.png' alt='forward' width='32' height=
 // X is some random identifier
 var testData = {'05/07/2021_1':'Walk Dog', '05/08/2021_2':'Feed Dog', '05/10/2021_3':'Test', '05/07/2021_4':'Eat', '05/10/2021_5':'Hi Edmund'};
 
-
-
 backmonth.addEventListener("click", function(){
     monthIn--;
+    if(monthIn<1){
+        monthIn=12;
+        yearIn--;
+    }
     resetCalendar();
     populateCalendar(monthIn, yearIn);
 });
@@ -37,6 +42,10 @@ backyear.addEventListener("click", function(){
 
 forwardmonth.addEventListener("click", function(){
     monthIn++;
+    if(monthIn>12){
+        monthIn=1;
+        yearIn++;
+    }
     resetCalendar();
     populateCalendar(monthIn, yearIn);
 });
@@ -106,7 +115,6 @@ function populateCalendar(month, year){
 
 // resets calender and inserts header of days of the week
 function resetCalendar(){
-    var week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var element = document.createElement("tr");
     while(calendar.firstChild){
         calendar.removeChild(calendar.firstChild);
@@ -135,9 +143,8 @@ function bulletAppend(bullets){
         }
         event.innerHTML = value;
         temp.childNodes[1].appendChild(event);
-      }
+    }
 }
 
 resetCalendar();
 populateCalendar(monthIn, yearIn);
-

@@ -1,0 +1,48 @@
+/**
+ * Stylesheet for calendar.html
+ */
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #333;
+    height: auto;
+    width: auto;
+}
+
+tbody {
+    vertical-align: center;
+    text-align: center;
+    border: 1px solid #333;
+    width: 10rem;
+    height: 8rem;
+}
+
+#weekdayheader > td {
+    vertical-align: center;
+    text-align: center;
+    border: 1px solid #333;
+    width: 10rem;
+    height: 1rem;
+}
+
+#weekdaysrow {
+    height: 30rem;
+}
+
+#weekdaysrow > td {
+    vertical-align: center;
+    text-align: center;
+    border: 1px solid #333;
+    width: 10rem;
+}
+
+.monthweek {
+    height: 3rem;
+    text-align: center;
+}
+
+thead {
+    background-color: #333;
+    color: #fff;
+}

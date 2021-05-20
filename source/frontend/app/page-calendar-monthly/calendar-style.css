@@ -21,9 +21,9 @@ tbody td {
 thead {
     background-color: #333;
     color: #fff;
+    text-align: center;
 }
 
 .monthyear {
     height: 3rem;
 }
-
