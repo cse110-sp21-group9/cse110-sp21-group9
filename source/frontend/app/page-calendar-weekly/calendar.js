@@ -229,9 +229,42 @@ function populateWeek(month, year, day, bullets){
         var temp = document.getElementById(dayofWeek);
         var event = document.createElement("li");
         if(temp.childNodes.length==1){
-
-            temp.appendChild(document.createElement("ul"));
+            temp.appendChild(document.createElement('ul'));
         }
+
+        if(bullets[e].type === "note") {
+            event.style.listStyleImage="url('icons/note.ico')";
+        }
+        else if(bullets[e].type === "event"){
+            event.style.listStyleImage="url('icons/event_empty.ico')";
+
+            event.addEventListener("click", function(){
+                console.log("test event, this = ", this);
+                console.log("this.style.listStyleImage = ", this.style.listStyleImage);
+                if(this.style.listStyleImage === 'url("icons/event_empty.ico")'){
+                    this.style.listStyleImage = "url('icons/event_checked.ico')";
+                }
+                else{
+                    this.style.listStyleImage = "url('icons/event_empty.ico')";
+                }
+            });
+        }
+        else if(bullets[e].type === "task"){
+            event.style.listStyleImage="url('icons/task_empty.ico')";
+
+            event.addEventListener("click", function(){
+                console.log("test task");
+                if(this.style.listStyleImage === 'url("icons/task_empty.ico")'){
+                    this.style.listStyleImage = "url('icons/task_checked.ico')";
+                }
+                else{
+                    this.style.listStyleImage = "url('icons/task_empty.ico')";
+                }
+            });
+        }
+
+
+
         event.innerHTML = details['title'];
         temp.childNodes[1].appendChild(event);
 
@@ -242,9 +275,9 @@ var temp = startEndWeek(5,2021,31);
 yearIn = 2021;
 monthIn = 5;
 dayIn = 10; 
-
+/*
 console.log(temp);
 console.log(weekEvents(temp,testData));
-
+*/
 resetCalendar(monthIn,yearIn,dayIn);
 populateWeek(monthIn,yearIn,dayIn,testData);

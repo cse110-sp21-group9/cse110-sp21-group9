@@ -46,3 +46,13 @@ thead {
     background-color: #333;
     color: #fff;
 }
+
+ul {
+    text-align: left;
+}
+
+/* how to set the bullet point to an image instead
+ul {
+    list-style-image: url('icons/note.png');
+}
+*/
