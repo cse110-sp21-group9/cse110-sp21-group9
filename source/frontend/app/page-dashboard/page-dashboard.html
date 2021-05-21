@@ -31,32 +31,40 @@
     </div>
 
     <div id="main">
-      <!--Try to make it change color on hover-->
+    <header>
       <div id = "openbtn" class = "hamburger" style = "display: inline-block">
         <div class = "hamburger-bar"></div>
         <div class = "hamburger-bar"></div>
         <div class = "hamburger-bar"></div>
       </div>
       <!--Search bar. Remember to format correctly-->
-      <div id = "searchbar" style = "display: inline-block">
-        <label for = "search">Search</label>
-        <input type = "text">
+      <div id = "searchbar" class = "form-group">
+        <input type = "text" class = "form-control input-lg" placeholder = "Search">
       </div>
       <!--Remember to give proper icon-->
-      <div style = "text-align: right; display: inline-block">
-        <h1 class = "text-align: right">Welcome back, "insert name here"</h1>
-      </div>
+        <h1 id = "welcome">Welcome back, Daisuke</h1>
      <br>
+    </header>
+      <!--Try to make it change color on hover-->
 
     <!--</template>-->
     <!--Journal Widget-->
-      <div id = "journal" style = "text-align: right">
+    <div id = "dashboard">
+      <div id = "journal">
         <div class = "aspect-ratio-box-inside">
           <h3>Journal</h3>
+          <p>A startlingly long wall of text</p><br>
+          <ul>
+            <li>I finished this dashboard, maybe</li><br>
+            <li><input type = "checkbox" id = "task">
+            <label for = 'task'>Finish this dashboard</label></li><br>
+            <li>2AM: Meet to create Japanese Language Table Doc</li>
+          </ul>
         </div>
       </div>
 
     <!--Calendar widget-->
+    <div id = right-side>
       <div id = "calendar">
         <div class = "aspect-ratio-box-inside">
           <h3>Calendar</h3>
@@ -67,10 +75,14 @@
 
     <!--Weather Widget(?)-->
       <div id = "weather" class = "aspect-ratio-box-inside">
-        <h3>Weather</h3>
+        <div class = "aspect-ratio-box-inside">
+          <h3>Weather</h3>
+          <p>A wall of more text</p>
+        </div>
       </div>
-    </template>
-
+      </div>
+     </div>
+    </div>
     <!--Tracker Widget--
     <div id = "tracker">
         <h3>Tracker</h3>
