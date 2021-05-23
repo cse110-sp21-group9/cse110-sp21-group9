@@ -1,3 +1,7 @@
+<!--TODOs: Make sure close button is next to title logo
+           Make sure icons are next to user's name and each tab on sidebar
+           Unique names for unique users
+           Better hamburger menu highlight?-->
 <!DOCTYPE html>
 <html lang = "en">
   <head>
@@ -14,16 +18,17 @@
   <body>
     <!--Sidebar-->
     <div id="mySidebar" class="sidebar">
-      <!--Make sure close button is next to title-->
+      <!--TODO: Make sure close button is next to title-->
       <div id = "title">
         <object data = "bujo-logo.svg" id = "logo"></object>
         <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
       </div>
-      <!--Remember to put in icons-->
+      <!--TODO: Remember to put in icons next to each tab-->
       <a href="#">Dashboard</a>
       <a href="#">Calendar</a>
       <a href="#">Tasks</a>
-      <a href="#">Habit Tracker</a>
+      <!--Unused--
+      <a href="#">Habit Tracker</a-->
       <a href="#">Journal</a>
       <div id = "sidebarbottom">
         <a href = "#">Settings</a>
@@ -37,11 +42,12 @@
         <div class = "hamburger-bar"></div>
         <div class = "hamburger-bar"></div>
       </div>
-      <!--Search bar. Remember to format correctly-->
+      <!--Search bar-->
       <div id = "searchbar" class = "form-group">
         <input type = "text" class = "form-control input-lg" placeholder = "Search">
       </div>
-      <!--Remember to give proper icon-->
+      <!--TODO: Remember to paste user icon right next to name-->
+      <!--TODO: Change name according to each user-->
         <h1 id = "welcome">Welcome back, Daisuke</h1>
      <br>
     </header>
@@ -60,7 +66,7 @@
             <label for = 'task'>Finish this dashboard</label></li><br>
             <li>2AM: Meet to create Japanese Language Table Doc</li>
           </ul>
-        </div>
+        </div >
       </div>
 
     <!--Calendar widget-->
@@ -73,17 +79,18 @@
        <!--I guess dump a calendar object here?-->
       </div>
 
-    <!--Weather Widget(?)-->
+    <!--Weather Widget(?) Weather is a placeholder-->
       <div id = "weather" class = "aspect-ratio-box-inside">
         <div class = "aspect-ratio-box-inside">
-          <h3>Weather</h3>
+          <h3>Some other widget</h3>
           <p>A wall of more text</p>
         </div>
       </div>
       </div>
      </div>
     </div>
-    <!--Tracker Widget--
+
+    <!--Tracker Widget (unused)--
     <div id = "tracker">
         <h3>Tracker</h3>
     </div-->

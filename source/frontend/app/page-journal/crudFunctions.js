@@ -1,8 +1,12 @@
-/*
-    most of the code in here should be considered wip
-    TODO: Create more comprehensive ID system
-          Extend created bullet object to do events and tasks on top of the currently available notes
-    Completed: Add type and tag functionality
+/**
+ *  Handles the backend of creating and editing bullet objects and tags and
+ *  making sure they're properly stored.
+ *  most of the code in here should be considered wip
+ *  TODO: Create more comprehensive ID system
+ *  Extend created bullet object to do events and tasks on top of the currently available notes
+ *    Be able to edit and delete tags
+ *  Change storage from local to the external database
+ *  Completed: Add type and tag functionality
 */
 
 let runTimeBullets = {};
@@ -12,6 +16,14 @@ let lastID; // this is bad
 // placeholder var to appease linter
 const IDArray = [];
 
+/** Sets the attributes of a bullet object
+ *  @param {Number} intID the bullet's ID
+ *  @param {Object} objData the bullet's data
+ *  @param {string} strType the bullet's type
+ *  @param {Date} dateDate the bullet's date
+ *  @param {Array} lstTags the tags associated to the bullet
+ *  @return null
+ */
 export function setBulletAttributes(intID, objData = null, strType = null, dateDate = null, lstTags = null) {
   let bullet = Object.assign({}, runTimeBullets[intID]); // make a shallow copy first
   if (objData) {
@@ -30,6 +42,11 @@ export function setBulletAttributes(intID, objData = null, strType = null, dateD
   updateBulletInStorage(bullet);
 }
 
+/** Gets all bullets within the specified date range
+ *  @param {Date} dateStart the beginning date to query from
+ *  @param {Date} dateEnd the end date to query from
+ *  @return a list of bullets that should be returned
+ */
 export function getBulletsByDateRange(dateStart, dateEnd, objOption = null) {
   let bulletsToReturn = [];
   for (const [ID, bullet] of Object.entries(runTimeBullets)) {
@@ -41,6 +58,10 @@ export function getBulletsByDateRange(dateStart, dateEnd, objOption = null) {
   return bulletsToReturn;
 }
 
+/** Gets a bullet by the specified ID
+ *  @param {Number} intID the bullet's ID
+ *  @return the bullet we were looking for
+ */
 export function getBulletById(intID, objOption = null) {
   return runTimeBullets[intID];
 }
@@ -78,11 +99,18 @@ export function createBullet(objData, strType, dateDate, lstTags) {
   return bullet.ID;
 }
 
+/** Deletes a bullet by the specified ID
+ *  @param {Number} intID the bullet's ID
+ *  @return null
+ */
 export function deleteBulletById(intID) {
   runTimeBullets[intID] = null;
   deleteBulletFromStorage(intID);
 }
 
+/** Renders all bullets and tags onto the DOM
+ *  @return null
+ */
 export function initCrudRuntime() {
   fillRunTimeBullets();
   updateTags();
@@ -143,12 +171,19 @@ function makeTaskBullet(objData, dateDate, lstTags, intID) {
   };
 }
 
+/** Updates bullets in the storage
+ *  @param {Bullet} objBullet the bullet we want to update
+ *  @return null
+ */
 function updateBulletInStorage(objBullet) {
   runTimeBullets[objBullet.ID] = objBullet;
   localStorage.setItem(objBullet.ID, JSON.stringify(objBullet));
 }
 
-// writes bullet to local storage and runtime
+/** Writes bullet to local storage and runtime
+ *  @param {Bullet} objBullet the bullet we want to write into storage
+ *  @return null
+ */
 function writeBulletToStorage(objBullet) {
   runTimeBullets[objBullet.ID] = objBullet;
   localStorage.setItem(objBullet.ID, JSON.stringify(objBullet));
@@ -159,9 +194,8 @@ function writeBulletToStorage(objBullet) {
   writeArrayToStorage('bulletIDs', bulletIDs);
 }
 
-/**
- * Deletes a bullet from storage
- * @param {Number} intID - ID of the bullet we want to delet
+/** Deletes a bullet from storage
+ *  @param {Number} intID - ID of the bullet we want to delet
  */
 function deleteBulletFromStorage(intID) {
   intID = Number(intID);
@@ -174,7 +208,10 @@ function deleteBulletFromStorage(intID) {
   writeArrayToStorage('bulletIDs', bulletIDs);
 }
 
-// TODO: should populate the runtime list from local storage
+/** TODO: should populate the runtime list from local storage
+ *  Renders bullets from storage into runtime.
+ *  @return null
+ */
 function fillRunTimeBullets() {
   if (runTimeUpToDate) return;
   lastID = localStorage.getItem('lastID');
@@ -197,9 +234,8 @@ function fillRunTimeBullets() {
   runTimeUpToDate = true;
 }
 
-/**
- * loads tags from storage
- * @return null
+/** loads tags from storage
+ *  @return null
  */
 function fillRunTimeTags() {
   let tags = localStorage.getItem('tags');
@@ -210,20 +246,28 @@ function fillRunTimeTags() {
   console.log('loaded tags: ', tagList);
 }
 
-// Can be made more efficient or just outsource to API
+/** NOTE: Can be made more efficient or just outsource to API
+ *  Writes an array to storage with an associated key
+ *  @param {string} strKey the array's key
+ *  @param {Array} lstArray the array we want to store
+ *  @return null
+ */
 function writeArrayToStorage(strKey, lstArray) {
   localStorage.setItem(strKey, JSON.stringify({ array: lstArray }));
 }
 
+/** Reads an array given an associated key
+ *  @param {string} strArrayKey the array's key
+ *  @return the array we want to read
+ */
 function readArrayFromStorage(strArrayKey) {
   let array = localStorage.getItem(strArrayKey);
   // JSON.parse(array)['array'] turned to JSON.parse(array).'array'
   return JSON.parse(array).array;
 }
 
-/**
- * Creates a checklist in the dialog form of all the tags we have established in tagList
- * @return null
+/** Creates a checklist in the dialog form of all the tags we have established in tagList
+ *  @return null
  */
 function updateTags() {
   // taglist is already defined
@@ -250,9 +294,8 @@ function updateTags() {
   }
 }
 
-/**
- * Get the results of the created tag checkboxes to display on the CRUD app.
- * @returns an array containing the names of all tags that the user selected
+/** Get the results of the created tag checkboxes to display on the CRUD app.
+ *  @returns an array containing the names of all tags that the user selected
  */
 // this function takes the user's specified tag entries and loads it onto the bullet object we are creating
 export function getCheckBoxResults() {
@@ -268,10 +311,9 @@ export function getCheckBoxResults() {
   return chosenTags;
 }
 
-/**
- * Creates a checklist in the "EditBullet" dialog form to change which tags this bullet has
- * The checkboxes should be properly checked according to the bullet's stored tags
- * @return null
+/** Creates a checklist in the "EditBullet" dialog form to change which tags this bullet has
+ *  The checkboxes should be properly checked according to the bullet's stored tags
+ *  @return null
  */
 function editTags() {
   let checkList = document.getElementById('edittag');
@@ -297,19 +339,17 @@ function editTags() {
   }
 }
 
-/**
- * Gets a bullet's selected type from the creation dialog
- * @returns The bullet's selected type
+/** Gets a bullet's selected type from the creation dialog
+ *  @returns The bullet's selected type
  */
 export function getType() {
   let opt = document.getElementById('type').value;
   return opt;
 }
 
-/**
- * Creates a tag based on user's input
- * @param {string} tagName - The tag's name
- * @return null
+/** Creates a tag based on user's input
+ *  @param {string} tagName - The tag's name
+ *  @return null
  */
 export function createTag(tagName) {
   tagList.push(tagName);
