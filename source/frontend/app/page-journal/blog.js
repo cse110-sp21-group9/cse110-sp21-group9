@@ -1,10 +1,18 @@
+/** This file handles a lot of the event listeners associated with a CRUD
+ *  application. It makes sure all created bullets and tags are registered
+ *  on the DOM. It also calls on methods from crudFunctions.js to properly
+ *  implement the CRUD functions.
+ *  TODO: Ability to edit and delete tags
+ */
+
+/* eslint-env jquery */
 // import "./DOMPurify/dist/purify.min.js";
 import * as crud from './crudFunctions.js';
 
 /* get elements from html page */
 // buttons and general writing space
 const formButton = document.getElementById('addBulletBut');
-const bujoSpace = document.getElementById('bujoSpace');
+// const bujoSpace = document.getElementById('bujoSpace');
 const saveBtn = document.getElementById('saveAdd');
 
 // creation inputs
@@ -25,7 +33,7 @@ const confirmBtn = document.getElementById('okConfirm');
 
 // tag creation stuff
 const tagBtn = document.getElementById('createtag');
-const tagBox = document.getElementById('tagcreation');
+// const tagBox = document.getElementById('tagcreation');
 const tagAddBtn = document.getElementById('saveTag');
 const tagName = document.getElementById('tagname');
 
@@ -53,27 +61,20 @@ for (const bullet of bulletsToLoad) {
 
 /* on click show new tag box */
 tagBtn.addEventListener('click', function() {
-  tagBox.showModal();
+  $('#tagcreation').modal('toggle');
 });
 
-/* on click set tag add button to true */
+/* if user confirms making new tag, add it to list */
 tagAddBtn.addEventListener('click', function() {
-  tagAddBtn.value = 'true';
-});
-
-/* on click set save button to true */
-saveBtn.addEventListener('click', function() {
-  saveBtn.value = 'true';
+  // add tag's string to list
+  crud.createTag(tagName.value);
+  $('#tagcreation').modal('toggle');
+  // maybe add a confirmation box
 });
 
 /* on click show new blog box */
 formButton.addEventListener('click', function() {
-  bujoSpace.showModal();
-});
-
-/* on click set edit save to true */
-editSave.addEventListener('click', function() {
-  editSave.value = 'true';
+  $('#bujoSpace').modal('toggle');
 });
 
 /* on click set confirm button to true */
@@ -81,13 +82,22 @@ confirmBtn.addEventListener('click', function() {
   confirmBtn.value = 'true';
 });
 
-/* opens the delete dialog box */
+/** Opens the delete dialog box and listens for delete button to get clicked
+ *  @param {bullet} elemEntry the bullet we want to delete
+ *  @return null
+*/
 function openDeleteDialog(elemEntry) {
-  confirmBox.onclose = () => { deleteBulletEntry(elemEntry); };
-  confirmBox.showModal();
+  confirmBtn.addEventListener('click', function() {
+    deleteBulletEntry(elemEntry);
+    $('#deleteBullet').modal('toggle');
+  });
 }
 
-/* companion function to openDeleteDialog, removes the event listener and deletes the entry if ok was clicked */
+/** Companion function to openDeleteDialog. Removes the event listener and
+ *  deletes entry if ok was clicked
+ *  @param {bullet} elemEntry the bullet we want to delete
+ *  @return null
+ */
 function deleteBulletEntry(elemEntry) {
   confirmBox.onclose = null;
   if (confirmBtn.value === 'false') return;
@@ -96,7 +106,11 @@ function deleteBulletEntry(elemEntry) {
   elemEntry.remove();
 }
 
-/* opens edit dialog box and saves edits if esave is true */
+/** Opens edit dialog box and saves edits if the associated event listener is
+ *  triggered
+ *  @param {bullet} elemEntry the bullet we want to edit
+ *  @return a modal to edit a bullet.
+*/
 function openEditDialog(elemEntry) {
   let entryBullet = crud.getBulletById(elemEntry.id);
 
@@ -104,15 +118,19 @@ function openEditDialog(elemEntry) {
   editDate.value = entryBullet.date;
   editDesc.value = entryBullet.data.note;
   editTags.value = entryBullet.tags;
+
+  editSave.addEventListener('click', function() {
+    editBulletEntry(elemEntry);
+    $('#EditBullet').modal('toggle');
+  });
   // TODO:Add functionality to edit type and tags
-  editBullet.onclose = () => { editBulletEntry(elemEntry); };
-  editBullet.showModal();
 }
 
+/** Edits a bullet's information and replaces it on storage
+ *  @param {bullet} elemEntry the bullet we want to edit
+ *  @return the modified bullet in storage and the DOM
+ */
 function editBulletEntry(elemEntry) {
-  if (editSave.value === 'false') return;
-  editSave.value = false;
-
   crud.setBulletAttributes(elemEntry.id, {
     title: editTitle.value,
     note: editDesc.value
@@ -123,7 +141,12 @@ function editBulletEntry(elemEntry) {
   editBullet.onclose = null;
 }
 
-// helper function to add text to bullet entry
+/** helper function to add text to bullet entry
+ *  @param {string} strTitle the bullet's title
+ *  @param {string} strText the bullet's text
+ *  @param {bullet} elemParent tbh no idea what this one does
+ *  @return null
+ */
 function appendTextNode(strTitle, strText, elemParent) {
   let elemBold = document.createElement('b');
 
@@ -132,7 +155,13 @@ function appendTextNode(strTitle, strText, elemParent) {
   elemParent.append(document.createTextNode(strText));
 }
 
-// helper function to add buttons to bullet entry
+/** helper function to add buttons to bullet entry
+ *  @param {string} strDisp what we want the bullet to read on the DOM
+ *  @param {string} strStyle the style we want the button in
+ *  @param {string} strClass what kind of button
+ *  @param {bullet} elemParent the bullet we want to tie the button to
+ *  @return a button
+ */
 function appendButton(strDisp, strStyle, strClass, elemParent) {
   let elemButton = document.createElement('BUTTON');
   let elemText = document.createTextNode(strDisp);
@@ -145,10 +174,9 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
   return elemButton;
 }
 
-/**
- * create a bullet entry element
- * @param {number} intBulletID - the bullet's numerical ID
- * @return {li} a list (bullet) object
+/** Create a bullet entry element
+ *  @param {number} intBulletID - the bullet's numerical ID
+ *  @return {li} a list (bullet) object
  */
 function createBulletEntryElem(intBulletID) {
   let newEntry = document.createElement('li');
@@ -176,35 +204,24 @@ function createBulletEntryElem(intBulletID) {
   appendTextNode(' Tags: ', bullet.tags, div);
 
   // create and append edit button
-  let editButton = appendButton('Edit', '', 'edit', div);
-  editButton.addEventListener('click', () => { openEditDialog(newEntry); });
+  let editButton = appendButton('Edit', '', 'btn btn-secondary', div);
+  editButton.addEventListener('click', () => {
+    $('#EditBullet').modal('toggle');
+    openEditDialog(newEntry);
+  });
 
   // create and append delete button
-  let deleteButton = appendButton('Delete', '', 'del', div);
-  deleteButton.addEventListener('click', () => { openDeleteDialog(newEntry); });
+  let deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
+  deleteButton.addEventListener('click', () => {
+    $('#deleteBullet').modal('toggle');
+    openDeleteDialog(newEntry);
+  });
 
   return newEntry;
 }
 
-/* if user confirms making new tag, add it to list */
-tagBox.addEventListener('close', function() {
-  // make sure user confirmed
-  if (tagAddBtn.value === 'false') return;
-  console.log(tagAddBtn.value);
-  tagAddBtn.value = false;
-
-  // add tag's string to list
-  crud.createTag(tagName.value);
-
-  // maybe add a confirmation box
-});
-
 /* if user confirms make new bullet and add it to page */
-bujoSpace.addEventListener('close', function() {
-  // make sure the user confirmed
-  if (saveBtn.value === 'false') return;
-  saveBtn.value = false;
-
+saveBtn.addEventListener('click', function() {
   // make tag array for new bullet
   let newBulletTags = crud.getCheckBoxResults();
   let newBulletType = crud.getType();
@@ -226,4 +243,6 @@ bujoSpace.addEventListener('close', function() {
   } else if (newBulletType === 'Task') {
     taskOut.append(createBulletEntryElem(newBulletID));
   }
+
+  $('#bujoSpace').modal('toggle');
 });
