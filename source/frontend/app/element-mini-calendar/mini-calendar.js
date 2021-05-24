@@ -1,17 +1,13 @@
-const calendarBody = document.getElementById('calendar-body');
-
 const COLUMNS = 8;
 const ROWS = 6;
-
 
 /*
 * custom element for a mini calander that can have days and weeks selected
 * you can bind callbacks for when days and weeks are clicked
 * note: in order for call backs to work they must be bound before calling set calendar
 */
-class MiniCalendar extends HTMLElement{
-  constructor()
-  {
+class MiniCalendar extends HTMLElement {
+  constructor() {
     super();
     this.dayCallBack = null;
     this.weekCallBack = null;
@@ -106,29 +102,27 @@ class MiniCalendar extends HTMLElement{
         <tbody id="calendar-body">
         </tbody>
       </table>
-    `
-    this.attachShadow({ mode: 'open' })
-    this.shadowRoot.appendChild(template.content.cloneNode(true))
+    `;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   /*
   * @param date: a date object that will be used to build the calendar
   * @param selectDay = true: if true the day that was ppassed in by date will start selected
   * @param selectWeek = true: if true the week that the day from the date object that was passed in will be selected
-  * 
+  *
   * note: in order for callbacks to work the callbacks must be bound before calling setCalendar
   */
-  setCalendar(date, selectDay=true, selectWeek=true)
-  {
-    const calendarBody = this.shadowRoot.querySelector("#calendar-body");
+  setCalendar(date, selectDay = true, selectWeek = true) {
+    const calendarBody = this.shadowRoot.querySelector('#calendar-body');
     const startDay = new Date(date.getYear() + 1900, date.getMonth(), 1).getDay();
     let dateCounter = -startDay + 1;
 
-    //first clear the calander
-    while (calendarBody.firstChild)
-      calendarBody.removeChild(calendarBody.firstChild);
+    // first clear the calander
+    while (calendarBody.firstChild) { calendarBody.removeChild(calendarBody.firstChild); }
 
-    //now build new elements
+    // now build new elements
     for (let y = 0; y < ROWS; y++) {
       const weekElement = document.createElement('tr');
       for (let x = 0; x < COLUMNS; x++) {
@@ -139,16 +133,16 @@ class MiniCalendar extends HTMLElement{
 
         if (x === 0) {
           dayElement.className = 'week';
-          if (this.weekCallBack !== null) dayElement.onclick = () => {this.weekCallBack(currentDate)};
+          if (this.weekCallBack !== null) dayElement.onclick = () => { this.weekCallBack(currentDate); };
           continue;
         }
 
-        if (this.dayCallBack !== null) dayElement.onclick = () => {this.dayCallBack(currentDate)};
+        if (this.dayCallBack !== null) dayElement.onclick = () => { this.dayCallBack(currentDate); };
 
         dayElement.innerHTML = currentDate.getDate();
         dayElement.className = 'day';
         if (currentDate.getMonth() !== date.getMonth()) { dayElement.classList.add('other-month'); }
-    
+
         if (dateCounter === date.getDate()) {
           if (selectDay) dayElement.classList.add('selected');
           if (selectWeek) weekElement.childNodes[0].classList.add('selected');
@@ -164,19 +158,16 @@ class MiniCalendar extends HTMLElement{
   * the input will be a date object and represents the day that was clicked
   * note: if you wish to unbind the day call back you can pass null into this function, and then call setCalendar
   */
-  bindDayCallBack(callBack)
-  {
+  bindDayCallBack(callBack) {
     this.dayCallBack = callBack;
   }
-
 
   /*
   * takes a function with a single input
   * the input will be a date object and represents the first day of the week that was clicked
   * note: if you wish to unbind the day call back you can pass null into this function, and then call setCalendar
   */
-  bindWeekCallBack(callBack)
-  {
+  bindWeekCallBack(callBack) {
     this.weekCallBack = callBack;
   }
 }
