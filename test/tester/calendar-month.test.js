@@ -13,10 +13,10 @@ describe('Basic unit tests for monthly calendar ', () => {
     "August", "September", "October", "November", "December"];
   let contentHtml;
   beforeAll(() => {
-    contentHtml = fs.readFileSync(path.resolve(__dirname, "../source/frontend/app/page-calendar/calendar.html"), 'utf-8');
+    contentHtml = fs.readFileSync(path.resolve(__dirname, "../../source/frontend/app/page-calendar/calendar.html"), 'utf-8');
     document.documentElement.innerHTML = contentHtml;
-    require('../source/frontend/app/page-calendar/calendar.js');
-    require('../source/frontend/app/page-calendar/sidebar.js');
+    require('../../source/frontend/app/page-calendar/calendar.js');
+    require('../../source/frontend/app/page-calendar/sidebar.js');
 
   });
 

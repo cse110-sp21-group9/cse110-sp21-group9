@@ -11,11 +11,11 @@ describe("Basic unit tests for CRUD page", () => {
   const testDate2 = "2021-07-23T08:15"; 
   let contentHtml;
   beforeAll(() => {
-    contentHtml = fs.readFileSync(path.resolve(__dirname, "../source/frontend/app/page-journal/page-CRUD.html"), 'utf-8');
+    contentHtml = fs.readFileSync(path.resolve(__dirname, "../../source/frontend/app/page-journal/page-CRUD.html"), 'utf-8');
     document.documentElement.innerHTML = contentHtml;
 
-    require('../source/frontend/app/page-journal/crudFunctions.js');
-    require('../source/frontend/app/page-journal/blog.js');
+    require('../../source/frontend/app/page-journal/crudFunctions.js');
+    require('../../source/frontend/app/page-journal/blog.js');
     
     class LocalStorageMock {
       constructor() {
