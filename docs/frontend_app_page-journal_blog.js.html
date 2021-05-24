@@ -26,143 +26,156 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>//import "./DOMPurify/dist/purify.min.js";
-import * as crud from "./crudFunctions.js"
+            <pre class="prettyprint source linenums"><code>/** This file handles a lot of the event listeners associated with a CRUD
+ *  application. It makes sure all created bullets and tags are registered
+ *  on the DOM. It also calls on methods from crudFunctions.js to properly
+ *  implement the CRUD functions.
+ *  TODO: Ability to edit and delete tags
+ */
+
+/* eslint-env jquery */
+// import "./DOMPurify/dist/purify.min.js";
+import * as crud from './crudFunctions.js';
 
 /* get elements from html page */
-//buttons and general writing space
-let formButton = document.getElementById('addBulletBut');
-let bujoSpace  = document.getElementById('bujoSpace');
-let saveBtn    = document.getElementById('saveAdd');
+// buttons and general writing space
+const formButton = document.getElementById('addBulletBut');
+// const bujoSpace = document.getElementById('bujoSpace');
+const saveBtn = document.getElementById('saveAdd');
 
-//creation inputs
-let titleInput = document.getElementById('title');
-let typeInput  = document.getElementById('type');
-let dateInput  = document.getElementById('time');
-let descInput  = document.querySelector("[name = 'desc']");
-let tagInput   = document.getElementById('tags');
+// creation inputs
+const titleInput = document.getElementById('title');
+// const typeInput = document.getElementById('type');
+const dateInput = document.getElementById('time');
+const descInput = document.querySelector('[name = "desc"]');
+// const tagInput = document.getElementById('tags');
 
-//output of creation
-let eventOut   = document.getElementById('eventlist');
-let taskOut    = document.getElementById('tasklist');
-let noteOut    = document.getElementById('notelist');
+// output of creation
+const eventOut = document.getElementById('eventlist');
+const taskOut = document.getElementById('tasklist');
+const noteOut = document.getElementById('notelist');
 
-//deletion stuff
-let confirmBox = document.getElementById('deleteBullet');
-let confirmBtn = document.getElementById('okConfirm');
+// deletion stuff
+const confirmBox = document.getElementById('deleteBullet');
+const confirmBtn = document.getElementById('okConfirm');
 
-//tag creation stuff
-let tagBtn     = document.getElementById('createtag');
-let tagBox     = document.getElementById('tagcreation');
-let tagAddBtn  = document.getElementById('saveTag');
-let tagName    = document.getElementById('tagname'); 
+// tag creation stuff
+const tagBtn = document.getElementById('createtag');
+// const tagBox = document.getElementById('tagcreation');
+const tagAddBtn = document.getElementById('saveTag');
+const tagName = document.getElementById('tagname');
 
-//edit inputs
-let editBullet = document.getElementById('EditBullet');
-let editSave   = document.getElementById('editSaveAdd');
-let editTitle  = document.getElementById('edittitle');
-let editDate   = document.getElementById('editdate');
-let editDesc   = document.getElementById('editdesc');
-let editType   = document.getElementById('edittype');
-let editTags   = document.getElementById('edittag');
-
+// edit inputs
+const editBullet = document.getElementById('EditBullet');
+const editSave = document.getElementById('editSaveAdd');
+const editTitle = document.getElementById('edittitle');
+const editDate = document.getElementById('editdate');
+const editDesc = document.getElementById('editdesc');
+// const editType = document.getElementById('edittype');
+const editTags = document.getElementById('edittag');
 
 crud.initCrudRuntime();
-//TODO: Write a date getter function to pass into here
-let bulletsToLoad = crud.getBulletsByDateRange("2020-06-12T19:00", "2020-06-12T20:00");
-for (const bullet of bulletsToLoad)
-{
-  if(bullet.type === "note") {
+// TODO: Write a date getter function to pass into here
+let bulletsToLoad = crud.getBulletsByDateRange('2020-06-12T19:00', '2020-06-12T20:00');
+for (const bullet of bulletsToLoad) {
+  if (bullet.type === 'note') {
     noteOut.append(createBulletEntryElem(bullet.ID));
-  }
-
-  else if(bullet.type === "event") {
+  } else if (bullet.type === 'event') {
     eventOut.append(createBulletEntryElem(bullet.ID));
-  }
-
-  else if(bullet.type === "task") {
+  } else if (bullet.type === 'task') {
     taskOut.append(createBulletEntryElem(bullet.ID));
   }
 }
 
 /* on click show new tag box */
-tagBtn.addEventListener('click', function (){
-  tagBox.showModal();
+tagBtn.addEventListener('click', function() {
+  $('#tagcreation').modal('toggle');
 });
 
-/* on click set tag add button to true */
+/* if user confirms making new tag, add it to list */
 tagAddBtn.addEventListener('click', function() {
-  tagAddBtn.value = "true";
-});
-
-/* on click set save button to true */
-saveBtn.addEventListener('click', function (){
-  saveBtn.value = "true";
+  // add tag's string to list
+  crud.createTag(tagName.value);
+  $('#tagcreation').modal('toggle');
+  // maybe add a confirmation box
 });
 
 /* on click show new blog box */
-formButton.addEventListener('click', function () {
-  bujoSpace.showModal();
-});
-
-/* on click set edit save to true */
-editSave.addEventListener('click', function (){
-  editSave.value = "true";
+formButton.addEventListener('click', function() {
+  $('#bujoSpace').modal('toggle');
 });
 
 /* on click set confirm button to true */
-confirmBtn.addEventListener('click', function (){
-  confirmBtn.value = "true";
+confirmBtn.addEventListener('click', function() {
+  confirmBtn.value = 'true';
 });
 
-/* opens the delete dialog box */
-function openDeleteDialog(elemEntry){
-  confirmBox.onclose = () => {deleteBulletEntry(elemEntry);};
-  confirmBox.showModal();
+/** Opens the delete dialog box and listens for delete button to get clicked
+ *  @param {bullet} elemEntry the bullet we want to delete
+ *  @return null
+*/
+function openDeleteDialog(elemEntry) {
+  confirmBtn.addEventListener('click', function() {
+    deleteBulletEntry(elemEntry);
+    $('#deleteBullet').modal('toggle');
+  });
 }
 
-/* companion function to openDeleteDialog, removes the event listener and deletes the entry if ok was clicked */
-function deleteBulletEntry(elemEntry)
-{
+/** Companion function to openDeleteDialog. Removes the event listener and
+ *  deletes entry if ok was clicked
+ *  @param {bullet} elemEntry the bullet we want to delete
+ *  @return null
+ */
+function deleteBulletEntry(elemEntry) {
   confirmBox.onclose = null;
-  if (confirmBtn.value == "false") return;
+  if (confirmBtn.value === 'false') return;
   confirmBtn.value = false;
   crud.deleteBulletById(elemEntry.id);
   elemEntry.remove();
 }
 
-/* opens edit dialog box and saves edits if esave is true */
-function openEditDialog(elemEntry)
-{
+/** Opens edit dialog box and saves edits if the associated event listener is
+ *  triggered
+ *  @param {bullet} elemEntry the bullet we want to edit
+ *  @return a modal to edit a bullet.
+*/
+function openEditDialog(elemEntry) {
   let entryBullet = crud.getBulletById(elemEntry.id);
 
   editTitle.value = entryBullet.data.title;
-  editDate.value  = entryBullet.date;
-  editDesc.value  = entryBullet.data.note;
+  editDate.value = entryBullet.date;
+  editDesc.value = entryBullet.data.note;
   editTags.value = entryBullet.tags;
-  //TODO:Add functionality to edit type and tags
-  editBullet.onclose = () => {editBulletEntry(elemEntry);};
-  editBullet.showModal();
+
+  editSave.addEventListener('click', function() {
+    editBulletEntry(elemEntry);
+    $('#EditBullet').modal('toggle');
+  });
+  // TODO:Add functionality to edit type and tags
 }
 
-function editBulletEntry(elemEntry)
-{
-  if (editSave.value == "false") return;
-  editSave.value = false;
-
+/** Edits a bullet's information and replaces it on storage
+ *  @param {bullet} elemEntry the bullet we want to edit
+ *  @return the modified bullet in storage and the DOM
+ */
+function editBulletEntry(elemEntry) {
   crud.setBulletAttributes(elemEntry.id, {
-      title: editTitle.value, 
-      note: editDesc.value
-    }, null, editDate.value);
+    title: editTitle.value,
+    note: editDesc.value
+  }, null, editDate.value);
 
   elemEntry.parentNode.replaceChild(createBulletEntryElem(elemEntry.id), elemEntry);
 
   editBullet.onclose = null;
 }
 
-//helper function to add text to bullet entry
-function appendTextNode(strTitle, strText, elemParent)
-{
+/** helper function to add text to bullet entry
+ *  @param {string} strTitle the bullet's title
+ *  @param {string} strText the bullet's text
+ *  @param {bullet} elemParent tbh no idea what this one does
+ *  @return null
+ */
+function appendTextNode(strTitle, strText, elemParent) {
   let elemBold = document.createElement('b');
 
   elemBold.append(document.createTextNode(strTitle));
@@ -170,10 +183,15 @@ function appendTextNode(strTitle, strText, elemParent)
   elemParent.append(document.createTextNode(strText));
 }
 
-//helper function to add buttons to bullet entry
-function appendButton(strDisp, strStyle, strClass, elemParent)
-{
-  let elemButton = document.createElement("BUTTON");
+/** helper function to add buttons to bullet entry
+ *  @param {string} strDisp what we want the bullet to read on the DOM
+ *  @param {string} strStyle the style we want the button in
+ *  @param {string} strClass what kind of button
+ *  @param {bullet} elemParent the bullet we want to tie the button to
+ *  @return a button
+ */
+function appendButton(strDisp, strStyle, strClass, elemParent) {
+  let elemButton = document.createElement('BUTTON');
   let elemText = document.createTextNode(strDisp);
 
   elemButton.style = strStyle;
@@ -184,94 +202,79 @@ function appendButton(strDisp, strStyle, strClass, elemParent)
   return elemButton;
 }
 
-/**
- * create a bullet entry element 
- * @param {number} intBulletID - the bullet's numerical ID
- * @return {li} a list (bullet) object
+/** Create a bullet entry element
+ *  @param {number} intBulletID - the bullet's numerical ID
+ *  @return {li} a list (bullet) object
  */
-function createBulletEntryElem(intBulletID){
+function createBulletEntryElem(intBulletID) {
   let newEntry = document.createElement('li');
-  let div = document.createElement("div");
+  let div = document.createElement('div');
   let bullet = crud.getBulletById(intBulletID);
 
   newEntry.id = intBulletID;
-  div.style = "margin: 10px; padding: 5px; border: 5px solid black"
+  div.style = 'margin: 10px; padding: 5px; border: 5px solid black';
 
   newEntry.append(div);
 
-  //create and append title of bullet
-  appendTextNode("Title: ", bullet.data.title, div);
+  // create and append title of bullet
+  appendTextNode('Title: ', bullet.data.title, div);
 
-  //create and append date and time bullet was created
-  appendTextNode(" Date: ", bullet.date, div);
+  // create and append date and time bullet was created
+  appendTextNode(' Date: ', bullet.date, div);
 
-  //create and append description for bullet
-  appendTextNode(" Note: ", bullet.data.note, div);
+  // create and append description for bullet
+  appendTextNode(' Note: ', bullet.data.note, div);
 
-  //create and append bullet type
-  appendTextNode(" Type: ", bullet.type, div);
+  // create and append bullet type
+  appendTextNode(' Type: ', bullet.type, div);
 
-  //create and append bullet's tags
-  appendTextNode(" Tags: ", bullet.tags, div);
+  // create and append bullet's tags
+  appendTextNode(' Tags: ', bullet.tags, div);
 
-  //create and append edit button
-  let editButton = appendButton("Edit", "", "edit", div);
-  editButton.addEventListener("click", ()=>{openEditDialog(newEntry)});
+  // create and append edit button
+  let editButton = appendButton('Edit', '', 'btn btn-secondary', div);
+  editButton.addEventListener('click', () => {
+    $('#EditBullet').modal('toggle');
+    openEditDialog(newEntry);
+  });
 
-  //create and append delete button
-  let deleteButton = appendButton("Delete", "", "del", div);
-  deleteButton.addEventListener("click", ()=>{openDeleteDialog(newEntry)});
+  // create and append delete button
+  let deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
+  deleteButton.addEventListener('click', () => {
+    $('#deleteBullet').modal('toggle');
+    openDeleteDialog(newEntry);
+  });
 
   return newEntry;
 }
 
-/* if user confirms making new tag, add it to list */
-tagBox.addEventListener('close', function() {
-  //make sure user confirmed
-  if(tagAddBtn.value == "false") return;
-  console.log(tagAddBtn.value);
-  tagAddBtn.value = false;
-
-  //add tag's string to list
-  crud.createTag(tagName.value);
-
-  //maybe add a confirmation box
-})
-
-
 /* if user confirms make new bullet and add it to page */
-bujoSpace.addEventListener('close', function (){
-
-  //make sure the user confirmed
-  if(saveBtn.value=="false") return;
-  saveBtn.value = false;
-
-  //make tag array for new bullet
+saveBtn.addEventListener('click', function() {
+  // make tag array for new bullet
   let newBulletTags = crud.getCheckBoxResults();
   let newBulletType = crud.getType();
 
   console.log(newBulletType);
-  //make a new bullet with the crud functions
+  // make a new bullet with the crud functions
   let newBulletID = crud.createBullet(
-    {title: titleInput.value, note: descInput.value},
+    { title: titleInput.value, note: descInput.value },
     newBulletType,
     dateInput.value,
     newBulletTags
   );
 
-  //add the bullet to the DOM
-  if(newBulletType === "Note") {
+  // add the bullet to the DOM
+  if (newBulletType === 'Note') {
     noteOut.append(createBulletEntryElem(newBulletID));
-  }
-
-  else if(newBulletType === "Event") {
+  } else if (newBulletType === 'Event') {
     eventOut.append(createBulletEntryElem(newBulletID));
-  }
-
-  else if(newBulletType === "Task") {
+  } else if (newBulletType === 'Task') {
     taskOut.append(createBulletEntryElem(newBulletID));
   }
-});</code></pre>
+
+  $('#bujoSpace').modal('toggle');
+});
+</code></pre>
         </article>
     </section>
 
@@ -281,13 +284,13 @@ bujoSpace.addEventListener('close', function (){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createBullet">createBullet</a></li><li><a href="global.html#createBulletEntryElem">createBulletEntryElem</a></li><li><a href="global.html#createTag">createTag</a></li><li><a href="global.html#deleteBulletFromStorage">deleteBulletFromStorage</a></li><li><a href="global.html#editTags">editTags</a></li><li><a href="global.html#fillRunTimeTags">fillRunTimeTags</a></li><li><a href="global.html#getCheckBoxResults">getCheckBoxResults</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#makeEventBullet">makeEventBullet</a></li><li><a href="global.html#makeNoteBullet">makeNoteBullet</a></li><li><a href="global.html#makeTaskBullet">makeTaskBullet</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#updateTags">updateTags</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BulletEntry.html">BulletEntry</a></li></ul><h3>Global</h3><ul><li><a href="global.html#appendButton">appendButton</a></li><li><a href="global.html#appendTextNode">appendTextNode</a></li><li><a href="global.html#closeSidebar">closeSidebar</a></li><li><a href="global.html#createBullet">createBullet</a></li><li><a href="global.html#createBulletEntryElem">createBulletEntryElem</a></li><li><a href="global.html#createTag">createTag</a></li><li><a href="global.html#deleteBulletById">deleteBulletById</a></li><li><a href="global.html#deleteBulletEntry">deleteBulletEntry</a></li><li><a href="global.html#deleteBulletFromStorage">deleteBulletFromStorage</a></li><li><a href="global.html#editBulletEntry">editBulletEntry</a></li><li><a href="global.html#editTags">editTags</a></li><li><a href="global.html#fillRunTimeBullets">fillRunTimeBullets</a></li><li><a href="global.html#fillRunTimeTags">fillRunTimeTags</a></li><li><a href="global.html#getBulletById">getBulletById</a></li><li><a href="global.html#getBulletsByDateRange">getBulletsByDateRange</a></li><li><a href="global.html#getCheckBoxResults">getCheckBoxResults</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#initCrudRuntime">initCrudRuntime</a></li><li><a href="global.html#makeEventBullet">makeEventBullet</a></li><li><a href="global.html#makeNoteBullet">makeNoteBullet</a></li><li><a href="global.html#makeTaskBullet">makeTaskBullet</a></li><li><a href="global.html#openDeleteDialog">openDeleteDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openSidebar">openSidebar</a></li><li><a href="global.html#readArrayFromStorage">readArrayFromStorage</a></li><li><a href="global.html#runTimeBullets">runTimeBullets</a></li><li><a href="global.html#setBulletAttributes">setBulletAttributes</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#updateBulletInStorage">updateBulletInStorage</a></li><li><a href="global.html#updateTags">updateTags</a></li><li><a href="global.html#writeArrayToStorage">writeArrayToStorage</a></li><li><a href="global.html#writeBulletToStorage">writeBulletToStorage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Mon May 17 2021 05:27:53 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sun May 23 2021 10:25:51 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>

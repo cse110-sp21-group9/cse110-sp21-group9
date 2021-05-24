@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar Demo</title>
+    <link rel="stylesheet" href="day-style.css">
+    <script type="module" src="day.js"></script>
+</head>
+
+<body>
+    <h1>Day</h1>
+    <div id="main_container">
+        <div id="calender_container">
+            <div id="date_container">
+                <h3 id="week_day">Thursday</h3>
+                <p id="date">april 1st</p>
+            </div>
+            <ul id="time_list">
+            </ul>
+        </div>
+        <div id="widgets_container">
+        </div>
+
+    </div>
+</body>
+
+<template id="time_slot">
+    <span>
+        <h4 id="time">day</h3>
+        <ul id="bullet_list">
+        </ul>
+    </span>
+</template>
+
+</html>

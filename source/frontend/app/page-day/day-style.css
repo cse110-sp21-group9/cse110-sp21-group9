@@ -1,0 +1,52 @@
+#main_container
+{
+    display: flex;
+    max-height: 95vh;
+}
+
+#calender_container
+{
+    width: 50%;
+}
+
+#date_container
+{
+    margin: 5px;
+    border-bottom: 1px solid black;
+}
+
+#date
+{
+    padding-left: 10px;
+}
+
+#week_day
+{
+    padding-left: 10px;
+}
+
+#widgets_container
+{
+    /*border: 5px solid blue;*/
+    width: 50%;
+}
+
+#time_list
+{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 90%;
+    overflow: scroll;
+    scrollbar-width: thin;
+}
+
+.time_slot
+{
+    border: 1px solid black;
+    border-left: 5px solid black;
+    border-radius: 4px;
+    background-color: white;
+    margin: 5px;
+    padding: 5px;
+}
