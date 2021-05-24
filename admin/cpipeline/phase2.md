@@ -3,8 +3,8 @@
 ![Pipeline diagram](phase2.drawio.png)
 
 ## Overview
-### Dev branch (<name>-dev)
-The first branch in our pipeline are the dev branches for each person in our group (<name of person>-dev). This branch is where new features for our web app are first created by developers. ESLint Style/Linting checks occur on this branch. 
+### Dev branch (-dev)
+The first branch in our pipeline are the dev branches for each person in our group (name of person-dev). This branch is where new features for our web app are first created by developers. ESLint Style/Linting checks occur on this branch. 
 
 #### ESLint Style/Linting checks 
 The first step in our pipeline is to run the ESLint tool for linting and code style enforcement. This occurs when any code in the `source` folder is about to be committed to the repo. 
@@ -13,13 +13,13 @@ This step is implemented with a pre-commit hook in the file `git-hooks/precommit
 
 After the code passes the ESLint style/Linting checks, it is then committed/pushed to the dev branch on the remote Github repo.
 
-### Release branch (<name>-release)
-Once a feature is completed and ready for testing, developers can then open and merge a pull request from their dev branch into their release branch (<name of person>-release). This branch is where new features for our web app are checked for code quality and individually tested using developer-generated unit tests. 
+### Release branch (-release)
+Once a feature is completed and ready for testing, developers can then open and merge a pull request from their dev branch into their release branch (name of person-release). This branch is where new features for our web app are checked for code quality and individually tested using developer-generated unit tests. 
 
 #### Codacy code quality check 
 When the code is merged to the release branch, the next step in our pipeline is to run a Codacy code quality check on the pushed code. 
 
-This step is implemented using Github Actions and is the first job defined in the workflow at `.github/workflows/release-workflow.yml`. The workflow is triggered when anything new is pushed to the `source` folder in any release branch, and the first job checks out a copy of the code and uses [this Github action](https://github.com/marketplace/actions/codacy-analysis-cli#analysis-with-default-settings) to run Codacy's static analysis tools on the code. This step in our pipeline is currently functional. 
+This step is implemented using Github Actions and is the first job defined in the workflow at `.github/workflows/release-workflow.yml`. The workflow is triggered when anything new is pushed to the `source` folder in any release branch. The first job checks out a copy of the code and uses [this Github action](https://github.com/marketplace/actions/codacy-analysis-cli#analysis-with-default-settings) to run Codacy's static analysis tools on the code. This step in our pipeline is currently functional. 
 
 #### Automated Jest unit tests (developer only)
 After the code passes the Codacy code quality check, we then run our automated developer generated unit tests on the code using Jest. 
