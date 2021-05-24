@@ -1,5 +1,5 @@
-# Code quality and test workflow for CI/CD pipeline
-name: Code Quality/Test workflow
+# Release Code workflow for CI/CD pipeline
+name: Release code workflow
 on: 
   push: 
     paths: 
@@ -8,7 +8,7 @@ on:
     - '**-release'
 jobs: 
   codacy-scan: #Run codacy code quality scan
-    name: Codacy Analysis CLI
+    name: Codacy Analysis CLI Scan
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
