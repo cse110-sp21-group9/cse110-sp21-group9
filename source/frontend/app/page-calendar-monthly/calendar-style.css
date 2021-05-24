@@ -21,10 +21,12 @@ tbody td {
 thead {
     background-color: #333;
     color: #fff;
+    text-align: center;
 }
 
 .monthyear {
     height: 3rem;
+<<<<<<< HEAD:source/frontend/app/page-calendar/calendar-style.css
 }
 
 /* The sidebar menu */
@@ -96,3 +98,6 @@ thead {
   padding: 20px;
 }
 
+=======
+}
+>>>>>>> 02481e8a88b45a474f8ac94b71a18681e9f15688:source/frontend/app/page-calendar-monthly/calendar-style.css
