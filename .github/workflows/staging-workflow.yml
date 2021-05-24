@@ -1,5 +1,5 @@
-#JSDoc generation workflow for CI/CD pipeline
-name: JSDoc generation workflow 
+#Staging code workflow for CI/CD pipeline
+name: Staging code workflow 
 on: 
   push:
     paths: 
