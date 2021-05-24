@@ -1,6 +1,6 @@
 # Meeting Minutes ~ 051921-meeting  
 ## I. Meeting Information
-**Meeting Purpose:** Weekly Group meeting
+**Meeting Purpose:** Weekly Group meeting  
 **Meeting Date/Time:** May 19th, 2021, 4:00pm - 4:30pm  
 **Timezone:** Pacific Standard Time (UTC−07:00)  
 **Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/j/98413787650)  
