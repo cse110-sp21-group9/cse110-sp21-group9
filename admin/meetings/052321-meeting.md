@@ -1,4 +1,4 @@
-# Meeting Minutes ~ 052321-meeting
+# Meeting Minutes ~ 052321-meeting  
 ## I. Meeting Information
 **Meeting Purpose:** Weekly Group meeting
 **Meeting Date/Time:** May 23th, 2021, 5:00pm - 5:50pm  

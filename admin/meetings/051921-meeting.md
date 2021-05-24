@@ -1,4 +1,4 @@
-# Meeting Minutes ~ 051921-meeting
+# Meeting Minutes ~ 051921-meeting  
 ## I. Meeting Information
 **Meeting Purpose:** Weekly Group meeting
 **Meeting Date/Time:** May 19th, 2021, 4:00pm - 4:30pm  
