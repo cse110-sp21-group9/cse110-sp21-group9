@@ -11,9 +11,9 @@ module.exports = {
     ecmaVersion: 12
   },
   rules: {
-    "semi": ["error","always"],
-    "space-before-function-paren": ["error", "never"],
-    "no-var": "error",
-    "prefer-const": "warn"
+    semi: ['error', 'always'],
+    'space-before-function-paren': ['error', 'never'],
+    'no-var': 'error',
+    'prefer-const': 'warn'
   }
-};
+}

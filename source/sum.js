@@ -5,13 +5,13 @@
  * @param {number} b - operand 2 to sum
  * @returns {number} Sum of a and b
  */
-function sum(a, b) {
-  return a + b;
+function sum (a, b) {
+  return a + b
 }
 
-let a = 1;
-let b = 2;
-let c = sum(a, b);
+const a = 1
+const b = 2
+const c = sum(a, b)
 
-console.log(c);
-module.exports = sum;
+console.log(c)
+module.exports = sum

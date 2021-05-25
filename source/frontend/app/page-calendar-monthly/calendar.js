@@ -1,13 +1,13 @@
-const calendar = document.getElementById('calendar');
-const month = document.getElementById('month');
-const year = document.getElementById('year');
-const backmonth = document.getElementById('backmonth');
-const forwardmonth = document.getElementById('forwardmonth');
-const backyear = document.getElementById('backyear');
-const forwardyear = document.getElementById('forwardyear');
+const calendar = document.getElementById('calendar')
+const month = document.getElementById('month')
+const year = document.getElementById('year')
+const backmonth = document.getElementById('backmonth')
+const forwardmonth = document.getElementById('forwardmonth')
+const backyear = document.getElementById('backyear')
+const forwardyear = document.getElementById('forwardyear')
 
-let yearIn = 2021;
-let monthIn = 5;
+let yearIn = 2021
+let monthIn = 5
 
 const monthNames = {
   1: 'January',
@@ -22,15 +22,15 @@ const monthNames = {
   10: 'October',
   11: 'November',
   12: 'December'
-};
+}
 
-const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-backmonth.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>';
-backyear.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>';
+backmonth.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>'
+backyear.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>'
 
-forwardmonth.innerHTML = '<img src="forward.png" alt="forward" width="32" height="32"/>';
-forwardyear.innerHTML = '<img src="forward.png" alt="forward" width="32" height="32"/>';
+forwardmonth.innerHTML = '<img src="forward.png" alt="forward" width="32" height="32"/>'
+forwardyear.innerHTML = '<img src="forward.png" alt="forward" width="32" height="32"/>'
 
 // Date MM/DD/YYYY/X:  Bullet name
 // X is some random identifier
@@ -80,158 +80,157 @@ const testData = {
     title: 'mwahahaaha2',
     date: '06/04/2021'
   }
-};
+}
 
-backmonth.addEventListener('click', function() {
-  monthIn--;
+backmonth.addEventListener('click', function () {
+  monthIn--
   if (monthIn < 1) {
-    monthIn = 12;
-    yearIn--;
+    monthIn = 12
+    yearIn--
   }
-  resetCalendar();
-  var data = getDataLocal(monthIn, yearIn);
-  populateCalendar(monthIn, yearIn, data);
-});
+  resetCalendar()
+  const data = getDataLocal(monthIn, yearIn)
+  populateCalendar(monthIn, yearIn, data)
+})
 
-backyear.addEventListener('click', function() {
-  yearIn--;
-  resetCalendar();
-  var data = getDataLocal(monthIn, yearIn);
-  populateCalendar(monthIn, yearIn, data);
-});
+backyear.addEventListener('click', function () {
+  yearIn--
+  resetCalendar()
+  const data = getDataLocal(monthIn, yearIn)
+  populateCalendar(monthIn, yearIn, data)
+})
 
-forwardmonth.addEventListener('click', function() {
-  monthIn++;
+forwardmonth.addEventListener('click', function () {
+  monthIn++
   if (monthIn > 12) {
-    monthIn = 1;
-    yearIn++;
+    monthIn = 1
+    yearIn++
   }
-  resetCalendar();
-  var data = getDataLocal(monthIn, yearIn);
-  populateCalendar(monthIn, yearIn, data);
-});
+  resetCalendar()
+  const data = getDataLocal(monthIn, yearIn)
+  populateCalendar(monthIn, yearIn, data)
+})
 
-forwardyear.addEventListener('click', function() {
-  yearIn++;
-  resetCalendar();
-  var data = getDataLocal(monthIn, yearIn);
-  populateCalendar(monthIn, yearIn, data);
-});
+forwardyear.addEventListener('click', function () {
+  yearIn++
+  resetCalendar()
+  const data = getDataLocal(monthIn, yearIn)
+  populateCalendar(monthIn, yearIn, data)
+})
 
 // updates local storage if there is nothing in it
-function updateLocalStorage(){
-  if (localStorage.getItem("bulletIDs") === null) {
-    let array = [];
+function updateLocalStorage () {
+  if (localStorage.getItem('bulletIDs') === null) {
+    const array = []
     for (const [key, value] of Object.entries(testData)) {
-      localStorage.setItem(key, JSON.stringify(value));
-      array.push(key);
+      localStorage.setItem(key, JSON.stringify(value))
+      array.push(key)
     }
-    localStorage.setItem("bulletIDs", array);
+    localStorage.setItem('bulletIDs', array)
   }
 }
 
 // gets month + - 1 information
-function getDataLocal(month, year){
-  let data = {};
-  if (localStorage.getItem("bulletIDs") === null) {
-    return data;
+function getDataLocal (month, year) {
+  const data = {}
+  if (localStorage.getItem('bulletIDs') === null) {
+    return data
   }
-  let bulletIds = localStorage.getItem("bulletIDs").split(",");
-  for(var i=0; i< bulletIds.length; i++){
-    let item = JSON.parse(localStorage.getItem(bulletIds[i]));
-   
-    let date = item['date'].split("/");
-    if(parseInt(date[2])==year && parseInt(date[0])==month){
-      data[bulletIds[i]] = item;
+  const bulletIds = localStorage.getItem('bulletIDs').split(',')
+  for (let i = 0; i < bulletIds.length; i++) {
+    const item = JSON.parse(localStorage.getItem(bulletIds[i]))
+
+    const date = item.date.split('/')
+    if (parseInt(date[2]) == year && parseInt(date[0]) == month) {
+      data[bulletIds[i]] = item
     }
   }
-  return data;
+  return data
 }
 
-function daysInMonth(month, year) {
-  return new Date(year, month, 0).getDate();
+function daysInMonth (month, year) {
+  return new Date(year, month, 0).getDate()
 }
 
-function startDate(month, year) {
-  const day = new Date(year, month - 1, 1); // 0 is sunday, 1 is monday, ..., 6 is saturday
-  return day.getDay();
+function startDate (month, year) {
+  const day = new Date(year, month - 1, 1) // 0 is sunday, 1 is monday, ..., 6 is saturday
+  return day.getDay()
 }
 
 // populates calender with all of the days of the associated month and year
 // adds click ability to each date
-function populateCalendar(month, year, data) {
-  let element;
-  let i;
-  let start = false;
-  let counter = 1;
+function populateCalendar (month, year, data) {
+  let element
+  let i
+  let start = false
+  let counter = 1
   for (i = 0; i < 42; i++) {
     if (i % 7 === 0) {
-      element = document.createElement('tr');
+      element = document.createElement('tr')
     }
-    let day = i % 7;
+    const day = i % 7
     if (day === startDate(month, year) && start === false &&
     counter < daysInMonth(month, year) + 1) {
-      start = true;
+      start = true
     }
     if (start) {
-      const date = document.createElement('td');
-      date.setAttribute('id', counter);
-      date.innerHTML = counter;
-      date.addEventListener('click', function() {
-        console.log(date.childNodes[0]);
-      });
-      counter++;
-      element.appendChild(date);
+      const date = document.createElement('td')
+      date.setAttribute('id', counter)
+      date.innerHTML = counter
+      date.addEventListener('click', function () {
+        console.log(date.childNodes[0])
+      })
+      counter++
+      element.appendChild(date)
     } else {
-      let date = document.createElement('td');
-      element.appendChild(date);
+      const date = document.createElement('td')
+      element.appendChild(date)
     }
     if (counter === daysInMonth(month, year) + 1) {
-      start = false;
+      start = false
     }
     if (i % 7 === 6) {
-      calendar.appendChild(element);
+      calendar.appendChild(element)
       if (counter === daysInMonth(month, year) + 1) {
-        break;
+        break
       }
     }
   }
-  bulletAppend(data);
+  bulletAppend(data)
 }
 
 // resets calender and inserts header of days of the week
-function resetCalendar() {
-  let element = document.createElement('tr');
+function resetCalendar () {
+  const element = document.createElement('tr')
   while (calendar.firstChild) {
-    calendar.removeChild(calendar.firstChild);
+    calendar.removeChild(calendar.firstChild)
   }
-  week.forEach(function(e) {
-    let date = document.createElement('th');
-    date.innerHTML = e;
-    element.appendChild(date);
-  });
-  calendar.append(element);
-  year.innerHTML = yearIn;
-  month.innerHTML = monthNames[monthIn];
+  week.forEach(function (e) {
+    const date = document.createElement('th')
+    date.innerHTML = e
+    element.appendChild(date)
+  })
+  calendar.append(element)
+  year.innerHTML = yearIn
+  month.innerHTML = monthNames[monthIn]
 }
 
 // for a specific month only
 // TO DO make a filter per month or something
-function bulletAppend(bullets) {
+function bulletAppend (bullets) {
   for (const [key, value] of Object.entries(bullets)) {
-    
-    let date = value['date'].split('/')[1];
-    let temp = document.getElementById(parseInt(date));
-    let event = document.createElement('li');
+    const date = value.date.split('/')[1]
+    const temp = document.getElementById(parseInt(date))
+    const event = document.createElement('li')
     if (temp.childNodes.length === 1) {
-      temp.appendChild(document.createElement('ul'));
+      temp.appendChild(document.createElement('ul'))
     }
-    event.innerHTML = value['title'];
-    temp.childNodes[1].appendChild(event);
+    event.innerHTML = value.title
+    temp.childNodes[1].appendChild(event)
   }
 }
 
 // updateLocalStorage();
-var data = getDataLocal(monthIn, yearIn);
-resetCalendar();
-populateCalendar(monthIn, yearIn, data);
+const data = getDataLocal(monthIn, yearIn)
+resetCalendar()
+populateCalendar(monthIn, yearIn, data)
