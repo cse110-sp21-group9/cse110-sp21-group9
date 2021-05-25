@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar Demo</title>
+    <link rel="stylesheet" href="calendar-style.css">
+    <script type="module" src="calendar.js"></script>
+    <script type="module" src="sidebar.js"></script>
+</head>
+
+<body>
+  <!--Sidebar-->
+  <div id="mySidebar" class="sidebar">
+    <!--Make sure close button is next to title-->
+  <div id = "title">
+    <object data = "bujo-logo.svg" id = "logo"></object>
+      <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
+    </div>
+    <!--Remember to put in icons-->
+    <a href="#">Dashboard</a>
+    <a href="#">Calendar</a>
+    <a href="#">Tasks</a>
+    <a href="#">Habit Tracker</a>
+    <a href="#">Journal</a>
+    <div id = "sidebarbottom">
+      <a href = "#">Settings</a>
+    </div> 
+  </div>
+
+  <div id = "main">
+     <!--Try to make it change color on hover-->
+     <div id = "openbtn" class = "hamburger" style = "display: inline-block">
+      <div class = "hamburger-bar"></div>
+      <div class = "hamburger-bar"></div>
+      <div class = "hamburger-bar"></div>
+     </div>
+    <table>
+
+        <thead>
+            <tr class="monthyear">
+                <td id="backmonth"></td>
+                <td id="month" colspan="5"></td>
+                <td id="forwardmonth"></td>
+            </tr>
+
+            <tr class="monthyear">
+                <td id="backyear"></td>
+                <td id="year" colspan="5"></td>
+                <td id="forwardyear"></td>
+            </tr>
+        </thead>
+
+        <tbody id="calendar">
+                   
+        </tbody>
+
+        <!-- <tfoot>blah blah blah</tfoot> --- maybe use the footer later -->
+
+    </table>
+ </div>
+
+
+</body>
+
+</html>

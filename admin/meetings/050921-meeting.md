@@ -1,7 +1,7 @@
-# Meeting Minutes ~ 042821-meetingTA
+# Meeting Minutes ~ 050921-meeting
 ## I. Meeting Information
-**Meeting Purpose:** Weekly Meeting with TA  
-**Meeting Date/Time:** May 5th, 2021, 3:00pm - 3:45pm  
+**Meeting Purpose:** Weekly group meeting 
+**Meeting Date/Time:** May 9th, 2021, 5:00pm - 6:00pm  
 **Timezone:** Pacific Standard Time (UTC−07:00)  
 **Meeting Location:** Virtually through Zoom (Link: https://ucsd.zoom.us/j/98413787650)  
 **Note Taker:** Edward Yang/Alan Wang  
@@ -34,7 +34,6 @@ CI/ CD pipeline| Alan | went through proposed pipeline which looks good
 Login | Edmund | said it was a nogo but Kenny thinks that it should still be viable
 CRUD | Everyone | CRUD actions on bullets, export log of journal/ upload log of journal
 Backend | Edmund | mongoDB backend to make things easier
-To- do list| Everyone | Nondate items
 Frontend | Evan/ Daisuka/ Etienne | need to discuss spec/ implementation <br> • How to organize tasks? <br> • How to list elements (global id)? <br> • How should subbullets work? <br> • How many tags can an element have <br> • Should different types of elements have the same tag? <br> • Issues all resolved <br>
 Calender view| Kenny/ Elisa | decided to use FullCalender API for calender view stuff
 Action items/Task assignment| Everyone | see action items section |
