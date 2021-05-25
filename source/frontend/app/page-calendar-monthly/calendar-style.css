@@ -1,32 +1,49 @@
 /**
  * Stylesheet for calendar.html
  */
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
 
 table {
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid #333;
+    /*border: 1px solid #333;*/
     height: auto;
     width: auto;
+    border-collapse: collapse;
 }
+
 
 tbody td {
     vertical-align: top;
     text-align: left;
-    border: 1px solid #333;
+    border: 1px solid #333; 
     width: 10rem;
     height: 8rem;
+
+    /* width: 100%; */
+    /* height: 80%; */
 }
 
+
+tbody tr th {
+  /* background-color: #c7c7cc; */
+  border: 1px solid #333; 
+}
+
+
+
 thead {
-    background-color: #333;
+    /* background-color: #333; */
+    border: 1px solid #333; 
+    background-color: #007aff;
     color: #fff;
     text-align: center;
 }
 
 .monthyear {
     height: 3rem;
-<<<<<<< HEAD:source/frontend/app/page-calendar/calendar-style.css
 }
 
 /* The sidebar menu */
@@ -90,6 +107,7 @@ thead {
   background-color: rgb(255, 255, 255);
 }
 
+
 /* End of sidebar stuff */
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -98,6 +116,20 @@ thead {
   padding: 20px;
 }
 
-=======
+/* Style month and year title*/
+#monthTitle {
+  font-size: 30px;
 }
->>>>>>> 02481e8a88b45a474f8ac94b71a18681e9f15688:source/frontend/app/page-calendar-monthly/calendar-style.css
+#yearTitle {
+  font-size: 20px;
+}
+
+/* Pointer on buttons*/
+#backmonth:hover{
+  cursor: pointer;
+}
+#forwardmonth:hover{
+  cursor: pointer;
+}
+
+

@@ -1,57 +1,23 @@
 /** TODO: Maybe have Elisa sweep through this to give her design decisions
-/* The sidebar menu */
+*/
+
 .sidebar {
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
+  height: 100%; 
+  width: 0; 
+  position: fixed; 
+  z-index: 1; 
   top: 0;
   left: 0;
-  background-color: rgb(227, 229, 240); /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+  background-color: rgb(227, 229, 240);
+  overflow-x: hidden; 
+  padding-top: 60px; 
+  transition: 0.5s; 
   overflow: hidden;
 }
-
-
-/* The sidebar links */
-.sidebar a {
-  padding: 8px 8px 8px 8px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #000000;
-  display: block;
-  transition: 0.3s;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidebar a:hover {
-  color: #949191;
-}
-
-/* Position and style the close button (top right corner) */
-.sidebar .closebtn {
-  position: absolute;
-  display: inline-block;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-#sidebarbottom {
-  height: 68%;/*Only for the demo.*/
-  display: flex;
-  align-items: flex-end;
-}
-
-/* End of sidebar stuff */
-
-
 /** All the stuff that goes to the header
  * Includes searchbars, welcome text, and hamburger menu
  */
+
 header {
   transition: margin-left .5s;
   padding: 10px;

@@ -2,21 +2,34 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calendar Demo</title>
-    <link rel="stylesheet" href="calendar-style.css">
-    <script type="module" src="calendar.js"></script>
-    <script type="module" src="sidebar.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Logo -->
+  <link rel="icon" type="image/jpeg" href="/source/frontend/assets/mini-logo.svg">
+
+  <!-- Nunito Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
+
+  <title>Calendar Demo</title>
+  <link rel="stylesheet" href="calendar-style.css">
+  <script type="module" src="calendar.js"></script>
+  <script type="module" src="sidebar.js"></script>
 </head>
 
 <body>
   <!--Sidebar-->
   <div id="mySidebar" class="sidebar">
     <!--Make sure close button is next to title-->
-  <div id = "title">
-    <object data = "bujo-logo.svg" id = "logo"></object>
-      <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
+    <div id="title">
+      <object data="bujo-logo.svg" id="logo"></object>
+      <a href="javascript:void(0)" class="closebtn" id='closebtn'>&times;</a>
     </div>
     <!--Remember to put in icons-->
     <a href="#">Dashboard</a>
@@ -24,42 +37,59 @@
     <a href="#">Tasks</a>
     <a href="#">Habit Tracker</a>
     <a href="#">Journal</a>
-    <div id = "sidebarbottom">
-      <a href = "#">Settings</a>
-    </div> 
+
+    <!-- <div id="sidebarbottom">
+      <a href="#">Settings</a>
+    </div> -->
   </div>
 
-  <div id = "main">
-     <!--Try to make it change color on hover-->
-     <div id = "openbtn" class = "hamburger" style = "display: inline-block">
-      <div class = "hamburger-bar"></div>
-      <div class = "hamburger-bar"></div>
-      <div class = "hamburger-bar"></div>
-     </div>
+  <div id="main">
+    <!--Try to make it change color on hover-->
+    <div id="openbtn" class="hamburger" style="display: inline-block">
+      <div class="hamburger-bar"></div>
+      <div class="hamburger-bar"></div>
+      <div class="hamburger-bar"></div>
+    </div>
     <table>
 
-        <thead>
-            <tr class="monthyear">
-                <td id="backmonth"></td>
-                <td id="month" colspan="5"></td>
-                <td id="forwardmonth"></td>
-            </tr>
+      <thead>
+        <tr class="monthyear">
+          <!-- <td id="year" colspan="2.5"></td> -->
+          <td id="backmonth" colspan="0.25"></td>
+          <td id="forwardmonth" colspan="0.25"></td>
+          <td id="month" colspan="3.5"></td>
+          <td colspan=".5"><button type="button" class="btn btn-dark">Today</button></td>
+          <td colspan=".5">
+            <div class="dropdown">
+              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Month View
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Month</a>
+                <a class="dropdown-item" href="#">Day</a>
+                <a class="dropdown-item" href="#">Week</a>
+              </div>
+            </div>
+          </td>
+        </tr>
 
-            <tr class="monthyear">
-                <td id="backyear"></td>
-                <td id="year" colspan="5"></td>
-                <td id="forwardyear"></td>
-            </tr>
-        </thead>
 
-        <tbody id="calendar">
-                   
-        </tbody>
+        <tr class="monthyear" style="display:none;">
+          <td id="backyear"></td>
+          <td id="year" colspan="5"></td>
+          <td id="forwardyear"></td>
+        </tr>
+      </thead>
 
-        <!-- <tfoot>blah blah blah</tfoot> --- maybe use the footer later -->
+      <tbody id="calendar">
+
+      </tbody>
+
+      <!-- <tfoot>blah blah blah</tfoot> --- maybe use the footer later -->
 
     </table>
- </div>
+  </div>
 
 
 </body>
