@@ -34,12 +34,52 @@ forwardyear.innerHTML = '<img src="forward.png" alt="forward" width="32" height=
 
 // Date MM/DD/YYYY/X:  Bullet name
 // X is some random identifier
-let testData = {
-  '05/07/2021_1': 'Walk Dog',
-  '05/08/2021_2': 'Feed Dog',
-  '05/10/2021_3': 'Test',
-  '05/07/2021_4': 'Eat',
-  '05/10/2021_5': 'Hi Edmund'
+const testData = {
+  id_1: {
+    type: 'task', // task, event, note
+    title: 'Walk Dog',
+    date: '05/07/2021'
+  },
+  id_2: {
+    type: 'task',
+    title: 'Feed Dog',
+    date: '05/08/2021'
+  },
+  id_3: {
+    type: 'event',
+    title: 'Test',
+    date: '05/10/2021'
+  },
+  id_4: {
+    type: 'event',
+    title: 'Eat',
+    date: '05/07/2021'
+  },
+  id_5: {
+    type: 'note',
+    title: 'Hi Edmund',
+    date: '05/10/2021'
+  },
+  id_6: {
+    type: 'note',
+    title: 'heuhuehue',
+    date: '04/28/2021'
+  },
+  id_7: {
+    type: 'note',
+    title: 'heuhuehue2',
+    date: '05/01/2021'
+  },
+  id_8: {
+    type: 'note',
+    title: 'mwahahaaha',
+    date: '05/30/2021'
+  },
+  id_9: {
+    type: 'note',
+    title: 'mwahahaaha2',
+    date: '06/04/2021'
+  }
 };
 
 backmonth.addEventListener('click', function() {
@@ -49,13 +89,15 @@ backmonth.addEventListener('click', function() {
     yearIn--;
   }
   resetCalendar();
-  populateCalendar(monthIn, yearIn);
+  var data = getDataLocal(monthIn, yearIn);
+  populateCalendar(monthIn, yearIn, data);
 });
 
 backyear.addEventListener('click', function() {
   yearIn--;
   resetCalendar();
-  populateCalendar(monthIn, yearIn);
+  var data = getDataLocal(monthIn, yearIn);
+  populateCalendar(monthIn, yearIn, data);
 });
 
 forwardmonth.addEventListener('click', function() {
@@ -65,14 +107,46 @@ forwardmonth.addEventListener('click', function() {
     yearIn++;
   }
   resetCalendar();
-  populateCalendar(monthIn, yearIn);
+  var data = getDataLocal(monthIn, yearIn);
+  populateCalendar(monthIn, yearIn, data);
 });
 
 forwardyear.addEventListener('click', function() {
   yearIn++;
   resetCalendar();
-  populateCalendar(monthIn, yearIn);
+  var data = getDataLocal(monthIn, yearIn);
+  populateCalendar(monthIn, yearIn, data);
 });
+
+// updates local storage if there is nothing in it
+function updateLocalStorage(){
+  if (localStorage.getItem("bulletIDs") === null) {
+    let array = [];
+    for (const [key, value] of Object.entries(testData)) {
+      localStorage.setItem(key, JSON.stringify(value));
+      array.push(key);
+    }
+    localStorage.setItem("bulletIDs", array);
+  }
+}
+
+// gets month + - 1 information
+function getDataLocal(month, year){
+  let data = {};
+  if (localStorage.getItem("bulletIDs") === null) {
+    return data;
+  }
+  let bulletIds = localStorage.getItem("bulletIDs").split(",");
+  for(var i=0; i< bulletIds.length; i++){
+    let item = JSON.parse(localStorage.getItem(bulletIds[i]));
+   
+    let date = item['date'].split("/");
+    if(parseInt(date[2])==year && parseInt(date[0])==month){
+      data[bulletIds[i]] = item;
+    }
+  }
+  return data;
+}
 
 function daysInMonth(month, year) {
   return new Date(year, month, 0).getDate();
@@ -85,7 +159,7 @@ function startDate(month, year) {
 
 // populates calender with all of the days of the associated month and year
 // adds click ability to each date
-function populateCalendar(month, year) {
+function populateCalendar(month, year, data) {
   let element;
   let i;
   let start = false;
@@ -122,7 +196,7 @@ function populateCalendar(month, year) {
       }
     }
   }
-  bulletAppend(testData);
+  bulletAppend(data);
 }
 
 // resets calender and inserts header of days of the week
@@ -145,16 +219,19 @@ function resetCalendar() {
 // TO DO make a filter per month or something
 function bulletAppend(bullets) {
   for (const [key, value] of Object.entries(bullets)) {
-    let date = key.split('/')[1];
+    
+    let date = value['date'].split('/')[1];
     let temp = document.getElementById(parseInt(date));
     let event = document.createElement('li');
     if (temp.childNodes.length === 1) {
       temp.appendChild(document.createElement('ul'));
     }
-    event.innerHTML = value;
+    event.innerHTML = value['title'];
     temp.childNodes[1].appendChild(event);
   }
 }
 
+// updateLocalStorage();
+var data = getDataLocal(monthIn, yearIn);
 resetCalendar();
-populateCalendar(monthIn, yearIn);
+populateCalendar(monthIn, yearIn, data);
