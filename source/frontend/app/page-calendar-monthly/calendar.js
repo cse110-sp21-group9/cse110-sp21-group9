@@ -24,12 +24,12 @@ const monthNames = {
   12: 'December'
 };
 
-const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-backmonth.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>';
+backmonth.innerHTML = '&#10094;';
 backyear.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>';
 
-forwardmonth.innerHTML = '<img src="forward.png" alt="forward" width="32" height="32"/>';
+forwardmonth.innerHTML = '&#10095;';
 forwardyear.innerHTML = '<img src="forward.png" alt="forward" width="32" height="32"/>';
 
 // Date MM/DD/YYYY/X:  Bullet name
@@ -212,7 +212,7 @@ function resetCalendar() {
   });
   calendar.append(element);
   year.innerHTML = yearIn;
-  month.innerHTML = monthNames[monthIn];
+  month.innerHTML = "<div id='monthTitle'><b>"+monthNames[monthIn]+"</b></div>"+"<div id=yearTitle>" + yearIn+"</div>";
 }
 
 // for a specific month only

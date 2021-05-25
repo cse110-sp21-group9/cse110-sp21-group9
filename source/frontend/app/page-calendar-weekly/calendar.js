@@ -24,7 +24,7 @@ const monthNames = {
   11: 'November',
   12: 'December'
 };
-const weekList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const weekList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
 
 backmonth.innerHTML = '<img src= "icons/back.png" alt="back" width="32" height="32"/>';
 backweek.innerHTML = '<img src="icons/back.png" alt="back" width="32" height="32"/>';
