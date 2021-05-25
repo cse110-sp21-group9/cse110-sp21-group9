@@ -5,9 +5,9 @@
 class sidebar extends HTMLElement {
   constructor() {
     super();
-  const template = document.createElement('template');
+    const template = document.createElement('template');
 
-  template.innerHTML = `
+    template.innerHTML = `
     <style>
     .sidebar a {
       padding: 8px 8px 8px 8px;
@@ -61,13 +61,12 @@ class sidebar extends HTMLElement {
     </div>
   `;
 
-  // create a shadow root for this web component
-  this.attachShadow({ mode: 'open' });
+    // create a shadow root for this web component
+    this.attachShadow({ mode: 'open' });
 
-  // attach cloned content of template to shadow DOM
-  this.shadowRoot.appendChild(template.content.cloneNode(true));
+    // attach cloned content of template to shadow DOM
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
 
 window.customElements.define('side-bar', sidebar);
-
