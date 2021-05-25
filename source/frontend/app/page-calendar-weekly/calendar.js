@@ -38,9 +38,9 @@ backmonth.addEventListener('click', function () {
     monthIn = 12
     yearIn--
   }
-  const data = getDataLocal(monthIn, yearIn)
-  resetCalendar(monthIn, yearIn, dayIn)
-  populateWeek(monthIn, yearIn, dayIn, data)
+  const data = getDataLocal(monthIn, yearIn);
+  resetCalendar(monthIn, yearIn, dayIn);
+  populateWeek(monthIn, yearIn, dayIn, data);
 })
 
 backweek.addEventListener('click', function () {
