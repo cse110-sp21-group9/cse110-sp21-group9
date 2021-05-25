@@ -1,5 +1,5 @@
 /** This file opens and closes the sidebar in the dashboard
- *  Credit to: w3schools for a demo on this functionality
+ *  Credit to: w3Schools for a demo on this functionality
 */
 
 // Buttons to open/close sidebar

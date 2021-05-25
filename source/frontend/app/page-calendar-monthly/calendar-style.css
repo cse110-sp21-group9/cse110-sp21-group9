@@ -1,53 +1,32 @@
-.dropdown-check-list {
-    display: inline-block;
-}
-  
-.dropdown-check-list .anchor {
-  position: relative;
-  cursor: pointer;
-  display: inline-block;
-  padding: 5px 50px 5px 10px;
-  border: 1px solid #ccc;
-}
-  
-.dropdown-check-list .anchor:after {
-  position: absolute;
-  content: "";
-  border-left: 2px solid black;
-  border-top: 2px solid black;
-  padding: 5px;
-  right: 10px;
-  top: 20%;
-  -moz-transform: rotate(-135deg);
-  -ms-transform: rotate(-135deg);
-  -o-transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-  transform: rotate(-135deg);
-}
-  
-.dropdown-check-list .anchor:active:after {
-  right: 8px;
-  top: 21%;
+/**
+ * Stylesheet for calendar.html
+ */
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #333;
+    height: auto;
+    width: auto;
 }
 
-.dropdown-check-list ul.items {
-  padding: 2px;
-  display: none;
-  margin: 0;
-  border: 1px solid #ccc;
-  border-top: none;
+tbody td {
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid #333;
+    width: 10rem;
+    height: 8rem;
 }
 
-.dropdown-check-list ul.items li {
-  list-style: none;
+thead {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
 }
 
-.dropdown-check-list.visible .anchor {
-  color: #0094ff;
-}
-
-.dropdown-check-list.visible .items {
-  display: block;
+.monthyear {
+    height: 3rem;
+<<<<<<< HEAD:source/frontend/app/page-calendar/calendar-style.css
 }
 
 /* The sidebar menu */
@@ -58,8 +37,6 @@
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  border-radius: 25px;
-  border: 2px solid black;
   background-color: rgb(227, 229, 240); /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
@@ -121,3 +98,6 @@
   padding: 20px;
 }
 
+=======
+}
+>>>>>>> 02481e8a88b45a474f8ac94b71a18681e9f15688:source/frontend/app/page-calendar-monthly/calendar-style.css

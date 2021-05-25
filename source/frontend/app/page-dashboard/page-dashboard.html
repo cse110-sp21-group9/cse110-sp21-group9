@@ -1,3 +1,7 @@
+<!--TODOs: Make sure close button is next to title logo
+           Make sure icons are next to user's name and each tab on sidebar
+           Unique names for unique users
+           Better hamburger menu highlight?-->
 <!DOCTYPE html>
 <html lang = "en">
   <head>
@@ -14,16 +18,17 @@
   <body>
     <!--Sidebar-->
     <div id="mySidebar" class="sidebar">
-      <!--Make sure close button is next to title-->
+      <!--TODO: Make sure close button is next to title-->
       <div id = "title">
         <object data = "bujo-logo.svg" id = "logo"></object>
         <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
       </div>
-      <!--Remember to put in icons-->
+      <!--TODO: Remember to put in icons next to each tab-->
       <a href="#">Dashboard</a>
       <a href="#">Calendar</a>
       <a href="#">Tasks</a>
-      <a href="#">Habit Tracker</a>
+      <!--Unused--
+      <a href="#">Habit Tracker</a-->
       <a href="#">Journal</a>
       <div id = "sidebarbottom">
         <a href = "#">Settings</a>
@@ -31,61 +36,75 @@
     </div>
 
     <div id="main">
-      <!--Try to make it change color on hover-->
+    <header>
       <div id = "openbtn" class = "hamburger" style = "display: inline-block">
         <div class = "hamburger-bar"></div>
         <div class = "hamburger-bar"></div>
         <div class = "hamburger-bar"></div>
       </div>
-      <!--Search bar. Remember to format correctly-->
-      <div id = "searchbar" style = "display: inline-block">
-        <label for = "search">Search</label>
-        <input type = "text">
+      <!--Search bar-->
+      <div id = "searchbar" class = "form-group">
+        <input type = "text" class = "form-control input-lg" placeholder = "Search">
       </div>
-      <!--Remember to give proper icon-->
-      <div style = "text-align: right; display: inline-block">
-        <h1 class = "text-align: right">Welcome back, "insert name here"</h1>
-      </div>
+      <!--TODO: Remember to paste user icon right next to name-->
+      <!--TODO: Change name according to each user-->
+        <h1 id = "welcome">Welcome back, Daisuke</h1>
      <br>
+    </header>
+      <!--Try to make it change color on hover-->
 
-     <!--Calendar widget-->
-    <!--<template id = "calendar">-->
+    <!--</template>-->
+    <!--Journal Widget-->
+    <div id = "dashboard">
+      <div id = "journal">
+        <div class = "aspect-ratio-box-inside">
+          <h3>Journal</h3>
+          <p>A startlingly long wall of text</p><br>
+          <ul>
+            <li>I finished this dashboard, maybe</li><br>
+            <li><input type = "checkbox" id = "task">
+            <label for = 'task'>Finish this dashboard</label></li><br>
+            <li>2AM: Meet to create Japanese Language Table Doc</li>
+          </ul>
+        </div >
+      </div>
+
+    <!--Calendar widget-->
+    <div id = right-side>
       <div id = "calendar">
-       <h3>Calendar</h3>
+        <div class = "aspect-ratio-box-inside">
+          <h3>Calendar</h3>
+        <p>A wall of text</p>
+        </div>
        <!--I guess dump a calendar object here?-->
       </div>
-    <!--</template>
 
-     <!--Task list widget-->
+    <!--Weather Widget(?) Weather is a placeholder-->
+      <div id = "weather" class = "aspect-ratio-box-inside">
+        <div class = "aspect-ratio-box-inside">
+          <h3>Some other widget</h3>
+          <p>A wall of more text</p>
+        </div>
+      </div>
+      </div>
+     </div>
+    </div>
+
+    <!--Tracker Widget (unused)--
+    <div id = "tracker">
+        <h3>Tracker</h3>
+    </div-->
+
+    <!--Task list widget-->
     <!--<template id = "tasklist">-->
-     <div id = "tasklist" style = "text-align: left">
+     <!--div id = "tasklist" style = "text-align: left">
       <h3 style = "text-align: left;">Tasks</h3>
-        <!--Dump a checklist here here-->
+        <!--Dump a checklist here here--
         <div id = 'taskboxes'>
           <label for = "task1">Walk Dog</label>
           <input type = 'checkbox' id = 'task1' >
         </div>
-     </div>
-    <!--</template>-->
-
-    <!--Weather Widget(?)-->
-    <!--template id = "weather"-->
-      <div id = "weather" style = "text-align: right">
-        <h3>Weather</h3>
-      </div>
-    <!--/template-->
-
-    <!--Tracker Widget-->
-    <div id = "tracker">
-        <h3>Tracker</h3>
-    </div>
-
-    <!--Journal Widget-->
-    <!--template id = 'journal'-->
-      <div id = "journal" style = "text-align: right">
-        <h3>Journal</h3>
-      </div>
-    <!--/template-->
+     </div>-->
 
     </div>
   </body>

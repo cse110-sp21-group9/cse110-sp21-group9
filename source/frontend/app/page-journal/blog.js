@@ -1,3 +1,10 @@
+/** This file handles a lot of the event listeners associated with a CRUD
+ *  application. It makes sure all created bullets and tags are registered
+ *  on the DOM. It also calls on methods from crudFunctions.js to properly
+ *  implement the CRUD functions.
+ *  TODO: Ability to edit and delete tags
+ */
+
 /* eslint-env jquery */
 // import "./DOMPurify/dist/purify.min.js";
 import * as crud from './crudFunctions.js';
@@ -75,7 +82,10 @@ confirmBtn.addEventListener('click', function() {
   confirmBtn.value = 'true';
 });
 
-/* opens the delete dialog box */
+/** Opens the delete dialog box and listens for delete button to get clicked
+ *  @param {bullet} elemEntry the bullet we want to delete
+ *  @return null
+*/
 function openDeleteDialog(elemEntry) {
   confirmBtn.addEventListener('click', function() {
     deleteBulletEntry(elemEntry);
@@ -83,7 +93,11 @@ function openDeleteDialog(elemEntry) {
   });
 }
 
-/* companion function to openDeleteDialog, removes the event listener and deletes the entry if ok was clicked */
+/** Companion function to openDeleteDialog. Removes the event listener and
+ *  deletes entry if ok was clicked
+ *  @param {bullet} elemEntry the bullet we want to delete
+ *  @return null
+ */
 function deleteBulletEntry(elemEntry) {
   confirmBox.onclose = null;
   if (confirmBtn.value === 'false') return;
@@ -92,7 +106,11 @@ function deleteBulletEntry(elemEntry) {
   elemEntry.remove();
 }
 
-/* opens edit dialog box and saves edits if esave is true */
+/** Opens edit dialog box and saves edits if the associated event listener is
+ *  triggered
+ *  @param {bullet} elemEntry the bullet we want to edit
+ *  @return a modal to edit a bullet.
+*/
 function openEditDialog(elemEntry) {
   let entryBullet = crud.getBulletById(elemEntry.id);
 
@@ -108,6 +126,10 @@ function openEditDialog(elemEntry) {
   // TODO:Add functionality to edit type and tags
 }
 
+/** Edits a bullet's information and replaces it on storage
+ *  @param {bullet} elemEntry the bullet we want to edit
+ *  @return the modified bullet in storage and the DOM
+ */
 function editBulletEntry(elemEntry) {
   crud.setBulletAttributes(elemEntry.id, {
     title: editTitle.value,
@@ -119,7 +141,12 @@ function editBulletEntry(elemEntry) {
   editBullet.onclose = null;
 }
 
-// helper function to add text to bullet entry
+/** helper function to add text to bullet entry
+ *  @param {string} strTitle the bullet's title
+ *  @param {string} strText the bullet's text
+ *  @param {bullet} elemParent tbh no idea what this one does
+ *  @return null
+ */
 function appendTextNode(strTitle, strText, elemParent) {
   let elemBold = document.createElement('b');
 
@@ -128,7 +155,13 @@ function appendTextNode(strTitle, strText, elemParent) {
   elemParent.append(document.createTextNode(strText));
 }
 
-// helper function to add buttons to bullet entry
+/** helper function to add buttons to bullet entry
+ *  @param {string} strDisp what we want the bullet to read on the DOM
+ *  @param {string} strStyle the style we want the button in
+ *  @param {string} strClass what kind of button
+ *  @param {bullet} elemParent the bullet we want to tie the button to
+ *  @return a button
+ */
 function appendButton(strDisp, strStyle, strClass, elemParent) {
   let elemButton = document.createElement('BUTTON');
   let elemText = document.createTextNode(strDisp);
@@ -141,10 +174,9 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
   return elemButton;
 }
 
-/**
- * create a bullet entry element
- * @param {number} intBulletID - the bullet's numerical ID
- * @return {li} a list (bullet) object
+/** Create a bullet entry element
+ *  @param {number} intBulletID - the bullet's numerical ID
+ *  @return {li} a list (bullet) object
  */
 function createBulletEntryElem(intBulletID) {
   let newEntry = document.createElement('li');
