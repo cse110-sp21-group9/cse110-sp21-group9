@@ -9,7 +9,7 @@
  *  Completed: Add type and tag functionality
 */
 
-let runTimeBullets = {};
+const runTimeBullets = {};
 let tagList = [];
 let runTimeUpToDate = false;
 let lastID; // this is bad
@@ -25,7 +25,7 @@ const IDArray = [];
  *  @return null
  */
 export function setBulletAttributes(intID, objData = null, strType = null, dateDate = null, lstTags = null) {
-  let bullet = Object.assign({}, runTimeBullets[intID]); // make a shallow copy first
+  const bullet = Object.assign({}, runTimeBullets[intID]); // make a shallow copy first
   if (objData) {
     bullet.data = objData;
   }
@@ -48,7 +48,7 @@ export function setBulletAttributes(intID, objData = null, strType = null, dateD
  *  @return a list of bullets that should be returned
  */
 export function getBulletsByDateRange(dateStart, dateEnd, objOption = null) {
-  let bulletsToReturn = [];
+  const bulletsToReturn = [];
   for (const [ID, bullet] of Object.entries(runTimeBullets)) {
     if (bullet.date >= dateStart && bullet.date < dateEnd) {
       bulletsToReturn.push(bullet);
@@ -187,7 +187,7 @@ function updateBulletInStorage(objBullet) {
 function writeBulletToStorage(objBullet) {
   runTimeBullets[objBullet.ID] = objBullet;
   localStorage.setItem(objBullet.ID, JSON.stringify(objBullet));
-  let bulletIDs = readArrayFromStorage('bulletIDs');
+  const bulletIDs = readArrayFromStorage('bulletIDs');
   console.log(bulletIDs);
   bulletIDs.push(objBullet.ID);
   localStorage.setItem('lastID', lastID);
@@ -202,7 +202,7 @@ function deleteBulletFromStorage(intID) {
   localStorage.removeItem(intID);
 
   // possibly can be made more efficient or just outsource to API
-  let bulletIDs = readArrayFromStorage('bulletIDs');
+  const bulletIDs = readArrayFromStorage('bulletIDs');
   const bulletIndex = bulletIDs.indexOf(intID);
   bulletIDs.splice(bulletIndex, 1);
   writeArrayToStorage('bulletIDs', bulletIDs);
@@ -222,7 +222,7 @@ function fillRunTimeBullets() {
   }
 
   lastID = Number(lastID);
-  let bulletIDs = readArrayFromStorage('bulletIDs');
+  const bulletIDs = readArrayFromStorage('bulletIDs');
   console.log('loaded bullet ids: ', bulletIDs);
   for (const ID of bulletIDs) {
     runTimeBullets[ID] = JSON.parse(localStorage.getItem(ID));
@@ -238,7 +238,7 @@ function fillRunTimeBullets() {
  *  @return null
  */
 function fillRunTimeTags() {
-  let tags = localStorage.getItem('tags');
+  const tags = localStorage.getItem('tags');
   console.log(tags);
   if (tagList == null || tagList === 'null') {
     tagList = [];
@@ -261,7 +261,7 @@ function writeArrayToStorage(strKey, lstArray) {
  *  @return the array we want to read
  */
 function readArrayFromStorage(strArrayKey) {
-  let array = localStorage.getItem(strArrayKey);
+  const array = localStorage.getItem(strArrayKey);
   // JSON.parse(array)['array'] turned to JSON.parse(array).'array'
   return JSON.parse(array).array;
 }
@@ -271,10 +271,10 @@ function readArrayFromStorage(strArrayKey) {
  */
 function updateTags() {
   // taglist is already defined
-  let checkList = document.getElementById('tags');
+  const checkList = document.getElementById('tags');
   for (const tag in tagList) {
     // create checkbox
-    let options = document.createElement('input');
+    const options = document.createElement('input');
 
     // specify element attributes
     options.setAttribute('type', 'checkbox');
@@ -282,7 +282,7 @@ function updateTags() {
     options.setAttribute('name', tagList[tag]);
 
     // create label for checkbox and define attributes
-    let label = document.createElement('label');
+    const label = document.createElement('label');
     label.setAttribute('for', tagList[tag]);
 
     // append text to the label
@@ -299,13 +299,13 @@ function updateTags() {
  */
 // this function takes the user's specified tag entries and loads it onto the bullet object we are creating
 export function getCheckBoxResults() {
-  let chosenTags = [];
+  const chosenTags = [];
   if (tagList.size === 0) {
     return chosenTags;
   }
 
-  let options = document.querySelectorAll('input[type = "checkbox"]:checked');
-  for (let checkbox of options) {
+  const options = document.querySelectorAll('input[type = "checkbox"]:checked');
+  for (const checkbox of options) {
     chosenTags.push(checkbox.value);
   }
   return chosenTags;
@@ -316,18 +316,18 @@ export function getCheckBoxResults() {
  *  @return null
  */
 function editTags() {
-  let checkList = document.getElementById('edittag');
+  const checkList = document.getElementById('edittag');
   // using tagList defined earlier
   for (const tag in tagList) {
     // create checkbox
-    let options = document.createElement('input');
+    const options = document.createElement('input');
     // specify element attributes
     options.setAttribute('type', 'checkbox');
     options.setAttribute('value', tagList[tag]);
     options.setAttribute('name', tagList[tag]);
 
     // create label for checkbox and define attributes
-    let label = document.createElement('label');
+    const label = document.createElement('label');
     label.setAttribute('for', tagList[tag]);
 
     // append text to the label
@@ -343,7 +343,7 @@ function editTags() {
  *  @returns The bullet's selected type
  */
 export function getType() {
-  let opt = document.getElementById('type').value;
+  const opt = document.getElementById('type').value;
   return opt;
 }
 

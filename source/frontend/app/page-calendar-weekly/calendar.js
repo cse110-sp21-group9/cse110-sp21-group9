@@ -38,8 +38,9 @@ backmonth.addEventListener('click', function() {
     monthIn = 12;
     yearIn--;
   }
+  const data = getDataLocal(monthIn, yearIn);
   resetCalendar(monthIn, yearIn, dayIn);
-  populateWeek(monthIn, yearIn, dayIn, testData);
+  populateWeek(monthIn, yearIn, dayIn, data);
 });
 
 backweek.addEventListener('click', function() {
@@ -53,8 +54,9 @@ backweek.addEventListener('click', function() {
   } else {
     dayIn = dayIn - 7;
   }
+  const data = getDataLocal(monthIn, yearIn);
   resetCalendar(monthIn, yearIn, dayIn);
-  populateWeek(monthIn, yearIn, dayIn, testData);
+  populateWeek(monthIn, yearIn, dayIn, data);
 });
 
 forwardmonth.addEventListener('click', function() {
@@ -63,8 +65,9 @@ forwardmonth.addEventListener('click', function() {
     monthIn = 1;
     yearIn++;
   }
+  const data = getDataLocal(monthIn, yearIn);
   resetCalendar(monthIn, yearIn, dayIn);
-  populateWeek(monthIn, yearIn, dayIn, testData);
+  populateWeek(monthIn, yearIn, dayIn, data);
 });
 
 forwardweek.addEventListener('click', function() {
@@ -78,8 +81,9 @@ forwardweek.addEventListener('click', function() {
   } else {
     dayIn = dayIn + 7;
   }
+  const data = getDataLocal(monthIn, yearIn);
   resetCalendar(monthIn, yearIn, dayIn);
-  populateWeek(monthIn, yearIn, dayIn, testData);
+  populateWeek(monthIn, yearIn, dayIn, data);
 });
 
 const testData = {
@@ -127,8 +131,43 @@ const testData = {
     type: 'note',
     title: 'mwahahaaha2',
     date: '06/04/2021'
+  },
+  id_10: {
+    type: 'note',
+    title: 'break',
+    date: '12/31/2020'
   }
 };
+
+// updates local storage if there is nothing in it
+function updateLocalStorage() {
+  if (localStorage.getItem('bulletIDs') === null) {
+    const array = [];
+    for (const [key, value] of Object.entries(testData)) {
+      localStorage.setItem(key, JSON.stringify(value));
+      array.push(key);
+    }
+    localStorage.setItem('bulletIDs', array);
+  }
+}
+
+// gets month + - 1 information
+function getDataLocal(month, year) {
+  const data = {};
+  if (localStorage.getItem('bulletIDs') === null) {
+    return data;
+  }
+  const bulletIds = localStorage.getItem('bulletIDs').split(',');
+  for (let i = 0; i < bulletIds.length; i++) {
+    const item = JSON.parse(localStorage.getItem(bulletIds[i]));
+
+    const date = item.date.split('/');
+    if (parseInt(date[2]) === year && (parseInt(date[0]) >= month - 1 && parseInt(date[0]) <= month + 1)) {
+      data[bulletIds[i]] = item;
+    }
+  }
+  return data;
+}
 
 function daysInMonth(month, year) {
   return new Date(year, month, 0).getDate();
@@ -140,11 +179,20 @@ function startEndWeek(month, year, day) {
   let dayWeek = new Date(year, month - 1, day); // 0 is sunday, 1 is monday, ..., 6 is saturday
   dayWeek = dayWeek.getDay();
   if (day - dayWeek < 0) { // start from prev month
-    temp = daysInMonth(month - 1, year);
-    return [temp + day - dayWeek, month - 1, 6 - dayWeek + day, month];
+    if (month - 1 < 1) {
+      temp = daysInMonth(12, year);
+      return [temp + day - dayWeek, 12, 6 - dayWeek + day, month];
+    } else {
+      temp = daysInMonth(month - 1, year);
+      return [temp + day - dayWeek, month - 1, 6 - dayWeek + day, month];
+    }
   } else if (day - dayWeek + 6 > daysInMonth(month, year)) { // end in next month
     temp = daysInMonth(month, year);
-    return [day - dayWeek, month, 6 - (temp - (day - dayWeek)), month + 1];
+    if (month + 1 > 12) {
+      return [day - dayWeek, month, 6 - (temp - (day - dayWeek)), 1];
+    } else {
+      return [day - dayWeek, month, 6 - (temp - (day - dayWeek)), month + 1];
+    }
   } else { // in month
     return [day - dayWeek, month, day - dayWeek + 6, month];
   }
@@ -152,19 +200,19 @@ function startEndWeek(month, year, day) {
 
 // limits is 4 tuple of start of week to end of week
 function weekEvents(limits, bullets) {
-  let list = [];
+  const list = [];
   for (const [key, value] of Object.entries(bullets)) {
-    let currDay = value.date.split('/');
-    if (limits[1] === limits[3] && currDay[0] === limits[1]) { // in month
-      if (currDay[1] >= limits[0] && currDay[1] <= limits[2]) {
+    const currDay = value.date.split('/');
+    if (limits[1] === limits[3] && parseInt(currDay[0]) === limits[1]) { // in month
+      if (parseInt(currDay[1]) >= limits[0] && parseInt(currDay[1]) <= limits[2]) {
         list.push(key);
       }
-    } else if ((currDay[0] === limits[1] && currDay[1] >= limits[0]) ||
-      (currDay[0] === limits[3] && currDay[1] <= limits[2])) {
+    } else if ((parseInt(currDay[0]) === limits[1] && parseInt(currDay[1]) >= limits[0]) ||
+      (parseInt(currDay[0]) === limits[3] && parseInt(currDay[1]) <= limits[2])) {
       // start from prev month
       list.push(key);
-    } else if ((currDay[0] === limits[1] && currDay[1] >= limits[0]) ||
-      (currDay[0] === limits[3] && currDay[1] <= limits[2])) {
+    } else if ((parseInt(currDay[0]) === limits[1] && parseInt(currDay[1]) >= limits[0]) ||
+      (parseInt(currDay[0]) === limits[3] && parseInt(currDay[1]) <= limits[2])) {
       // end in next month
       list.push(key);
     }
@@ -173,34 +221,35 @@ function weekEvents(limits, bullets) {
 }
 
 function resetCalendar(m, y, d) {
-  let element = document.createElement('tr');
+  const element = document.createElement('tr');
   element.setAttribute('id', 'weekdaysrow');
   while (calendar.firstChild) {
     calendar.removeChild(calendar.firstChild);
   }
 
-  let bounds = startEndWeek(m, y, d);
+  const bounds = startEndWeek(m, y, d);
+
   let i;
   if (bounds[0] === bounds[2]) {
     for (i = 0; i < weekList.length; i++) {
       const number = bounds[1] + '/' + (bounds[0] + i);
-      let date = document.createElement('td');
+      const date = document.createElement('td');
       date.setAttribute('id', number);
       date.innerHTML = number;
       element.appendChild(date);
     }
   } else {
     for (i = 0; i < weekList.length; i++) {
-      let temp = bounds[0] + i;
+      const temp = bounds[0] + i;
       if (temp > daysInMonth(bounds[1], y)) {
         const number = bounds[3] + '/' + (bounds[2] - 6 + i);
-        let date = document.createElement('td');
+        const date = document.createElement('td');
         date.setAttribute('id', number);
         date.innerHTML = number;
         element.appendChild(date);
       } else {
         const number = bounds[1] + '/' + temp;
-        let date = document.createElement('td');
+        const date = document.createElement('td');
         date.setAttribute('id', number);
         date.innerHTML = number;
         element.appendChild(date);
@@ -214,14 +263,14 @@ function resetCalendar(m, y, d) {
 }
 
 function populateWeek(month, year, day, bullets) {
-  let bounds = startEndWeek(month, year, day);
-  let events = weekEvents(bounds, bullets);
+  const bounds = startEndWeek(month, year, day);
+  const events = weekEvents(bounds, bullets);
   events.forEach(function(e) {
-    let details = bullets[e];
-    let currDay = details.date.split('/');
-    let dayofWeek = parseInt(currDay[0]) + '/' + parseInt(currDay[1]);
-    let temp = document.getElementById(dayofWeek);
-    let event = document.createElement('li');
+    const details = bullets[e];
+    const currDay = details.date.split('/');
+    const dayofWeek = parseInt(currDay[0]) + '/' + parseInt(currDay[1]);
+    const temp = document.getElementById(dayofWeek);
+    const event = document.createElement('li');
     if (temp.childNodes.length === 1) {
       temp.appendChild(document.createElement('ul'));
     } if (bullets[e].type === 'note') {
@@ -253,14 +302,14 @@ function populateWeek(month, year, day, bullets) {
   });
 }
 
-const temp = startEndWeek(5, 2021, 31);
-console.log(temp);
 yearIn = 2021;
 monthIn = 5;
-dayIn = 10;
+dayIn = 5;
 /*
 console.log(temp);
 console.log(weekEvents(temp,testData));
 */
+// updateLocalStorage();
+const data = getDataLocal(monthIn, yearIn);
 resetCalendar(monthIn, yearIn, dayIn);
-populateWeek(monthIn, yearIn, dayIn, testData);
+populateWeek(monthIn, yearIn, dayIn, data);
