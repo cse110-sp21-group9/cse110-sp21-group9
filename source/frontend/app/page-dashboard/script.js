@@ -1,10 +1,13 @@
-/** This file opens and closes the sidebar in the dashboard
+/** This file creates, opens, and closes the sidebar in the dashboard
  *  Credit to: w3schools for a demo on this functionality
 */
-
 // Buttons to open/close sidebar
+const sideBar = document.querySelector('side-bar');
+console.log(sideBar);
+const docBar = document.querySelector('[class = "sidebar"]');
 const sideBarOpener = document.getElementById('openbtn');
-const sideBarCloser = document.getElementById('closebtn');
+const sideBarCloser = sideBar.shadowRoot.getElementById('closebtn');
+console.log(sideBarCloser);
 
 // Open sidebar when you click this button
 sideBarOpener.addEventListener('click', function() {
@@ -20,7 +23,7 @@ sideBarCloser.addEventListener('click', function() {
  * @return null
  */
 function openSidebar() {
-  document.getElementById('mySidebar').style.width = '250px';
+  docBar.style.width = '250px';
   document.getElementById('main').style.marginLeft = '250px';
 }
 
@@ -28,6 +31,6 @@ function openSidebar() {
  * @return null
  */
 function closeSidebar() {
-  document.getElementById('mySidebar').style.width = '0';
+  docBar.style.width = '0';
   document.getElementById('main').style.marginLeft = '0';
 }

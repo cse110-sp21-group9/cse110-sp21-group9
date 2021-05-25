@@ -12,29 +12,15 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-    <script type = "module" src = "sidebar.js"></script>
+    <script type = "module" src = "../../components/sidebar.js"></script>
+    <script type = "module" src = "script.js"></script>
     <link rel = "stylesheet" href = "style.css">
   </head>
   <body>
     <!--Sidebar-->
-    <div id="mySidebar" class="sidebar">
-      <!--TODO: Make sure close button is next to title-->
-      <div id = "title">
-        <object data = "bujo-logo.svg" id = "logo"></object>
-        <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
-      </div>
-      <!--TODO: Remember to put in icons next to each tab-->
-      <a href="#">Dashboard</a>
-      <a href="#">Calendar</a>
-      <a href="#">Tasks</a>
-      <!--Unused--
-      <a href="#">Habit Tracker</a-->
-      <a href="#">Journal</a>
-      <div id = "sidebarbottom">
-        <a href = "#">Settings</a>
-      </div> 
+    <div class = "sidebar">
+      <side-bar></side-bar>
     </div>
-
     <div id="main">
     <header>
       <div id = "openbtn" class = "hamburger" style = "display: inline-block">
@@ -89,23 +75,6 @@
       </div>
      </div>
     </div>
-
-    <!--Tracker Widget (unused)--
-    <div id = "tracker">
-        <h3>Tracker</h3>
-    </div-->
-
-    <!--Task list widget-->
-    <!--<template id = "tasklist">-->
-     <!--div id = "tasklist" style = "text-align: left">
-      <h3 style = "text-align: left;">Tasks</h3>
-        <!--Dump a checklist here here--
-        <div id = 'taskboxes'>
-          <label for = "task1">Walk Dog</label>
-          <input type = 'checkbox' id = 'task1' >
-        </div>
-     </div>-->
-
     </div>
   </body>
 </html>
