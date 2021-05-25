@@ -17,7 +17,6 @@ class sidebar extends HTMLElement {
       display: block;
       transition: 0.3s;
     }
-
     
     .sidebar a:hover {
       color: #949191;
@@ -37,18 +36,10 @@ class sidebar extends HTMLElement {
       display: flex;
       align-items: flex-end;
    }
-  
-
-  #main {
-    transition: margin-left .5s; 
-    padding: 20px;
-    width: 95%;
-    height: 100vh;
-  }
   </style>
     <div class="sidebar">
       <div id = "title">
-        <object data = "bujo-logo.svg" id = "logo"></object>
+        <object data = "../../assets/bujo-logo.svg" id = "logo"></object>
         <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
       </div>
       <a href="#">Dashboard</a>
