@@ -1,7 +1,7 @@
-const calendarBody = document.getElementById('calendar-body')
-
-const COLUMNS = 8
-const ROWS = 6
+const calendarBody = document.getElementById('calendar-body');
+console.log(calendarBody);
+const COLUMNS = 8;
+const ROWS = 6;
 
 /*
 * custom element for a mini calander that can have days and weeks selected
@@ -9,11 +9,11 @@ const ROWS = 6
 * note: in order for call backs to work they must be bound before calling set calendar
 */
 class MiniCalendar extends HTMLElement {
-  constructor () {
-    super()
-    this.dayCallBack = null
-    this.weekCallBack = null
-    const template = document.createElement('template')
+  constructor() {
+    super();
+    this.dayCallBack = null;
+    this.weekCallBack = null;
+    const template = document.createElement('template');
     template.innerHTML = `
       <style>
         #calendar{
@@ -104,9 +104,9 @@ class MiniCalendar extends HTMLElement {
         <tbody id="calendar-body">
         </tbody>
       </table>
-    `
-    this.attachShadow({ mode: 'open' })
-    this.shadowRoot.appendChild(template.content.cloneNode(true))
+    `;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   /*
@@ -116,42 +116,42 @@ class MiniCalendar extends HTMLElement {
   *
   * note: in order for callbacks to work the callbacks must be bound before calling setCalendar
   */
-  setCalendar (date, selectDay = true, selectWeek = true) {
-    const calendarBody = this.shadowRoot.querySelector('#calendar-body')
-    const startDay = new Date(date.getYear() + 1900, date.getMonth(), 1).getDay()
-    let dateCounter = -startDay + 1
+  setCalendar(date, selectDay = true, selectWeek = true) {
+    const calendarBody = this.shadowRoot.querySelector('#calendar-body');
+    const startDay = new Date(date.getYear() + 1900, date.getMonth(), 1).getDay();
+    let dateCounter = -startDay + 1;
 
     // first clear the calander
-    while (calendarBody.firstChild) { calendarBody.removeChild(calendarBody.firstChild) }
+    while (calendarBody.firstChild) { calendarBody.removeChild(calendarBody.firstChild); }
 
     // now build new elements
     for (let y = 0; y < ROWS; y++) {
-      const weekElement = document.createElement('tr')
+      const weekElement = document.createElement('tr');
       for (let x = 0; x < COLUMNS; x++) {
-        const dayElement = document.createElement('td')
-        weekElement.appendChild(dayElement)
+        const dayElement = document.createElement('td');
+        weekElement.appendChild(dayElement);
 
-        const currentDate = new Date(date.getYear() + 1900, date.getMonth(), dateCounter)
+        const currentDate = new Date(date.getYear() + 1900, date.getMonth(), dateCounter);
 
         if (x === 0) {
-          dayElement.className = 'week'
-          if (this.weekCallBack !== null) dayElement.onclick = () => { this.weekCallBack(currentDate) }
-          continue
+          dayElement.className = 'week';
+          if (this.weekCallBack !== null) dayElement.onclick = () => { this.weekCallBack(currentDate); };
+          continue;
         }
 
-        if (this.dayCallBack !== null) dayElement.onclick = () => { this.dayCallBack(currentDate) }
+        if (this.dayCallBack !== null) dayElement.onclick = () => { this.dayCallBack(currentDate); };
 
-        dayElement.innerHTML = currentDate.getDate()
-        dayElement.className = 'day'
-        if (currentDate.getMonth() !== date.getMonth()) { dayElement.classList.add('other-month') }
+        dayElement.innerHTML = currentDate.getDate();
+        dayElement.className = 'day';
+        if (currentDate.getMonth() !== date.getMonth()) { dayElement.classList.add('other-month'); }
 
         if (dateCounter === date.getDate()) {
-          if (selectDay) dayElement.classList.add('selected')
-          if (selectWeek) weekElement.childNodes[0].classList.add('selected')
+          if (selectDay) dayElement.classList.add('selected');
+          if (selectWeek) weekElement.childNodes[0].classList.add('selected');
         }
-        dateCounter++
+        dateCounter++;
       }
-      calendarBody.appendChild(weekElement)
+      calendarBody.appendChild(weekElement);
     }
   }
 
@@ -160,8 +160,8 @@ class MiniCalendar extends HTMLElement {
   * the input will be a date object and represents the day that was clicked
   * note: if you wish to unbind the day call back you can pass null into this function, and then call setCalendar
   */
-  bindDayCallBack (callBack) {
-    this.dayCallBack = callBack
+  bindDayCallBack(callBack) {
+    this.dayCallBack = callBack;
   }
 
   /*
@@ -169,9 +169,9 @@ class MiniCalendar extends HTMLElement {
   * the input will be a date object and represents the first day of the week that was clicked
   * note: if you wish to unbind the day call back you can pass null into this function, and then call setCalendar
   */
-  bindWeekCallBack (callBack) {
-    this.weekCallBack = callBack
+  bindWeekCallBack(callBack) {
+    this.weekCallBack = callBack;
   }
 }
 
-customElements.define('mini-calendar', MiniCalendar)
+customElements.define('mini-calendar', MiniCalendar);
