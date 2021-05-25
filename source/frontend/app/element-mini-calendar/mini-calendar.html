@@ -5,38 +5,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar Demo</title>
-    <link rel="stylesheet" href="calendar-style.css">
-    <script type="module" src="calendar.js"></script>
+    <link rel="stylesheet" href="mini-calendar-style.css">
+    <script type="module" src="mini-calendar.js"></script>
 </head>
 
 <body>
-
-    <table>
-
+    <div id="test">
+    <table id = "calendar">
         <thead>
             <tr class="monthyear">
                 <td id="backmonth"></td>
                 <td id="month" colspan="7"></td>
                 <td id="forwardmonth"></td>
             </tr>
-
-            <tr class="monthyear">
-                <td id="backyear"></td>
-                <td id="year" colspan="7"></td>
-                <td id="forwardyear"></td>
+            <tr>
+                <th></th>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
             </tr>
         </thead>
 
-        <tbody id="calendar">
+        <tbody id="calendar-body">
                    
         </tbody>
-
-        <!-- <tfoot>blah blah blah</tfoot> --- maybe use the footer later -->
-
     </table>
-
-
-
+    </div>
 </body>
 
 </html>
