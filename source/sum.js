@@ -10,8 +10,8 @@ function sum (a, b) {
 }
 
 const a = 1
-const b = 2
-const c = sum(a, b)
+const d = 2
+const c = sum(a, d)
 
 console.log(c)
 module.exports = sum
