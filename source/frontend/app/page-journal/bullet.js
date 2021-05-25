@@ -19,7 +19,7 @@ class BulletEntry extends HTMLElement {
     const template = document.getElementById('bulletTemplate');
 
     // get the clone
-    let clone = template.content.cloneNode(true);
+    const clone = template.content.cloneNode(true);
 
     // now we make the necessary changes to the clone
     // const articleElement = clone.querySelector('.bulletEntry'); // not sure if we actually need this reference
