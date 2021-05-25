@@ -10,10 +10,12 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12
   },
+	"ignorePatterns": [".eslintrc.js"],
   rules: {
     'semi': ['error', 'always'],
     'space-before-function-paren': ['error', 'never'],
     'no-var': 'error',
-    'prefer-const': 'warn'
+    'prefer-const': 'warn',
+		'no-unused-vars': 'warn',
   }
 }

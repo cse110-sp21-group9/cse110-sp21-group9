@@ -9,12 +9,12 @@
  *  Completed: Add type and tag functionality
 */
 
-const runTimeBullets = {}
-let tagList = []
-let runTimeUpToDate = false
-let lastID // this is bad
+const runTimeBullets = {};
+let tagList = [];
+let runTimeUpToDate = false;
+let lastID; // this is bad
 // placeholder var to appease linter
-const IDArray = []
+const IDArray = [];
 
 /** Sets the attributes of a bullet object
  *  @param {Number} intID the bullet's ID
@@ -24,22 +24,22 @@ const IDArray = []
  *  @param {Array} lstTags the tags associated to the bullet
  *  @return null
  */
-export function setBulletAttributes (intID, objData = null, strType = null, dateDate = null, lstTags = null) {
-  const bullet = Object.assign({}, runTimeBullets[intID]) // make a shallow copy first
+export function setBulletAttributes(intID, objData = null, strType = null, dateDate = null, lstTags = null) {
+  const bullet = Object.assign({}, runTimeBullets[intID]); // make a shallow copy first
   if (objData) {
-    bullet.data = objData
+    bullet.data = objData;
   }
   if (strType) {
-    bullet.data = objData
+    bullet.data = objData;
   }
   if (dateDate) {
-    bullet.date = dateDate
+    bullet.date = dateDate;
   }
   if (lstTags) {
-    bullet.tags = lstTags
+    bullet.tags = lstTags;
   }
 
-  updateBulletInStorage(bullet)
+  updateBulletInStorage(bullet);
 }
 
 /** Gets all bullets within the specified date range
@@ -47,23 +47,23 @@ export function setBulletAttributes (intID, objData = null, strType = null, date
  *  @param {Date} dateEnd the end date to query from
  *  @return a list of bullets that should be returned
  */
-export function getBulletsByDateRange (dateStart, dateEnd, objOption = null) {
-  const bulletsToReturn = []
+export function getBulletsByDateRange(dateStart, dateEnd, objOption = null) {
+  const bulletsToReturn = [];
   for (const [ID, bullet] of Object.entries(runTimeBullets)) {
     if (bullet.date >= dateStart && bullet.date < dateEnd) {
-      bulletsToReturn.push(bullet)
-      IDArray.push(ID)
+      bulletsToReturn.push(bullet);
+      IDArray.push(ID);
     }
   }
-  return bulletsToReturn
+  return bulletsToReturn;
 }
 
 /** Gets a bullet by the specified ID
  *  @param {Number} intID the bullet's ID
  *  @return the bullet we were looking for
  */
-export function getBulletById (intID, objOption = null) {
-  return runTimeBullets[intID]
+export function getBulletById(intID, objOption = null) {
+  return runTimeBullets[intID];
 }
 
 /**
@@ -74,47 +74,47 @@ export function getBulletById (intID, objOption = null) {
  * @param {Number} intID - Bullet's ID
  * @returns the created bullet object's ID
  */
-export function createBullet (objData, strType, dateDate, lstTags) {
-  let bullet
+export function createBullet(objData, strType, dateDate, lstTags) {
+  let bullet;
   if (strType === 'Note') {
-    lastID++
-    bullet = makeNoteBullet(objData, dateDate, lstTags, lastID)
-    localStorage.setItem('lastID', lastID)
-    writeBulletToStorage(bullet)
+    lastID++;
+    bullet = makeNoteBullet(objData, dateDate, lstTags, lastID);
+    localStorage.setItem('lastID', lastID);
+    writeBulletToStorage(bullet);
   } else if (strType === 'Event') {
     // might need to collect more user input info for this
     // EG: Date and Time of Event
-    lastID++
-    bullet = makeEventBullet(objData, dateDate, lstTags, lastID)
-    localStorage.setItem('lastID', lastID)
-    writeBulletToStorage(bullet)
+    lastID++;
+    bullet = makeEventBullet(objData, dateDate, lstTags, lastID);
+    localStorage.setItem('lastID', lastID);
+    writeBulletToStorage(bullet);
   } else if (strType === 'Task') {
-    lastID++
-    bullet = makeTaskBullet(objData, dateDate, lstTags, lastID)
-    localStorage.setItem('lastID', lastID)
-    writeBulletToStorage(bullet)
+    lastID++;
+    bullet = makeTaskBullet(objData, dateDate, lstTags, lastID);
+    localStorage.setItem('lastID', lastID);
+    writeBulletToStorage(bullet);
   }
 
   // TODO: write ids into local storage array for later querying
-  return bullet.ID
+  return bullet.ID;
 }
 
 /** Deletes a bullet by the specified ID
  *  @param {Number} intID the bullet's ID
  *  @return null
  */
-export function deleteBulletById (intID) {
-  runTimeBullets[intID] = null
-  deleteBulletFromStorage(intID)
+export function deleteBulletById(intID) {
+  runTimeBullets[intID] = null;
+  deleteBulletFromStorage(intID);
 }
 
 /** Renders all bullets and tags onto the DOM
  *  @return null
  */
-export function initCrudRuntime () {
-  fillRunTimeBullets()
-  updateTags()
-  editTags()
+export function initCrudRuntime() {
+  fillRunTimeBullets();
+  updateTags();
+  editTags();
 }
 
 /**
@@ -125,14 +125,14 @@ export function initCrudRuntime () {
  * @param {Number} intID - Bullet's ID
  * @returns A Note Bullet object containing all param info
  */
-function makeNoteBullet (objData, dateDate, lstTags, intID) {
+function makeNoteBullet(objData, dateDate, lstTags, intID) {
   return {
     ID: intID,
     date: dateDate,
     type: 'note',
     tags: lstTags,
     data: objData
-  }
+  };
 }
 
 /** TODO: Might need more parameters
@@ -143,14 +143,14 @@ function makeNoteBullet (objData, dateDate, lstTags, intID) {
  * @param {Number} intID - Bullet's ID
  * @returns An Event Bullet object containing all param info
  */
-function makeEventBullet (objData, dateDate, lstTags, intID) {
+function makeEventBullet(objData, dateDate, lstTags, intID) {
   return {
     ID: intID,
     date: dateDate,
     type: 'event',
     tags: lstTags,
     data: objData
-  }
+  };
 }
 
 /** TODO: Might need more parameters
@@ -161,89 +161,89 @@ function makeEventBullet (objData, dateDate, lstTags, intID) {
  * @param {Number} intID - Bullet's ID
  * @returns A Task Bullet object containing all param info
  */
-function makeTaskBullet (objData, dateDate, lstTags, intID) {
+function makeTaskBullet(objData, dateDate, lstTags, intID) {
   return {
     ID: intID,
     date: dateDate,
     type: 'task',
     tags: lstTags,
     data: objData
-  }
+  };
 }
 
 /** Updates bullets in the storage
  *  @param {Bullet} objBullet the bullet we want to update
  *  @return null
  */
-function updateBulletInStorage (objBullet) {
-  runTimeBullets[objBullet.ID] = objBullet
-  localStorage.setItem(objBullet.ID, JSON.stringify(objBullet))
+function updateBulletInStorage(objBullet) {
+  runTimeBullets[objBullet.ID] = objBullet;
+  localStorage.setItem(objBullet.ID, JSON.stringify(objBullet));
 }
 
 /** Writes bullet to local storage and runtime
  *  @param {Bullet} objBullet the bullet we want to write into storage
  *  @return null
  */
-function writeBulletToStorage (objBullet) {
-  runTimeBullets[objBullet.ID] = objBullet
-  localStorage.setItem(objBullet.ID, JSON.stringify(objBullet))
-  const bulletIDs = readArrayFromStorage('bulletIDs')
-  console.log(bulletIDs)
-  bulletIDs.push(objBullet.ID)
-  localStorage.setItem('lastID', lastID)
-  writeArrayToStorage('bulletIDs', bulletIDs)
+function writeBulletToStorage(objBullet) {
+  runTimeBullets[objBullet.ID] = objBullet;
+  localStorage.setItem(objBullet.ID, JSON.stringify(objBullet));
+  const bulletIDs = readArrayFromStorage('bulletIDs');
+  console.log(bulletIDs);
+  bulletIDs.push(objBullet.ID);
+  localStorage.setItem('lastID', lastID);
+  writeArrayToStorage('bulletIDs', bulletIDs);
 }
 
 /** Deletes a bullet from storage
  *  @param {Number} intID - ID of the bullet we want to delet
  */
-function deleteBulletFromStorage (intID) {
-  intID = Number(intID)
-  localStorage.removeItem(intID)
+function deleteBulletFromStorage(intID) {
+  intID = Number(intID);
+  localStorage.removeItem(intID);
 
   // possibly can be made more efficient or just outsource to API
-  const bulletIDs = readArrayFromStorage('bulletIDs')
-  const bulletIndex = bulletIDs.indexOf(intID)
-  bulletIDs.splice(bulletIndex, 1)
-  writeArrayToStorage('bulletIDs', bulletIDs)
+  const bulletIDs = readArrayFromStorage('bulletIDs');
+  const bulletIndex = bulletIDs.indexOf(intID);
+  bulletIDs.splice(bulletIndex, 1);
+  writeArrayToStorage('bulletIDs', bulletIDs);
 }
 
 /** TODO: should populate the runtime list from local storage
  *  Renders bullets from storage into runtime.
  *  @return null
  */
-function fillRunTimeBullets () {
-  if (runTimeUpToDate) return
-  lastID = localStorage.getItem('lastID')
+function fillRunTimeBullets() {
+  if (runTimeUpToDate) return;
+  lastID = localStorage.getItem('lastID');
   if (lastID === 'null' || lastID == null) {
-    localStorage.setItem('lastID', lastID)
-    lastID = 0
-    writeArrayToStorage('bulletIDs', [])
+    localStorage.setItem('lastID', lastID);
+    lastID = 0;
+    writeArrayToStorage('bulletIDs', []);
   }
 
-  lastID = Number(lastID)
-  const bulletIDs = readArrayFromStorage('bulletIDs')
-  console.log('loaded bullet ids: ', bulletIDs)
+  lastID = Number(lastID);
+  const bulletIDs = readArrayFromStorage('bulletIDs');
+  console.log('loaded bullet ids: ', bulletIDs);
   for (const ID of bulletIDs) {
-    runTimeBullets[ID] = JSON.parse(localStorage.getItem(ID))
-    console.log('loaded bullet object: ', runTimeBullets[ID])
+    runTimeBullets[ID] = JSON.parse(localStorage.getItem(ID));
+    console.log('loaded bullet object: ', runTimeBullets[ID]);
   }
 
   // makes sure tags are also loaded
-  fillRunTimeTags()
-  runTimeUpToDate = true
+  fillRunTimeTags();
+  runTimeUpToDate = true;
 }
 
 /** loads tags from storage
  *  @return null
  */
-function fillRunTimeTags () {
-  const tags = localStorage.getItem('tags')
-  console.log(tags)
+function fillRunTimeTags() {
+  const tags = localStorage.getItem('tags');
+  console.log(tags);
   if (tagList == null || tagList === 'null') {
-    tagList = []
+    tagList = [];
   }
-  console.log('loaded tags: ', tagList)
+  console.log('loaded tags: ', tagList);
 }
 
 /** NOTE: Can be made more efficient or just outsource to API
@@ -252,45 +252,45 @@ function fillRunTimeTags () {
  *  @param {Array} lstArray the array we want to store
  *  @return null
  */
-function writeArrayToStorage (strKey, lstArray) {
-  localStorage.setItem(strKey, JSON.stringify({ array: lstArray }))
+function writeArrayToStorage(strKey, lstArray) {
+  localStorage.setItem(strKey, JSON.stringify({ array: lstArray }));
 }
 
 /** Reads an array given an associated key
  *  @param {string} strArrayKey the array's key
  *  @return the array we want to read
  */
-function readArrayFromStorage (strArrayKey) {
-  const array = localStorage.getItem(strArrayKey)
+function readArrayFromStorage(strArrayKey) {
+  const array = localStorage.getItem(strArrayKey);
   // JSON.parse(array)['array'] turned to JSON.parse(array).'array'
-  return JSON.parse(array).array
+  return JSON.parse(array).array;
 }
 
 /** Creates a checklist in the dialog form of all the tags we have established in tagList
  *  @return null
  */
-function updateTags () {
+function updateTags() {
   // taglist is already defined
-  const checkList = document.getElementById('tags')
+  const checkList = document.getElementById('tags');
   for (const tag in tagList) {
     // create checkbox
-    const options = document.createElement('input')
+    const options = document.createElement('input');
 
     // specify element attributes
-    options.setAttribute('type', 'checkbox')
-    options.setAttribute('value', tagList[tag])
-    options.setAttribute('name', tagList[tag])
+    options.setAttribute('type', 'checkbox');
+    options.setAttribute('value', tagList[tag]);
+    options.setAttribute('name', tagList[tag]);
 
     // create label for checkbox and define attributes
-    const label = document.createElement('label')
-    label.setAttribute('for', tagList[tag])
+    const label = document.createElement('label');
+    label.setAttribute('for', tagList[tag]);
 
     // append text to the label
-    label.appendChild(document.createTextNode(tagList[tag]))
+    label.appendChild(document.createTextNode(tagList[tag]));
 
     // append checkbox and label to the form
-    checkList.appendChild(options)
-    checkList.appendChild(label)
+    checkList.appendChild(options);
+    checkList.appendChild(label);
   }
 }
 
@@ -298,62 +298,62 @@ function updateTags () {
  *  @returns an array containing the names of all tags that the user selected
  */
 // this function takes the user's specified tag entries and loads it onto the bullet object we are creating
-export function getCheckBoxResults () {
-  const chosenTags = []
+export function getCheckBoxResults() {
+  const chosenTags = [];
   if (tagList.size === 0) {
-    return chosenTags
+    return chosenTags;
   }
 
-  const options = document.querySelectorAll('input[type = "checkbox"]:checked')
+  const options = document.querySelectorAll('input[type = "checkbox"]:checked');
   for (const checkbox of options) {
-    chosenTags.push(checkbox.value)
+    chosenTags.push(checkbox.value);
   }
-  return chosenTags
+  return chosenTags;
 }
 
 /** Creates a checklist in the "EditBullet" dialog form to change which tags this bullet has
  *  The checkboxes should be properly checked according to the bullet's stored tags
  *  @return null
  */
-function editTags () {
-  const checkList = document.getElementById('edittag')
+function editTags() {
+  const checkList = document.getElementById('edittag');
   // using tagList defined earlier
   for (const tag in tagList) {
     // create checkbox
-    const options = document.createElement('input')
+    const options = document.createElement('input');
     // specify element attributes
-    options.setAttribute('type', 'checkbox')
-    options.setAttribute('value', tagList[tag])
-    options.setAttribute('name', tagList[tag])
+    options.setAttribute('type', 'checkbox');
+    options.setAttribute('value', tagList[tag]);
+    options.setAttribute('name', tagList[tag]);
 
     // create label for checkbox and define attributes
-    const label = document.createElement('label')
-    label.setAttribute('for', tagList[tag])
+    const label = document.createElement('label');
+    label.setAttribute('for', tagList[tag]);
 
     // append text to the label
-    label.appendChild(document.createTextNode(tagList[tag]))
+    label.appendChild(document.createTextNode(tagList[tag]));
 
     // append checkbox and label to the form
-    checkList.appendChild(options)
-    checkList.appendChild(label)
+    checkList.appendChild(options);
+    checkList.appendChild(label);
   }
 }
 
 /** Gets a bullet's selected type from the creation dialog
  *  @returns The bullet's selected type
  */
-export function getType () {
-  const opt = document.getElementById('type').value
-  return opt
+export function getType() {
+  const opt = document.getElementById('type').value;
+  return opt;
 }
 
 /** Creates a tag based on user's input
  *  @param {string} tagName - The tag's name
  *  @return null
  */
-export function createTag (tagName) {
-  tagList.push(tagName)
-  console.log(tagList)
-  localStorage.setItem('tags', tagList)
-  updateTags()
+export function createTag(tagName) {
+  tagList.push(tagName);
+  console.log(tagList);
+  localStorage.setItem('tags', tagList);
+  updateTags();
 }
