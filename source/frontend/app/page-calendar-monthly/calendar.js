@@ -6,9 +6,9 @@ const forwardmonth = document.getElementById('forwardmonth');
 const backyear = document.getElementById('backyear');
 const forwardyear = document.getElementById('forwardyear');
 
-var monthIn = 5;
-var yearIn = 2021;
-var dayIn = 25;
+let monthIn = 5;
+let yearIn = 2021;
+let dayIn = 25;
 
 const monthNames = {
   1: 'January',
@@ -82,17 +82,17 @@ const testData = {
     date: '2021-06-04T20:00'
   },
   id_10: {
-    type: 'event', 
+    type: 'event',
     title: 'Walk',
     date: '2021-05-07T20:00'
   },
   id_11: {
-    type: 'event', 
+    type: 'event',
     title: 'Walk2',
     date: '2021-05-07T20:00'
   },
   id_12: {
-    type: 'event', 
+    type: 'event',
     title: 'Walk3',
     date: '2021-05-07T20:00'
   },
@@ -100,7 +100,7 @@ const testData = {
     type: 'event',
     title: 'Walk4',
     date: '2021-05-07T20:00'
-  },
+  }
 
 };
 
@@ -114,7 +114,7 @@ backmonth.addEventListener('click', function() {
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
-  let hashed = generateHash(false);
+  const hashed = generateHash(false);
   updateURL(hashed);
 });
 
@@ -123,7 +123,7 @@ backyear.addEventListener('click', function() {
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
-  let hashed = generateHash(false);
+  const hashed = generateHash(false);
   updateURL(hashed);
 });
 
@@ -136,7 +136,7 @@ forwardmonth.addEventListener('click', function() {
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
-  let hashed = generateHash(false);
+  const hashed = generateHash(false);
   updateURL(hashed);
 });
 
@@ -145,7 +145,7 @@ forwardyear.addEventListener('click', function() {
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
-  let hashed = generateHash(false);
+  const hashed = generateHash(false);
   updateURL(hashed);
 });
 
@@ -170,11 +170,11 @@ function getDataLocal(month, year) {
   const bulletIds = localStorage.getItem('bulletIDs').split(',');
   for (let i = 0; i < bulletIds.length; i++) {
     const item = JSON.parse(localStorage.getItem(bulletIds[i]));
-    if(item==null){
+    if (item == null) {
       continue;
     }
-    const date = item.date.split('/');
-    if (parseInt(date[2]) === year && parseInt(date[0]) === month) {
+    const date = item['date'].split('T')[0].split('-');
+    if (parseInt(date[0]) === year && parseInt(date[1]) === month) {
       data[bulletIds[i]] = item;
     }
   }
@@ -212,14 +212,12 @@ function populateCalendar(month, year, data) {
       date.innerHTML = counter;
       date.addEventListener('click', function() {
         console.log(date.childNodes[0]);
-        hash = '#month=' + monthIn + '?year='+yearIn+'?day='+date.innerHTML;
-        var root = document.URL.split("/")[2];
-        var path = 'http://' + root + '/source/frontend/app/page-day/day.html';
-        var url_ob = new URL(path);
-        url_ob.hash = hash;
-        console.log(url_ob);
-        window.location.href = url_ob.href;
-        
+        const hash = '#month=' + monthIn + '?year=' + yearIn + '?day=' + date.innerHTML;
+        const root = document.URL.split('/')[2];
+        const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
+        const url = new URL(path);
+        url.hash = hash;
+        window.location.href = url.href;
       });
       counter++;
       element.appendChild(date);
@@ -253,82 +251,79 @@ function resetCalendar() {
   });
   calendar.append(element);
   year.innerHTML = yearIn;
-  month.innerHTML = "<div id='monthTitle'><b>"+monthNames[monthIn]+"</b></div>"+"<div id=yearTitle>" + yearIn+"</div>";
+  month.innerHTML = "<div id='monthTitle'><b>" + monthNames[monthIn] + '</b></div>' + '<div id=yearTitle>' + yearIn + '</div>';
 }
 
 // for a specific month only
 // TO DO make a filter per month or something
 function bulletAppend(bullets) {
   for (const [key, value] of Object.entries(bullets)) {
-    const date = value.date.split('/')[1];
+    const date = value['date'].split('T')[0].split('-')[2];
     const temp = document.getElementById(parseInt(date));
     const event = document.createElement('li');
     if (temp.childNodes.length === 1) {
       temp.appendChild(document.createElement('ul'));
     }
     event.innerHTML = value.title;
-    if(temp.childNodes[1].childNodes.length<5){
+    if (temp.childNodes[1].childNodes.length < 5) {
       temp.childNodes[1].appendChild(event);
     }
   }
 }
 
-function getTasks(bullets){
-  var tasks = []
+function getTasks(bullets) {
+  const tasks = [];
   for (const [key, value] of Object.entries(bullets)) {
-    if(value['type']=='task' && value['tag']=='monthly'){
+    if (value.type === 'task' && value.tag === 'monthly') {
       tasks.push(key);
     }
   }
   return tasks;
 }
 
-function getNotes(bullets){
-  var notes = []
+function getNotes(bullets) {
+  const notes = [];
   for (const [key, value] of Object.entries(bullets)) {
-    if(value['type']=='note' && value['tag']=='monthly'){
+    if (value.type === 'note' && value.tag === 'monthly') {
       notes.push(key);
     }
   }
   return notes;
 }
 
-function generateHash(onload=true){
-  var curr = document.URL;
+function generateHash(onload = true) {
+  let curr = document.URL;
 
-  if(onload){
-    var month;
-    var year;
-    var day;
-    if(curr.includes('#')){
+  if (onload) {
+    let month;
+    let year;
+    let day;
+    if (curr.includes('#')) {
       curr = document.URL.split('#')[1].split('?');
       month = parseInt(curr[0].split('=')[1]);
       year = parseInt(curr[1].split('=')[1]);
       day = parseInt(curr[2].split('=')[1]);
-      
-      return '#month=' + month + '?year='+year + '?day='+day;
-    }
-    else{
-      var date = new Date();
+
+      return '#month=' + month + '?year=' + year + '?day=' + day;
+    } else {
+      let date = new Date();
       date = date.toISOString().split('T')[0].split('-');
       month = parseInt(date[1]);
       year = parseInt(date[0]);
       day = parseInt(date[2]);
-      return '#month=' + month + '?year='+year + '?day='+day;
+      return '#month=' + month + '?year=' + year + '?day=' + day;
     }
+  } else {
+    return '#month=' + monthIn + '?year=' + yearIn + '?day=' + dayIn;
   }
-  else{
-    return '#month=' + monthIn + '?year='+ yearIn + '?day='+dayIn;
-  }
-  
 }
 
-function readHash(hash){
-  var curr = hash.split('?');
+function readHash(hash) {
+  const curr = hash.split('?');
 
-  var month;
-  var year;
-  var day;
+  let month;
+  let year;
+  let day;
 
   month = parseInt(curr[0].split('=')[1]);
   year = parseInt(curr[1].split('=')[1]);
@@ -337,13 +332,13 @@ function readHash(hash){
   return [month, year, day];
 }
 
-function updateURL(hash){
-  var url_ob = new URL(document.URL);
-  url_ob.hash = hash;
-  document.location.href = url_ob.href;
+function updateURL(hash) {
+  const url = new URL(document.URL);
+  url.hash = hash;
+  document.location.href = url.href;
 }
 
-let hashed = generateHash();
+const hashed = generateHash();
 [monthIn, yearIn, dayIn] = readHash(hashed);
 updateURL(hashed);
 
