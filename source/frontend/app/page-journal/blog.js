@@ -48,7 +48,7 @@ const editTags = document.getElementById('edittag');
 
 crud.initCrudRuntime();
 // TODO: Write a date getter function to pass into here
-let bulletsToLoad = crud.getBulletsByDateRange('2020-06-12T19:00', '2020-06-12T20:00');
+const bulletsToLoad = crud.getBulletsByDateRange('2020-06-12T19:00', '2020-06-12T20:00');
 for (const bullet of bulletsToLoad) {
   if (bullet.type === 'note') {
     noteOut.append(createBulletEntryElem(bullet.ID));
@@ -112,7 +112,7 @@ function deleteBulletEntry(elemEntry) {
  *  @return a modal to edit a bullet.
 */
 function openEditDialog(elemEntry) {
-  let entryBullet = crud.getBulletById(elemEntry.id);
+  const entryBullet = crud.getBulletById(elemEntry.id);
 
   editTitle.value = entryBullet.data.title;
   editDate.value = entryBullet.date;
@@ -148,7 +148,7 @@ function editBulletEntry(elemEntry) {
  *  @return null
  */
 function appendTextNode(strTitle, strText, elemParent) {
-  let elemBold = document.createElement('b');
+  const elemBold = document.createElement('b');
 
   elemBold.append(document.createTextNode(strTitle));
   elemParent.append(elemBold);
@@ -163,8 +163,8 @@ function appendTextNode(strTitle, strText, elemParent) {
  *  @return a button
  */
 function appendButton(strDisp, strStyle, strClass, elemParent) {
-  let elemButton = document.createElement('BUTTON');
-  let elemText = document.createTextNode(strDisp);
+  const elemButton = document.createElement('BUTTON');
+  const elemText = document.createTextNode(strDisp);
 
   elemButton.style = strStyle;
   elemButton.className = strClass;
@@ -179,9 +179,9 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
  *  @return {li} a list (bullet) object
  */
 function createBulletEntryElem(intBulletID) {
-  let newEntry = document.createElement('li');
-  let div = document.createElement('div');
-  let bullet = crud.getBulletById(intBulletID);
+  const newEntry = document.createElement('li');
+  const div = document.createElement('div');
+  const bullet = crud.getBulletById(intBulletID);
 
   newEntry.id = intBulletID;
   div.style = 'margin: 10px; padding: 5px; border: 5px solid black';
@@ -204,14 +204,14 @@ function createBulletEntryElem(intBulletID) {
   appendTextNode(' Tags: ', bullet.tags, div);
 
   // create and append edit button
-  let editButton = appendButton('Edit', '', 'btn btn-secondary', div);
+  const editButton = appendButton('Edit', '', 'btn btn-secondary', div);
   editButton.addEventListener('click', () => {
     $('#EditBullet').modal('toggle');
     openEditDialog(newEntry);
   });
 
   // create and append delete button
-  let deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
+  const deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
   deleteButton.addEventListener('click', () => {
     $('#deleteBullet').modal('toggle');
     openDeleteDialog(newEntry);
@@ -223,12 +223,12 @@ function createBulletEntryElem(intBulletID) {
 /* if user confirms make new bullet and add it to page */
 saveBtn.addEventListener('click', function() {
   // make tag array for new bullet
-  let newBulletTags = crud.getCheckBoxResults();
-  let newBulletType = crud.getType();
+  const newBulletTags = crud.getCheckBoxResults();
+  const newBulletType = crud.getType();
 
   console.log(newBulletType);
   // make a new bullet with the crud functions
-  let newBulletID = crud.createBullet(
+  const newBulletID = crud.createBullet(
     { title: titleInput.value, note: descInput.value },
     newBulletType,
     dateInput.value,
