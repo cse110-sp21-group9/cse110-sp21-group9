@@ -1,50 +1,26 @@
 /**
- * <bullet-entry> custom component
+ * Read only Bullet Class
  * to be subclassed later by notes, tasks, events, etc.
  * It uses the template with id="bulletTemplate" in crud.html
+ * 
+ * front end side code should never construct a bullet class directly since ID must be
+ * assigned by crud runtime. If a new bullet object is needed construct one through the crud functions
  */
-class BulletEntry extends HTMLElement {
-  constructor(title, type, date, description, tag) {
-    super();
 
-    // set the member vars
-    this.id = new Date().getTime() / 1000; // automatic generation up to nearest second, hidden from user
-    this.title = title; // user selection
-    this.type = type; // user selection, this is the specific type of bullet
-    this.date = date; // user selected date, the one actually displayed to the user
-    this.description = description; // user input
-    this.tag = tag; // user selection
-
-    // templated HTML content
-    const template = document.getElementById('bulletTemplate');
-
-    // get the clone
-    let clone = template.content.cloneNode(true);
-
-    // now we make the necessary changes to the clone
-    // const articleElement = clone.querySelector('.bulletEntry'); // not sure if we actually need this reference
-
-    const titleElement = clone.querySelector('.bulletTitle');
-    const typeElement = clone.querySelector('.bulletType');
-    const dateElement = clone.querySelector('.bulletDate');
-    const descriptionElement = clone.querySelector('.bulletDescription');
-    const tagElement = clone.querySelector('.bulletTag');
-
-    titleElement.innerHTML = title;
-    typeElement.innerHTML = type;
-    dateElement.innerHTML = date;
-    descriptionElement.innerHTML = description;
-    tagElement.innerHTML = tag;
-
-    // create a shadow root for this web component
-    this.attachShadow({ mode: 'open' });
-
-    // attach cloned content of template to shadow DOM
-    this.shadowRoot.appendChild(clone);
+export class Bullet {
+  constructor(objBullet) {
+    this.ID = objBullet.ID;           // automatic generation up to nearest second, hidden from user
+    this.title = objBullet.title;     // user selection
+    this.type = objBullet.type;       // user selection, this is the specific type of bullet
+    this.date = objBullet.date;       // user selected date, the one actually displayed to the user
+    this.tags = objBullet.tags;       // user selection
+    this.content = objBullet.content; // user input
+    this.dueDate = objBullet.dueDate;
+    this.status = objBullet.status;
   }
 
-  get id() {
-    return this.id;
+  get ID() {
+    return this.ID;
   }
 
   get title() {
@@ -59,60 +35,19 @@ class BulletEntry extends HTMLElement {
     return this.date;
   }
 
-  get description() {
-    return this.description;
+  get tags() {
+    return this.tags;
   }
 
-  get tag() {
-    return this.tag;
+  get content() {
+    return this.content;
   }
 
-  // id doesn't change so it doesn't seed a setter method
-
-  set title(title) {
-    this.title = title;
-
-    // get the root of the shadow that was attached to this element
-    const shadow = this.shadowRoot;
-
-    shadow.querySelector('.bulletTitle').innerHTML = title;
+  get dueDate() {
+    return this.dueDate;
   }
 
-  set type(type) {
-    this.type = type;
-
-    // get the root of the shadow that was attached to this element
-    const shadow = this.shadowRoot;
-
-    shadow.querySelector('.bulletType').innerHTML = type;
-  }
-
-  set date(date) {
-    this.date = date;
-
-    // get the root of the shadow that was attached to this element
-    const shadow = this.shadowRoot;
-
-    shadow.querySelector('.bulletDate').innerHTML = date;
-  }
-
-  set description(description) {
-    this.description = description;
-
-    // get the root of the shadow that was attached to this element
-    const shadow = this.shadowRoot;
-
-    shadow.querySelector('.bulletDescription').innerHTML = description;
-  }
-
-  set tag(tag) {
-    this.tag = tag;
-
-    // get the root of the shadow that was attached to this element
-    const shadow = this.shadowRoot;
-
-    shadow.querySelector('.bulletTag').innerHTML = tag;
+  get status() {
+    return this.status;
   }
 }
-
-customElements.define('bullet-entry', BulletEntry);
