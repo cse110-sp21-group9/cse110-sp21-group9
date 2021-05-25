@@ -22,6 +22,10 @@ router.get('/page-login/login.html', function(req, res){
   res.sendFile('/frontend/app/page-login/login.html', { root: __dirname });
 });
 
+router.get('/page-signup/signup.html', function(req, res){
+  res.sendFile('/frontend/app/page-signup/signup.html', { root: __dirname });
+});
+
 
 
 module.exports = router;
