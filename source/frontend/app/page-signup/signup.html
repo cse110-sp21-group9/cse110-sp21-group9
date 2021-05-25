@@ -95,7 +95,12 @@
           })
         }).then((res) => res.json());
 
-        console.log(result)
+        if (result.status === 'ok') {
+          // everything went fine
+          alert('Success')
+        } else {
+          alert(result.error)
+        }
       }
     </script>
   </body>

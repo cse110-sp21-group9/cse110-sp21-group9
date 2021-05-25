@@ -50,9 +50,21 @@ router.get('/page-signup/signup.html', function(req, res){
 
 
 app.post('/api/register', async (req,res) => {
-  console.log(req.body)
-
   const { username, password: plainTextPassword } = req.body
+  
+  if(!username || typeof username !== 'string') {
+    return res.json({ status: 'error', error: 'Invalid username' })
+  }
+  if(!plainTextPassword || typeof plainTextPassword !== 'string') {
+    return res.json({ status:'error',error:'Invalid password' })
+  }
+  if(plainTextPassword.length < 5) {
+    return res.json({
+      status: 'error',
+      error: 'Password too small. Should be atleast 6 characters'
+    })
+  }
+  
   const password = await bcrypt.hash(plainTextPassword, 10)
 
   try {
@@ -62,11 +74,14 @@ app.post('/api/register', async (req,res) => {
     })
     console.log('User created successfully: ', response)
   } catch (error) {
-    console.error("Duplicate username!");
-    console.log(error);
+    if(error.code === 11000) {
+      // duplicate key
+      return res.json({ status: 'error', error: 'Username already in use' })
+    }
+    throw error
   }
 
-  res.json({ status: 'ok' })
+
 })
 
 
