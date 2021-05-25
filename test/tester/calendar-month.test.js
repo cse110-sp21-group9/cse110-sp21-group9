@@ -13,11 +13,12 @@ describe('Basic unit tests for monthly calendar ', () => {
     'August', 'September', 'October', 'November', 'December']
   let contentHtml
   beforeAll(() => {
-    contentHtml = fs.readFileSync(path.resolve(__dirname, '../../source/frontend/app/page-calendar/calendar.html'), 'utf-8')
-    document.documentElement.innerHTML = contentHtml
-    require('../../source/frontend/app/page-calendar/calendar.js')
-    require('../../source/frontend/app/page-calendar/sidebar.js')
-  })
+    contentHtml = fs.readFileSync(path.resolve(__dirname, "../../source/frontend/app/page-calendar-monthly/calendar.html"), 'utf-8');
+    document.documentElement.innerHTML = contentHtml;
+    require('../../source/frontend/app/page-calendar-monthly/calendar.js');
+    require('../../source/frontend/app/page-calendar-monthly/sidebar.js');
+
+  });
 
   // DOM Unit Test 1: Page has correct current month/year
   test('Test1: Page has correct current month/year', () => {
