@@ -32,3 +32,14 @@ function closeSidebar() {
   docBar.style.width = '0';
   document.getElementById('main').style.marginLeft = '0';
 }
+
+function setCalendar() {
+  console.log('setting calendar hash');
+  const curDate = new Date();
+  const month = curDate.getMonth();
+  const year = curDate.getFullYear();
+  const hash = '#month=' + month + '?year=' + year + '?day=1';
+  // sideBar.calendar = hash;
+}
+
+setCalendar();
