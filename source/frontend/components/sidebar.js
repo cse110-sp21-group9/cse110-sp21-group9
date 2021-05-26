@@ -1,5 +1,54 @@
-/** This file implements a <sidebar> custom web component
+/** This file implements a <side-bar> custom web component
  *  Credit to: w3Schools for a demo on this functionality
+ *  TODO: Write instructions for how to use this thing
+ *
+ *  How to use use this :
+ *  In your html file:
+ *  Paste this in your <head>
+ *  <script type = "module" src = "../../components/sidebar.js"></script>
+    <script type = "module" src = "../../components/script.js"></script>
+ *  Paste this in your <body>
+    <div class="sidebar">
+    <side-bar></side-bar>
+    </div>
+    <div id= "main">
+    <header>
+      <div id = "openbtn" class = "hamburger" style = "display: inline-block">
+        <div class = "hamburger-bar"></div>
+        <div class = "hamburger-bar"></div>
+        <div class = "hamburger-bar"></div>
+      </div>
+    </header>
+ *  Make sure to wrap the rest of your website under the 'main' div
+ *  In your css file:
+ *  .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: rgb(227, 229, 240);
+      overflow-x: hidden;
+      padding-top: 60px;
+      transition: 0.5s;
+      overflow: hidden;
+    }
+ *  #main {
+      transition: margin-left .5s;
+      padding: 20px;
+      width: 95%;
+      height: 100vh;
+    }
+    .hamburger-bar {
+      width: 35px;
+      height: 5px;
+      background-color: black;
+      margin: 6px 0;
+    }
+    .hamburger:hover {
+      background-color: rgb(255, 255, 255);
+}
 */
 
 class sidebar extends HTMLElement {
@@ -42,12 +91,9 @@ class sidebar extends HTMLElement {
         <object data = "../../assets/bujo-logo.svg" id = "logo"></object>
         <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
       </div>
-      <a href="#">Dashboard</a>
-      <a href="#">Calendar</a>
-      <a href="#">Tasks</a>
-      <a href="#">Journal</a>
-      <div id = "sidebarbottom">
-        <a href = "#">Settings</a>
+      <a class= "calendar" href="#">Monthly Calendar</a>
+      <a href = "#">Settings</a>
+      <a href = "#">Log Out</a>
       </div> 
     </div>
   `;
@@ -58,6 +104,6 @@ class sidebar extends HTMLElement {
     // attach cloned content of template to shadow DOM
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
-}
 
+}
 window.customElements.define('side-bar', sidebar);
