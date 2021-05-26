@@ -41,19 +41,21 @@ var router = express.Router();
 app.get('/', (req, res) => {
   res.sendFile('/frontend/app/page-homepage/homepage.html', { root: __dirname });
 });
-router.get('/homepage.html', function(req, res){
-  res.sendFile('/frontend/app/page-homepage/homepage.html', { root: __dirname });
-});
-router.get('/homepage/homepage.html', function(req, res){
+router.get('/app/page-homepage/homepage.html', function(req, res){
   res.sendFile('/frontend/app/page-homepage/homepage.html', { root: __dirname });
 });
 router.get('/app/page-login/login.html', function(req, res){
-  res.sendFile('/app/page-login/login.html', { root: __dirname });
+  res.sendFile('/frontend/app/page-login/login.html', { root: __dirname });
 });
-router.get('/page-signup/signup.html', function(req, res){
+router.get('/app/page-signup/signup.html', function(req, res){
   res.sendFile('/frontend/app/page-signup/signup.html', { root: __dirname });
 });
-
+router.get('/app/page-calendar/calendar.html', function(req, res){
+  res.sendFile('/frontend/app/page-calendar-monthly/calendar.html', { root: __dirname });
+});
+router.get('/app/page-day/day.html', function(req, res){
+  res.sendFile('/frontend/app/page-day/day.html', { root: __dirname });
+});
 
 app.post('/api/login', async(req,res) => {
   const { username, password } = req.body
