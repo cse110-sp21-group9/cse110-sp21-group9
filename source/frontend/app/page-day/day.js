@@ -3,11 +3,16 @@
  *  on the DOM. It also calls on methods from crudFunctions.js to properly
  *  implement the CRUD functions.
  *  TODO: Ability to edit and delete tags
+ *  TODO: Fix multi-add bug
+ *  TODO: Add note bullet functionality
+ *  TODO: Integrate with firebase backend
+ *  TODO: Update outdated crudFunctions calls
  */
 
 /* get elements from html page */
 // buttons and general writing space
 /* eslint-env jquery */
+// POTENTIALLY OLD
 import * as crud from '../page-journal/crudFunctions.js';
 
 // const bujoSpace = document.getElementById('bujoSpace');
@@ -45,7 +50,7 @@ const timeSegments = document.getElementById('time_list');
 
 // make sure this changes depending on the day you pick
 const curDay = '2020-04-01';
-
+// POTENTIALLY OLD
 crud.initCrudRuntime();
 
 for (let i = 0; i < 24; i++) {
@@ -79,6 +84,7 @@ function makeTimeSlotComponent(intTime) {
 
 // TODO: Write a date getter function to pass into here
 // TODO: Make sure the date here is all the bullets of the current day we're in
+// POTENTIALLY OLD
 const bulletsToLoad = crud.getBulletsByDateRange('2020-04-01T00:00', '2020-04-01T23:59');
 for (const bullet of bulletsToLoad) {
   if (bullet.type === 'note') {
@@ -118,6 +124,7 @@ function openCreationDialog(timeStr, bulletList) {
   saveBtn.addEventListener('click', function() {
     console.log('hit the save button');
     // make tag array for new bullet
+    // POTENTIALLY OLD
     const newBulletTags = crud.getCheckBoxResults();
     const newBulletType = crud.getType();
     console.log(newBulletType);
@@ -132,6 +139,7 @@ function openCreationDialog(timeStr, bulletList) {
       // console.log(date);
     }
     // make a new bullet with the crud functions
+    // POTENTIALLY OLD
     const newBulletID = crud.createBullet(
       { title: titleInput.value, note: descInput.value },
       newBulletType,
@@ -165,6 +173,7 @@ tagBtn.addEventListener('click', function() {
 /* if user confirms making new tag, add it to list */
 tagAddBtn.addEventListener('click', function() {
   // add tag's string to list
+  // POTENTIALLY OLD
   crud.createTag(tagName.value);
   $('#tagcreation').modal('toggle');
   // maybe add a confirmation box
@@ -195,6 +204,7 @@ function deleteBulletEntry(elemEntry) {
   confirmBox.onclose = null;
   if (confirmBtn.value === 'false') return;
   confirmBtn.value = false;
+  // POTENTIALLY OLD
   crud.deleteBulletById(elemEntry.id);
   elemEntry.remove();
 }
@@ -205,6 +215,7 @@ function deleteBulletEntry(elemEntry) {
  *  @return a modal to edit a bullet.
 */
 function openEditDialog(elemEntry) {
+  // POTENTIALLY OLD
   const entryBullet = crud.getBulletById(elemEntry.id);
 
   editTitle.value = entryBullet.data.title;
@@ -224,6 +235,7 @@ function openEditDialog(elemEntry) {
  *  @return the modified bullet in storage and the DOM
  */
 function editBulletEntry(elemEntry) {
+  // POTENTIALLY OLD
   crud.setBulletAttributes(elemEntry.id, {
     title: editTitle.value,
     note: editDesc.value
@@ -274,6 +286,7 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
 function createBulletEntryElem(intBulletID) {
   const newEntry = document.createElement('li');
   const div = document.createElement('div');
+  // POTENTIALLY OLD
   const bullet = crud.getBulletById(intBulletID);
 
   newEntry.id = intBulletID;
