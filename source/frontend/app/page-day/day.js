@@ -7,7 +7,7 @@
  *  TODO: Add note bullet functionality - DONE
  *  TODO: Integrate with firebase backend
  *  TODO: Update outdated crudFunctions calls - Check with Evan when crudFunction was updated
- *  TODO: Account for updated date format - Date navigation works but still needs to use agreed upon hash 
+ *  TODO: Account for updated date format - Date navigation works but still needs to use agreed upon hash
  *  TODO: Plan to read url hash: If the hash is empty, just bring us to the current day
  *        Otherwise, load bullets from the date in the urlhash - DONE I think
  */
@@ -85,13 +85,13 @@ updateURL(hashed);
 // set the UI to display the current day
 setDay([defMonth, defYear, defDay]);
 const curDay = defYear + '-' + defMonth + '-' + defDay;
-console.log("Current Day: " + curDay);
+console.log('Current Day: ' + curDay);
 
 // generate date+time strings to load bullets from
 const loadStart = curDay + timeStart;
 const loadEnd = curDay + timeEnd;
-console.log("Bullet load time start: " + loadStart);
-console.log("Bullet load time end: " + loadEnd);
+console.log('Bullet load time start: ' + loadStart);
+console.log('Bullet load time end: ' + loadEnd);
 
 // POTENTIALLY OLD
 crud.initCrudRuntime();
@@ -473,7 +473,7 @@ function getWeekday([month, year, day]) {
   return (y + y / 4 - y / 100 + y / 400 + t[month - 1] + day) % 7;
 }
 
-// Open option to create a note bullet on the note space 
+// Open option to create a note bullet on the note space
 // if you click this button
 noteBtn.addEventListener('click', function() {
   // Take things one at a time when creating note bullets
@@ -522,7 +522,7 @@ noteBtn.addEventListener('click', function() {
 
 // This button takes you back to the month calendar
 monthBtn.addEventListener('click', function() {
-  const hash = '#month=' + defMonth + '?year=' + defYear +'?day=' + defDay;
+  const hash = '#month=' + defMonth + '?year=' + defYear + '?day=' + defDay;
   const root = document.URL.split('/')[2];
   const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
   const url = new URL(path);
