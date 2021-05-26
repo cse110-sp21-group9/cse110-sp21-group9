@@ -26,6 +26,11 @@ tbody td {
     /* height: 80%; */
 }
 
+tbody tr td:hover{
+  background-color: #b6c4ca;
+  cursor: pointer;
+}
+
 
 tbody tr th {
   /* background-color: #c7c7cc; */
@@ -124,7 +129,7 @@ thead {
   font-size: 20px;
 }
 
-/* Pointer on buttons*/
+/* Pointer on buttons back/forward buttons*/
 #backmonth:hover{
   cursor: pointer;
 }
