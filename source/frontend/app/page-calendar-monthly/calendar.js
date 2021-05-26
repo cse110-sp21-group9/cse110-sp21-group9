@@ -1,3 +1,5 @@
+import {hashString, readHash, daysInMonth, startDate, updateURL} from '../../utils.js';
+
 const calendar = document.getElementById('calendar');
 const month = document.getElementById('month');
 const year = document.getElementById('year');
@@ -8,7 +10,6 @@ const forwardyear = document.getElementById('forwardyear');
 
 let monthIn = 5;
 let yearIn = 2021;
-let dayIn = 25;
 
 const monthNames = {
   1: 'January',
@@ -173,21 +174,12 @@ function getDataLocal(month, year) {
     if (item == null) {
       continue;
     }
-    const date = item['date'].split('T')[0].split('-');
+    const date = item.date.split('T')[0].split('-');
     if (parseInt(date[0]) === year && parseInt(date[1]) === month) {
       data[bulletIds[i]] = item;
     }
   }
   return data;
-}
-
-function daysInMonth(month, year) {
-  return new Date(year, month, 0).getDate();
-}
-
-function startDate(month, year) {
-  const day = new Date(year, month - 1, 1); // 0 is sunday, 1 is monday, ..., 6 is saturday
-  return day.getDay();
 }
 
 // populates calender with all of the days of the associated month and year
@@ -212,12 +204,18 @@ function populateCalendar(month, year, data) {
       date.innerHTML = counter;
       date.addEventListener('click', function() {
         console.log(date.childNodes[0]);
-        const hash = '#month=' + monthIn + '?year=' + yearIn + '?day=' + date.innerHTML;
+        const hash = hashString('d', yearIn, monthIn, date.childNodes[0].nodeValue);
         const root = document.URL.split('/')[2];
         const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
         const url = new URL(path);
         url.hash = hash;
         window.location.href = url.href;
+      });
+      date.addEventListener("mouseover", function(){
+        date.style.border= '3px solid #333'; 
+      });
+      date.addEventListener("mouseleave", function(){
+        date.style.border= '1px solid #333'; 
       });
       counter++;
       element.appendChild(date);
@@ -258,7 +256,7 @@ function resetCalendar() {
 // TO DO make a filter per month or something
 function bulletAppend(bullets) {
   for (const [key, value] of Object.entries(bullets)) {
-    const date = value['date'].split('T')[0].split('-')[2];
+    const date = value.date.split('T')[0].split('-')[2];
     const temp = document.getElementById(parseInt(date));
     const event = document.createElement('li');
     if (temp.childNodes.length === 1) {
@@ -294,52 +292,36 @@ function getNotes(bullets) {
 function generateHash(onload = true) {
   let curr = document.URL;
 
-  if (onload) {
+  if (onload){
     let month;
     let year;
-    let day;
-    if (curr.includes('#')) {
-      curr = document.URL.split('#')[1].split('?');
-      month = parseInt(curr[0].split('=')[1]);
-      year = parseInt(curr[1].split('=')[1]);
-      day = parseInt(curr[2].split('=')[1]);
-
-      return '#month=' + month + '?year=' + year + '?day=' + day;
-    } else {
+    if(curr.includes('#')) {
+      var date = readHash(curr.split('#')[1]);
+      date = date.toISOString().split('T')[0].split('-');
+      month = parseInt(date[1]);
+      year = parseInt(date[0]);
+    }
+    else{
       let date = new Date();
       date = date.toISOString().split('T')[0].split('-');
       month = parseInt(date[1]);
       year = parseInt(date[0]);
-      day = parseInt(date[2]);
-      return '#month=' + month + '?year=' + year + '?day=' + day;
     }
-  } else {
-    return '#month=' + monthIn + '?year=' + yearIn + '?day=' + dayIn;
+    return hashString('m', year, month);
+  }
+  else {
+    return hashString('m', yearIn, monthIn);
   }
 }
 
-function readHash(hash) {
-  const curr = hash.split('?');
-
-  let month;
-  let year;
-  let day;
-
-  month = parseInt(curr[0].split('=')[1]);
-  year = parseInt(curr[1].split('=')[1]);
-  day = parseInt(curr[2].split('=')[1]);
-
-  return [month, year, day];
-}
-
-function updateURL(hash) {
-  const url = new URL(document.URL);
-  url.hash = hash;
-  document.location.href = url.href;
-}
-
 const hashed = generateHash();
-[monthIn, yearIn, dayIn] = readHash(hashed);
+
+var date = readHash(hashed);
+date = date.toISOString().split('T')[0].split('-');
+
+yearIn = parseInt(date[0]);
+monthIn = parseInt(date[1]);
+
 updateURL(hashed);
 
 updateLocalStorage();
