@@ -4,28 +4,24 @@
  *  implement the CRUD functions.
  *  TODO: Ability to edit and delete tags
  *  TODO: Fix multi-add bug
- *  TODO: Add note bullet functionality
+ *  TODO: Add note bullet functionality - DONE
  *  TODO: Integrate with firebase backend
- *  TODO: Update outdated crudFunctions calls
- *  TODO: Account for updated date format
+ *  TODO: Update outdated crudFunctions calls - Check with Evan when crudFunction was updated
+ *  TODO: Account for updated date format - Date navigation works but still needs to use agreed upon hash 
  *  TODO: Plan to read url hash: If the hash is empty, just bring us to the current day
- *        Otherwise, load bullets from the date in the urlhash
+ *        Otherwise, load bullets from the date in the urlhash - DONE I think
  */
 
 /* get elements from html page */
-// buttons and general writing space
 /* eslint-env jquery */
 // POTENTIALLY OLD
 import * as crud from '../page-journal/crudFunctions.js';
 
-// const bujoSpace = document.getElementById('bujoSpace');
 const saveBtn = document.getElementById('saveAdd');
 
 // creation inputs
 const titleInput = document.getElementById('title');
-// const typeInput = document.getElementById('type');
 const descInput = document.querySelector('[name = "desc"]');
-// const tagInput = document.getElementById('tags');
 
 // output of creation for note bullets
 const noteOut = document.getElementById('noteSpace');
@@ -36,7 +32,6 @@ const confirmBtn = document.getElementById('okConfirm');
 
 // tag creation stuff
 const tagBtn = document.getElementById('createtag');
-// const tagBox = document.getElementById('tagcreation');
 const tagAddBtn = document.getElementById('saveTag');
 const tagName = document.getElementById('tagname');
 
@@ -46,13 +41,16 @@ const editSave = document.getElementById('editSaveAdd');
 const editTitle = document.getElementById('edittitle');
 const editDate = document.getElementById('editdate');
 const editDesc = document.getElementById('editdesc');
-// const editType = document.getElementById('edittype');
 const editTags = document.getElementById('edittag');
 
 // for the note space box
 const noteBtn = document.getElementById('addNote');
 
+// For creating the time table
 const timeSegments = document.getElementById('time_list');
+
+// Navigate back to month view
+const monthBtn = document.getElementById('curMonth');
 
 const monthNames = {
   1: 'January',
@@ -87,13 +85,13 @@ updateURL(hashed);
 // set the UI to display the current day
 setDay([defMonth, defYear, defDay]);
 const curDay = defYear + '-' + defMonth + '-' + defDay;
-console.log(curDay);
+console.log("Current Day: " + curDay);
 
 // generate date+time strings to load bullets from
 const loadStart = curDay + timeStart;
 const loadEnd = curDay + timeEnd;
-console.log(loadStart);
-console.log(loadEnd);
+console.log("Bullet load time start: " + loadStart);
+console.log("Bullet load time end: " + loadEnd);
 
 // POTENTIALLY OLD
 crud.initCrudRuntime();
@@ -132,7 +130,6 @@ function makeTimeSlotComponent(intTime) {
 // POTENTIALLY OLD
 const bulletsToLoad = crud.getBulletsByDateRange(loadStart, loadEnd);
 for (const bullet of bulletsToLoad) {
-  console.log('Loading Bullet: ' + bullet);
   if (bullet.type === 'note') {
     console.log('Loading Note bullet');
     // paste bullet on notespace
@@ -165,6 +162,8 @@ for (const bullet of bulletsToLoad) {
  *  @param {string} timeStr string for the time we want to add the bullet in
  *  @param {ul element} bulletList the list where we want to append to
  *  @return the created bullet
+ *  THEORY: Bullet-double add is there because saveBtn is the same across all addBtns.
+ *  Potential fix: Create save button here for each and every add button on the time table
  */
 function openCreationDialog(timeStr, bulletList) {
   console.log('Entering openCreationDialog');
@@ -442,16 +441,19 @@ function setDay([month, year, day]) {
   const curMonth = month;
   const curYear = year;
   const curDay = day;
+
+  // Update month
   const monthDisplay = document.getElementById('curMonth');
   monthDisplay.innerHTML = monthNames[curMonth];
+
+  // Update date
   const dateDisplay = document.getElementById('date');
-  console.log(dateDisplay);
   dateDisplay.innerHTML = curMonth + '/' + curDay + '/' + curYear;
+
+  // Update weekday
   const weekDisplay = document.getElementById('week_day');
   let weekDay = getWeekday([curMonth, curYear, curDay]);
-  console.log('weekday: ' + weekDay);
   weekDay = Math.round(weekDay) % 7;
-  console.log(weekDay);
   weekDisplay.innerHTML = week[weekDay];
 }
 
@@ -471,7 +473,8 @@ function getWeekday([month, year, day]) {
   return (y + y / 4 - y / 100 + y / 400 + t[month - 1] + day) % 7;
 }
 
-// Create a note bullet on the note space if you click this button
+// Open option to create a note bullet on the note space 
+// if you click this button
 noteBtn.addEventListener('click', function() {
   // Take things one at a time when creating note bullets
   noteBtn.disabled = true;
@@ -515,4 +518,14 @@ noteBtn.addEventListener('click', function() {
       noteBtn.disabled = false;
     }
   });
+});
+
+// This button takes you back to the month calendar
+monthBtn.addEventListener('click', function() {
+  const hash = '#month=' + defMonth + '?year=' + defYear +'?day=' + defDay;
+  const root = document.URL.split('/')[2];
+  const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
+  const url = new URL(path);
+  url.hash = hash;
+  window.location.href = url.href;
 });
