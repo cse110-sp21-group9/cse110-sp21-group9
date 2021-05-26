@@ -3,9 +3,12 @@ const path = require('path');         // The path module provides utilities for 
                                       // and directory paths. 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const  mongoAtlasUri = "mongodb+srv://BujoStudio:powellmon2134@cluster0.2hihe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const mongoAtlasUri = "mongodb+srv://BujoStudio:powellmon2134@cluster0.2hihe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const User = require('./backend/model/user')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+const JWT_SECRET = "jkotgklsndfivlkajrg"
 
 try {
   // Connect to the MongoDB cluster
@@ -18,6 +21,10 @@ try {
   console.log("Could not connect");
 }
 
+
+// CLUSTER
+// DATABASES
+// DOCUMENTS
 
 const app = express();
 app.use(bodyParser.json())
@@ -43,12 +50,40 @@ router.get('/homepage/homepage.html', function(req, res){
 router.get('/page-login/login.html', function(req, res){
   res.sendFile('/frontend/app/page-login/login.html', { root: __dirname });
 });
-
 router.get('/page-signup/signup.html', function(req, res){
   res.sendFile('/frontend/app/page-signup/signup.html', { root: __dirname });
 });
 
 
+app.post('/api/login', async(req,res) => {
+  const { username, password } = req.body
+
+  
+  const user = await User.findOne({ username }).lean()
+
+  
+  if(!user) {
+    return res.json({ status: 'error', error: 'Invalid username/password' })
+  }
+
+  // console.log("password: " + password);
+  // console.log("user.password: " + user.password);
+
+  let loginState = bcrypt.compare(password, user.password);
+
+  if(await bcrypt.compare(password, user.password)) {
+    const token = jwt.sign({ 
+      id: user._id, 
+      username: user.username 
+    }, JWT_SECRET)
+
+    return res.json({ status: 'ok', data: token })
+  }
+
+
+
+  res.json({ status: 'error', error: 'Invalid username/password' })
+})
 app.post('/api/register', async (req,res) => {
   const { username, password: plainTextPassword } = req.body
   
