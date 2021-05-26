@@ -26,16 +26,16 @@ Date: 5/24-5/25/2021
 
 ### Navigation diagram for MVP:
 ![Navigation Diagram](../interface/rough/MVP-page-navigation.png)
-Successful login -> month view 
-Clicking on a date on the month view will add date as url hash, move to day page for that date 
+Successful login -> month view  
+Clicking on a date on the month view will add date as url hash, move to day page for that date  
 
 ### Url hash format: 
-day: v-y-m-d
-Month: v-y-m
-**v** - view type (d - daily, m - monthly, w - weekly, allows for scanning for rest of url)
-**y** - year number
-**m** - month number
-**d** - day number 
+day: v-y-m-d  
+Month: v-y-m  
+**v** - view type (d - daily, m - monthly, w - weekly, allows for scanning for rest of url)  
+**y** - year number  
+**m** - month number  
+**d** - day number  
 
 ### Backend: 
 - Will have login and authentication
