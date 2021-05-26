@@ -180,7 +180,7 @@ function openCreationDialog(timeStr, bulletList) {
     const newBulletType = crud.getType();
     console.log(newBulletType);
     // set date and time to be today's date and clicked time
-    // since this is a task/event, we 
+    // since this is a task/event, we
     time = 'T' + timeStr + ':' + '00';
     date = curDay + time;
     // make a new bullet with the crud functions
@@ -339,8 +339,7 @@ function createBulletEntryElem(intBulletID) {
   if (bullet.type === 'note') {
     div.style = 'border: 0px';
     appendTextNode('', bullet.data.title, div);
-  }
-  else {
+  } else {
     // create and append title of bullet
     appendTextNode('Title: ', bullet.data.title, div);
 
@@ -476,15 +475,15 @@ function getWeekday([month, year, day]) {
 noteBtn.addEventListener('click', function() {
   // Take things one at a time when creating note bullets
   noteBtn.disabled = true;
-  let notespace = document.getElementById('noteSpace');
+  const notespace = document.getElementById('noteSpace');
 
   // Create a text input field to create bullet
-  let note = document.createElement('input');
+  const note = document.createElement('input');
   note.type = 'text';
   notespace.appendChild(note);
 
   // Create a cancel button for when you realize note-taking is stupid
-  let cancel = document.createElement('button');
+  const cancel = document.createElement('button');
   cancel.innerHTML = 'Cancel';
   notespace.appendChild(cancel);
   cancel.addEventListener('click', function() {
@@ -493,7 +492,7 @@ noteBtn.addEventListener('click', function() {
     notespace.removeChild(cancel);
   });
 
-  // Create note bullet 
+  // Create note bullet
   let time = new Date();
   let date = new Date();
   note.addEventListener('keypress', function(e) {
@@ -502,18 +501,18 @@ noteBtn.addEventListener('click', function() {
       time = 'T01:00';
       date = curDay + time;
       const newBulletID = crud.createBullet(
-      { title: note.value, note: null },
-      'Note',
-      date,
-      null
-    );
-    // create the bullet element and destroy the input text + cancel button
-    notespace.append(createBulletEntryElem(newBulletID));
-    notespace.removeChild(note);
-    notespace.removeChild(cancel);
-    
-    // reenable the create note button
-    noteBtn.disabled = false;
+        { title: note.value, note: null },
+        'Note',
+        date,
+        null
+      );
+      // create the bullet element and destroy the input text + cancel button
+      notespace.append(createBulletEntryElem(newBulletID));
+      notespace.removeChild(note);
+      notespace.removeChild(cancel);
+
+      // reenable the create note button
+      noteBtn.disabled = false;
     }
   });
 });
