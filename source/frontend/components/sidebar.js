@@ -91,7 +91,7 @@ class sidebar extends HTMLElement {
         <object data = "../../assets/bujo-logo.svg" id = "logo"></object>
         <a href="javascript:void(0)" class="closebtn" id = 'closebtn'>&times;</a>
       </div>
-      <a class= "calendar" href="#">Monthly Calendar</a>
+      <a class= "calendar" href="">Monthly Calendar</a>
       <a href = "#">Settings</a>
       <a href = "#">Log Out</a>
       </div> 
@@ -105,5 +105,15 @@ class sidebar extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
+  /*
+  set sidebar(calendar) {
+    console.log('In sidebar component setter');
+    const root = document.URL.split('/')[2];
+    const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
+    const url = new URL(path);
+    url.hash = hash;
+    this.calendar.href.value = url;
+  }
+  */
 }
 window.customElements.define('side-bar', sidebar);
