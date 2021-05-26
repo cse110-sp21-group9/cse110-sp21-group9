@@ -72,8 +72,8 @@ const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 let defMonth = '04';
 let defYear = '2021';
 let defDay = '01';
-let timeStart = 'T00:00';
-let timeEnd = 'T23:59';
+const timeStart = 'T00:00';
+const timeEnd = 'T23:59';
 // generate hash of the day we're in if we don't have one already
 const hashed = generateHash();
 // update the date variables we have accordingly and the url
@@ -81,11 +81,11 @@ const hashed = generateHash();
 updateURL(hashed);
 // set the UI to display the current day
 setDay([defMonth, defYear, defDay]);
-let curDay = defYear + '-' + defMonth + '-' + defDay;
+const curDay = defYear + '-' + defMonth + '-' + defDay;
 console.log(curDay);
 // generate date+time strings to load bullets from
-let loadStart = curDay + timeStart;
-let loadEnd = curDay + timeEnd;
+const loadStart = curDay + timeStart;
+const loadEnd = curDay + timeEnd;
 console.log(loadStart);
 console.log(loadEnd);
 // POTENTIALLY OLD
@@ -131,12 +131,12 @@ for (const bullet of bulletsToLoad) {
   } else {
     for (let hourIt = 0; hourIt < 24; hourIt++) {
       const hours = document.querySelectorAll('[class = "time_slot"]');
-      let curHour = hours[hourIt];
+      const curHour = hours[hourIt];
       console.log(curHour);
       let bulHour = bullet.date.toString();
       bulHour = bulHour.substring(10, 12);
       console.log("Bullet's Hour: " + bulHour);
-      let bulHourNum = parseInt(bulHour);
+      const bulHourNum = parseInt(bulHour);
       if (bulHourNum === hourIt) {
         console.log('pasting bullet from storage');
         const list = curHour.querySelector('ul');
@@ -372,20 +372,20 @@ function getCurrentDay(hash) {
   let curYear;
   let curDay;
 
-  //parse the hash
+  // parse the hash
   const curr = hash.split('?');
   curMonth = parseInt(curr[0].split('=')[1]);
   console.log(curMonth);
   curYear = parseInt(curr[1].split('=')[1]);
   curDay = parseInt(curr[2].split('=')[1]);
 
-  //return the date
+  // return the date
   console.log('Month: ' + curMonth + ' ' + 'Year: ' + curYear + ' ' + 'Day: ' + curDay);
   return [curMonth, curYear, curDay];
 }
 
 /** TODO: Make this function work with new hash system
- *  Generates a hash based on either: 
+ *  Generates a hash based on either:
  *  1. The URL we inherited from
  *  2. Today's date
  *  3. A default date
@@ -436,15 +436,15 @@ function updateURL(hash) {
  *  @return null
  */
 function setDay([month, year, day]) {
-  let curMonth = month;
-  let curYear = year;
-  let curDay = day;
-  let monthDisplay = document.getElementById('curMonth');
+  const curMonth = month;
+  const curYear = year;
+  const curDay = day;
+  const monthDisplay = document.getElementById('curMonth');
   monthDisplay.innerHTML = monthNames[curMonth];
-  let dateDisplay = document.getElementById('date')
+  const dateDisplay = document.getElementById('date');
   console.log(dateDisplay);
   dateDisplay.innerHTML = curMonth + '/' + curDay + '/' + curYear;
-  let weekDisplay = document.getElementById('week_day');
+  const weekDisplay = document.getElementById('week_day');
   let weekDay = getWeekday([curMonth, curYear, curDay]);
   console.log('weekday: ' + weekDay);
   weekDay = Math.round(weekDay) % 7;
@@ -452,18 +452,18 @@ function setDay([month, year, day]) {
   weekDisplay.innerHTML = week[weekDay];
 }
 
-/** Gets the current day of the week based on the day's month, 
+/** Gets the current day of the week based on the day's month,
  *  day and year.
- *  Credit for week calculation formula: 
- *  https://www.geeksforgeeks.org/find-day-of-the-week-for-a-given-date/ 
+ *  Credit for week calculation formula:
+ *  https://www.geeksforgeeks.org/find-day-of-the-week-for-a-given-date/
  *  @param {String} month the month of hte current day;
  *  @param {String} year the year of the current day
  *  @param {String} day the day of the current year
  *  @return the current weekday in number form
  */
 function getWeekday([month, year, day]) {
-  let t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+  const t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
   let y = year;
   y -= (month < 3) ? 1 : 0;
-  return (y + y/4 - y/100 + y/400 + t[month-1] + day) % 7;
+  return (y + y / 4 - y / 100 + y / 400 + t[month - 1] + day) % 7;
 }
