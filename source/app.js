@@ -3,7 +3,7 @@ const path = require('path');         // The path module provides utilities for 
                                       // and directory paths. 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const  mongoAtlasUri = "mongodb+srv://BujoStudio:powellmon2134@cluster0.2hihe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const mongoAtlasUri = "mongodb+srv://BujoStudio:powellmon2134@cluster0.2hihe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const User = require('./backend/model/user')
 const bcrypt = require('bcryptjs')
 
@@ -26,22 +26,41 @@ const port = process.env.PORT || 8080;
 
 // serve static files from the `source` folder
 console.log("The absolute path of working directory " + __dirname);
+
 //router object
 var router = express.Router();
 
-
-
+// respond to get requests for each page
 app.get('/', (req, res) => {
   res.sendFile('/frontend/app/page-homepage/homepage.html', { root: __dirname });
 });
+
 router.get('/homepage.html', function(req, res){
   res.sendFile('/frontend/app/page-homepage/homepage.html', { root: __dirname });
 });
+
 router.get('/homepage/homepage.html', function(req, res){
   res.sendFile('/frontend/app/page-homepage/homepage.html', { root: __dirname });
 });
+
 router.get('/page-login/login.html', function(req, res){
   res.sendFile('/frontend/app/page-login/login.html', { root: __dirname });
+});
+
+router.get('/page-login/style.css', function(req, res){
+  res.sendFile('/frontend/app/page-login/style.css', {root: __dirname });
+});
+
+router.get('/page-signup/style.css', function(req, res){
+  res.sendFile('/frontend/app/page-signup/style.css', {root: __dirname });
+});
+
+router.get('/frontend/assets/bujo-logo.svg', function(req, res){
+  res.sendFile('/frontend/assets/bujo-logo.svg', {root: __dirname });
+});
+
+router.get('/frontend/assets/mini-logo.svg', function(req, res){
+  res.sendFile('/frontend/assets/mini-logo.svg', {root: __dirname });
 });
 
 router.get('/page-signup/signup.html', function(req, res){
