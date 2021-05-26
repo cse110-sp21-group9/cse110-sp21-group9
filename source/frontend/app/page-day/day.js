@@ -28,7 +28,7 @@ const descInput = document.querySelector('[name = "desc"]');
 // const tagInput = document.getElementById('tags');
 
 // output of creation for note bullets
-const noteOut = document.getElementById('undated_notes');
+const noteOut = document.getElementById('noteSpace');
 
 // deletion stuff
 const confirmBox = document.getElementById('deleteBullet');
@@ -48,6 +48,9 @@ const editDate = document.getElementById('editdate');
 const editDesc = document.getElementById('editdesc');
 // const editType = document.getElementById('edittype');
 const editTags = document.getElementById('edittag');
+
+// for the note space box
+const noteBtn = document.getElementById('addNote');
 
 const timeSegments = document.getElementById('time_list');
 
@@ -76,18 +79,22 @@ const timeStart = 'T00:00';
 const timeEnd = 'T23:59';
 // generate hash of the day we're in if we don't have one already
 const hashed = generateHash();
+
 // update the date variables we have accordingly and the url
 [defMonth, defYear, defDay] = getCurrentDay(hashed);
 updateURL(hashed);
+
 // set the UI to display the current day
 setDay([defMonth, defYear, defDay]);
 const curDay = defYear + '-' + defMonth + '-' + defDay;
 console.log(curDay);
+
 // generate date+time strings to load bullets from
 const loadStart = curDay + timeStart;
 const loadEnd = curDay + timeEnd;
 console.log(loadStart);
 console.log(loadEnd);
+
 // POTENTIALLY OLD
 crud.initCrudRuntime();
 
@@ -125,7 +132,9 @@ function makeTimeSlotComponent(intTime) {
 // POTENTIALLY OLD
 const bulletsToLoad = crud.getBulletsByDateRange(loadStart, loadEnd);
 for (const bullet of bulletsToLoad) {
+  console.log('Loading Bullet: ' + bullet);
   if (bullet.type === 'note') {
+    console.log('Loading Note bullet');
     // paste bullet on notespace
     noteOut.append(createBulletEntryElem(bullet.ID));
   } else {
@@ -135,10 +144,9 @@ for (const bullet of bulletsToLoad) {
       console.log(curHour);
       let bulHour = bullet.date.toString();
       bulHour = bulHour.substring(10, 12);
-      console.log("Bullet's Hour: " + bulHour);
       const bulHourNum = parseInt(bulHour);
       if (bulHourNum === hourIt) {
-        console.log('pasting bullet from storage');
+        console.log('pasting bullet from storage to timetable');
         const list = curHour.querySelector('ul');
         if (bullet.type === 'event') {
           list.append(createBulletEntryElem(bullet.ID));
@@ -172,15 +180,9 @@ function openCreationDialog(timeStr, bulletList) {
     const newBulletType = crud.getType();
     console.log(newBulletType);
     // set date and time to be today's date and clicked time
-    // since this is a note, we just get the current time
-    if (newBulletType === 'note') {
-      time = 'T' + time.getHours() + ':' + time.getMinutes();
-      date = curDay + time;
-    } else {
-      time = 'T' + timeStr + ':' + '00';
-      date = curDay + time;
-      // console.log(date);
-    }
+    // since this is a task/event, we 
+    time = 'T' + timeStr + ':' + '00';
+    date = curDay + time;
     // make a new bullet with the crud functions
     // POTENTIALLY OLD
     const newBulletID = crud.createBullet(
@@ -192,9 +194,7 @@ function openCreationDialog(timeStr, bulletList) {
 
     console.log('In appending mode');
     // add the bullet to the DOM
-    if (newBulletType === 'Note') {
-      noteOut.append(createBulletEntryElem(newBulletID));
-    } else if (newBulletType === 'Event') {
+    if (newBulletType === 'Event') {
     // paste onto specific hour
       console.log('appending event');
       bulletList.append(createBulletEntryElem(newBulletID));
@@ -336,16 +336,20 @@ function createBulletEntryElem(intBulletID) {
   div.style = 'margin: 10px; padding: 5px; border: 5px solid black';
 
   newEntry.append(div);
+  if (bullet.type === 'note') {
+    div.style = 'border: 0px';
+    appendTextNode('', bullet.data.title, div);
+  }
+  else {
+    // create and append title of bullet
+    appendTextNode('Title: ', bullet.data.title, div);
 
-  // create and append title of bullet
-  appendTextNode('Title: ', bullet.data.title, div);
+    // create and append description for bullet
+    appendTextNode(' Note: ', bullet.data.note, div);
 
-  // create and append description for bullet
-  appendTextNode(' Note: ', bullet.data.note, div);
-
-  // create and append bullet's tags
-  appendTextNode(' Tags: ', bullet.tags, div);
-
+    // create and append bullet's tags
+    appendTextNode(' Tags: ', bullet.tags, div);
+  }
   // create and append edit button
   const editButton = appendButton('Edit', '', 'btn btn-secondary', div);
   editButton.addEventListener('click', () => {
@@ -467,3 +471,49 @@ function getWeekday([month, year, day]) {
   y -= (month < 3) ? 1 : 0;
   return (y + y / 4 - y / 100 + y / 400 + t[month - 1] + day) % 7;
 }
+
+// Create a note bullet on the note space if you click this button
+noteBtn.addEventListener('click', function() {
+  // Take things one at a time when creating note bullets
+  noteBtn.disabled = true;
+  let notespace = document.getElementById('noteSpace');
+
+  // Create a text input field to create bullet
+  let note = document.createElement('input');
+  note.type = 'text';
+  notespace.appendChild(note);
+
+  // Create a cancel button for when you realize note-taking is stupid
+  let cancel = document.createElement('button');
+  cancel.innerHTML = 'Cancel';
+  notespace.appendChild(cancel);
+  cancel.addEventListener('click', function() {
+    noteBtn.disabled = false;
+    notespace.removeChild(note);
+    notespace.removeChild(cancel);
+  });
+
+  // Create note bullet 
+  let time = new Date();
+  let date = new Date();
+  note.addEventListener('keypress', function(e) {
+    // Hit enter to actually save the thing. Is it intuitive enough?
+    if (e.key === 'Enter') {
+      time = 'T01:00';
+      date = curDay + time;
+      const newBulletID = crud.createBullet(
+      { title: note.value, note: null },
+      'Note',
+      date,
+      null
+    );
+    // create the bullet element and destroy the input text + cancel button
+    notespace.append(createBulletEntryElem(newBulletID));
+    notespace.removeChild(note);
+    notespace.removeChild(cancel);
+    
+    // reenable the create note button
+    noteBtn.disabled = false;
+    }
+  });
+});
