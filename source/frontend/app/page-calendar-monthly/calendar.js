@@ -6,8 +6,9 @@ const forwardmonth = document.getElementById('forwardmonth');
 const backyear = document.getElementById('backyear');
 const forwardyear = document.getElementById('forwardyear');
 
-let yearIn = 2021;
 let monthIn = 5;
+let yearIn = 2021;
+let dayIn = 25;
 
 const monthNames = {
   1: 'January',
@@ -38,48 +39,69 @@ const testData = {
   id_1: {
     type: 'task', // task, event, note
     title: 'Walk Dog',
-    date: '05/07/2021'
+    date: '2021-05-07T20:00'
   },
   id_2: {
     type: 'task',
     title: 'Feed Dog',
-    date: '05/08/2021'
+    date: '2021-05-08T20:00'
   },
   id_3: {
     type: 'event',
     title: 'Test',
-    date: '05/10/2021'
+    date: '2021-05-10T20:00'
   },
   id_4: {
     type: 'event',
     title: 'Eat',
-    date: '05/07/2021'
+    date: '2021-05-07T20:00'
   },
   id_5: {
     type: 'note',
     title: 'Hi Edmund',
-    date: '05/10/2021'
+    date: '2021-05-10T20:00'
   },
   id_6: {
     type: 'note',
     title: 'heuhuehue',
-    date: '04/28/2021'
+    date: '2021-04-28T20:00'
   },
   id_7: {
     type: 'note',
     title: 'heuhuehue2',
-    date: '05/01/2021'
+    date: '2021-05-01T20:00'
   },
   id_8: {
     type: 'note',
     title: 'mwahahaaha',
-    date: '05/30/2021'
+    date: '2021-05-30T20:00'
   },
   id_9: {
     type: 'note',
     title: 'mwahahaaha2',
-    date: '06/04/2021'
+    date: '2021-06-04T20:00'
+  },
+  id_10: {
+    type: 'event',
+    title: 'Walk',
+    date: '2021-05-07T20:00'
+  },
+  id_11: {
+    type: 'event',
+    title: 'Walk2',
+    date: '2021-05-07T20:00'
+  },
+  id_12: {
+    type: 'event',
+    title: 'Walk3',
+    date: '2021-05-07T20:00'
+  },
+  id_13: {
+    type: 'event',
+    title: 'Walk4',
+    date: '2021-05-07T20:00'
   }
+
 };
 
 backmonth.addEventListener('click', function() {
@@ -88,9 +110,12 @@ backmonth.addEventListener('click', function() {
     monthIn = 12;
     yearIn--;
   }
+
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
+  const hashed = generateHash(false);
+  updateURL(hashed);
 });
 
 backyear.addEventListener('click', function() {
@@ -98,6 +123,8 @@ backyear.addEventListener('click', function() {
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
+  const hashed = generateHash(false);
+  updateURL(hashed);
 });
 
 forwardmonth.addEventListener('click', function() {
@@ -109,6 +136,8 @@ forwardmonth.addEventListener('click', function() {
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
+  const hashed = generateHash(false);
+  updateURL(hashed);
 });
 
 forwardyear.addEventListener('click', function() {
@@ -116,6 +145,8 @@ forwardyear.addEventListener('click', function() {
   resetCalendar();
   const data = getDataLocal(monthIn, yearIn);
   populateCalendar(monthIn, yearIn, data);
+  const hashed = generateHash(false);
+  updateURL(hashed);
 });
 
 // updates local storage if there is nothing in it
@@ -139,9 +170,11 @@ function getDataLocal(month, year) {
   const bulletIds = localStorage.getItem('bulletIDs').split(',');
   for (let i = 0; i < bulletIds.length; i++) {
     const item = JSON.parse(localStorage.getItem(bulletIds[i]));
-
-    const date = item.date.split('/');
-    if (parseInt(date[2]) === year && parseInt(date[0]) === month) {
+    if (item == null) {
+      continue;
+    }
+    const date = item['date'].split('T')[0].split('-');
+    if (parseInt(date[0]) === year && parseInt(date[1]) === month) {
       data[bulletIds[i]] = item;
     }
   }
@@ -179,6 +212,12 @@ function populateCalendar(month, year, data) {
       date.innerHTML = counter;
       date.addEventListener('click', function() {
         console.log(date.childNodes[0]);
+        const hash = '#month=' + monthIn + '?year=' + yearIn + '?day=' + date.innerHTML;
+        const root = document.URL.split('/')[2];
+        const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
+        const url = new URL(path);
+        url.hash = hash;
+        window.location.href = url.href;
       });
       counter++;
       element.appendChild(date);
@@ -212,25 +251,101 @@ function resetCalendar() {
   });
   calendar.append(element);
   year.innerHTML = yearIn;
-  month.innerHTML = "<div id='monthTitle'><b>"+monthNames[monthIn]+"</b></div>"+"<div id=yearTitle>" + yearIn+"</div>";
+  month.innerHTML = "<div id='monthTitle'><b>" + monthNames[monthIn] + '</b></div>' + '<div id=yearTitle>' + yearIn + '</div>';
 }
 
 // for a specific month only
 // TO DO make a filter per month or something
 function bulletAppend(bullets) {
   for (const [key, value] of Object.entries(bullets)) {
-    const date = value.date.split('/')[1];
+    const date = value['date'].split('T')[0].split('-')[2];
     const temp = document.getElementById(parseInt(date));
     const event = document.createElement('li');
     if (temp.childNodes.length === 1) {
       temp.appendChild(document.createElement('ul'));
     }
     event.innerHTML = value.title;
-    temp.childNodes[1].appendChild(event);
+    if (temp.childNodes[1].childNodes.length < 5) {
+      temp.childNodes[1].appendChild(event);
+    }
   }
 }
 
-// updateLocalStorage();
+function getTasks(bullets) {
+  const tasks = [];
+  for (const [key, value] of Object.entries(bullets)) {
+    if (value.type === 'task' && value.tag === 'monthly') {
+      tasks.push(key);
+    }
+  }
+  return tasks;
+}
+
+function getNotes(bullets) {
+  const notes = [];
+  for (const [key, value] of Object.entries(bullets)) {
+    if (value.type === 'note' && value.tag === 'monthly') {
+      notes.push(key);
+    }
+  }
+  return notes;
+}
+
+function generateHash(onload = true) {
+  let curr = document.URL;
+
+  if (onload) {
+    let month;
+    let year;
+    let day;
+    if (curr.includes('#')) {
+      curr = document.URL.split('#')[1].split('?');
+      month = parseInt(curr[0].split('=')[1]);
+      year = parseInt(curr[1].split('=')[1]);
+      day = parseInt(curr[2].split('=')[1]);
+
+      return '#month=' + month + '?year=' + year + '?day=' + day;
+    } else {
+      let date = new Date();
+      date = date.toISOString().split('T')[0].split('-');
+      month = parseInt(date[1]);
+      year = parseInt(date[0]);
+      day = parseInt(date[2]);
+      return '#month=' + month + '?year=' + year + '?day=' + day;
+    }
+  } else {
+    return '#month=' + monthIn + '?year=' + yearIn + '?day=' + dayIn;
+  }
+}
+
+function readHash(hash) {
+  const curr = hash.split('?');
+
+  let month;
+  let year;
+  let day;
+
+  month = parseInt(curr[0].split('=')[1]);
+  year = parseInt(curr[1].split('=')[1]);
+  day = parseInt(curr[2].split('=')[1]);
+
+  return [month, year, day];
+}
+
+function updateURL(hash) {
+  const url = new URL(document.URL);
+  url.hash = hash;
+  document.location.href = url.href;
+}
+
+const hashed = generateHash();
+[monthIn, yearIn, dayIn] = readHash(hashed);
+updateURL(hashed);
+
+updateLocalStorage();
 const data = getDataLocal(monthIn, yearIn);
 resetCalendar();
 populateCalendar(monthIn, yearIn, data);
+
+console.log(getTasks(data));
+console.log(getNotes(data));
