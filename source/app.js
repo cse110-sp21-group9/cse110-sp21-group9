@@ -8,7 +8,7 @@ const User = require('./backend/model/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const JWT_SECRET = "jkotgklsndfivlkajrg"
+const JWT_SECRET = "jkotgklsndfivlkajrg";
 
 try {
   // Connect to the MongoDB cluster
@@ -121,6 +121,8 @@ app.post('/api/register', async (req,res) => {
 
 
 module.exports = router;
+
+app.use(express.static(__dirname + '/public/'));
 
 app.use(express.static(__dirname));        // Add
 app.use('/', router);                      // Add router to application

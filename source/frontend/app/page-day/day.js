@@ -64,9 +64,11 @@ function makeTimeSlotComponent(intTime) {
   const timeText = document.createTextNode(`${stringTime}:00`);
   const bulletList = document.createElement('ul');
   const addBtn = document.createElement('button');
+  addBtn.classList = "btn btn-primary btn-sm circleButts";
+  
   // TODO: Make this button have an icon. This is a failed attempt
-  addBtn.innerHTML = '<i class = "fas fa-angle-right></i>';
-  addBtn.innerHTML = 'Add Bullet';
+  addBtn.innerHTML = '<i class="fas fa-plus"></i>';
+  //addBtn.innerHTML = 'Add Bullet';
   timeSlot.appendChild(timeText);
   timeSlot.appendChild(bulletList);
   timeSlot.appendChild(addBtn);
@@ -304,14 +306,16 @@ function createBulletEntryElem(intBulletID) {
   appendTextNode(' Tags: ', bullet.tags, div);
 
   // create and append edit button
-  const editButton = appendButton('Edit', '', 'btn btn-secondary', div);
+  const editButton = appendButton('', '', 'btn-sm btn-primary circleButts', div);
+  editButton.innerHTML = '<i class="fas fa-pen"></i>'
   editButton.addEventListener('click', () => {
     $('#EditBullet').modal('toggle');
     openEditDialog(newEntry);
   });
 
   // create and append delete button
-  const deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
+  const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', div);
+  deleteButton.innerHTML = '<i class="fas fa-trash">'
   deleteButton.addEventListener('click', () => {
     $('#deleteBullet').modal('toggle');
     openDeleteDialog(newEntry);
