@@ -14,7 +14,7 @@ People who attended the meeting:
 - [x] Daisuke Chon (*Temporary Team Lead*) (excused)
 - [ ] Kenny Chan
 - [x] Etienne Robin
-- [] Elisa Brooks
+- [ ] Elisa Brooks
 - [x] Evan Martinez (*Temporary Team Lead*)
 
 ## III. Agenda Items
@@ -83,7 +83,7 @@ Topic | Who  | Notes |
 ----- | ---- | ----- |
 
 ## Task Assignment/Action Items 
-Everything part of MVP due TOMORROW (basically everything here): 
+Everything part of MVP due TOMORROW (basically everything here):  
 **Evan + Alan:**  
 - Come up with plan for testing, test suite
 
