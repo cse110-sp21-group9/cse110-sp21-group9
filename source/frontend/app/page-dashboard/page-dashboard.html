@@ -1,0 +1,80 @@
+<!--TODOs: Make sure close button is next to title logo
+           Make sure icons are next to user's name and each tab on sidebar
+           Unique names for unique users
+           Better hamburger menu highlight?-->
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <meta charset = "UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bujo Demo</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+    <script type = "module" src = "../../components/sidebar.js"></script>
+    <script type = "module" src = "../../components/script.js"></script>
+    <link rel = "stylesheet" href = "style.css">
+  </head>
+  <body>
+    <!--Sidebar-->
+    <div class = "sidebar">
+      <side-bar></side-bar>
+    </div>
+    <div id="main">
+    <header>
+      <div id = "openbtn" class = "hamburger" style = "display: inline-block">
+        <div class = "hamburger-bar"></div>
+        <div class = "hamburger-bar"></div>
+        <div class = "hamburger-bar"></div>
+      </div>
+      <!--Search bar-->
+      <div id = "searchbar" class = "form-group">
+        <input type = "text" class = "form-control input-lg" placeholder = "Search">
+      </div>
+      <!--TODO: Remember to paste user icon right next to name-->
+      <!--TODO: Change name according to each user-->
+        <h1 id = "welcome">Welcome back, Daisuke</h1>
+     <br>
+    </header>
+      <!--Try to make it change color on hover-->
+
+    <!--</template>-->
+    <!--Journal Widget-->
+    <div id = "dashboard">
+      <div id = "journal">
+        <div class = "aspect-ratio-box-inside">
+          <h3>Journal</h3>
+          <p>A startlingly long wall of text</p><br>
+          <ul>
+            <li>I finished this dashboard, maybe</li><br>
+            <li><input type = "checkbox" id = "task">
+            <label for = 'task'>Finish this dashboard</label></li><br>
+            <li>2AM: Meet to create Japanese Language Table Doc</li>
+          </ul>
+        </div >
+      </div>
+
+    <!--Calendar widget-->
+    <div id = right-side>
+      <div id = "calendar">
+        <div class = "aspect-ratio-box-inside">
+          <h3>Calendar</h3>
+        <p>A wall of text</p>
+        </div>
+       <!--I guess dump a calendar object here?-->
+      </div>
+
+    <!--Weather Widget(?) Weather is a placeholder-->
+      <div id = "weather" class = "aspect-ratio-box-inside">
+        <div class = "aspect-ratio-box-inside">
+          <h3>Some other widget</h3>
+          <p>A wall of more text</p>
+        </div>
+      </div>
+      </div>
+     </div>
+    </div>
+    </div>
+  </body>
+</html>

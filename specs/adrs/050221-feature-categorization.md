@@ -1,6 +1,8 @@
 # Feature Categorization
-Status: accepted
+Status: Accepted
+
 Deciders: Alan, Elisa, Edmund, Edward, Etienne, Evan, Kenny
+
 Date: 5/2/2021 @ 4PM + 5/5/2021 @ 3PM
 
 ## We have a list of features to implement but we haven't concretely figured out which we should work on first
