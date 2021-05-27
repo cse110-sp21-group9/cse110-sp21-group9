@@ -22,9 +22,6 @@ try {
 }
 
 
-// CLUSTER
-// DATABASES
-// DOCUMENTS
 
 const app = express();
 app.use(bodyParser.json())
