@@ -197,11 +197,15 @@ function populateCalendar(month, year, data) {
         url.hash = hash;
         window.location.href = url.href;
       });
+      // hover over date cells in calendar
       date.addEventListener("mouseover", function(){
-        date.style.border= '3px solid #333'; 
+        // date.style.border= '3px solid #333';
+        date.style.backgroundColor = '#c7c7cc';
+        date.style.cursor= 'pointer';
       });
       date.addEventListener("mouseleave", function(){
-        date.style.border= '1px solid #333'; 
+        // date.style.border= '1px solid #333';
+        date.style.backgroundColor = 'white';
       });
       counter++;
       element.appendChild(date);

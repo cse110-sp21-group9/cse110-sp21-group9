@@ -488,6 +488,7 @@ noteBtn.addEventListener('click', function() {
 
   // Create a cancel button for when you realize note-taking is stupid
   const cancel = document.createElement('button');
+  cancel.classList = "btn btn-sm btn-secondary";
   cancel.innerHTML = 'Cancel';
   notespace.appendChild(cancel);
   cancel.addEventListener('click', function() {
