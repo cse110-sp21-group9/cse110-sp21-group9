@@ -1,50 +1,102 @@
-<!DOCTYPE html>
 <html lang="en">
-<html>
 
 <head>
-  <title>Bujo Studio</title>
+  <title>BuJo Studio</title>
+  <link rel="icon" type="image/jpeg" href="/source/frontend/assets/mini-logo.svg">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/source/frontend/style/main.css">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://kit.fontawesome.com/c7fe59e5a5.js" crossorigin="anonymous"></script>
+
+  <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+  <style>
+    body {
+        font-family: 'Nunito';
+    }
+  </style>
+  
 </head>
-
 <body>
-  <nav class="navbar navbar-expand-sm bg-light navbar-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="../page-homepage/homepage.html"> <img src="/source/frontend/assets/bujo-logo.svg" />
-      </a>
-
-      <!-- SUGGESTION Remove About and FAQ and just write what our Bujo does on the main page -->
-      <!-- <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">FAQ</a>
-        </li>
-      </ul> -->
-
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <a class="navbar-brand" href="../page-homepage/homepage.html"> <img src="/source/frontend/assets/bujo-logo.svg" /></a>
+        
       <div class="ml-auto">
-        <a href="../page-login/login.html"><button type="submit" class="btn btn-primary btn-lg mr-1">Login</button></a>
-        <a href="signup.html"> <button type="submit" class="btn btn-primary btn-lg mr-1">Sign up</button></a>
+        <a href="../page-login/login.html"><button type="submit" class="btn btn-primary btn-sm mr-1">Login</button></a>
+        <a href="../page-signup/signup.html"> <button type="submit" class="btn btn-primary btn-sm mr-1">Sign up</button></a>
       </div>
-    </div>
 
-  </nav>
-  <div class="container-login mt-5 text-center">
-    <div class="form-group">
-      <input type=username class="form-control" placeholder="Enter Username" id="username-input">
-    </div>
-    <div class="form-group">
-      <input type=password class="form-control" placeholder="Enter Password" id="password-input">
-    </div>
-    <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
-    <button type="submit" class="btn btn-lg btn-primary btn-block" hidden="false">Sign up</button>
+      </nav>
 
-    <!-- TODO: set hidden = false if incorrect password/username was inputted -->
-    <p class="text-danger mt-3">Incorrect Username or Password</p>
-  </div>
+      <div class = "mt-4 col-md-12"></div>
+
+      <form class="col-lg-6 offset-lg-3">
+        <div class="align-middle">
+          <div class="imgcontainer">
+            <i class="fas fa-user-circle fa-5x" id="avatar"></i>
+          </div>
+
+          <h1 class="h3 mb-3 font-weight-normal text-center">Welcome Back!</h1>
+
+          <div class="container text-center" >
+            <p>Don't have an account? <a href="../page-signup/signup.html">Sign up for Free!</a></p>
+          </div>
+        
+          <div class="container">
+            <i class="fas fa-user"></i>
+            <label for="uname"><b>Username</b></label>
+            <input class="input-field" type="text" placeholder= "Enter Username" name="uname" required>
+
+            <i class="fas fa-lock"></i>
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            <button type="submit" class="btn btn-lg btn-secondary btn-block" type="submit">Sign in</button>
+            <div class = "mt-2 col-md-12"></div>
+            <div class = "mt-2 col-md-12"></div>
+            <a class = "btn btn-lg btn-google btn-block btn-primary" href = "#">
+            <img src = "https://img.icons8.com/color/16/000000/google-logo.png">  Signup Using Google</a>
+            <label>
+              <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+          </div>
+        
+          <!--Remember to account for wrong usernames and passwords-->
+        
+      </form>
 </body>
-</html>
+  
+  <script>
+      const form = document.getElementById('login');
+      form.addEventListener('submit',registerUser);
+
+      async function registerUser(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const result = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username,
+            password
+          })
+        }).then((res) => res.json());
+
+        if (result.status === 'ok') {
+          // everything went fine
+          console.log('Got the token: ', result.data)
+        } else {
+          alert(result.error)
+        }
+      }
+    </script>                                                                                                                                                                  
