@@ -47,8 +47,8 @@ router.get('/homepage.html', function(req, res){
 router.get('/homepage/homepage.html', function(req, res){
   res.sendFile('/frontend/app/page-homepage/homepage.html', { root: __dirname });
 });
-router.get('/page-login/login.html', function(req, res){
-  res.sendFile('/frontend/app/page-login/login.html', { root: __dirname });
+router.get('/app/page-login/login.html', function(req, res){
+  res.sendFile('/app/page-login/login.html', { root: __dirname });
 });
 router.get('/page-signup/signup.html', function(req, res){
   res.sendFile('/frontend/app/page-signup/signup.html', { root: __dirname });
@@ -122,10 +122,13 @@ app.post('/api/register', async (req,res) => {
 
 module.exports = router;
 
-app.use(express.static(__dirname + '/public/'));
 
-app.use(express.static(__dirname));        // Add
-app.use('/', router);                      // Add router to application
+//static folder
+app.use(express.static(path.join(__dirname, '/frontend')))
+
+// app.use(express.static(__dirname));        // Add
+// app.use('/', router);                      // Add router to application
+
 app.listen(port, () => {
   console.log('Server started at http://localhost:' + port);
 })
