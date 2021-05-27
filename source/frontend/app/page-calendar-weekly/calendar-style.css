@@ -2,6 +2,11 @@
  * Stylesheet for calendar.html
  */
 
+
+main {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
 table {
     margin-left: auto;
     margin-right: auto;
