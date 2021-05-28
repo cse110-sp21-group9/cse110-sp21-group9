@@ -32,8 +32,8 @@ export function getBulletsByDateRange(dateStart, dateEnd, objOption = null) {
   return bulletsToReturn;
 }
 
-//TODO
-function getBulletsByDateSpan(dateStart, dateDue, option){
+// TODO
+function getBulletsByDateSpan(dateStart, dateDue, option) {
   const bulletsToReturn = [];
   for (const bulletObj of runTimeBullets) {
     if (bulletObj.date === dateStart && bulletObj.date === dateDue) {
@@ -49,7 +49,7 @@ function getBulletsByDateSpan(dateStart, dateDue, option){
  */
 export function getBulletById(intID, objOption = null) {
   if (intID in runTimeBullets) return Bullet(runTimeBullets[intID]);
-  else return null; 
+  else return null;
 }
 
 /** Gets all event bullets within the specified date range
@@ -72,20 +72,20 @@ export function getTaskBulletsByDateRange(dateStart, dateEnd, objOption = null) 
   return filterArray(unfilteredBullets, 'Task');
 }
 
-//TODO
-function getBulletsByTag(tag, option){}
-function getEventBulletsByTag(tag, option){}
-function getNoteBulletsByTag(tag, option){}
-function getTaskBulletsByTag(tag, option){}
+// TODO
+function getBulletsByTag(tag, option) {}
+function getEventBulletsByTag(tag, option) {}
+function getNoteBulletsByTag(tag, option) {}
+function getTaskBulletsByTag(tag, option) {}
 
-function setBulletTitle(ID, title, option){}
-function setBulletDate(ID, date, option){}
-function setBulletTags(ID, tagList, option){}
-function addBulletTag(ID, tag, option){}
-function removeBulletTag(ID, tag, option){}
-function setBulletContent(ID, content, option){}
-function setBulletDueDate(ID, dueDate, option){}
-function setBulletStatus(ID, status, option){}
+function setBulletTitle(ID, title, option) {}
+function setBulletDate(ID, date, option) {}
+function setBulletTags(ID, tagList, option) {}
+function addBulletTag(ID, tag, option) {}
+function removeBulletTag(ID, tag, option) {}
+function setBulletContent(ID, content, option) {}
+function setBulletDueDate(ID, dueDate, option) {}
+function setBulletStatus(ID, status, option) {}
 
 function getAvailableTags() {
   return Object.keys(tags);
@@ -100,7 +100,6 @@ function createTag(strTag, option = null) {
 function removeTagGlobably(tag, option) {
 
 }
-
 
 /**
  * Creates a bullet object
@@ -152,8 +151,7 @@ export function createBullet(strType, strTitle, strDate, lstTags, strContent, op
  *  @return null
  */
 export function deleteBulletById(intID) {
-  if (intID in runTimeBullets)
-  {
+  if (intID in runTimeBullets) {
     runTimeBullets[intID] = null;
     deleteBulletFromStorage(intID);
   }

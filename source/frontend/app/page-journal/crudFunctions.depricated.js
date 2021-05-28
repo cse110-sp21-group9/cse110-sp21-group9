@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 import { Bullet } from './bullet.js';
 
->>>>>>> evan-dev
 /**
  *  Handles the backend of creating and editing bullet objects and tags and
  *  making sure they're properly stored.
@@ -19,35 +16,6 @@ let tagList = [];
 let runTimeUpToDate = false;
 let lastID; // this is bad
 
-<<<<<<< HEAD
-/** Sets the attributes of a bullet object
- *  @param {Number} intID the bullet's ID
- *  @param {Object} objData the bullet's data
- *  @param {string} strType the bullet's type
- *  @param {Date} dateDate the bullet's date
- *  @param {Array} lstTags the tags associated to the bullet
- *  @return null
- */
-export function setBulletAttributes(intID, objData = null, strType = null, dateDate = null, lstTags = null) {
-  const bullet = Object.assign({}, runTimeBullets[intID]); // make a shallow copy first
-  if (objData) {
-    bullet.data = objData;
-  }
-  if (strType) {
-    bullet.data = objData;
-  }
-  if (dateDate) {
-    bullet.date = dateDate;
-  }
-  if (lstTags) {
-    bullet.tags = lstTags;
-  }
-
-  updateBulletInStorage(bullet);
-}
-
-=======
->>>>>>> evan-dev
 /** Gets all bullets within the specified date range
  *  @param {Date} dateStart the beginning date to query from
  *  @param {Date} dateEnd the end date to query from
@@ -72,18 +40,6 @@ export function getBulletById(intID, objOption = null) {
   return runTimeBullets[intID];
 }
 
-<<<<<<< HEAD
-/**
- * Creates a bullet object
- * @param {string} objData - Bullet description
- * @param {string} strType - The bullet's type
- * @param {date} dateDate - Date bullet was created
- * @param {Number} intID - Bullet's ID
- * @returns the created bullet object's ID
- */
-export function createBullet(objData, strType, dateDate, lstTags) {
-  let bullet;
-=======
 /** Gets all event bullets within the specified date range
  *  @param {Date} dateStart the beginning date to query from
  *  @param {Date} dateEnd the end date to query from
@@ -137,7 +93,6 @@ export function createBullet(strType, strTitle, strDate, lstTags, strContent, op
     status: null
   };
   
->>>>>>> evan-dev
   if (strType === 'Note') {
     writeNewBullet(bullet);
   } else if (strType === 'Event') {
