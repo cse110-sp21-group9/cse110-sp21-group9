@@ -7,8 +7,6 @@ const path = require('path');
 
 describe('Basic unit tests for monthly calendar ', () => {
   const currDate = new Date();
-  const currMonth = currDate.getMonth();
-  const currYear = currDate.getFullYear();
   const monthNames = ['January', 'Feburuary', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December'];
   let contentHtml;
@@ -16,64 +14,107 @@ describe('Basic unit tests for monthly calendar ', () => {
     contentHtml = fs.readFileSync(path.resolve(__dirname, '../../source/frontend/app/page-calendar-monthly/calendar.html'), 'utf-8');
     document.documentElement.innerHTML = contentHtml;
     require('../../source/frontend/app/page-calendar-monthly/calendar.js');
-    require('../../source/frontend/app/page-calendar-monthly/sidebar.js');
+		require('../../source/frontend/app/page-calendar-monthly/sidebar.js');
+		require('../../source/frontend/utils.js');
   });
 
   // DOM Unit Test 1: Page has correct current month/year
   test('Test1: Page has correct current month/year', () => {
     const month = document.getElementById('month');
     const year = document.getElementById('year');
-    expect(month.innerHTML).toMatch(monthNames[currMonth]);
-    expect(year.innerHTML).toMatch(currYear.toString());
+    expect(month.innerHTML).toMatch(monthNames[currDate.getMonth()]);
+    expect(year.innerHTML).toMatch(currDate.getFullYear().toString());
   });
 
-  // DOM Unit Test 2: Next month button moves calendar to correct month
-  test('Test2: Next month button moves calendar to correct month', () => {
+  // DOM Unit Test 2: Current month has correct days of the week 
+  test('Test2: Current month has correct days of the week', () => {
+    const testDate = new Date(); 
+		testDate.setDate(15);
+		let testWeekday = testDate.getDay(); 
+		let day = document.getElementById('15'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('15');
+
+		testDate.setDate(2);
+		testWeekday = testDate.getDay(); 
+		day = document.getElementById('2'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('2');
+
+		testDate.setDate(23);
+		testWeekday = testDate.getDay(); 
+		day = document.getElementById('23'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('23');
+  });
+
+  // DOM Unit Test 3: Next month button moves calendar to correct month
+  test('Test3: Next month button moves calendar to correct month', () => {
     const forwardMonth = document.getElementById('forwardmonth');
     forwardMonth.click();
     const month = document.getElementById('month');
-    expect(month.innerHTML).toMatch(monthNames[currMonth + 1]);
+		currDate.setMonth(currDate.getMonth() + 1)
+    expect(month.innerHTML).toMatch(monthNames[currDate.getMonth()]);
   });
 
-  // DOM Unit Test 3: Previous month button moves calendar to correct month
-  test('Test3: Previous month button moves calendar to correct month', () => {
+  // DOM Unit Test 4: Next month has correct days of the week
+	test('Test4: Next month has correct days of the week', () => {
+    const testDate = new Date(currDate.getFullYear(), currDate.getMonth());
+		testDate.setDate(10);
+		let testWeekday = testDate.getDay(); 
+		let day = document.getElementById('10'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('10');
+
+		testDate.setDate(4);
+		testWeekday = testDate.getDay(); 
+		day = document.getElementById('4'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('4');
+
+		testDate.setDate(28);
+		testWeekday = testDate.getDay(); 
+		day = document.getElementById('28'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('28');
+  });
+
+  // DOM Unit Test 5: Previous month button moves calendar to correct month
+  test('Test5: Previous month button moves calendar to correct month', () => {
     const backMonth = document.getElementById('backmonth');
     backMonth.click();
     const month = document.getElementById('month');
-    expect(month.innerHTML).toMatch(monthNames[currMonth]);
-  });
-
-  // DOM Unit Test 4: Next year button moves calendar to correct year
-  test('Test4: Next year button moves calendar to correct year ', () => {
-    const forwardYear = document.getElementById('forwardyear');
-    forwardYear.click();
-    const year = document.getElementById('year');
-    expect(year.innerHTML).toMatch((currYear + 1).toString());
-  });
-
-  // DOM Unit Test 5: Previous year button moves calendar to correct year
-  test('Test5: Previous year button moves calendar to correct year', () => {
-    const backYear = document.getElementById('backyear');
-    backYear.click();
-    const year = document.getElementById('year');
-    expect(year.innerHTML).toMatch(currYear.toString());
+		currDate.setMonth(currDate.getMonth() - 1);
+    expect(month.innerHTML).toMatch(monthNames[currDate.getMonth()]);
   });
 
   // DOM Unit Test 6: Previous month button in January moves to correct month/year
   test('Test6:Previous month button in January moves to correct month/year (should change to December of last year)', () => {
     // Try to go to December of last year
     const backMonth = document.getElementById('backmonth');
-    for (let i = 0; i < currMonth + 1; i++) {
+    for (let i = 0; i < currDate.getMonth() + 1; i++) {
       backMonth.click();
     }
     const month = document.getElementById('month');
     const year = document.getElementById('year');
     expect(month.innerHTML).toMatch('December');
-    expect(year.innerHTML).toMatch((currYear - 1).toString());
+    expect(year.innerHTML).toMatch((currDate.getFullYear() - 1).toString());
   });
 
-  // DOM Unit Test 7: Next month button in December moves to correct month/year
-  test('Test7: Next month button in December moves to correct month/year (should change to January of next year)', () => {
+  // DOM Unit Test 7: December of last year has correct days of the week
+	test('Test7: Next month has correct days of the week', () => {
+    const testDate = new Date(currDate.getFullYear() - 1, 11);
+		testDate.setDate(13);
+		let testWeekday = testDate.getDay(); 
+		let day = document.getElementById('13'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('13');
+
+		testDate.setDate(3);
+		testWeekday = testDate.getDay(); 
+		day = document.getElementById('3'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('3');
+
+		testDate.setDate(26);
+		testWeekday = testDate.getDay(); 
+		day = document.getElementById('26'); 
+		expect(day.parentNode.children[testWeekday].id).toBe('26');
+  });
+  // DOM Unit Test 8: Next month button in December moves to correct month/year
+  test('Test8: Next month button in December moves to correct month/year (should change to January of next year)', () => {
     // Try to go to January of next year
     const forwardMonth = document.getElementById('forwardmonth');
     for (let i = 0; i < 13; i++) {
@@ -82,7 +123,7 @@ describe('Basic unit tests for monthly calendar ', () => {
     const month = document.getElementById('month');
     const year = document.getElementById('year');
     expect(month.innerHTML).toMatch('January');
-    expect(year.innerHTML).toMatch((currYear + 1).toString());
+    expect(year.innerHTML).toMatch((currDate.getFullYear() + 1).toString());
   });
   // DOM Unit Test 8: Check event listener for month selector
   // DOM Unit Test 9: Check event listener for each week?
