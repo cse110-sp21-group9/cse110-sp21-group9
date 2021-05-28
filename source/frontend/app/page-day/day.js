@@ -16,6 +16,7 @@
 /* eslint-env jquery */
 // POTENTIALLY OLD
 import * as crud from '../page-journal/crudFunctions.js';
+import * as utils from '../../utils.js'
 
 const saveBtn = document.getElementById('saveAdd');
 
@@ -76,11 +77,13 @@ let defDay = '01';
 const timeStart = 'T00:00';
 const timeEnd = 'T23:59';
 // generate hash of the day we're in if we don't have one already
-const hashed = generateHash();
+generateHash();
+const date = utils.readHash(document.location.hash);
 
 // update the date variables we have accordingly and the url
-[defMonth, defYear, defDay] = getCurrentDay(hashed);
-updateURL(hashed);
+defYear  = date.getFullYear();
+defMonth = date.getMonth();
+defDay   = date.getDate();
 
 // set the UI to display the current day
 setDay([defMonth, defYear, defDay]);
@@ -107,9 +110,11 @@ function makeTimeSlotComponent(intTime) {
   const timeText = document.createTextNode(`${stringTime}:00`);
   const bulletList = document.createElement('ul');
   const addBtn = document.createElement('button');
+  addBtn.classList = "btn btn-primary btn-sm circleButts";
+  
   // TODO: Make this button have an icon. This is a failed attempt
-  addBtn.innerHTML = '<i class = "fas fa-angle-right></i>';
-  addBtn.innerHTML = 'Add Bullet';
+  addBtn.innerHTML = '<i class="fas fa-plus"></i>';
+  //addBtn.innerHTML = 'Add Bullet';
   timeSlot.appendChild(timeText);
   timeSlot.appendChild(bulletList);
   timeSlot.appendChild(addBtn);
@@ -349,14 +354,16 @@ function createBulletEntryElem(intBulletID) {
     appendTextNode(' Tags: ', bullet.tags, div);
   }
   // create and append edit button
-  const editButton = appendButton('Edit', '', 'btn btn-secondary', div);
+  const editButton = appendButton('', '', 'btn-sm btn-primary circleButts', div);
+  editButton.innerHTML = '<i class="fas fa-pen"></i>'
   editButton.addEventListener('click', () => {
     $('#EditBullet').modal('toggle');
     openEditDialog(newEntry);
   });
 
   // create and append delete button
-  const deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
+  const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', div);
+  deleteButton.innerHTML = '<i class="fas fa-trash">'
   deleteButton.addEventListener('click', () => {
     $('#deleteBullet').modal('toggle');
     openDeleteDialog(newEntry);
@@ -369,17 +376,16 @@ function createBulletEntryElem(intBulletID) {
  *  @param {string} hash the url hash
  *  @return the month, year, and day that we're in
  */
-function getCurrentDay(hash) {
+function getCurrentDay(urlHash) {
   let curMonth;
   let curYear;
   let curDay;
 
   // parse the hash
-  const curr = hash.split('?');
-  curMonth = parseInt(curr[0].split('=')[1]);
-  console.log(curMonth);
-  curYear = parseInt(curr[1].split('=')[1]);
-  curDay = parseInt(curr[2].split('=')[1]);
+  const day = utils.readHash(urlHash);
+  curMonth = day.getMonth(); 
+  curYear  = day.getFullYear();
+  curDay   = day.getDate();
 
   // return the date
   console.log('Month: ' + curMonth + ' ' + 'Year: ' + curYear + ' ' + 'Day: ' + curDay);
@@ -395,27 +401,22 @@ function getCurrentDay(hash) {
  *  @return a hash that tells us which month, year, and day we're in
  */
 function generateHash(onload = true) {
-  let curr = document.URL;
-  if (onload) {
-    let month;
-    let year;
-    let day;
-    if (curr.includes('#')) {
-      curr = document.URL.split('#')[1].split('?');
-      month = parseInt(curr[0].split('=')[1]);
-      year = parseInt(curr[1].split('=')[1]);
-      day = parseInt(curr[2].split('=')[1]);
-      return '#month=' + month + '?year=' + year + '?day=' + day;
-    } else {
-      let date = new Date();
-      date = date.toISOString().split('T')[0].split('-');
-      month = parseInt(date[1]);
-      year = parseInt(date[0]);
-      day = parseInt(date[2]);
-      return '#month=' + month + '?year=' + year + '?day=' + day;
+  let currentURL = document.URL;
+  if (onload) 
+  {
+    if (!currentURL.includes('#')) //do nothing
+    {
+      const url = new URL(document.URL);
+      const date = new Date();
+      url.hash = utils.hashString('w', date.getFullYear(), date.getMonth(), date.getDate());
+      document.location.href = url.href;
     }
-  } else {
-    return '#month=' + defMonth + '?year=' + defYear + '?day=' + defDay;
+  }
+  else 
+  {
+    const url = new URL(document.URL);
+    url.hash = utils.hashString('m', defMonth, defYear);
+    document.location.href = url.href;
   }
 }
 
@@ -522,10 +523,8 @@ noteBtn.addEventListener('click', function() {
 
 // This button takes you back to the month calendar
 monthBtn.addEventListener('click', function() {
-  const hash = '#month=' + defMonth + '?year=' + defYear + '?day=' + defDay;
   const root = document.URL.split('/')[2];
+  document.location.hash = utils.hashString('m', defYear, defMonth);
   const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
-  const url = new URL(path);
-  url.hash = hash;
-  window.location.href = url.href;
+  document.location = path;
 });
