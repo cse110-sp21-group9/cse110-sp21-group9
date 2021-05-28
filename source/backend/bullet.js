@@ -1,8 +1,12 @@
 /**
- * <bullet-entry> custom component
+ * Read only Bullet Class
  * to be subclassed later by notes, tasks, events, etc.
  * It uses the template with id="bulletTemplate" in crud.html
+ *
+ * front end side code should never construct a bullet class directly since ID must be
+ * assigned by crud runtime. If a new bullet object is needed construct one through the crud functions
  */
+
 export class Bullet {
   constructor(objBullet) {
     this.ID = objBullet.ID; // automatic generation up to nearest second, hidden from user
