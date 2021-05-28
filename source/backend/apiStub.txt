@@ -5,7 +5,8 @@
             this seems like a a less round about method.
         5/24/2021:
         -crud functions will now construct and return a bullet class
-        -bullets will no longer have a data object, but instead store all possible feilds at the top level 
+        -bullets will no longer have a data object, but instead store all possible feilds at the top level
+        5/27/2021 added global add tag function
 */
 
 /*
@@ -30,6 +31,7 @@ function getBulletsByDateSpan(start, due, option){}        //=> List of bullet c
 
 function getBulletById(ID, option){}                       //=> returns bullet class
 
+//deprication
 function getEventBulletsByDateRange(start, end, option){}  //=> List of Event Bullets
 function getNoteBulletsByDateRange(start, end, option){}   //=> List of Note Bullets
 function getTaskBulletsByDateRange(start, end, option){}   //=> List of Task Bullets
@@ -49,8 +51,9 @@ function setBulletContent(ID, content, option){}    //=> returns updated bullet 
 function setBulletDueDate(ID, dueDate, option){}    //=> returns updated bullet class
 function setBulletStatus(ID, status, option){}      //=> returns updated bullet class
 
-function getAvailableTags(){}                       //=> returns a list of all known tags
-function removeTagGlobably(tag){}                   //=> removes tag from the global tag table, and removes it from all bullets
+function getAvailableTags(){}                       //=> returns a dict of all known tags
+function createTag(tag, option){}                   //=> adds tag to list of all known tags
+function removeTagGlobably(tag, option){}           //=> removes tag from the global tag table, and removes it from all bullets
 
 //note due date and status will be taken as an option Object if the type requires them
 function createBullet(strType, strTitle, strDate, lstTags, strContent, option) //=> returns the created bullet class
