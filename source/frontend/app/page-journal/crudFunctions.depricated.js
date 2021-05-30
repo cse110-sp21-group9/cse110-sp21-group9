@@ -1,3 +1,5 @@
+import { Bullet } from './bullet.js';
+
 /**
  *  Handles the backend of creating and editing bullet objects and tags and
  *  making sure they're properly stored.
@@ -13,46 +15,18 @@ const runTimeBullets = {};
 let tagList = [];
 let runTimeUpToDate = false;
 let lastID; // this is bad
-// placeholder var to appease linter
-const IDArray = [];
-
-/** Sets the attributes of a bullet object
- *  @param {Number} intID the bullet's ID
- *  @param {Object} objData the bullet's data
- *  @param {string} strType the bullet's type
- *  @param {Date} dateDate the bullet's date
- *  @param {Array} lstTags the tags associated to the bullet
- *  @return null
- */
-export function setBulletAttributes(intID, objData = null, strType = null, dateDate = null, lstTags = null) {
-  const bullet = Object.assign({}, runTimeBullets[intID]); // make a shallow copy first
-  if (objData) {
-    bullet.data = objData;
-  }
-  if (strType) {
-    bullet.data = objData;
-  }
-  if (dateDate) {
-    bullet.date = dateDate;
-  }
-  if (lstTags) {
-    bullet.tags = lstTags;
-  }
-
-  updateBulletInStorage(bullet);
-}
 
 /** Gets all bullets within the specified date range
  *  @param {Date} dateStart the beginning date to query from
  *  @param {Date} dateEnd the end date to query from
  *  @return a list of bullets that should be returned
  */
+//TODO build bullet classes instead of returning objects directly
 export function getBulletsByDateRange(dateStart, dateEnd, objOption = null) {
   const bulletsToReturn = [];
-  for (const [ID, bullet] of Object.entries(runTimeBullets)) {
-    if (bullet.date >= dateStart && bullet.date < dateEnd) {
-      bulletsToReturn.push(bullet);
-      IDArray.push(ID);
+  for (const bulletObj of runTimeBullets) {
+    if (bulletObj.date >= dateStart && bulletObj.date < dateEnd) {
+      bulletsToReturn.push(new Bullet(bulletObj));
     }
   }
   return bulletsToReturn;
@@ -66,37 +40,73 @@ export function getBulletById(intID, objOption = null) {
   return runTimeBullets[intID];
 }
 
+/** Gets all event bullets within the specified date range
+ *  @param {Date} dateStart the beginning date to query from
+ *  @param {Date} dateEnd the end date to query from
+ *  @return a list of bullets that should be returned
+ */
+export function getEventBulletsByDateRange(dateStart, dateEnd, objOption = null) {
+  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  return filterArray(unfilteredBullets, 'Event');
+}
+
+export function getNoteBulletsByDateRange(dateStart, dateEnd, objOption = null) {
+  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  return filterArray(unfilteredBullets, 'Note');
+}
+
+export function getTaskBulletsByDateRange(dateStart, dateEnd, objOption = null) {
+  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  return filterArray(unfilteredBullets, 'Task');
+}
+
 /**
  * Creates a bullet object
- * @param {string} objData - Bullet description
- * @param {string} strType - The bullet's type
- * @param {date} dateDate - Date bullet was created
- * @param {Number} intID - Bullet's ID
- * @returns the created bullet object's ID
+ * @param {string} strType    - bullet type
+ * @param {string} strTitle   - bullet title
+ * @param {string} strDate    - bullet date
+ * @param {string} strContent - bullet content
+ * @param {list}   lstTags    - list of bullet tags
+ * @param {JSONObject} option - defulats to null, one or more extra feilds based on bullet type 
+ *  eg:{dueDate: strDueDate, status: strStatus}
+ * @returns the created bullet object
  */
-export function createBullet(objData, strType, dateDate, lstTags) {
-  let bullet;
+export function createBullet(strType, strTitle, strDate, lstTags, strContent, option=null) {
+  
+  function writeNewBullet(bullet){
+    lastID++;
+    localStorage.setItem('lastID', lastID);
+    writeBulletToStorage(bullet);
+    creationSuccessful = true;
+  }
+  
+  let creationSuccessful = false;
+  let bullet =
+  {
+    ID: null,
+    title: strTitle,
+    type: strType,
+    date: strDate,
+    tags: lstTags,
+    content: strContent,
+    dueDate: null,
+    status: null
+  };
+  
   if (strType === 'Note') {
-    lastID++;
-    bullet = makeNoteBullet(objData, dateDate, lstTags, lastID);
-    localStorage.setItem('lastID', lastID);
-    writeBulletToStorage(bullet);
+    writeNewBullet(bullet);
   } else if (strType === 'Event') {
-    // might need to collect more user input info for this
-    // EG: Date and Time of Event
-    lastID++;
-    bullet = makeEventBullet(objData, dateDate, lstTags, lastID);
-    localStorage.setItem('lastID', lastID);
-    writeBulletToStorage(bullet);
+    bullet.dueDate = option.dueDate;
+    writeNewBullet(bullet);
   } else if (strType === 'Task') {
-    lastID++;
-    bullet = makeTaskBullet(objData, dateDate, lstTags, lastID);
-    localStorage.setItem('lastID', lastID);
-    writeBulletToStorage(bullet);
+    bullet.status = option.dueDate;
+    writeNewBullet(bullet);
   }
 
-  // TODO: write ids into local storage array for later querying
-  return bullet.ID;
+  if (creationSuccessful)
+    return new Bullet(bullet);
+  else
+    return null;
 }
 
 /** Deletes a bullet by the specified ID
@@ -115,69 +125,6 @@ export function initCrudRuntime() {
   fillRunTimeBullets();
   updateTags();
   editTags();
-}
-
-/**
- * Helper function for creating Note Bullets
- * @param {string} objData - Bullet description
- * @param {date} dateDate - Date bullet was created
- * @param {array} lstTags - List of tags associated with bullet
- * @param {Number} intID - Bullet's ID
- * @returns A Note Bullet object containing all param info
- */
-function makeNoteBullet(objData, dateDate, lstTags, intID) {
-  return {
-    ID: intID,
-    date: dateDate,
-    type: 'note',
-    tags: lstTags,
-    data: objData
-  };
-}
-
-/** TODO: Might need more parameters
- * Helper function for creating Event Bullets
- * @param {string} objData - Bullet description
- * @param {date} dateDate - Date bullet was created
- * @param {array} lstTags - List of tags associated with bullet
- * @param {Number} intID - Bullet's ID
- * @returns An Event Bullet object containing all param info
- */
-function makeEventBullet(objData, dateDate, lstTags, intID) {
-  return {
-    ID: intID,
-    date: dateDate,
-    type: 'event',
-    tags: lstTags,
-    data: objData
-  };
-}
-
-/** TODO: Might need more parameters
- * Helper function for creating Task Bullets
- * @param {string} objData - Bullet Description
- * @param {date} dateDate - Date bullet was created
- * @param {array} lstTags - List of tags associated with bullet
- * @param {Number} intID - Bullet's ID
- * @returns A Task Bullet object containing all param info
- */
-function makeTaskBullet(objData, dateDate, lstTags, intID) {
-  return {
-    ID: intID,
-    date: dateDate,
-    type: 'task',
-    tags: lstTags,
-    data: objData
-  };
-}
-
-/** Updates bullets in the storage
- *  @param {Bullet} objBullet the bullet we want to update
- *  @return null
- */
-function updateBulletInStorage(objBullet) {
-  runTimeBullets[objBullet.ID] = objBullet;
-  localStorage.setItem(objBullet.ID, JSON.stringify(objBullet));
 }
 
 /** Writes bullet to local storage and runtime
@@ -219,6 +166,7 @@ function fillRunTimeBullets() {
     localStorage.setItem('lastID', lastID);
     lastID = 0;
     writeArrayToStorage('bulletIDs', []);
+    writeArrayToStorage('tags', []);
   }
 
   lastID = Number(lastID);
@@ -228,7 +176,7 @@ function fillRunTimeBullets() {
     runTimeBullets[ID] = JSON.parse(localStorage.getItem(ID));
     console.log('loaded bullet object: ', runTimeBullets[ID]);
   }
-
+  tagList = readArrayFromStorage('');
   // makes sure tags are also loaded
   fillRunTimeTags();
   runTimeUpToDate = true;
@@ -239,31 +187,10 @@ function fillRunTimeBullets() {
  */
 function fillRunTimeTags() {
   const tags = localStorage.getItem('tags');
-  console.log(tags);
   if (tagList == null || tagList === 'null') {
     tagList = [];
   }
   console.log('loaded tags: ', tagList);
-}
-
-/** NOTE: Can be made more efficient or just outsource to API
- *  Writes an array to storage with an associated key
- *  @param {string} strKey the array's key
- *  @param {Array} lstArray the array we want to store
- *  @return null
- */
-function writeArrayToStorage(strKey, lstArray) {
-  localStorage.setItem(strKey, JSON.stringify({ array: lstArray }));
-}
-
-/** Reads an array given an associated key
- *  @param {string} strArrayKey the array's key
- *  @return the array we want to read
- */
-function readArrayFromStorage(strArrayKey) {
-  const array = localStorage.getItem(strArrayKey);
-  // JSON.parse(array)['array'] turned to JSON.parse(array).'array'
-  return JSON.parse(array).array;
 }
 
 /** Creates a checklist in the dialog form of all the tags we have established in tagList
@@ -356,4 +283,41 @@ export function createTag(tagName) {
   console.log(tagList);
   localStorage.setItem('tags', tagList);
   updateTags();
+}
+
+//----------------helpers----------------
+
+/** Helper function to filter array of bullets
+ *  @param {Array} arrayIn
+ *  @param {String} bulletFilter
+ *  @return a filtered list according to the bullet type filter
+ */
+ function filterArray(arrayIn, bulletFilter) {
+  const arrayOut = [];
+  for (const bullet in arrayIn) {
+    if (bullet.type === bulletFilter) {
+      output.push(bullet);
+    }
+  }
+  return arrayOut;
+}
+
+/** NOTE: Can be made more efficient or just outsource to API
+ *  Writes an array to storage with an associated key
+ *  @param {string} strKey the array's key
+ *  @param {Array} lstArray the array we want to store
+ *  @return null
+ */
+ function writeArrayToStorage(strKey, lstArray) {
+  localStorage.setItem(strKey, JSON.stringify({ array: lstArray }));
+}
+
+/** Reads an array given an associated key
+ *  @param {string} strArrayKey the array's key
+ *  @return the array we want to read
+ */
+function readArrayFromStorage(strArrayKey) {
+  const array = localStorage.getItem(strArrayKey);
+  // JSON.parse(array)['array'] turned to JSON.parse(array).'array'
+  return JSON.parse(array).array;
 }

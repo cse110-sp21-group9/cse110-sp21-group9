@@ -53,6 +53,9 @@ router.get('/app/page-calendar/calendar.html', function(req, res){
 router.get('/app/page-day/day.html', function(req, res){
   res.sendFile('/frontend/app/page-day/day.html', { root: __dirname });
 });
+router.get('/app/page-dashboard/page-dashboard.html', function(req, res){
+  res.sendFile('/frontend/app/page-dashboard/page-dashboard.html', { root: __dirname });
+});
 
 app.post('/api/login', async(req,res) => {
   const { username, password } = req.body

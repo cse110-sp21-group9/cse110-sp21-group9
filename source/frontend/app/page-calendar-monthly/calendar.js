@@ -200,12 +200,12 @@ function populateCalendar(month, year, data) {
       // hover over date cells in calendar
       date.addEventListener("mouseover", function(){
         // date.style.border= '3px solid #333';
-        date.style.backgroundColor = '#c7c7cc';
+        date.style.backgroundColor = 'var(--accent-color1)';
         date.style.cursor= 'pointer';
       });
       date.addEventListener("mouseleave", function(){
         // date.style.border= '1px solid #333';
-        date.style.backgroundColor = 'white';
+        date.style.backgroundColor = 'var(--background-color)';
       });
       counter++;
       element.appendChild(date);
