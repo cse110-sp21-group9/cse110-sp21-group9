@@ -39,7 +39,6 @@ const tagName = document.getElementById('tagname');
 
 // edit inputs
 const editBullet = document.getElementById('EditBullet');
-const editSave = document.getElementById('editSaveAdd');
 const editTitle = document.getElementById('edittitle');
 const editDate = document.getElementById('editdate');
 const editDesc = document.getElementById('editdesc');
