@@ -1,26 +1,29 @@
-
 body {
   font-family: 'Nunito Sans', sans-serif;
+  grid-area: content; 
 }
 
-.sidebar {
-  height: 100%; 
-  width: 0; 
-  position: fixed; 
-  z-index: 1; 
-  top: 0;
-  left: 0;
-  background-color: rgb(227, 229, 240);
-  overflow-x: hidden; 
-  padding-top: 60px; 
-  transition: 0.5s; 
-  overflow: hidden;
+
+/* CSS Grid */
+.main-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 100px);
+  background-color: white;
+  gap: 10px;
+  grid-template-areas: 
+    'sidebar top-nav top-nav'
+    'sidebar content notespace'
+    'sidebar content notespace'
+    'sidebar content notespace';
 }
+/*  CSS Grid End*/
+
 /** All the stuff that goes to the header
  * Includes searchbars, welcome text, and hamburger menu
  */
-
 header {
+  /* grid-area: top-nav;  */
   transition: margin-left .5s;
   padding: 10px;
   width: 100vw;
@@ -31,6 +34,7 @@ header {
 }
 
 #searchbar {
+  /* grid-area: top-nav;  */
   display: inline-block;
   position: relative;
   width: 45%;
@@ -40,45 +44,43 @@ header {
 
 /* The sidebar menu */
 .mySidebar {
-  height: 100%; 
+  height: 100%;
   /* min-height: 100vh; */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
+  width: 0;
+  /* 0 width - change this with JavaScript */
+  position: fixed;
+  grid-area: sidebar; 
+  /* Stay in place */
   display: flex;
-  z-index: 1; /* Stay on top */
+  z-index: 1;
+  /* Stay on top */
   top: 0;
   left: 0;
-  background-color: rgb(227, 229, 240); /* Black*/
+  background-color: rgb(227, 229, 240);
+  /* Black*/
   /* overflow-x: hidden; Disable horizontal scroll */
   /* padding-top: 60px; Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+  transition: 0.5s;
+  /* 0.5 second transition effect to slide in the sidebar */
 }
 
 #welcome {
   position: relative;
   display: inline-block;
   text-align: center;
-  vertical-align:top;
+  vertical-align: top;
   margin-left: 5%;
   flex-grow: 2;
 }
 
-/* The button used to open the sidebar */
-.hamburger-bar {
-  width: 35px;
-  height: 5px;
-  background-color: black;
-  margin: 6px 0;
-}
 
-.hamburger:hover {
-  background-color: rgb(255, 255, 255);
-}
 /* End of header stuff */
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
-  transition: margin-left .5s; /* If you want a transition effect */
+  grid-area: content; 
+  transition: margin-left .5s;
+  /* If you want a transition effect */
   padding: 20px;
   width: 95%;
   height: 100vh;
@@ -93,17 +95,15 @@ body {
 }
 
 
-#main_container
-{
-    display: flex;
-    max-height: 95vh;
+#main_container {
+  display: flex;
+  max-height: 95vh;
 }
 
-#calender_container
-{
+#calender_container {
   vertical-align: top;
   position: relative;
-  background-color:rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   margin: 4vw;
   border-radius: 15px;
   border: 1px solid black;
@@ -112,53 +112,47 @@ body {
   overflow: hidden;
 }
 
-#date_container
-{
-    margin: 5px;
-    border-bottom: 1px solid black;
+#date_container {
+  margin: 5px;
+  border-bottom: 1px solid black;
 }
 
-#date
-{
-    padding-left: 10px;
+#date {
+  padding-left: 10px;
 }
 
-#week_day
-{
-    padding-left: 10px;
+#week_day {
+  padding-left: 10px;
 }
 
-#widgets_container
-{
-    /*border: 5px solid blue;*/
-    width: 50%;
+#widgets_container {
+  /*border: 5px solid blue;*/
+  width: 50%;
 }
 
-#time_list
-{
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    height: 90%;
-    overflow-y: scroll;
-    scrollbar-width: thin;
+#time_list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  height: 90%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
 }
 
-.time_slot
-{
-    border: 1px solid black;
-    border-left: 5px solid black;
-    border-radius: 4px;
-    background-color: white;
-    margin: 5px;
-    padding: 5px;
+.time_slot {
+  border: 1px solid black;
+  border-left: 5px solid black;
+  border-radius: 4px;
+  background-color: white;
+  margin: 5px;
+  padding: 5px;
 }
 
 /* Right hand widget: just notes */
 #undated_notes {
   vertical-align: top;
   position: relative;
-  background-color:rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   width: 40vw;
   height: 96%;
   margin: 4vw;
@@ -185,7 +179,7 @@ body {
 }
 
 #curMonth:hover {
-    color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
 }
 
 p {
