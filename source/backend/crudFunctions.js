@@ -11,7 +11,7 @@ import { Bullet } from './bullet.js';
  *  Completed: Add type and tag functionality
  */
 
-let runTimeBullets = {};
+const runTimeBullets = {};
 let runTimeTags = {};
 let runTimeUpToDate = false;
 let lastID; // this is bad
@@ -58,39 +58,38 @@ export function getBulletById(intID, objOption = null) {
  *  @return a list of bullets that should be returned
  */
 export function getEventBulletsByDateRange(dateStart, dateEnd, objOption = null) {
-  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  const unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
   return filterArray(unfilteredBullets, 'Event');
 }
 
 export function getNoteBulletsByDateRange(dateStart, dateEnd, objOption = null) {
-  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  const unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
   return filterArray(unfilteredBullets, 'Note');
 }
 
 export function getTaskBulletsByDateRange(dateStart, dateEnd, objOption = null) {
-  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  const unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
   return filterArray(unfilteredBullets, 'Task');
 }
 
 export function getBulletsByTag(strTag, objOption = null) {
-  let bulletsToReturn = [];
-  for (bulletObj of runTimeBullets) {
+  const bulletsToReturn = [];
+  for (const bulletObj of runTimeBullets) {
     if (bulletObj === null) continue;
-    else if (bulletObj.tags.indexOf(strTag) !== -1)
-      bulletsToReturn.push(Bullet(bulletObj));
+    else if (bulletObj.tags.indexOf(strTag) !== -1) { bulletsToReturn.push(Bullet(bulletObj)); }
   }
   return bulletsToReturn;
 }
 export function getEventBulletsByTag(strTag, objOption = null) {
-  let unfilteredBullets = getBulletsByTag(strTag);
+  const unfilteredBullets = getBulletsByTag(strTag);
   return filterArray(unfilteredBullets, 'event');
 }
 export function getNoteBulletsByTag(strTag, objOption = null) {
-  let unfilteredBullets = getBulletsByTag(strTag);
+  const unfilteredBullets = getBulletsByTag(strTag);
   return filterArray(unfilteredBullets, 'note');
 }
 export function getTaskBulletsByTag(strTag, objOption = null) {
-  let unfilteredBullets = getBulletsByTag(strTag);
+  const unfilteredBullets = getBulletsByTag(strTag);
   return filterArray(unfilteredBullets, 'task');
 }
 export function setBulletTitle(intID, strTitle, objOption = null) {
@@ -99,10 +98,10 @@ export function setBulletTitle(intID, strTitle, objOption = null) {
 export function setBulletDate(intID, dateDate, objOption = null) {
   return updateBullet(intID, 'date', dateDate);
 }
-//note tag must first be registered globally
+// note tag must first be registered globally
 export function addBulletTag(intID, strTag, objOption = null) {
   if (runTimeBullets[intID] === null) return null;
-  let bulletObj = runTimeBullets[intID];
+  const bulletObj = runTimeBullets[intID];
   if (!(strTag in runTimeTags)) return null;
   bulletObj.tags.push(strTag);
   writeBulletToStorage(bulletObj);
@@ -110,11 +109,11 @@ export function addBulletTag(intID, strTag, objOption = null) {
 }
 export function removeBulletTag(intID, strTag, objOption = null) {
   if (runTimeBullets[intID] === null) return null;
-  let bulletObj = runTimeBullets[intID];
+  const bulletObj = runTimeBullets[intID];
   if (!(strTag in runTimeTags)) return null;
-  let index = bulletObj.tags.indexOf(strTag);
+  const index = bulletObj.tags.indexOf(strTag);
   if (index === -1) return null;
-  bulletObj.tags.splice(index, 1)
+  bulletObj.tags.splice(index, 1);
   writeBulletToStorage(bulletObj);
   return new Bullet(bulletObj);
 }
@@ -129,10 +128,9 @@ export function setBulletStatus(intID, strstatus, objOption = null) {
 }
 
 export function getAvailableTags() {
-  let tagsToRetrun = [];
-  for (tag of runTimeTags) {
-    if (tag === true)
-      tagsToRetrun.push(tag);
+  const tagsToRetrun = [];
+  for (const tag of runTimeTags) {
+    if (tag === true) { tagsToRetrun.push(tag); }
   }
   return tagsToRetrun;
 }
@@ -148,8 +146,8 @@ export function removeTagGlobally(strTag, objOption = null) {
   if (strTag in runTimeTags) {
     runTimeTags[strTag] = null;
     localStorage.setItem('tags', JSON.stringify(runTimeTags));
-    for (bulletObj in runTimeBullets){
-      if (bulletObj !== null){
+    for (const bulletObj in runTimeBullets) {
+      if (bulletObj !== null) {
         removeBulletTag(bulletObj.ID, strTag);
       }
     }
@@ -196,10 +194,10 @@ export function createBullet(strType, strTitle, strDate, lstTags, strContent, ob
   if (strType === 'Note') {
     writeNewBullet(bullet);
   } else if (strType === 'Event') {
-    bullet.dueDate = option.dueDate;
+    bullet.dueDate = objOption.dueDate;
     writeNewBullet(bullet);
   } else if (strType === 'Task') {
-    bullet.status = option.status;
+    bullet.status = objOption.status;
     writeNewBullet(bullet);
   }
 
@@ -227,10 +225,9 @@ export function initCrudRuntime() {
 
 // ----------------helpers----------------
 
-function updateBullet(intID, strField, data) 
-{
+function updateBullet(intID, strField, data) {
   if (runTimeBullets[intID] === null) return null;
-  let bulletObj = runTimeBullets[intID];
+  const bulletObj = runTimeBullets[intID];
   bulletObj[strField] = data;
   writeBulletToStorage(bulletObj);
   return new Bullet(bulletObj);
@@ -297,7 +294,7 @@ function filterArray(arrayIn, bulletFilter) {
   const arrayOut = [];
   for (const bullet in arrayIn) {
     if (bullet.type === bulletFilter) {
-      output.push(bullet);
+      arrayOut.push(bullet);
     }
   }
   return arrayOut;
