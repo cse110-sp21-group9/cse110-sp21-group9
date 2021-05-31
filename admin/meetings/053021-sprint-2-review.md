@@ -40,18 +40,23 @@ Task Assignment | • Who should complete each task? <br>
 ### Progress updates  
 **Edward**
 - Settings page 
-  - import/export bullets from json file feature 
-  - Change mode function for light/dark mode  
+- import/export bullets from json file feature 
+- Change mode function for light/dark mode  
+
 **Kenny/Elisa**
-  - Light/dark mode css styling
-  - Sidebar styling  
+- Light/dark mode css styling
+ - Sidebar styling  
+
 **Etienne** 
-  - still working on mini calendar   
+- still working on mini calendar  
+ 
 **Edmund/Evan**
 - ran into too many issues with database, will use localstorage for backend
-- Goal is to allow user to log in to upload/download their bullets from db server  
+- Goal is to allow user to log in to upload/download their bullets from db server 
+ 
 **Alan**
-- Finished unit tests for backend crud functions  
+- Finished unit tests for backend crud functions
+  
 ### Conduct second retrospective
 - See notes in retrospectives folder  
 
@@ -66,13 +71,16 @@ Task Assignment | • Who should complete each task? <br>
 
 ## V. Task Assignment/Actions Items 
 **Kenny/Elisa/Daisuke** 
-  - meet tonight to redesign day view UI   
+- meet tonight to redesign day view UI   
+  
 **Evan** 
-  - update Backend, integrate with other views  
+- update Backend, integrate with other views  
+
 **Edmund/Evan** 
-  - create top-lavel page map in globals.js
-  - Keep path variables in one place
-  - To change to another page from one page, just change the url to mapping/hash  
+- create top-lavel page map in globals.js
+- Keep path variables in one place
+- To change to another page from one page, just change the url to mapping/hash  
+
 **Continue working on remaining roadmap tasks (due 5/31)** 
 - **Edmund**:
   - Look through local storage back end for bugs
