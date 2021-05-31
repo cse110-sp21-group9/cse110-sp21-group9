@@ -11,7 +11,7 @@ import { Bullet } from './bullet.js';
  *  Completed: Add type and tag functionality
  */
 
-const runTimeBullets = {};
+let runTimeBullets = {};
 let runTimeTags = {};
 let runTimeUpToDate = false;
 let lastID; // this is bad
@@ -191,13 +191,19 @@ export function createBullet(strType, strTitle, strDate, lstTags, strContent, ob
     status: null
   };
 
+  if (objOption != null)
+  {
+    if ("dueDate" in objOption)
+      bullet.dueDate = objOption.dueDate;
+    if ("status" in objOption)
+      bullet.status = objOption.status;
+  }
+
   if (strType === 'Note') {
     writeNewBullet(bullet);
   } else if (strType === 'Event') {
-    bullet.dueDate = objOption.dueDate;
     writeNewBullet(bullet);
   } else if (strType === 'Task') {
-    bullet.status = objOption.status;
     writeNewBullet(bullet);
   }
 
