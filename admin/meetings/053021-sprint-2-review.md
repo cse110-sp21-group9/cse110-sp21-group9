@@ -3,7 +3,7 @@
 **Meeting Purpose:** Weekly Group meeting/Sprint 2 Review meeting  
 **Meeting Date/Time:** May 30th, 2021, 4:30pm - 5:30pm  
 **Timezone:** Pacific Standard Time (UTC−07:00)  
-**Meeting Location:** Virtually through Discord
+**Meeting Location:** Virtually through Discord  
 **Note Taker:** Alan Wang/Edward Yang 
 
 ## II. Attendees
@@ -41,18 +41,17 @@ Task Assignment | • Who should complete each task? <br>
 **Edward**
 - Settings page 
   - import/export bullets from json file feature 
-  - Change mode function for light/dark mode
+  - Change mode function for light/dark mode  
 **Kenny/Elisa**
   - Light/dark mode css styling
-  - Sidebar styling 
+  - Sidebar styling  
 **Etienne** 
-  - still working on mini calendar 
+  - still working on mini calendar   
 **Edmund/Evan**
 - ran into too many issues with database, will use localstorage for backend
-- Goal is to allow user to log in to upload/download their bullets from db server
+- Goal is to allow user to log in to upload/download their bullets from db server  
 **Alan**
-- Finished unit tests for backend crud functions 
-
+- Finished unit tests for backend crud functions  
 ### Conduct second retrospective
 - See notes in retrospectives folder  
 
@@ -67,29 +66,29 @@ Task Assignment | • Who should complete each task? <br>
 
 ## V. Task Assignment/Actions Items 
 **Kenny/Elisa/Daisuke** 
-  - meet tonight to redesign day view UI 
+  - meet tonight to redesign day view UI   
 **Evan** 
-  - update Backend, integrate with other views
+  - update Backend, integrate with other views  
 **Edmund/Evan** 
   - create top-lavel page map in globals.js
-  - Keep path variables in one place 
-  - To change to another page from one page, just change the url to mapping/hash
+  - Keep path variables in one place
+  - To change to another page from one page, just change the url to mapping/hash  
 **Continue working on remaining roadmap tasks (due 5/31)** 
 - **Edmund**:
   - Look through local storage back end for bugs
   - Integrate back end into day view (due 5/28)
   - Move possible shared functionality from day and month view into globals and utils
-  - Make bullets scroll on month view
+  - Make bullets scroll on month view  
 - **Kenny + Elisa**:
   - Frame out html and css for a landing page (hold off on this for now)
   - ~~Start doing color schemes for a dark theme~~
-  - ~~start styling dashboard (if it is ready for styling)~~
-  - **Etienne**:
-    - Clone current mini calendar and change/add functionality
-    - Add month display
-    - Add month scrolling working
-    - Make default behavior clicking day hash URL correctly and take you to the view for that day
-    - Make default behavior clicking Month take you to the month view
+  - ~~start styling dashboard (if it is ready for styling)~~  
+- **Etienne**:
+  - Clone current mini calendar and change/add functionality
+  - Add month display
+  - Add month scrolling working
+  - Make default behavior clicking day hash URL correctly and take you to the view for that day
+  - Make default behavior clicking Month take you to the month view  
 - **Daisuke**:
   - ~~Finish any framing needed on dashboard~~
   - ~~Think of something to fill the widget section or remove it~~
@@ -97,20 +96,20 @@ Task Assignment | • Who should complete each task? <br>
   - ~~Make dashboard load tasks for current day/week~~
   - If you finish above tasks and have free time:
     - ~~Tell Kenny or Elisa that dashboard is ready for styling~~
-      - ask alan if he needs help writing test cases
+      - ask alan if he needs help writing test cases  
 - **Edward**:
   - ~~Start work on a settings page~~
   - Possibly work with Elisa for style/lay out
   - Current planned settings:
     - ~~Light/Dark theme~~
     - User info, name, Birthday
-    - ~~import/export bullet data~~
+    - ~~import/export bullet data~~  
 - **Alan**:
   - ~~Write testing suit for back end crud functions~~
-  - Run above testing suit and report any bugs to Evan or Edmund
+  - Run above testing suit and report any bugs to Evan or Edmund  
 - **Evan**:
   - ~~Start working on import export feature for bullets from back end~~
-  - Start working on settings and info storage for back end
+  - Start working on settings and info storage for back end  
 
 
 **Old Items**
