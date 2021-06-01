@@ -1,97 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Logo -->
-  <link rel="icon" type="image/jpeg" href="/source/frontend/assets/mini-logo.svg">
+    <!-- Logo -->
+    <link rel="icon" type="image/jpeg" href="/source/frontend/assets/mini-logo.svg">
 
-  <!-- Nunito Font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+    <!-- Nunito Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/c7fe59e5a5.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <!-- Icons -->
+    <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
 
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
+    <title>Calendar Demo</title>
+    <link rel="stylesheet" href="calendar-style.css">
+    <script type="module" src="calendar.js"></script>
+    <script type="module" src="sidebar.js"></script>
+  </head>
 
-  <title>Calendar Demo</title>
-  <link rel="stylesheet" href="calendar-style.css">
-  <script type="module" src="calendar.js"></script>
-  <script type="module" src="sidebar.js"></script>
-</head>
+  <body>
+    <!-- <div class="main-container"> -->
 
-<body>
-  <!--Sidebar-->
-  <div id="mySidebar" class="sidebar">
-    <!--Make sure close button is next to title-->
-    <div id="title">
-      <object data="bujo-logo.svg" id="logo"></object>
-      <a href="javascript:void(0)" class="closebtn" id='closebtn'>&times;</a>
-    </div>
-    <!--Remember to put in icons-->
-    <a href="#">Dashboard</a>
-    <a href="#">Calendar</a>
-    <a href="#">Tasks</a>
-    <a href="#">Habit Tracker</a>
-    <a href="#">Journal</a>
+      <!-- New Sidebar -->
+      <!-- Source: https://getbootstrap.com/docs/5.0/examples/sidebars/# -->
+      <div class="mySidebar">
+        <div class="d-flex flex-column flex-shrink-0 bg-light"
+          style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;">
+          <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
+            data-bs-placement="right" data-bs-original-title="Icon-only">
+            <span class="visually-hidden center-block"><img src="../../assets/nav-logo.svg" /></span>
+          </a>
+          <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+              <a href="/source/frontend/app/page-day/day.html" class="nav-link py-3 border-bottom" aria-current="page" title="Home"
+                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <i class="fas fa-home fa-2x"></i>
+              </a>
+            </li>
+            <li>
+              <a href="/source/frontend/app/page-calendar-monthly/calendar.html"
+                class="nav-link active py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
+                data-bs-placement="right" data-bs-original-title="Month">
+                <i class="fas fa-calendar-alt fa-2x"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link py-3 border-bottom" title="Settings" data-bs-toggle="tooltip"
+                data-bs-placement="right" data-bs-original-title="Settings">
+                <i class="fas fa-user-cog fa-2x"></i>
+              </a>
+            </li>
+          </ul>
 
-    <!-- <div id="sidebarbottom">
-      <a href="#">Settings</a>
-    </div> -->
-  </div>
-
-  <div id="main">
-    <!--Try to make it change color on hover-->
-    <div id="openbtn" class="hamburger" style="display: inline-block">
-      <div class="hamburger-bar"></div>
-      <div class="hamburger-bar"></div>
-      <div class="hamburger-bar"></div>
-    </div>
-    <table>
-
-      <thead>
-        <tr class="monthyear">
-          <!-- <td id="year" colspan="2.5"></td> -->
-          <td id="backmonth" colspan="0.25"></td>
-          <td id="forwardmonth" colspan="0.25"></td>
-          <td id="month" colspan="3.5"></td>
-          <td colspan=".5"><button type="button" class="btn btn-dark">Today</button></td>
-          <td colspan=".5">
-            <div class="dropdown">
-              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Month View
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Month</a>
-                <a class="dropdown-item" href="#">Day</a>
-                <a class="dropdown-item" href="#">Week</a>
+          <!-- <div class="dropdown border-top">
+            <button type="button" class="btn" data-toggle="dropdown">
+              <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown-menu">
+                <i class="fas fa-user-circle fa-2x" id="avatar" aria-hidden="true"></i>
+              </a>
+              <div class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
               </div>
-            </div>
-          </td>
-        </tr>
+            </button>
+          </div> -->
+        </div>
+      </div>
+
+      <div class=main-calendar id="main ml-auto align-top">
+        <table>
+          <thead>
+            <tr class="monthyear">
+              <!-- <td id="year" colspan="2.5"></td> -->
+              <td id="backmonth" colspan="0.25"></td>
+              <td id="forwardmonth" colspan="0.25"></td>
+              <td id="month" colspan="3.5"></td>
+              <td colspan=".5"><button type="button" class="btn btn-primary"><i class="fas fa-calendar-day"></i>
+                  Today</button></td>
+              <td colspan=".5">
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Month View
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Month</a>
+                    <a class="dropdown-item" href="#">Day</a>
+                    <a class="dropdown-item" href="#">Week</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
 
 
-        <tr class="monthyear" style="display:none;">
-          <td id="backyear"></td>
-          <td id="year" colspan="5"></td>
-          <td id="forwardyear"></td>
-        </tr>
-      </thead>
+            <tr class="monthyear" style="display:none;">
+              <td id="backyear"></td>
+              <td id="year" colspan="5"></td>
+              <td id="forwardyear"></td>
+            </tr>
+          </thead>
 
-      <tbody id="calendar">
+          <tbody id="calendar">
 
-      </tbody>
+          </tbody>
 
-      <!-- <tfoot>blah blah blah</tfoot> --- maybe use the footer later -->
+          <!-- <tfoot>blah blah blah</tfoot> --- maybe use the footer later -->
 
-    </table>
-  </div>
+        </table>
+      </div>
+    <!-- </div> -->
+  </body>
 
-
-</body>
-
-</html>
+  </html>

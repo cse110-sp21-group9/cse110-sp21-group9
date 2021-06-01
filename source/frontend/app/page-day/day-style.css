@@ -1,22 +1,77 @@
+/* colors for light-theme */
+:root {
+  --background-color: white;
+  --text-color: #1c1c1e;
+  --accent-color1: #c7c7cc; 
+  --nav-color: #fcfcfc; /* drop down box color */
+  --nav-color-hover: #f2f2f7;
+}  
 
-.sidebar {
-  height: 100%; 
-  width: 0; 
-  position: fixed; 
-  z-index: 1; 
+/* colors for dark-theme */
+[data-theme="dark"] { 
+  --background-color: #1c1c1e;
+  --text-color: #f2f2f7;
+  --accent-color1: #8e8e93;
+  --nav-color: #2c2c2e;
+  --nav-color-hover: #48484a;
+}
+
+/* styling for overall page */
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--background-color);
+  grid-area: content;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Styling for dropup menu */
+/* body .mySidebar .dropdown .dropdown-menu{
+  background-color: var(--nav-color);
+}
+
+body .mySidebar .dropdown .dropdown-menu li a{
+  color: var(--text-color);
+}
+
+body .mySidebar .dropdown .dropdown-menu li a:hover{
+  background-color: var(--nav-color-hover);
+} */
+
+/* The sidebar menu */
+.mySidebar {
+  height: 100%;
+  grid-area: sidebar;
+  position: fixed;
+  background-color: var(--nav-color);
+  width: 0;
+  position: fixed;
+  /* display: flex; */
+  z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(227, 229, 240);
-  overflow-x: hidden; 
-  padding-top: 60px; 
-  transition: 0.5s; 
-  overflow: hidden;
 }
+
+/* CSS Grid */
+.main-container {
+  display: grid;
+  grid-template-columns: 1% auto;
+  grid-template-rows: 0 auto;
+  background-color: white;
+  gap: 1%;
+  /* Probably put in calendar on the top two rows of the third column 
+   and then have notespace on the bottom two rows */
+  grid-template-areas: 
+    'sidebar main';
+}
+/*  CSS Grid End*/
+
 /** All the stuff that goes to the header
  * Includes searchbars, welcome text, and hamburger menu
  */
-
 header {
+  /* grid-area: top-nav;  */
   transition: margin-left .5s;
   padding: 10px;
   width: 100vw;
@@ -27,122 +82,129 @@ header {
 }
 
 #searchbar {
+  /* grid-area: top-nav;  */
   display: inline-block;
   position: relative;
   width: 45%;
   margin-left: 3%;
+  border-radius: 4px;
 }
 
 #welcome {
   position: relative;
   display: inline-block;
   text-align: center;
-  vertical-align:top;
+  vertical-align: top;
   margin-left: 5%;
   flex-grow: 2;
 }
 
-/* The button used to open the sidebar */
-.hamburger-bar {
-  width: 35px;
-  height: 5px;
-  background-color: black;
-  margin: 6px 0;
-}
 
-.hamburger:hover {
-  background-color: rgb(255, 255, 255);
-}
 /* End of header stuff */
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
-  transition: margin-left .5s; /* If you want a transition effect */
+  display: inline-block;
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-area: content; 
+  transition: margin-left .5s;
+  /* If you want a transition effect */
   padding: 20px;
   width: 95%;
-  height: 100vh;
-}
-
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  /* overflow: hidden; */
-  background-color: rgba(108, 164, 255, 0.267);
+  height: 100vh; 
 }
 
 
-#main_container
-{
-    display: flex;
-    max-height: 95vh;
+#main_container {
+  display: flex;
+  max-height: 100vh;
 }
 
-#calender_container
-{
+#calender_container {
   vertical-align: top;
   position: relative;
-  background-color:rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   margin: 4vw;
-  border-radius: 25px;
-  border: 5px solid black;
+  border-radius: 5px;
+  border: 1px solid var(--text-color);
   margin: 20px;
   width: 55vw;
-  overflow-x: hidden;
+  height: 95vh;
+  overflow-y: hidden;
 }
 
-#date_container
-{
-    margin: 5px;
-    border-bottom: 1px solid black;
+#date_container {
+  margin: 1px;
+  border-bottom: 1px solid var(--text-color);
+  display: grid;
+  grid-template-columns: 50% 25% 25%;
+  grid-template-rows: 50% 50%;
+  background-color: white;
+  gap: 1%;
+  /* Probably put in calendar on the top two rows of the third column 
+   and then have notespace on the bottom two rows */
+  grid-template-areas: 
+    'week_day '
+    'date addBullet createtag';
 }
 
-#date
-{
-    padding-left: 10px;
+#date {
+  grid-row-start: 2;
+  padding-left: 15px;
 }
 
-#week_day
-{
-    padding-left: 10px;
+#week_day {
+  grid-row-start: 1;
+  padding-left: 10px;
 }
 
-#widgets_container
-{
-    /*border: 5px solid blue;*/
-    width: 50%;
+/* TODO: Style this button to be smaller */
+#addBullet {
+  /* size: 15px; */
+  grid-row-start: 2;
+  align-self: center;
 }
 
-#time_list
-{
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    height: 90%;
-    overflow: scroll;
-    scrollbar-width: thin;
+#createtag {
+  grid-row-start: 2;
 }
 
-.time_slot
-{
-    border: 1px solid black;
-    border-left: 5px solid black;
-    border-radius: 4px;
-    background-color: white;
-    margin: 5px;
-    padding: 5px;
+#widgets_container {
+  /*border: 5px solid blue;*/
+  width: 50%;
+}
+
+#time_list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  height: 90%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.time_slot {
+  border: 1px solid var(--text-color);
+  border-left: 5px solid var(--text-color);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  margin: 5px;
+  height: auto;
+  min-height: 5em;
+  padding: 5px;
 }
 
 /* Right hand widget: just notes */
 #undated_notes {
   vertical-align: top;
   position: relative;
-  background-color:rgb(255, 255, 255);
+  background-color: var(--background-color);
   width: 40vw;
   height: 96%;
   margin: 4vw;
-  border-radius: 25px;
-  border: 5px solid black;
+  border-radius: 15px;
+  border: 1px solid var(--text-color);
   margin: 20px;
 }
 
@@ -151,4 +213,26 @@ body {
   margin: 10px;
   width: 100%;
   height: 100%;
+}
+
+#tags {
+  border: 1px solid var(--text-color);
+}
+
+/* style add,edit,delete buttons*/
+.circleButts {
+  border-radius: 30px;
+}
+
+#curMonth {
+  display: inline-block;
+}
+
+#curMonth:hover {
+  color: rgb(255, 255, 255);
+}
+
+p {
+  font-size: 18px;
+
 }

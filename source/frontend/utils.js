@@ -1,9 +1,28 @@
-export function hashString(type, year, month, day = null) {
-  if (type === 'm') {
-    return type + '-' + year + '-' + month;
-  } else {
-    return type + '-' + year + '-' + month + '-' + day;
-  }
+export const MONTH_NAMES_LONG = {
+    1: 'January',
+    2: 'Feburuary',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December'
+  };
+  
+export const WEEK_NAMES_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+export const WEEK_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+export function hashString(type, year,month, day=null){
+    if(type=='m'){
+        return type + '-' + year + '-' + month;
+    }
+    else{
+        return type + '-' + year + '-' + month + '-' + day;
+    }
 }
 
 export function readHash(hash) {

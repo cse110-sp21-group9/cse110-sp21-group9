@@ -1,4 +1,7 @@
-import { hashString, readHash, daysInMonth, startDate, updateURL } from '../../utils.js';
+//todo propper utils usage
+
+import {hashString, readHash, daysInMonth, startDate, updateURL} from '../../utils.js';
+import * as utils from '../../utils.js';
 
 const calendar = document.getElementById('calendar');
 const month = document.getElementById('month');
@@ -10,23 +13,6 @@ const forwardyear = document.getElementById('forwardyear');
 
 let monthIn = 5;
 let yearIn = 2021;
-
-const monthNames = {
-  1: 'January',
-  2: 'Feburuary',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'August',
-  9: 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December'
-};
-
-const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 backmonth.innerHTML = '&#10094;';
 backyear.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>';
@@ -211,11 +197,15 @@ function populateCalendar(month, year, data) {
         url.hash = hash;
         window.location.href = url.href;
       });
-      date.addEventListener('mouseover', function() {
-        date.style.border = '3px solid #333';
+      // hover over date cells in calendar
+      date.addEventListener("mouseover", function(){
+        // date.style.border= '3px solid #333';
+        date.style.backgroundColor = 'var(--accent-color1)';
+        date.style.cursor= 'pointer';
       });
-      date.addEventListener('mouseleave', function() {
-        date.style.border = '1px solid #333';
+      date.addEventListener("mouseleave", function(){
+        // date.style.border= '1px solid #333';
+        date.style.backgroundColor = 'var(--background-color)';
       });
       counter++;
       element.appendChild(date);
@@ -242,14 +232,14 @@ function resetCalendar() {
   while (calendar.firstChild) {
     calendar.removeChild(calendar.firstChild);
   }
-  week.forEach(function(e) {
+  utils.WEEK_NAMES_SHORT.forEach(function(e) {
     const date = document.createElement('th');
     date.innerHTML = e;
     element.appendChild(date);
   });
   calendar.append(element);
   year.innerHTML = yearIn;
-  month.innerHTML = "<div id='monthTitle'><b>" + monthNames[monthIn] + '</b></div>' + '<div id=yearTitle>' + yearIn + '</div>';
+  month.innerHTML = "<div id='monthTitle'><b>" + utils.MONTH_NAMES_LONG[monthIn] + '</b></div>' + '<div id=yearTitle>' + yearIn + '</div>';
 }
 
 // for a specific month only

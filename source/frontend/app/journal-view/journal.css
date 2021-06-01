@@ -1,0 +1,84 @@
+/* CSS Grid */
+.main-container {
+    display: grid;
+    grid-template-columns: 4.5rem 60vh 100vh;
+    /* grid-template-rows: repeat(2, 100px); */
+    background-color: white;
+    height: 98%;
+    grid-template-areas:
+        'sidebar notebar journal'
+
+}
+
+/* colors for light-theme */
+:root {
+    --background-color: white;
+    --text-color: #1c1c1e;
+    --accent-color1: #c7c7cc; 
+    --nav-color: #fcfcfc; /* drop down box color */
+    --nav-color-hover: #f2f2f7;
+  }  
+  
+/* colors for dark-theme */
+[data-theme="dark"] { 
+    --background-color: #1c1c1e;
+    --text-color: #f2f2f7;
+    --accent-color1: #8e8e93;
+    --nav-color: #2c2c2e;
+    --nav-color-hover: #48484a;
+}
+
+/* styling for overall page */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: var(--background-color);
+}
+
+/* Styling for dropup menu */
+body .mySidebar .dropdown .dropdown-menu{
+    background-color: var(--nav-color);
+    position: absolute;
+    z-index: 1;
+}
+  
+body .mySidebar .dropdown .dropdown-menu li a{
+    color: var(--text-color);
+
+}
+  
+body .mySidebar .dropdown .dropdown-menu li a:hover{
+    background-color: var(--nav-color-hover);
+
+}
+
+/* The sidebar menu */
+.mySidebar {
+  height: 100%;
+  grid-area: sidebar;
+  position: absolute fixed;
+  background-color: var(--nav-color);
+  width: 4.5rem;
+}
+
+.list-group {
+    height: 100vh;
+    grid-area: notebar;
+    position: relative fixed;
+    overflow: auto;
+    /* overflow-x: hidden; */
+    /* overflow-y: hidden; */
+    /* width: 20% */
+}
+/* 
+.side-components {
+    height: 100%;
+} */
+
+.main-journal {
+    grid-area: journal;
+    margin: auto;
+    /* height: 10px; */
+    /* width: 100px; */
+    /* overflow: auto; */
+    /* width: 80% */
+}
