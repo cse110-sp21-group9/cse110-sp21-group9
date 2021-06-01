@@ -12,7 +12,7 @@ import { Bullet } from './bullet.js';
  */
 
 const runTimeBullets = {};
-const runTimeTags = {};
+let runTimeTags = {};
 let runTimeUpToDate = false;
 let lastID; // this is bad
 
@@ -23,21 +23,21 @@ let lastID; // this is bad
  */
 export function getBulletsByDateRange(dateStart, dateEnd, objOption = null) {
   const bulletsToReturn = [];
-  for (const bulletObj of runTimeBullets) {
-    if (bulletObj === null) continue;
-    else if (bulletObj.date >= dateStart && bulletObj.date < dateEnd) {
-      bulletsToReturn.push(new Bullet(bulletObj));
+  for (const bulletKey of Object.keys(runTimeBullets)) {
+    const bullet = runTimeBullets[bulletKey];
+    if (bullet.date >= dateStart && bullet.date < dateEnd) {
+      bulletsToReturn.push(new Bullet(bullet));
     }
   }
   return bulletsToReturn;
 }
 
-export function getBulletsByDateSpan(dateStart, dateDue, option) {
+export function getBulletsByDateSpan(dateStart, dateDue, objOption = null) {
   const bulletsToReturn = [];
-  for (const bulletObj of runTimeBullets) {
-    if (bulletObj === null) continue;
-    else if (bulletObj.date === dateStart && bulletObj.date === dateDue) {
-      bulletsToReturn.push(new Bullet(bulletObj));
+  for (const bulletKey of Object.keys(runTimeBullets)) {
+    const bullet = runTimeBullets[bulletKey];
+    if (dateEquals(bullet.date, dateStart) && dateEquals(bullet.dueDate, dateDue)) {
+      bulletsToReturn.push(new Bullet(bullet));
     }
   }
   return bulletsToReturn;
@@ -48,7 +48,7 @@ export function getBulletsByDateSpan(dateStart, dateDue, option) {
  *  @return the bullet we were looking for
  */
 export function getBulletById(intID, objOption = null) {
-  if (intID in runTimeBullets && runTimeBullets[intID] !== null) return Bullet(runTimeBullets[intID]);
+  if (intID in runTimeBullets) return new Bullet(runTimeBullets[intID]);
   else return null;
 }
 
@@ -58,101 +58,108 @@ export function getBulletById(intID, objOption = null) {
  *  @return a list of bullets that should be returned
  */
 export function getEventBulletsByDateRange(dateStart, dateEnd, objOption = null) {
-  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  const unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
   return filterArray(unfilteredBullets, 'Event');
 }
 
 export function getNoteBulletsByDateRange(dateStart, dateEnd, objOption = null) {
-  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  const unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
   return filterArray(unfilteredBullets, 'Note');
 }
 
 export function getTaskBulletsByDateRange(dateStart, dateEnd, objOption = null) {
-  unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
+  const unfilteredBullets = getBulletsByDateRange(dateStart, dateEnd, objOption);
   return filterArray(unfilteredBullets, 'Task');
 }
 
-export function getBulletsByTag(strTag, option = null) {
-  let bulletsToReturn = [];
-  for (bulletObj of runTimeBullets) {
-    if (bulletObj === null) continue;
-    else if (bulletObj.tags.indexOf(strTag) !== -1)
-      bulletsToReturn.push(Bullet(bulletObj));
+export function getBulletsByTag(strTag, objOption = null) {
+  const bulletsToReturn = [];
+  for (const bulletKey of Object.keys(runTimeBullets)) {
+    const bullet = runTimeBullets[bulletKey];
+    if (bullet.tags.indexOf(strTag) !== -1) { bulletsToReturn.push(new Bullet(bullet)); }
   }
   return bulletsToReturn;
 }
-export function getEventBulletsByTag(strTag, option = null) {
-  let unfilteredBullets = getBulletsByTag(strTag);
+
+export function getEventBulletsByTag(strTag, objOption = null) {
+  const unfilteredBullets = getBulletsByTag(strTag);
   return filterArray(unfilteredBullets, 'event');
 }
-export function getNoteBulletsByTag(strTag, option = null) {
-  let unfilteredBullets = getBulletsByTag(strTag);
+
+export function getNoteBulletsByTag(strTag, objOption = null) {
+  const unfilteredBullets = getBulletsByTag(strTag);
   return filterArray(unfilteredBullets, 'note');
 }
-export function getTaskBulletsByTag(tag, option = null) {
-  let unfilteredBullets = getBulletsByTag(strTag);
+
+export function getTaskBulletsByTag(strTag, objOption = null) {
+  const unfilteredBullets = getBulletsByTag(strTag);
   return filterArray(unfilteredBullets, 'task');
 }
-export function setBulletTitle(intID, strTitle, option = null) {
-  updateBullet(intID, 'title', strTitle);
+
+export function setBulletTitle(intID, strTitle, objOption = null) {
+  return updateBullet(intID, 'title', strTitle);
 }
-export function setBulletDate(intID, dateDate, option = null) {
-  updateBullet(intID, 'date', dateDate);
+
+export function setBulletDate(intID, dateDate, objOption = null) {
+  if (!(dateDate instanceof Date)) { return null; }
+  return updateBullet(intID, 'date', dateDate);
 }
-//note tag must first be registered globally
-export function addBulletTag(intID, strTag, option = null) {
-  if (runTimeBullets[intID] === null) return null;
-  let bulletObj = runTimeBullets[intID];
+
+// note tag must first be registered globally
+export function addBulletTag(intID, strTag, objOption = null) {
+  if (!(intID in runTimeBullets)) return null;
+  const bulletObj = runTimeBullets[intID];
   if (!(strTag in runTimeTags)) return null;
   bulletObj.tags.push(strTag);
-  writeBulletToStorage(bulletObj);
+  runTimeBullets[intID] = bulletObj;
+  localStorage.setItem(intID, JSON.stringify(bulletObj));
   return new Bullet(bulletObj);
 }
-export function removeBulletTag(intID, strTag, option = null) {
-  if (runTimeBullets[intID] === null) return null;
-  let bulletObj = runTimeBullets[intID];
-  if (!(strTag in runTimeTags)) return null;
-  let index = bulletObj.tags.indexOf(strTag);
+
+export function removeBulletTag(intID, strTag, objOption = null) {
+  if (!(intID in runTimeBullets) || !(strTag in runTimeTags)) return null;
+  const bulletObj = runTimeBullets[intID];
+  const index = bulletObj.tags.indexOf(strTag);
   if (index === -1) return null;
-  bulletObj.tags.splice(index, 1)
-  writeBulletToStorage(bulletObj);
+  bulletObj.tags.splice(index, 1);
+  runTimeBullets[intID] = bulletObj;
+  localStorage.setItem(intID, JSON.stringify(bulletObj));
   return new Bullet(bulletObj);
 }
-export function setBulletContent(intID, strContent, option = null) {
-  updateBullet(intID, 'content', strContent);
+
+export function setBulletContent(intID, strContent, objOption = null) {
+  return updateBullet(intID, 'content', strContent);
 }
-export function setBulletDueDate(intID, strdueDate, option = null) {
-  updateBullet(intID, 'dueDate', strdueDate);
+export function setBulletDueDate(intID, dateDueDate, objOption = null) {
+  if (!(dateDueDate instanceof Date)) { return null; }
+  return updateBullet(intID, 'dueDate', dateDueDate);
 }
-export function setBulletStatus(intID, strstatus, option = null) {
-  updateBullet(intID, 'status', strstatus);
+export function setBulletStatus(intID, strstatus, objOption = null) {
+  return updateBullet(intID, 'status', strstatus);
 }
 
 export function getAvailableTags() {
-  let tagsToRetrun = [];
-  for (tag of runTimeTags) {
-    if (tag === true)
-      tagsToRetrun.push(tag);
+  const tagsToReturn = [];
+  for (const tag of Object.keys(runTimeTags)) {
+    tagsToReturn.push(tag);
   }
-  return tagsToRetrun;
+  return tagsToReturn;
 }
 
-export function createTag(strTag, option = null) {
+export function createTag(strTag, objOption = null) {
   if (!(strTag in runTimeTags)) {
     runTimeTags[strTag] = true;
     localStorage.setItem('tags', JSON.stringify(runTimeTags));
   }
 }
 
-export function removeTagGlobably(strTag, option = null) {
+export function removeTagGlobally(strTag, objOption = null) {
   if (strTag in runTimeTags) {
-    runTimeTags[strTag] = null;
-    localStorage.setItem('tags', JSON.stringify(runTimeTags));
-    for (bulletObj in runTimeBullets){
-      if (bulletObj !== null){
-        removeBulletTag(bulletObj.ID, strTag);
-      }
+    for (const bulletKey of Object.keys(runTimeBullets)) {
+      removeBulletTag(bulletKey, strTag);
     }
+    delete runTimeTags[strTag];
+    localStorage.setItem('tags', JSON.stringify(runTimeTags));
   }
 }
 
@@ -167,13 +174,20 @@ export function removeTagGlobably(strTag, option = null) {
  *  eg:{dueDate: strDueDate, status: strStatus}
  * @returns the created bullet object
  */
-export function createBullet(strType, strTitle, strDate, lstTags, strContent, option = null) {
+export function createBullet(strType, strTitle, dateDate, lstTags, strContent, objOption = null) {
   function writeNewBullet(bulletObj) {
     lastID++;
+    bulletObj.ID = lastID;
     localStorage.setItem('lastID', lastID);
     writeBulletToStorage(bulletObj);
     creationSuccessful = true;
   }
+
+  if (!(dateDate instanceof Date)) { return null; }
+
+  lstTags.forEach((tag, index) => {
+    if (!(tag in runTimeTags)) return null;
+  });
 
   let creationSuccessful = false;
   const bullet =
@@ -181,20 +195,23 @@ export function createBullet(strType, strTitle, strDate, lstTags, strContent, op
     ID: null,
     title: strTitle,
     type: strType,
-    date: strDate,
+    date: dateDate,
     tags: lstTags,
     content: strContent,
     dueDate: null,
     status: null
   };
 
+  if (objOption != null) {
+    if ('dueDate' in objOption) { bullet.dueDate = objOption.dueDate; }
+    if ('status' in objOption) { bullet.status = objOption.status; }
+  }
+
   if (strType === 'Note') {
     writeNewBullet(bullet);
   } else if (strType === 'Event') {
-    bullet.dueDate = option.dueDate;
     writeNewBullet(bullet);
   } else if (strType === 'Task') {
-    bullet.status = option.dueDate;
     writeNewBullet(bullet);
   }
 
@@ -207,7 +224,7 @@ export function createBullet(strType, strTitle, strDate, lstTags, strContent, op
  */
 export function deleteBulletById(intID) {
   if (intID in runTimeBullets) {
-    runTimeBullets[intID] = null;
+    delete runTimeBullets[intID];
     deleteBulletFromStorage(intID);
   }
   return null;
@@ -221,13 +238,20 @@ export function initCrudRuntime() {
 }
 
 // ----------------helpers----------------
+function dateEquals(date1, date2) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
 
-function updateBullet(intID, strField, data) 
-{
-  if (runTimeBullets[intID] === null) return null;
-  let bulletObj = runTimeBullets[intID];
+function updateBullet(intID, strField, data) {
+  if (!(intID in runTimeBullets)) return null;
+  const bulletObj = runTimeBullets[intID];
   bulletObj[strField] = data;
-  writeBulletToStorage(bulletObj);
+  runTimeBullets[intID] = bulletObj;
+  localStorage.setItem(intID, JSON.stringify(bulletObj));
   return new Bullet(bulletObj);
 }
 
@@ -266,21 +290,28 @@ function fillRunTimeBullets() {
   if (runTimeUpToDate) return;
   lastID = localStorage.getItem('lastID');
   if (lastID === 'null' || lastID == null) {
-    localStorage.setItem('lastID', lastID);
     lastID = 0;
+    localStorage.setItem('lastID', lastID);
     writeArrayToStorage('bulletIDs', []);
-    writeArrayToStorage('tags', JSON.stringify({}));
+    localStorage.setItem('tags', JSON.stringify({}));
   }
 
   lastID = Number(lastID);
   const bulletIDs = readArrayFromStorage('bulletIDs');
   console.log('loaded bullet ids: ', bulletIDs);
   for (const ID of bulletIDs) {
-    runTimeBullets[ID] = JSON.parse(localStorage.getItem(ID));
+    runTimeBullets[ID] = parseBullet(ID);
     console.log('loaded bullet object: ', runTimeBullets[ID]);
   }
   runTimeTags = JSON.parse(localStorage.getItem('tags'));
   runTimeUpToDate = true;
+}
+
+function parseBullet(intID) {
+  const bullet = JSON.parse(localStorage.getItem(intID));
+  bullet.date = new Date(bullet.date);
+  if ('dueDate' in bullet) { bullet.dueDate = new Date(bullet.dueDate); }
+  return bullet;
 }
 
 /** Helper function to filter array of bullets
@@ -292,7 +323,7 @@ function filterArray(arrayIn, bulletFilter) {
   const arrayOut = [];
   for (const bullet in arrayIn) {
     if (bullet.type === bulletFilter) {
-      output.push(bullet);
+      arrayOut.push(bullet);
     }
   }
   return arrayOut;
