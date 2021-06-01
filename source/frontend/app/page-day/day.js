@@ -77,6 +77,7 @@ document.getElementById('week_day').innerHTML = dayName;
 
 // init crud
 crud.initCrudRuntime();
+loadTags();
 
 // make timeslots
 for (let i = 0; i < 24; i++) {
@@ -185,6 +186,94 @@ for (const bullet of bulletsToLoad) {
 }
 */
 
+/** Loads new tags from runtime to display on tag modal
+ *  Doesn't load in tags we already loaded in once
+ *  @return null
+ */
+function loadTags() {
+  // Grab tags saved in storage, and the part of the modal to paste them in
+  let tagsToLoad = crud.getAvailableTags();
+  let loadingBay = document.getElementById('taglist');
+  // Grab the tags already pasted onto the modal
+  let loadedTags = loadingBay.querySelectorAll('li');
+  console.log(loadedTags);
+  for (let i = 0; i < tagsToLoad.length; i++) {
+    let curTag = tagsToLoad[i];
+    // check if the tag we're putting in is already pasted if so, set our current tag to null
+    for (let j = 0; j < loadedTags.length; j++) {
+      if(loadedTags[j].innerHTML === curTag) {
+        curTag = null;
+      }
+    }
+    // if our current tag is null, skip over it
+    if(curTag === null) {
+      continue;
+    } else {
+      // otherwise, paste the tag onto the modal
+      console.log(curTag);
+      let tagBox = document.createElement('div');
+      tagBox.style = 'display: flex';
+      let tag = document.createElement('li');
+      tag.innerHTML = curTag;
+      tagBox.appendChild(tag);
+       // Make tag editable
+      tagBox.addEventListener('dblclick', () => {
+        tagBox.disabled = true;
+        let prevValue = tag.innerHTML;
+        deleteButton.hidden = true;
+        tag.innerHTML = '';
+        // Create a text input field to edit the tag
+        const editBox = document.createElement('input');
+        editBox.type = 'text';
+        editBox.value = prevValue;
+        tagBox.appendChild(editBox);
+    
+        // Create a cancel button for when you realize note-taking is stupid
+        const cancel = document.createElement('button');
+        cancel.classList = 'btn btn-sm btn-secondary';
+        cancel.innerHTML = 'Cancel';
+        tagBox.appendChild(cancel);
+        cancel.addEventListener('click', function() {
+          tagBox.removeChild(editBox);
+          tagBox.removeChild(cancel);
+          tag.innerHTML = prevValue;
+          deleteButton.hidden = false;
+          tagBox.disabled = false;
+        });
+
+        editBox.addEventListener('keypress', function(e) {
+          // Hit enter to actually save the thing. Is it intuitive enough?
+          if (e.key === 'Enter') {
+            // if you have an empty input box, just delete the thing
+            if(editBox.value === '') {
+              crud.removeTagGlobally(prevValue);
+              loadingBay.removeChild(tagBox);
+            } else {
+              let newTag = editBox.value;
+              // create the tag and destroy the input text + cancel button
+              crud.editTag(prevValue, newTag);
+              tagBox.removeChild(editBox);
+              tagBox.removeChild(cancel);
+              tag.innerHTML = newTag;
+              deleteButton.hidden = false;
+              tagBox.disabled = false;
+            }
+          }
+        });
+      });
+      // create and append delete button
+      // NOTE FOR DESIGN TEAM: Make this into a little x maybe
+      const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', tagBox);
+      deleteButton.innerHTML = '<i class="fas fa-trash">';
+      deleteButton.addEventListener('click', () => {
+        crud.removeTagGlobally(tag.innerHTML);
+        loadingBay.removeChild(tagBox);
+      }); 
+      loadingBay.appendChild(tagBox);
+    }
+  }
+}
+
 /* on click show new tag box */
 tagBtn.addEventListener('click', function() {
   $('#tagcreation').modal('toggle');
@@ -199,6 +288,56 @@ tagAddBtn.addEventListener('click', function() {
   // maybe add a confirmation box
 });
 
+
+tagName.addEventListener('keypress', function(e) {
+  // Hit enter to actually save the thing. Is it intuitive enough?
+  if (e.key === 'Enter') {
+    let newTag = tagName.value;
+    // create the bullet element and destroy the input text + cancel button
+    crud.createTag(tagName.value);
+    loadTags();
+    tagName.value = '';
+  }
+});
+
+const tagSelector = document.getElementById('tags');
+function populateBulletTags() {
+  let tagsToLoad = crud.getAvailableTags();
+  let loadedTags = tagSelector.querySelector('option');
+  console.log(loadedTags);
+  for (let i = 0; i < tagsToLoad.length; i++) {
+    let curTag = tagsToLoad[i];
+    // check if the tag we're putting in is already pasted if so, set our current tag to null
+    for (let j = 0; j < loadedTags.length; j++) {
+      if(loadedTags[j].innerHTML === curTag) {
+        curTag = null;
+      }
+    }
+    if (curTag === null) {
+      continue;
+    } else {
+      let option = document.createElement('option');
+      option.innerHTML = curTag;
+      option.value = curTag;
+      tagSelector.appendChild(option);
+      option.addEventListener('click', function() {
+        let selectedTags = document.getElementById('bullet_tags');
+        let tagBox = document.createElement('div');
+        tagBox.style = 'display: flex';
+        let thisTag = document.createElement('li');
+        thisTag.innerHTML = curTag;
+        tagBox.appendChild(thisTag);
+        const deleteButton = appendButton('', '','btn-smbtn-danger circleButts', tagBox);
+        deleteButton.innerHTML = '<i class="fas fa-trash">';
+        deleteButton.addEventListener('click', () => {
+          selectedTags.removeChild(tagBox);
+        });
+        selectedTags.appendChild(tagBox);
+      });
+    }
+  }
+}
+populateBulletTags();
 /** Opens the delete dialog box and listens for delete button to get clicked
  *  @param {bullet} elemEntry the bullet we want to delete
  *  @return null

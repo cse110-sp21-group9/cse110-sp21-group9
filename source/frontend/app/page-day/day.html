@@ -12,9 +12,8 @@
 	<script src="https://kit.fontawesome.com/c7fe59e5a5.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="day-style.css">
 	<script type="module" src="day.js"></script>
-	<script type="module" src="../../components/sidebar.js"></script>
-	<script type="module" src="../../components/script.js"></script>
 	<script type="module" src="../../../backend/crudFunctions.js"></script>
+	<script type="module" src="../element-mini-calendar/mini-calendar.js"></script>
 
 	<!-- Nunito Font -->
 	<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -86,14 +85,34 @@
 						<p id="date">april 1st</p>
 						<button class="btn-sm btn-primary circleButts" id="addBullet"><i
 							class="fas fa-plus"></i></button>
-						<button id="createtag" class="btn btn-primary">Tags</button>
+						<button id="createtag" class="btn btn-primary">Edit Tags</button>
 					</div>
 					<ul id="time_list">
 					</ul>
 				</div>
-				<div id="widgets_container">
-					<div id="minicalendar">
-						
+				<div id="right-side">
+					<div id="mini-calendar">
+						<table id = "calendar">
+							<thead>
+								<tr class="monthyear">
+									<td id="backmonth"></td>
+									<td id="month" colspan="7"></td>
+									<td id="forwardmonth"></td>
+								</tr>
+								<tr>
+									<th></th>
+									<th>Sun</th>
+									<th>Mon</th>
+									<th>Tue</th>
+									<th>Wed</th>
+									<th>Thu</th>
+									<th>Fri</th>
+									<th>Sat</th>
+								</tr>
+							</thead>
+							<tbody id="calendar-body">
+							</tbody>
+						</table>
 					</div>
 					<div id="undated_notes">
 						<div class="aspect-ratio-box-inside">
@@ -124,24 +143,27 @@
 							<label for="title">Title: </label>
 							<input type="text" id="title"><br>
 
-							<div id="tags">
-								<label for="tags">Tags: </label>
-							</div>
 							<label for="type">Type: </label>
 							<select name="bulletType" id="type">
 								<option value="Event">Event</option>
 								<option value="Task">Task</option>
 							</select> <br>
 							<label for="time">Hour: </label>
-							<select name=bulletHour" id="hour">
+							<select name="bulletHour" id="hour">
 							</select>
 							<select name="bulletAMPM" id="AMPM">
 								<option value="AM">AM</option>
 								<option value="PM">PM</option>
 							</select><br>
-							<div id="tags">
-								<label for="tags">Tag: </label>
-							</select>
+							<label for="tags">Tags: </label>
+							<select name="bulletTags" id="tags">
+								<option value="School">School</option>
+
+							</select><br>
+							<div id="selected_tags">
+								<ul id="bullet_tags">
+
+								</ul>
 							</div>
 							<textarea name="desc" rows="10" cols="30" placeholder="Notes"></textarea><br>
 						</form>
@@ -161,17 +183,19 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h3 class="modal-title">Tags</h3>
+						<h3 class="modal-title">Edit Tags</h3>
 					</div>
 					<div class="modal-body">
+						<h4>Current Tags: </h4>
+						<ul id="taglist">
+						</ul>
 						<form method="dialog">
-							<label for="tagname">Title: </label>
+							<label for="tagname">Add a new tag: </label>
 							<input type="text" id="tagname"><br>
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button id="tagcancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button id="saveTag" class="btn btn-primary" value="false">Save</button>
+						<button id="saveTag" class="btn btn-primary" value="false">Done</button>
 					</div>
 				</div>
 			</div>
