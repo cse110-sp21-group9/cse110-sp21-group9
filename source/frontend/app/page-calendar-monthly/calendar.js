@@ -280,33 +280,31 @@ function getNotes(bullets) {
 }
 
 function generateHash(onload = true) {
-  let curr = document.URL;
+  const curr = document.URL;
 
-  if (onload){
+  if (onload) {
     let month;
     let year;
-    if(curr.includes('#')) {
-      var date = readHash(curr.split('#')[1]);
+    if (curr.includes('#')) {
+      let date = readHash(curr.split('#')[1]);
       date = date.toISOString().split('T')[0].split('-');
       month = parseInt(date[1]);
       year = parseInt(date[0]);
-    }
-    else{
+    } else {
       let date = new Date();
       date = date.toISOString().split('T')[0].split('-');
       month = parseInt(date[1]);
       year = parseInt(date[0]);
     }
     return hashString('m', year, month);
-  }
-  else {
+  } else {
     return hashString('m', yearIn, monthIn);
   }
 }
 
 const hashed = generateHash();
 
-var date = readHash(hashed);
+let date = readHash(hashed);
 date = date.toISOString().split('T')[0].split('-');
 
 yearIn = parseInt(date[0]);
