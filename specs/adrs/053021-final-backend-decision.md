@@ -32,11 +32,11 @@ We decided to move to a localStorage backend as the backend for our final app. T
 - Can add/remove tags from individual bullets, and remove tags globally 
 - **initCrudRunTime()** needs to be run every time each page loads
 
-### LocalStorage format:** 
+### LocalStorage format:
 ```
 {
 	lastID: (null if fresh localstorage)
-  bulletIDs: {
+  	bulletIDs: {
 		array: [array of IDs]
 	}
 	<id of a bullet>: <data for that bullet>
