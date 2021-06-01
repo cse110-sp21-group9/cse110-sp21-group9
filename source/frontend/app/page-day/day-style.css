@@ -134,13 +134,36 @@ body {
     padding: 5px;
 }
 
-/* Right hand widget: just notes */
+/* Right hand widgets */
+#right-side {
+  vertical-align: top;
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-items: flex-end;
+}
+
+/* Widgets on the dashboard */
+#mini-calendar {
+  vertical-align: top;
+  position: relative; 
+  background-color:rgb(255, 255, 255);
+  width: 40vw;
+  height: 46%;
+  margin: 4vw;
+  border-radius: 15px;
+  border: 1px solid black;
+  margin: 20px;
+}
+
+/* Not going to be used, probably */
 #undated_notes {
   vertical-align: top;
   position: relative;
   background-color:rgb(255, 255, 255);
   width: 40vw;
-  height: 96%;
+  height: 46%;
   margin: 4vw;
   border-radius: 15px;
   border: 1px solid black;
@@ -158,7 +181,8 @@ body {
 /* style add,edit,delete buttons*/
 .circleButts {
   border-radius: 30px;
-
+}
+/*
 #curMonth {
   display: inline-block;
 }
@@ -166,8 +190,7 @@ body {
 #curMonth:hover {
     color: rgb(255, 255, 255);
 }
-
+*/
 p {
   font-size: 18px;
-
 }

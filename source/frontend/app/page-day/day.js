@@ -15,13 +15,17 @@
 /* get elements from html page */
 /* eslint-env jquery */
 // POTENTIALLY OLD
-import * as crud from '../page-journal/crudFunctions.js';
-import * as utils from '../../utils.js'
+import * as crud from '../../../backend/crudFunctions.js';
+import * as utils from '../../utils.js';
+import * as globals from '../../globals.js';
 
-const saveBtn = document.getElementById('saveAdd');
+const saveBulletBtn = document.getElementById('saveBullet');
 
 // creation inputs
+const addBtn = document.getElementById('addBulletBut');
 const titleInput = document.getElementById('title');
+const startTimeInput = document.getElementById('start_time');
+const endTimeInput = document.getElementById('end_time');
 const descInput = document.querySelector('[name = "desc"]');
 
 // output of creation for note bullets
@@ -53,23 +57,6 @@ const timeSegments = document.getElementById('time_list');
 // Navigate back to month view
 const monthBtn = document.getElementById('curMonth');
 
-const monthNames = {
-  1: 'January',
-  2: 'Feburuary',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'August',
-  9: 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December'
-};
-
-const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 // make sure this changes depending on the day you pick
 let defMonth = '04';
 let defYear = '2021';
@@ -77,13 +64,14 @@ let defDay = '01';
 const timeStart = 'T00:00';
 const timeEnd = 'T23:59';
 // generate hash of the day we're in if we don't have one already
-generateHash();
-const date = utils.readHash(document.location.hash);
 
+const hash = utils.hashString('d', defYear, defMonth, defDay);
+utils.updateURL(hash);
+const dateHash = utils.readHash(document.location.hash);
 // update the date variables we have accordingly and the url
-defYear  = date.getFullYear();
-defMonth = date.getMonth();
-defDay   = date.getDate();
+defYear = dateHash.getFullYear();
+defMonth = dateHash.getMonth();
+defDay = dateHash.getDate();
 
 // set the UI to display the current day
 setDay([defMonth, defYear, defDay]);
@@ -109,23 +97,10 @@ function makeTimeSlotComponent(intTime) {
   const timeSlot = document.createElement('div');
   const timeText = document.createTextNode(`${stringTime}:00`);
   const bulletList = document.createElement('ul');
-  const addBtn = document.createElement('button');
-  addBtn.classList = "btn btn-primary btn-sm circleButts";
-  
-  // TODO: Make this button have an icon. This is a failed attempt
-  addBtn.innerHTML = '<i class="fas fa-plus"></i>';
-  //addBtn.innerHTML = 'Add Bullet';
+
   timeSlot.appendChild(timeText);
   timeSlot.appendChild(bulletList);
-  timeSlot.appendChild(addBtn);
   timeSlot.className = 'time_slot';
-
-  // Performs same function as addBulletBut
-  addBtn.addEventListener('click', function() {
-    console.log('Add button was clicked');
-    openCreationDialog(stringTime, bulletList);
-    $('#bujoSpace').modal('toggle');
-  });
 
   return timeSlot;
 }
@@ -162,55 +137,65 @@ for (const bullet of bulletsToLoad) {
   }
 }
 
+addBtn.addEventListener('click', function() {
+  console.log('Add button was clicked');
+  $('#bujoSpace').modal('toggle');
+});
+
 /** Opens create bullet dialog box and saves additions if associated event listener is
  *  triggered
- *  @param {string} timeStr string for the time we want to add the bullet in
  *  @param {ul element} bulletList the list where we want to append to
  *  @return the created bullet
- *  THEORY: Bullet-double add is there because saveBtn is the same across all addBtns.
- *  Potential fix: Create save button here for each and every add button on the time table
+ * if user confirms, make new bullet and add it to page
  */
-function openCreationDialog(timeStr, bulletList) {
-  console.log('Entering openCreationDialog');
-  const title = titleInput;
-  let time = new Date();
-  let date = new Date();
-  const desc = descInput;
-  saveBtn.addEventListener('click', function() {
-    console.log('hit the save button');
-    // make tag array for new bullet
-    // POTENTIALLY OLD
-    const newBulletTags = crud.getCheckBoxResults();
-    const newBulletType = crud.getType();
-    console.log(newBulletType);
-    // set date and time to be today's date and clicked time
-    // since this is a task/event, we
-    time = 'T' + timeStr + ':' + '00';
-    date = curDay + time;
-    // make a new bullet with the crud functions
-    // POTENTIALLY OLD
-    const newBulletID = crud.createBullet(
-      { title: titleInput.value, note: descInput.value },
-      newBulletType,
-      date,
-      newBulletTags
-    );
-
-    console.log('In appending mode');
-    // add the bullet to the DOM
-    if (newBulletType === 'Event') {
-    // paste onto specific hour
-      console.log('appending event');
-      bulletList.append(createBulletEntryElem(newBulletID));
-    } else if (newBulletType === 'Task') {
-    // paste onto specific hour
-      console.log('appending task');
-      bulletList.append(createBulletEntryElem(newBulletID));
+saveBulletBtn.addEventListener('click', function() {
+  const startTime = startTimeInput.value;
+  const startHour = startTime.substring(0, 2);
+  const bulStartHour = parseInt(startHour);
+  let bulletList;
+  for (let hourIt = 0; hourIt < 24; hourIt++) {
+    const hours = document.querySelectorAll('[class = "time_slot"]');
+    const curHour = hours[hourIt];
+    console.log(curHour);
+    if (bulStartHour === hourIt) {
+      bulletList = curHour.querySelector('ul');
+      console.log('found timespace: ' + bulletList);
+      break;
     }
+  }
+  const endTime = endTimeInput.value;
+  const endHour = endTime.substring(0, 2);
+  const bulEndHour = parseInt(endHour);
+  try {
+    if (bulStartHour >= bulEndHour) {
+      throw new TimeDiscrepancyError('Start Time must come before End Time');
+    }
+  } catch (err) {
+    const errorMessage = document.getElementById('error');
+    errorMessage.innerHTML = err.message;
+    errorMessage.hidden = false;
+    return;
+  }
+  // make tag array for new bullet
+  // POTENTIALLY OLD
+  // const newBulletTags = getCheckBoxResults();
+  const date = new Date();
+  let dateString = JSON.stringify(date);
+  dateString = dateString.split('T')[0];
+  console.log(dateString);
+  const startDate = dateString + 'T' + startTime;
+  console.log(startDate);
+  const endDate = dateString + 'T' + endTime;
+  console.log(endDate);
+  // POTENTIALLY OLD
+  const newBulletType = getType();
+  const newBulletID = crud.createBullet(newBulletType, titleInput.value, startDate, null, descInput.value, endDate);
+  console.log(newBulletID);
 
-    $('#bujoSpace').modal('toggle');
-  });
-}
+  console.log('appending event');
+  bulletList.append(createBulletEntryElem(newBulletID));
+  $('#bujoSpace').modal('toggle');
+});
 
 /* on click show new tag box */
 tagBtn.addEventListener('click', function() {
@@ -342,20 +327,22 @@ function createBulletEntryElem(intBulletID) {
   newEntry.append(div);
   if (bullet.type === 'note') {
     div.style = 'border: 0px';
-    appendTextNode('', bullet.data.title, div);
-  } else {
+    appendTextNode('', bullet.title, div);
+  } else if (bullet.type === 'event') {
     // create and append title of bullet
-    appendTextNode('Title: ', bullet.data.title, div);
+    appendTextNode('Title: ', bullet.title, div);
 
     // create and append description for bullet
-    appendTextNode(' Note: ', bullet.data.note, div);
+    appendTextNode(' Note: ', bullet.note, div);
 
     // create and append bullet's tags
     appendTextNode(' Tags: ', bullet.tags, div);
+  } else {
+    appendTextNode('Title: ', bullet.title, div);
   }
   // create and append edit button
   const editButton = appendButton('', '', 'btn-sm btn-primary circleButts', div);
-  editButton.innerHTML = '<i class="fas fa-pen"></i>'
+  editButton.innerHTML = '<i class="fas fa-pen"></i>';
   editButton.addEventListener('click', () => {
     $('#EditBullet').modal('toggle');
     openEditDialog(newEntry);
@@ -363,7 +350,7 @@ function createBulletEntryElem(intBulletID) {
 
   // create and append delete button
   const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', div);
-  deleteButton.innerHTML = '<i class="fas fa-trash">'
+  deleteButton.innerHTML = '<i class="fas fa-trash">';
   deleteButton.addEventListener('click', () => {
     $('#deleteBullet').modal('toggle');
     openDeleteDialog(newEntry);
@@ -375,7 +362,7 @@ function createBulletEntryElem(intBulletID) {
 /** Generates a month, year, and day given a url hash
  *  @param {string} hash the url hash
  *  @return the month, year, and day that we're in
- */
+ *
 function getCurrentDay(urlHash) {
   let curMonth;
   let curYear;
@@ -383,9 +370,9 @@ function getCurrentDay(urlHash) {
 
   // parse the hash
   const day = utils.readHash(urlHash);
-  curMonth = day.getMonth(); 
-  curYear  = day.getFullYear();
-  curDay   = day.getDate();
+  curMonth = day.getMonth();
+  curYear = day.getFullYear();
+  curDay = day.getDate();
 
   // return the date
   console.log('Month: ' + curMonth + ' ' + 'Year: ' + curYear + ' ' + 'Day: ' + curDay);
@@ -399,10 +386,10 @@ function getCurrentDay(urlHash) {
  *  3. A default date
  *  @param {boolean} onload tells us whether we are inheriting a URL or not
  *  @return a hash that tells us which month, year, and day we're in
- */
+ *
 function generateHash(onload = true) {
   let currentURL = document.URL;
-  if (onload) 
+  if (onload)
   {
     if (!currentURL.includes('#')) //do nothing
     {
@@ -412,23 +399,25 @@ function generateHash(onload = true) {
       document.location.href = url.href;
     }
   }
-  else 
+  else
   {
     const url = new URL(document.URL);
     url.hash = utils.hashString('m', defMonth, defYear);
     document.location.href = url.href;
   }
 }
+*/
 
 /** Updates the url of the page we are in based on the given hash
  *  @param {string} hash the hash we want to update our url with
  *  @return null
- */
+ *
 function updateURL(hash) {
   const url = new URL(document.URL);
   url.hash = hash;
   document.location.href = url.href;
 }
+*/
 
 /** Sets the day view's date-related variables
  *  NOTE: params may actually be in string format rather than int
@@ -445,17 +434,19 @@ function setDay([month, year, day]) {
 
   // Update month
   const monthDisplay = document.getElementById('curMonth');
-  monthDisplay.innerHTML = monthNames[curMonth];
+  console.log(monthDisplay);
+  monthDisplay.innerHTML = globals.MONTH_NAMES_LONG[curMonth];
 
   // Update date
   const dateDisplay = document.getElementById('date');
   dateDisplay.innerHTML = curMonth + '/' + curDay + '/' + curYear;
+  console.log(dateDisplay);
 
   // Update weekday
   const weekDisplay = document.getElementById('week_day');
   let weekDay = getWeekday([curMonth, curYear, curDay]);
   weekDay = Math.round(weekDay) % 7;
-  weekDisplay.innerHTML = week[weekDay];
+  weekDisplay.innerHTML = globals.WEEK_NAMES_LONG[weekDay];
 }
 
 /** Gets the current day of the week based on the day's month,
@@ -528,3 +519,74 @@ monthBtn.addEventListener('click', function() {
   const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
   document.location = path;
 });
+
+/** loads tags from storage
+ *  @return null
+ *
+function fillRunTimeTags() {
+  const tags = localStorage.getItem('tags');
+  if (tagList == null || tagList === 'null') {
+    tagList = [];
+  }
+  console.log('loaded tags: ', tagList);
+}
+
+/** Creates a checklist in the dialog form of all the tags we have established in tagList
+ *  @return null
+ *
+function updateTags() {
+  // taglist is already defined
+  const checkList = document.getElementById('tags');
+  for (const tag in tagList) {
+    // create checkbox
+    const options = document.createElement('input');
+
+    // specify element attributes
+    options.setAttribute('type', 'checkbox');
+    options.setAttribute('value', tagList[tag]);
+    options.setAttribute('name', tagList[tag]);
+
+    // create label for checkbox and define attributes
+    const label = document.createElement('label');
+    label.setAttribute('for', tagList[tag]);
+
+    // append text to the label
+    label.appendChild(document.createTextNode(tagList[tag]));
+
+    // append checkbox and label to the form
+    checkList.appendChild(options);
+    checkList.appendChild(label);
+  }
+}
+
+/** Get the results of the created tag checkboxes to display on the CRUD app.
+ *  @returns an array containing the names of all tags that the user selected
+ *
+// this function takes the user's specified tag entries and loads it onto the bullet object we are creating
+function getCheckBoxResults() {
+  const chosenTags = [];
+  if (tagList.size === 0) {
+    return chosenTags;
+  }
+
+  const options = document.querySelectorAll('input[type = "checkbox"]:checked');
+  for (const checkbox of options) {
+    chosenTags.push(checkbox.value);
+  }
+  return chosenTags;
+}
+*/
+class TimeDiscrepancyError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'GlobalError';
+  }
+}
+
+/** Gets a bullet's selected type from the creation dialog
+ *  @returns The bullet's selected type
+ */
+export function getType() {
+  const opt = document.getElementById('type').value;
+  return opt;
+}
