@@ -9,36 +9,4 @@ export class Bullet {
     this.dueDate = objBullet.dueDate;
     this.status = objBullet.status;
   }
-
-  get ID() {
-    return this.ID;
-  }
-
-  get title() {
-    return this.title;
-  }
-
-  get type() {
-    return this.type;
-  }
-
-  get date() {
-    return this.date;
-  }
-
-  get tags() {
-    return this.tags;
-  }
-
-  get content() {
-    return this.content;
-  }
-
-  get dueDate() {
-    return this.dueDate;
-  }
-
-  get status() {
-    return this.status;
-  }
 }

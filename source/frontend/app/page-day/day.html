@@ -16,58 +16,93 @@
 	<script type="module" src="../../components/script.js"></script>
 	<script type="module" src="../../../backend/crudFunctions.js"></script>
 
+	<!-- Nunito Font -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-	<div class="sidebar">
-		<side-bar></side-bar>
-	</div>
-	<div id="main">
-		<header>
-			<div id="openbtn" class="hamburger" style="display: inline-block">
-				<div class="hamburger-bar"></div>
-				<div class="hamburger-bar"></div>
-				<div class="hamburger-bar"></div>
-			</div>
-			<!--Search bar-->
-			<div id="searchbar" class="form-group">
-				<input type="text" class="form-control col-lg-8" placeholder="Search">
-			</div>
-
-
-			<!--TODO: Remember to paste user icon right next to name-->
-			<!--TODO: Change name according to each user-->
-			<h1 id="welcome">
-
-
-				Welcome back
-			</h1>
-			<br>
-		</header>
-		<h1 id = week_day>Thursday</h1>
-		<button id="addBulletBut" class = "btn btn-primary" >Add Event</button	>
-		<div id="main_container">
-			<div id="calender_container">
-				<div id="date_container">
-					<h3 id="curMonth">Thursday</h3>
-					<p id="date">april 1st</p>
-				</div>
-				<ul id="time_list">
+	<div class="main-container">
+		<!-- Source: https://getbootstrap.com/docs/5.0/examples/sidebars/# -->
+		<div class="mySidebar">
+			<div class="d-flex flex-column flex-shrink-0 bg-light"
+				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;">
+				<a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
+					data-bs-placement="right" data-bs-original-title="Icon-only">
+					<span class="visually-hidden center-block"><img src="../../assets/nav-logo.svg" /></span>
+				</a>
+				<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+					<li class="nav-item">
+						<a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="Home"
+							data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+							<i class="fas fa-home fa-2x"></i>
+						</a>
+					</li>
+					<li>
+						<a href="/source/frontend/app/page-calendar-monthly/calendar.html"
+							class="nav-link  py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
+							data-bs-placement="right" data-bs-original-title="Month">
+							<i class="fas fa-calendar-alt fa-2x"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="nav-link py-3 border-bottom" title="Settings" data-bs-toggle="tooltip"
+							data-bs-placement="right" data-bs-original-title="Settings">
+							<i class="fas fa-user-cog fa-2x"></i>
+						</a>
+					</li>
 				</ul>
+
+				<!-- <div class="dropdown border-top">
+					<button type="button" class="btn" data-toggle="dropdown">
+						<a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
+							data-bs-toggle="dropdown-menu">
+							<i class="fas fa-user-circle fa-2x" id="avatar" aria-hidden="true"></i>
+						</a>
+						<div class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Settings</a></li>
+							<li><a class="dropdown-item" href="#">Profile</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Sign out</a></li>
+						</div>
+					</button>
+				</div> -->
 			</div>
-			<div id="right-side">
-				<div id = "mini-calendar">
-					<div class = "aspect-ratio-box-inside">
-						<h2>Minicalendar</h2>
+		</div>
+
+		<div id="main">
+			<!--<header>-->
+				<!--TODO: Remember to paste user icon right next to name-->
+				<!--TODO: Change name according to each user-->
+			<!--</header-->
+			<h1 class="mb-3">Daily Calendar</h1>
+			<div id="main_container">
+				<div id="calender_container">
+					<div id="date_container">
+						<h3 id="week_day">Thursday</h3>
+						<p id="date">april 1st</p>
+						<button class="btn-sm btn-primary circleButts" id="addBullet"><i
+							class="fas fa-plus"></i></button>
+						<button id="createtag" class="btn btn-primary">Tags</button>
 					</div>
+					<ul id="time_list">
+					</ul>
 				</div>
-				<div id="undated_notes">
-					<div class="aspect-ratio-box-inside">
-						<h2>Notespace</h2>
-						<ul id="noteSpace">
-							<li>A note</li>
-						</ul>
-						<button id="addNote">Add Note</button>
+				<div id="widgets_container">
+					<div id="minicalendar">
+						
+					</div>
+					<div id="undated_notes">
+						<div class="aspect-ratio-box-inside">
+							<h2>Notespace</h2>
+							<ul id="noteSpace">
+								<li>A note</li>
+							</ul>
+							<button class="btn-sm btn-primary circleButts" id="addNote"><i
+									class="fas fa-plus"></i></button>
 						</div>
 					</div>
 				</div>
@@ -96,18 +131,18 @@
 							<select name="bulletType" id="type">
 								<option value="Event">Event</option>
 								<option value="Task">Task</option>
+							</select> <br>
+							<label for="time">Hour: </label>
+							<select name=bulletHour" id="hour">
+							</select>
+							<select name="bulletAMPM" id="AMPM">
+								<option value="AM">AM</option>
+								<option value="PM">PM</option>
 							</select><br>
-							<label for="start_time"> Start Time: </label>
-							<input type="time" id="start_time" value="00:00"
-							min="00:00"
-							max="23:00"
-							step="3600"><br>
-							<label for="end_time"> End Time : </label>
-							<input type="time" id="end_time" value="00:00"
-							min="00:00"
-							max="23:00"
-							step="3600"><br>
-							<p id='error' hidden='true' style='color:red'></p>
+							<div id="tags">
+								<label for="tags">Tag: </label>
+							</select>
+							</div>
 							<textarea name="desc" rows="10" cols="30" placeholder="Notes"></textarea><br>
 						</form>
 					</div>
@@ -171,7 +206,12 @@
 						<form method="dialog">
 							<label for="edittitle">Title: </label>
 							<input type="text" id="edittitle"><br>
-							<label for="editdate">Date: </label>
+							<select name="editHour" id="edithour">
+							</select>
+							<select name="editAMPM" id="editAMPM">
+								<option value="AM">AM</option>
+								<option value="PM">PM</option>
+							</select><br>
 							<input type="text" id="editdate"><br>
 							<label for="editdesc">Content: </label>
 							<input type="text" id="editdesc">
@@ -190,7 +230,6 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 
 <template id="time_slot">
