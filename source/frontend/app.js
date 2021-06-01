@@ -1,4 +1,3 @@
---no - verify
 const express = require('express'); // Creates an instance of an Express application
 const path = require('path'); // The path module provides utilities for working with file
 // and directory paths.
