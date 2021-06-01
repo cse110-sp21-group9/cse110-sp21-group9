@@ -131,7 +131,7 @@ export function editBulletTag(intID, strOldTag, strNewTag, objOption = null) {
   bulletObj.tags[index] = strNewTag;
   runTimeBullets[intID] = bulletObj;
   localStorage.setItem(intID, JSON.stringify(bulletObj));
-  return new Bullet(bulletObj); 
+  return new Bullet(bulletObj);
 }
 
 export function removeBulletTag(intID, strTag, objOption = null) {
