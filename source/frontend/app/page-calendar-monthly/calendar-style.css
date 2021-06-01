@@ -52,24 +52,6 @@ body {
 /*  CSS Grid End*/
 
 
-/* Styling for dropup menu */
-body .mySidebar .dropdown .dropdown-menu{
-  background-color: var(--nav-color);
-}
-
-body .mySidebar .dropdown .dropdown-menu li a{
-  color: var(--text-color);
-}
-
-body .mySidebar .dropdown .dropdown-menu li a:hover{
-  background-color: var(--nav-color-hover);
-}
-
-/* 
-body .main-container table thead tr td{
-  background-color: #1c1c1e;
-} */
-
 .dropdown-menu {
   background-color: var(--nav-color);
 }

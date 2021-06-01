@@ -27,7 +27,7 @@ body {
 }
 
 /* Styling for dropup menu */
-body .mySidebar .dropdown .dropdown-menu{
+/* body .mySidebar .dropdown .dropdown-menu{
   background-color: var(--nav-color);
 }
 
@@ -37,7 +37,7 @@ body .mySidebar .dropdown .dropdown-menu li a{
 
 body .mySidebar .dropdown .dropdown-menu li a:hover{
   background-color: var(--nav-color-hover);
-}
+} */
 
 /* The sidebar menu */
 .mySidebar {
@@ -47,7 +47,7 @@ body .mySidebar .dropdown .dropdown-menu li a:hover{
   background-color: var(--nav-color);
   width: 0;
   position: fixed;
-  display: flex;
+  /* display: flex; */
   z-index: 1;
   top: 0;
   left: 0;
@@ -56,15 +56,14 @@ body .mySidebar .dropdown .dropdown-menu li a:hover{
 /* CSS Grid */
 .main-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 100px);
+  grid-template-columns: 1% auto;
+  grid-template-rows: 0 auto;
   background-color: white;
-  gap: 10px;
+  gap: 1%;
+  /* Probably put in calendar on the top two rows of the third column 
+   and then have notespace on the bottom two rows */
   grid-template-areas: 
-    'sidebar top-nav top-nav'
-    'sidebar content notespace'
-    'sidebar content notespace'
-    'sidebar content notespace';
+    'sidebar main';
 }
 /*  CSS Grid End*/
 
@@ -105,6 +104,9 @@ header {
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
+  display: inline-block;
+  grid-row-start: 1;
+  grid-column-start: 2;
   grid-area: content; 
   transition: margin-left .5s;
   /* If you want a transition effect */
@@ -116,7 +118,7 @@ header {
 
 #main_container {
   display: flex;
-  max-height: 95vh;
+  max-height: 100vh;
 }
 
 #calender_container {
@@ -124,24 +126,48 @@ header {
   position: relative;
   background-color: rgb(255, 255, 255);
   margin: 4vw;
-  border-radius: 15px;
+  border-radius: 5px;
   border: 1px solid var(--text-color);
   margin: 20px;
   width: 55vw;
-  overflow: hidden;
+  height: 95vh;
+  overflow-y: hidden;
 }
 
 #date_container {
-  margin: 5px;
+  margin: 1px;
   border-bottom: 1px solid var(--text-color);
+  display: grid;
+  grid-template-columns: 50% 25% 25%;
+  grid-template-rows: 50% 50%;
+  background-color: white;
+  gap: 1%;
+  /* Probably put in calendar on the top two rows of the third column 
+   and then have notespace on the bottom two rows */
+  grid-template-areas: 
+    'week_day '
+    'date addBullet createtag';
 }
 
 #date {
-  padding-left: 10px;
+  grid-row-start: 2;
+  padding-left: 15px;
 }
 
 #week_day {
+  grid-row-start: 1;
   padding-left: 10px;
+}
+
+/* TODO: Style this button to be smaller */
+#addBullet {
+  /* size: 15px; */
+  grid-row-start: 2;
+  align-self: center;
+}
+
+#createtag {
+  grid-row-start: 2;
 }
 
 #widgets_container {
@@ -164,6 +190,8 @@ header {
   border-radius: 4px;
   background-color: var(--background-color);
   margin: 5px;
+  height: auto;
+  min-height: 5em;
   padding: 5px;
 }
 
@@ -187,6 +215,9 @@ header {
   height: 100%;
 }
 
+#tags {
+  border: 1px solid var(--text-color);
+}
 
 /* style add,edit,delete buttons*/
 .circleButts {
