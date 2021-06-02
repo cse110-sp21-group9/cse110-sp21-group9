@@ -216,51 +216,6 @@ function loadTags() {
       const tag = document.createElement('li');
       tag.innerHTML = curTag;
       tagBox.appendChild(tag);
-      // Make tag editable
-      tagBox.addEventListener('dblclick', () => {
-        tagBox.disabled = true;
-        const prevValue = tag.innerHTML;
-        deleteButton.hidden = true;
-        tag.innerHTML = '';
-        // Create a text input field to edit the tag
-        const editBox = document.createElement('input');
-        editBox.type = 'text';
-        editBox.value = prevValue;
-        tagBox.appendChild(editBox);
-
-        // Create a cancel button for when you realize note-taking is stupid
-        const cancel = document.createElement('button');
-        cancel.classList = 'btn btn-sm btn-secondary';
-        cancel.innerHTML = 'Cancel';
-        tagBox.appendChild(cancel);
-        cancel.addEventListener('click', function() {
-          tagBox.removeChild(editBox);
-          tagBox.removeChild(cancel);
-          tag.innerHTML = prevValue;
-          deleteButton.hidden = false;
-          tagBox.disabled = false;
-        });
-
-        editBox.addEventListener('keypress', function(e) {
-          // Hit enter to actually save the thing. Is it intuitive enough?
-          if (e.key === 'Enter') {
-            // if you have an empty input box, just delete the thing
-            if (editBox.value === '') {
-              crud.removeTagGlobally(prevValue);
-              loadingBay.removeChild(tagBox);
-            } else {
-              const newTag = editBox.value;
-              // create the tag and destroy the input text + cancel button
-              crud.editTag(prevValue, newTag);
-              tagBox.removeChild(editBox);
-              tagBox.removeChild(cancel);
-              tag.innerHTML = newTag;
-              deleteButton.hidden = false;
-              tagBox.disabled = false;
-            }
-          }
-        });
-      });
       // create and append delete button
       // NOTE FOR DESIGN TEAM: Make this into a little x maybe
       const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', tagBox);

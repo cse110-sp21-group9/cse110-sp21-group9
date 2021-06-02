@@ -116,24 +116,6 @@ export function addBulletTag(intID, strTag, objOption = null) {
   return new Bullet(bulletObj);
 }
 
-/** Edits a Bullet's Tag given an intID, the old tag, and the new tag
- * @param {Number} intID the bullet's ID
- * @param {string} strOldTag the bullet's old tag string
- * @param {string} strNewTag the bullet's updated tag string
- * @return the bullet with the updated tag
- * NOTE: I put this in so I have no idea if it's going to work or not
- */
-export function editBulletTag(intID, strOldTag, strNewTag, objOption = null) {
-  if (!(intID in runTimeBullets) || !(strOldTag in runTimeTags)) return null;
-  const bulletObj = runTimeBullets[intID];
-  const index = bulletObj.tags.indexOf(strOldTag);
-  if (index === -1) return null;
-  bulletObj.tags[index] = strNewTag;
-  runTimeBullets[intID] = bulletObj;
-  localStorage.setItem(intID, JSON.stringify(bulletObj));
-  return new Bullet(bulletObj);
-}
-
 export function removeBulletTag(intID, strTag, objOption = null) {
   if (!(intID in runTimeBullets) || !(strTag in runTimeTags)) return null;
   const bulletObj = runTimeBullets[intID];
@@ -167,22 +149,6 @@ export function getAvailableTags() {
 export function createTag(strTag, objOption = null) {
   if (!(strTag in runTimeTags)) {
     runTimeTags[strTag] = true;
-    localStorage.setItem('tags', JSON.stringify(runTimeTags));
-  }
-}
-
-/** Edits a given tag with a new tag string.
- *  @param {string} strOldTag the old tag string
- *  @param {string} strNewTag the new tag string
- *  @return null
- *  NOTE: I put this in without testing it -- Daisuke
- */
-export function editTag(strOldTag, strNewTag, objOption = null) {
-  if (strOldTag in runTimeTags) {
-    for (const bulletKey of Object.keys(runTimeBullets)) {
-      editBulletTag(bulletKey, strOldTag, strNewTag);
-    }
-    runTimeTags[strOldTag] = strNewTag;
     localStorage.setItem('tags', JSON.stringify(runTimeTags));
   }
 }
