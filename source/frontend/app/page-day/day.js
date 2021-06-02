@@ -16,6 +16,7 @@ const titleInput = document.getElementById('title');
 const contentInput = document.querySelector('[name = "desc"]');
 const hourInput = document.getElementById('hour');
 const AMPMInput = document.getElementById('AMPM');
+const tagSelector = document.getElementById('tags');
 const selectedTags = document.getElementById('bullet_tags');
 // output of creation for note bullets
 const noteOut = document.getElementById('noteSpace');
@@ -25,7 +26,7 @@ const confirmBox = document.getElementById('deleteBullet');
 const confirmBtn = document.getElementById('okConfirm');
 
 // tag creation stuff
-const tagSelect = document.getElementById('selecttag');
+const tagFilterSelect = document.getElementById('selecttag');
 const tagCloseBtn = document.getElementById('saveTag');
 const tagName = document.getElementById('tagname');
 
@@ -81,7 +82,7 @@ for (let i = 0; i < 24; i++) {
 
   timeSlots.push(document.getElementById('time_slot' + String(i)));
 }
-
+loadBullets();
 function makeTimeSlotComponent(intTime) {
   let stringTime = String(intTime);
   if (intTime < 10) stringTime = '0' + stringTime;
@@ -123,7 +124,18 @@ for (let i = 1; i < 12; i++) {
 }
 
 // on create bullet,
-createBulletButton.onclick = () => { $('#bujoSpace').modal('toggle'); };
+createBulletButton.onclick = () => {
+  $('#bujoSpace').modal('toggle');
+  // clear settings for creation of new bullet
+  titleInput.value = '';
+  const typeInput = document.getElementById('type');
+  typeInput.value = 'Event';
+  hourInput.value = '0';
+  AMPMInput.value = 'AM';
+
+  // refresh tags
+  populateTagOptions(tagSelector);
+};
 saveBulletBtn.onclick = () => {
   $('#bujoSpace').modal('toggle');
   const bulletType = document.getElementById('type').value;
@@ -143,20 +155,6 @@ saveBulletBtn.onclick = () => {
   const newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, bulletTags, contentInput.value);
   const newElement = createBulletEntryElem(newBullet);
   timeSlots[hour].append(newElement);
-  newElement.querySelector('h5').onclick = () => {
-    $('#viewBullet').modal('toggle');
-    showBulletInfo(newBullet);
-  };
-
-  //clear settings for creation of next bullet
-  titleInput.value = '';
-  const typeInput = document.getElementById('type');
-  typeInput.value = 'Event';
-  hourInput.value = '0';
-  AMPMInput.value = 'AM';
-  const tagInput = document.getElementById('tags');
-  tagInput.value = 'Default';
-  contentInput.value = 'Notes';
 };
 
 /** Displays the relevant information pertaining to the given bullet
@@ -180,15 +178,13 @@ function showBulletInfo(curBullet) {
   typeBar.innerHTML = curBullet.type;
   createTagElements(tagBar, curBullet);
   // Can set class of tagBar here for styling
-  tagBar.listClass.add("tagBar");
+  tagBar.classList.add('tagBar');
   const editButton = document.getElementById('editButton');
   const deleteButton = document.getElementById('deleteButton');
   editButton.onclick = () => {
-    $('#viewBullet').modal('toggle');
     openEditDialog(curBullet);
   };
   deleteButton.onclick = () => {
-    $('#viewBullet').modal('toggle');
     openDeleteDialog(curBullet);
   };
 }
@@ -199,23 +195,27 @@ function showBulletInfo(curBullet) {
  * @param strTag Can specify a tag to only load bullets of that tag
  */
 // load initial bullets from local storage
-const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
-  pageDate.getFullYear(),
-  pageDate.getMonth(),
-  pageDate.getDate() + 1
-));
-for (const bullet of bulletsToLoad) {
-  const hour = bullet.date.getHours();
-  if (bullet.type !== 'Note') {
-    const curBullet = createBulletEntryElem(bullet);
-    timeSlots[hour].append(curBullet);
-    curBullet.onclick = () => {
-      $('#viewBullet').modal('toggle');
-      showBulletInfo(bullet);
-    };
+function loadBullets(strTag = null) {
+  for (const timeSlot of timeSlots) {
+    while (timeSlot.firstChild) {
+      timeSlot.removeChild(timeSlot.firstChild);
+    }
+  }
+  const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
+    pageDate.getFullYear(),
+    pageDate.getMonth(),
+    pageDate.getDate() + 1
+  ));
+  for (const bullet of bulletsToLoad) {
+    const hour = bullet.date.getHours();
+    if (bullet.type !== 'Note') {
+      if (strTag === null || bullet.tags.indexOf(strTag) !== -1) {
+        const curBullet = createBulletEntryElem(bullet);
+        timeSlots[hour].append(curBullet);
+      }
+    }
   }
 }
-
 /** Loads new tags from runtime to display on tag modal
  *  Doesn't load in tags we already loaded in once
  *  @return null
@@ -224,8 +224,6 @@ function loadTags() {
   // Grab tags saved in storage, and the part of the modal to paste them in
   const tagsToLoad = crud.getAvailableTags();
   const loadingBay = document.getElementById('taglist');
-  const tagSelect = document.getElementById('selecttag');
-  const tagEditOption = document.getElementById('edittags');
   console.log(loadingBay);
 
   // Grab the tags already pasted onto the modal
@@ -255,37 +253,43 @@ function loadTags() {
       const option = document.createElement('option');
       option.innerHTML = curTag;
       option.value = curTag;
-      tagSelect.appendChild(option);
+      tagFilterSelect.insertBefore(option, tagFilterSelect.children[tagFilterSelect.length - 1]);
       // create and append delete button
       // NOTE FOR DESIGN TEAM: Make this into a little x maybe
       const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', tagBox);
       deleteButton.innerHTML = '<i class="fas fa-trash">';
       deleteButton.addEventListener('click', () => {
         crud.removeTagGlobally(tag.innerHTML);
+        tagFilterSelect.removeChild(option);
         loadingBay.removeChild(tagBox);
+        loadBullets();
       });
       loadingBay.appendChild(tagBox);
     }
   }
 }
 /* tag filter selector */
-tagSelect.addEventListener('change', function() {
-  if (tagSelect.value === 'edit') {
+tagFilterSelect.addEventListener('change', function () {
+  if (tagFilterSelect.value === 'edit') {
     $('#tagcreation').modal('toggle');
+  } else if (tagFilterSelect.value === 'ALL') {
+    loadBullets();
+  } else if (tagFilterSelect.value !== '') {
+    loadBullets(tagFilterSelect.value);
   }
+  tagFilterSelect.value = '';
 });
 
 /* if user confirms making new tag, add it to list */
-tagCloseBtn.addEventListener('click', function() {
+tagCloseBtn.addEventListener('click', function () {
   // add tag's string to list
   $('#tagcreation').modal('toggle');
   // maybe add a confirmation box
 });
 
-tagName.addEventListener('keypress', function(e) {
+tagName.addEventListener('keypress', function (e) {
   // Hit enter to actually save the thing. Is it intuitive enough?
   if (e.key === 'Enter') {
-    const newTag = tagName.value;
     // create the bullet element and destroy the input text + cancel button
     crud.createTag(tagName.value);
     loadTags();
@@ -293,38 +297,36 @@ tagName.addEventListener('keypress', function(e) {
   }
 });
 
-const tagSelector = document.getElementById('tags');
-function populateBulletTags() {
+/**
+ * Populates select element with options corresponding to tags
+ * @param {HTMLSelectElement} objSelect
+ */
+function populateTagOptions(objSelect) {
   const tagsToLoad = crud.getAvailableTags();
-  const loadedTags = tagSelector.querySelector('option');
-  console.log(loadedTags);
+  while (objSelect.firstChild) {
+    objSelect.removeChild(objSelect.firstChild);
+  }
+  const defaultopt = document.createElement('option');
+  defaultopt.value = 'Default';
+  defaultopt.innerHTML = 'Select tag:';
+  objSelect.appendChild(defaultopt);
+  console.log(objSelect);
   for (let i = 0; i < tagsToLoad.length; i++) {
-    let curTag = tagsToLoad[i];
-    // check if the tag we're putting in is already pasted if so, set our current tag to null
-    for (let j = 0; j < loadedTags.length; j++) {
-      if (loadedTags[j].innerHTML === curTag) {
-        curTag = null;
-      }
-    }
-    if (curTag === null) {
-      continue;
-    } else {
-      // create an option box for the tag and add it to the selector
-      const option = document.createElement('option');
-      option.innerHTML = curTag;
-      option.value = curTag;
-      console.log(option);
-      tagSelector.appendChild(option);
-    }
+    const curTag = tagsToLoad[i];
+    // create an option box for the tag and add it to the selector
+    const option = document.createElement('option');
+    option.innerHTML = curTag;
+    option.value = curTag;
+    console.log(option);
+    objSelect.appendChild(option);
   }
 }
 
-populateBulletTags();
 /** Adds a tag to a bullet.
  *  NOTE: Before saving the bullet, clicking this button shows the user that they will be adding the tag they selected
 */
 const confirmTagBtn = document.getElementById('confirmTag');
-confirmTagBtn.addEventListener('click', function() {
+confirmTagBtn.addEventListener('click', function () {
   if (tagSelector.value !== 'Default') {
     // Set up the DOM
     const tagBox = document.createElement('div');
@@ -351,7 +353,7 @@ confirmTagBtn.addEventListener('click', function() {
 */
 function openDeleteDialog(elemEntry) {
   $('#deleteBullet').modal('toggle');
-  confirmBtn.onclick = function() {
+  confirmBtn.onclick = function () {
     crud.deleteBulletById(elemEntry.id);
     elemEntry.remove();
     $('#deleteBullet').modal('toggle');
@@ -405,9 +407,9 @@ function createBulletEntryElem(objBullet) {
   const newEntry = document.createElement('li');
   const bulletInfo = document.createElement('div');
   const bulletTags = document.createElement('div');
-  const bulletTitle = document.createElement('h5');
+  const bulletTitle = document.createElement('span');
 
-  const btnDiv = document.createElement("div"); // div for both edit and delete buttons
+  const btnDiv = document.createElement('div'); // div for both edit and delete buttons
 
   newEntry.id = objBullet.ID;
   bulletInfo.style = 'margin: 10px; padding: 5px;';
@@ -419,48 +421,52 @@ function createBulletEntryElem(objBullet) {
   }
   console.log(objBullet.title);
   bulletTitle.innerHTML = objBullet.title;
+  bulletTitle.onclick = () => {
+    $('#viewBullet').modal('toggle');
+    showBulletInfo(objBullet);
+  };
+
   bulletInfo.appendChild(bulletTitle);
 
   // create and append edit button
   bulletInfo.appendChild(btnDiv);
 
-
   const editButton = appendButton('', '', 'btn-sm btn-primary circleButts d-none', btnDiv);
-  editButton.innerHTML = '<i class="fas fa-pen"></i>'
+  editButton.innerHTML = '<i class="fas fa-pen"></i>';
   editButton.addEventListener('click', () => {
     openEditDialog(newEntry);
   });
 
   // show delete button when hover over event
-  bulletInfo.addEventListener('mouseover', function() {
+  bulletInfo.addEventListener('mouseover', function () {
     bulletInfo.style = 'margin: 10px; padding: 5px; background-color: rgba(161, 157, 157, 0.075); border-radius: 10px; display:flex; justify-content: space-between;';
     // bulletInfo.style.backgroundColor = "var(--nav-color-hover)";
-    editButton.classList.remove("d-none");
+    editButton.classList.remove('d-none');
   });
-  bulletInfo.addEventListener('mouseleave', function() {
-      bulletInfo.style = 'margin: 10px; padding: 5px;';
-      editButton.classList.add("d-none");
+  bulletInfo.addEventListener('mouseleave', function () {
+    bulletInfo.style = 'margin: 10px; padding: 5px;';
+    editButton.classList.add('d-none');
   });
 
   // create and append delete button
   const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnDiv);
-  deleteButton.innerHTML = '<i class="fas fa-trash">'
+  deleteButton.innerHTML = '<i class="fas fa-trash">';
   deleteButton.addEventListener('click', () => {
     openDeleteDialog(newEntry);
   });
   // show delete button when hover over event
-  bulletInfo.addEventListener('mouseover', function() {
-    deleteButton.classList.remove("d-none");
+  bulletInfo.addEventListener('mouseover', function () {
+    deleteButton.classList.remove('d-none');
   });
-  bulletInfo.addEventListener('mouseleave', function() {
-      deleteButton.classList.add("d-none");
+  bulletInfo.addEventListener('mouseleave', function () {
+    deleteButton.classList.add('d-none');
   });
   createTagElements(bulletTags, objBullet);
   // Can set class of bulletTags here for styling
-  bulletTags.classList.add("bulletTag");
+  bulletTags.classList.add('bulletTag');
   bulletInfo.appendChild(bulletTags);
   newEntry.appendChild(bulletInfo);
-  
+
   return newEntry;
 }
 /**
@@ -469,8 +475,8 @@ function createBulletEntryElem(objBullet) {
  * @param {Bullet} objBullet bullet object to get tags from
  */
 function createTagElements(objTagDiv, objBullet) {
-  //Clear any tags in div
-  while(objTagDiv.firstChild) {
+  // Clear any tags in div
+  while (objTagDiv.firstChild) {
     objTagDiv.removeChild(objTagDiv.firstChild);
   }
 
@@ -478,7 +484,7 @@ function createTagElements(objTagDiv, objBullet) {
     const newTag = document.createElement('div');
     newTag.innerHTML = tag;
     // set class of tag div for styling of individual tag elements
-    newTag.classList.add("tag");
+    newTag.classList.add('tag');
     objTagDiv.appendChild(newTag);
   }
 }
@@ -497,7 +503,7 @@ function getHour(hour, AMPM) {
 
 // Open option to create a note bullet on the note space
 // if you click this button
-noteBtn.addEventListener('click', function() {
+noteBtn.addEventListener('click', function () {
   // Take things one at a time when creating note bullets
   noteBtn.disabled = true;
   const notespace = document.getElementById('noteSpace');
@@ -512,7 +518,7 @@ noteBtn.addEventListener('click', function() {
   cancel.classList = 'btn btn-sm btn-secondary';
   cancel.innerHTML = 'Cancel';
   notespace.appendChild(cancel);
-  cancel.addEventListener('click', function() {
+  cancel.addEventListener('click', function () {
     noteBtn.disabled = false;
     notespace.removeChild(note);
     notespace.removeChild(cancel);
@@ -521,7 +527,7 @@ noteBtn.addEventListener('click', function() {
   // Create note bullet
   let time = new Date();
   let date = new Date();
-  note.addEventListener('keypress', function(e) {
+  note.addEventListener('keypress', function (e) {
     // Hit enter to actually save the thing. Is it intuitive enough?
     if (e.key === 'Enter') {
       time = 'T01:00';
