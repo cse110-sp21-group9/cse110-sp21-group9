@@ -1,17 +1,3 @@
-/** This file handles a lot of the event listeners associated with a CRUD
- *  application. It makes sure all created bullets and tags are registered
- *  on the DOM. It also calls on methods from crudFunctions.js to properly
- *  implement the CRUD functions.
- *  TODO: Ability to edit and delete tags
- *  TODO: Fix multi-add bug
- *  TODO: Add note bullet functionality - DONE
- *  TODO: Integrate with firebase backend
- *  TODO: Update outdated crudFunctions calls - Check with Evan when crudFunction was updated
- *  TODO: Account for updated date format - Date navigation works but still needs to use agreed upon hash
- *  TODO: Plan to read url hash: If the hash is empty, just bring us to the current day
- *        Otherwise, load bullets from the date in the urlhash - DONE I think
- */
-
 /* get elements from html page */
 /* eslint-env jquery */
 // POTENTIALLY OLD
@@ -146,28 +132,23 @@ saveBulletBtn.onclick = () => {
 
   const bulletTags = [];
   const tagBoxes = selectedTags.querySelectorAll('div');
-  console.log(tagBoxes[0]);
   if (tagBoxes !== null) {
     for (let i = 0; i < tagBoxes.length; i++) {
       const curTag = tagBoxes[i].querySelector('li').innerHTML;
-      console.log(curTag);
       bulletTags.push(curTag);
       tagBoxes[i].remove();
     }
   }
 
   const newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, bulletTags, contentInput.value);
-  console.log(newBullet);
   const newElement = createBulletEntryElem(newBullet);
   timeSlots[hour].append(newElement);
   newElement.querySelector('h5').onclick = () => {
-    const editButton = document.createElement('button');
-    editButton.setAttribute('bulletID', newElement.id);
-    const deleteButton = document.createElement('button');
-    deleteButton.setAttribute('bulletID', newElement.id);
     $('#viewBullet').modal('toggle');
     showBulletInfo(newBullet);
   };
+
+  //clear settings for creation of next bullet
   titleInput.value = '';
   const typeInput = document.getElementById('type');
   typeInput.value = 'Event';
@@ -189,11 +170,6 @@ function showBulletInfo(curBullet) {
   const typeBar = document.getElementById('viewtype');
   const contentBar = document.getElementById('viewdesc');
   const tagBar = document.getElementById('viewtags');
-  console.log(curBullet.title);
-  console.log();
-  console.log(timeBar);
-  console.log(contentBar);
-  console.log(typeBar);
 
   console.log('title: ' + curBullet.title);
   // Set bullet info on view modal
@@ -204,6 +180,7 @@ function showBulletInfo(curBullet) {
   typeBar.innerHTML = curBullet.type;
   createTagElements(tagBar, curBullet);
   // Can set class of tagBar here for styling
+  tagBar.listClass.add("tagBar");
   const editButton = document.getElementById('editButton');
   const deleteButton = document.getElementById('deleteButton');
   editButton.onclick = () => {
@@ -219,7 +196,7 @@ function showBulletInfo(curBullet) {
 /**
  * Loads bullets from local storage
  * Can load bullets by a specific tag with tag parameter
- * @param tag Can specify a tag to only load bullets of that tag
+ * @param strTag Can specify a tag to only load bullets of that tag
  */
 // load initial bullets from local storage
 const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
@@ -233,48 +210,11 @@ for (const bullet of bulletsToLoad) {
     const curBullet = createBulletEntryElem(bullet);
     timeSlots[hour].append(curBullet);
     curBullet.onclick = () => {
-      const editButton = document.createElement('button');
-      editButton.setAttribute('bulletID', curBullet.id);
-      const deleteButton = document.createAttribute('button');
-      deleteButton.setAttribute('bulletID', curBullet.id);
       $('#viewBullet').modal('toggle');
       showBulletInfo(bullet);
     };
   }
 }
-/*
-// TODO: Write a date getter function to pass into here
-// TODO: Make sure the date here is all the bullets of the current day we're in
-// POTENTIALLY OLD
-const bulletsToLoad = crud.getBulletsByDateRange(loadStart, loadEnd);
-for (const bullet of bulletsToLoad) {
-  if (bullet.type === 'note') {
-    console.log('Loading Note bullet');
-    // paste bullet on notespace
-    noteOut.append(createBulletEntryElem(bullet.ID));
-  } else {
-    for (let hourIt = 0; hourIt < 24; hourIt++) {
-      const hours = document.querySelectorAll('[class = "time_slot"]');
-      const curHour = hours[hourIt];
-      console.log(curHour);
-      let bulHour = bullet.date.toString();
-      bulHour = bulHour.substring(10, 12);
-      const bulHourNum = parseInt(bulHour);
-      if (bulHourNum === hourIt) {
-        console.log('pasting bullet from storage to timetable');
-        const list = curHour.querySelector('ul');
-        if (bullet.type === 'event') {
-          list.append(createBulletEntryElem(bullet.ID));
-          break;
-        } else if (bullet.type === 'task') {
-          list.append(createBulletEntryElem(bullet.ID));
-          break;
-        }
-      }
-    }
-  }
-}
-*/
 
 /** Loads new tags from runtime to display on tag modal
  *  Doesn't load in tags we already loaded in once
@@ -467,8 +407,10 @@ function createBulletEntryElem(objBullet) {
   const bulletTags = document.createElement('div');
   const bulletTitle = document.createElement('h5');
 
+  const btnDiv = document.createElement("div"); // div for both edit and delete buttons
+
   newEntry.id = objBullet.ID;
-  bulletInfo.style = 'margin: 10px; padding: 5px; border: 5px solid black';
+  bulletInfo.style = 'margin: 10px; padding: 5px;';
 
   if (objBullet.type === 'Task') {
     const checkbox = document.createElement('INPUT');
@@ -478,10 +420,47 @@ function createBulletEntryElem(objBullet) {
   console.log(objBullet.title);
   bulletTitle.innerHTML = objBullet.title;
   bulletInfo.appendChild(bulletTitle);
+
+  // create and append edit button
+  bulletInfo.appendChild(btnDiv);
+
+
+  const editButton = appendButton('', '', 'btn-sm btn-primary circleButts d-none', btnDiv);
+  editButton.innerHTML = '<i class="fas fa-pen"></i>'
+  editButton.addEventListener('click', () => {
+    openEditDialog(newEntry);
+  });
+
+  // show delete button when hover over event
+  bulletInfo.addEventListener('mouseover', function() {
+    bulletInfo.style = 'margin: 10px; padding: 5px; background-color: rgba(161, 157, 157, 0.075); border-radius: 10px; display:flex; justify-content: space-between;';
+    // bulletInfo.style.backgroundColor = "var(--nav-color-hover)";
+    editButton.classList.remove("d-none");
+  });
+  bulletInfo.addEventListener('mouseleave', function() {
+      bulletInfo.style = 'margin: 10px; padding: 5px;';
+      editButton.classList.add("d-none");
+  });
+
+  // create and append delete button
+  const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnDiv);
+  deleteButton.innerHTML = '<i class="fas fa-trash">'
+  deleteButton.addEventListener('click', () => {
+    openDeleteDialog(newEntry);
+  });
+  // show delete button when hover over event
+  bulletInfo.addEventListener('mouseover', function() {
+    deleteButton.classList.remove("d-none");
+  });
+  bulletInfo.addEventListener('mouseleave', function() {
+      deleteButton.classList.add("d-none");
+  });
   createTagElements(bulletTags, objBullet);
   // Can set class of bulletTags here for styling
+  bulletTags.classList.add("bulletTag");
   bulletInfo.appendChild(bulletTags);
   newEntry.appendChild(bulletInfo);
+  
   return newEntry;
 }
 /**
@@ -490,10 +469,16 @@ function createBulletEntryElem(objBullet) {
  * @param {Bullet} objBullet bullet object to get tags from
  */
 function createTagElements(objTagDiv, objBullet) {
+  //Clear any tags in div
+  while(objTagDiv.firstChild) {
+    objTagDiv.removeChild(objTagDiv.firstChild);
+  }
+
   for (const tag of objBullet.tags) {
     const newTag = document.createElement('div');
     newTag.innerHTML = tag;
     // set class of tag div for styling of individual tag elements
+    newTag.classList.add("tag");
     objTagDiv.appendChild(newTag);
   }
 }

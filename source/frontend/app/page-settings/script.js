@@ -122,3 +122,5 @@ modeChange.addEventListener('click', function() {
     modeChange.setAttribute('data-theme', 'dark');
   }
 });
+
+/* Light/Dark Mode */

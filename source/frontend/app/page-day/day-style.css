@@ -56,17 +56,21 @@ body .mySidebar .dropdown .dropdown-menu li a:hover{
 /* CSS Grid */
 .main-container {
   display: grid;
-  grid-template-columns: 1% auto;
+  grid-template-columns: auto auto;
   grid-template-rows: 0 auto;
   background-color: white;
-  gap: 1%;
+  gap: 20px;
   /* Probably put in calendar on the top two rows of the third column 
    and then have notespace on the bottom two rows */
-  grid-template-areas: 
-    'sidebar main';
-}
-/*  CSS Grid End*/
 
+
+   /* removed main temporarily*/
+  grid-template-areas: 
+    'sidebar dayview mini-cal'
+    'sidebar dayview notespace';
+}
+
+/*  CSS Grid End*/
 /** All the stuff that goes to the header
  * Includes searchbars, welcome text, and hamburger menu
  */
@@ -123,6 +127,7 @@ header {
 
 #calender_container {
   vertical-align: top;
+  /* grid-area: ; */
   position: relative;
   background-color: rgb(255, 255, 255);
   margin: 4vw;
@@ -193,6 +198,10 @@ header {
   height: auto;
   min-height: 5em;
   padding: 5px;
+}
+
+.time_slot:hover{
+  background-color: rgba(161, 157, 157, 0.075);;
 }
 
 /* Right hand widgets */
@@ -323,4 +332,20 @@ td.other-month{
     border-radius: 10%;
     z-index: -1;
     content: '';
+}
+
+/* Style bullet entries */
+.bulletTag {
+  border-radius: 5;
+  border-width: 1px;
+}
+
+/* Style tags in entries */
+.tag {
+  color: red;
+}
+
+/* Style tag bar in modal */
+.tagBar {
+  background-color: yellow;
 }
