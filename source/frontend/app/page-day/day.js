@@ -19,6 +19,9 @@ import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
 
+const MAX_TITLE_LENGTH = 35;
+const MAX_TAG_LENGTH = 15;
+
 const saveBulletBtn = document.getElementById('saveBullet');
 
 // creation inputs
@@ -27,6 +30,7 @@ const titleInput = document.getElementById('title');
 const contentInput = document.querySelector('[name = "desc"]');
 const hourInput = document.getElementById('hour');
 const AMPMInput = document.getElementById('AMPM');
+const selectedTags = document.getElementById('bullet_tags');
 // output of creation for note bullets
 const noteOut = document.getElementById('noteSpace');
 
@@ -35,8 +39,8 @@ const confirmBox = document.getElementById('deleteBullet');
 const confirmBtn = document.getElementById('okConfirm');
 
 // tag creation stuff
-const tagBtn = document.getElementById('createtag');
-const tagAddBtn = document.getElementById('saveTag');
+const tagSelect = document.getElementById('selecttag');
+const tagCloseBtn = document.getElementById('saveTag');
 const tagName = document.getElementById('tagname');
 
 // edit inputs
@@ -74,6 +78,11 @@ const dayName = globals.DAY_NAMES_LONG[pageDate.getDay()];
 // Update date
 document.getElementById('date').innerHTML = monthName + ' ' + pageDate.getDate();
 document.getElementById('week_day').innerHTML = dayName;
+
+// Set bullet title and tag name input limits
+titleInput.maxLength = MAX_TITLE_LENGTH;
+editTitle.maxLength = MAX_TITLE_LENGTH;
+tagName.maxLength = MAX_TAG_LENGTH;
 
 // init crud
 crud.initCrudRuntime();
@@ -134,12 +143,84 @@ saveBulletBtn.onclick = () => {
   const bulletType = document.getElementById('type').value;
   const hour = getHour(hourInput.value, AMPMInput.value);
   const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
-  const newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, [], contentInput.value);
+
+  const bulletTags = [];
+  const tagBoxes = selectedTags.querySelectorAll('div');
+  console.log(tagBoxes[0]);
+  if (tagBoxes !== null) {
+    for (let i = 0; i < tagBoxes.length; i++) {
+      const curTag = tagBoxes[i].querySelector('li').innerHTML;
+      console.log(curTag);
+      bulletTags.push(curTag);
+      tagBoxes[i].remove();
+    }
+  }
+
+  const newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, bulletTags, contentInput.value);
   console.log(newBullet);
   const newElement = createBulletEntryElem(newBullet);
   timeSlots[hour].append(newElement);
+  newElement.querySelector('h5').onclick = () => {
+    let editButton = document.createElement('button');
+    editButton.setAttribute('bulletID', newElement.id);
+    let deleteButton = document.createElement('button');
+    deleteButton.setAttribute('bulletID', newElement.id);
+    $('#viewBullet').modal('toggle');
+    showBulletInfo(newBullet);
+  };
+  titleInput.value = '';
+  const typeInput = document.getElementById('type');
+  typeInput.value = 'Event';
+  hourInput.value = '0';
+  AMPMInput.value = 'AM';
+  const tagInput = document.getElementById('tags');
+  tagInput.value = 'Default';
+  contentInput.value = 'Notes';
 };
 
+/** Displays the relevant information pertaining to the given bullet
+ * @param {bullet} curBullet the bullet we want to display information about
+ * @return null
+ */
+function showBulletInfo(curBullet) {
+  const titleBar = document.getElementById('viewtitle');
+  const dateBar = document.getElementById('viewdate');
+  const timeBar = document.getElementById('viewtime');
+  const typeBar = document.getElementById('viewtype');
+  const contentBar = document.getElementById('viewdesc');
+  const tagBar = document.getElementById('viewtags');
+  console.log(curBullet.title);
+  console.log();
+  console.log(timeBar);
+  console.log(contentBar);
+  console.log(typeBar);
+
+  console.log('title: ' + curBullet.title);
+  // Set bullet info on view modal
+  titleBar.innerHTML = curBullet.title;
+  dateBar.innerHTML = monthName + ' ' + pageDate.getDay() + ',' + pageDate.getFullYear();
+  timeBar.innerHTML = pageDate.getHours() + ':00';
+  contentBar.innerHTML = curBullet.content;
+  typeBar.innerHTML = curBullet.type;
+  createTagElements(tagBar, curBullet);
+  // Can set class of tagBar here for styling
+  const editButton = document.getElementById('editButton');
+  const deleteButton = document.getElementById('deleteButton');
+  editButton.onclick = () => {
+    $('#viewBullet').modal('toggle');
+    openEditDialog(curBullet);
+  };
+  deleteButton.onclick = () => {
+    $('#viewBullet').modal('toggle');
+    openDeleteDialog(curBullet);
+  };
+}
+
+/**
+ * Loads bullets from local storage
+ * Can load bullets by a specific tag with tag parameter
+ * @param tag Can specify a tag to only load bullets of that tag
+ */
 // load initial bullets from local storage
 const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
   pageDate.getFullYear(),
@@ -149,7 +230,16 @@ const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
 for (const bullet of bulletsToLoad) {
   const hour = bullet.date.getHours();
   if (bullet.type !== 'Note') {
-    timeSlots[hour].append(createBulletEntryElem(bullet));
+    const curBullet = createBulletEntryElem(bullet);
+    timeSlots[hour].append(curBullet);
+    curBullet.onclick = () => {
+      let editButton = document.createElement('button');
+      editButton.setAttribute('bulletID', curBullet.id);
+      let deleteButton = document.createAttribute('button');
+      deleteButton.setAttribute('bulletID', curBullet.id);
+      $('#viewBullet').modal('toggle');
+      showBulletInfo(bullet);
+    };
   }
 }
 /*
@@ -194,9 +284,12 @@ function loadTags() {
   // Grab tags saved in storage, and the part of the modal to paste them in
   const tagsToLoad = crud.getAvailableTags();
   const loadingBay = document.getElementById('taglist');
+  const tagSelect = document.getElementById('selecttag');
+  const tagEditOption = document.getElementById('edittags');
+  console.log(loadingBay);
+
   // Grab the tags already pasted onto the modal
   const loadedTags = loadingBay.querySelectorAll('li');
-  console.log(loadedTags);
   for (let i = 0; i < tagsToLoad.length; i++) {
     let curTag = tagsToLoad[i];
     // check if the tag we're putting in is already pasted if so, set our current tag to null
@@ -211,11 +304,18 @@ function loadTags() {
     } else {
       // otherwise, paste the tag onto the modal
       console.log(curTag);
+      // Add to tagbox in edit tag modal
       const tagBox = document.createElement('div');
       tagBox.style = 'display: flex';
       const tag = document.createElement('li');
       tag.innerHTML = curTag;
       tagBox.appendChild(tag);
+
+      // Add to tag filter selector
+      const option = document.createElement('option');
+      option.innerHTML = curTag;
+      option.value = curTag;
+      tagSelect.appendChild(option);
       // create and append delete button
       // NOTE FOR DESIGN TEAM: Make this into a little x maybe
       const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', tagBox);
@@ -228,17 +328,16 @@ function loadTags() {
     }
   }
 }
-
-/* on click show new tag box */
-tagBtn.addEventListener('click', function() {
-  $('#tagcreation').modal('toggle');
+/* tag filter selector */
+tagSelect.addEventListener('change', function() {
+  if (tagSelect.value === 'edit') {
+    $('#tagcreation').modal('toggle');
+  }
 });
 
 /* if user confirms making new tag, add it to list */
-tagAddBtn.addEventListener('click', function() {
+tagCloseBtn.addEventListener('click', function() {
   // add tag's string to list
-  // POTENTIALLY OLD
-  crud.createTag(tagName.value);
   $('#tagcreation').modal('toggle');
   // maybe add a confirmation box
 });
@@ -270,28 +369,42 @@ function populateBulletTags() {
     if (curTag === null) {
       continue;
     } else {
+      // create an option box for the tag and add it to the selector
       const option = document.createElement('option');
       option.innerHTML = curTag;
       option.value = curTag;
+      console.log(option);
       tagSelector.appendChild(option);
-      option.addEventListener('click', function() {
-        const selectedTags = document.getElementById('bullet_tags');
-        const tagBox = document.createElement('div');
-        tagBox.style = 'display: flex';
-        const thisTag = document.createElement('li');
-        thisTag.innerHTML = curTag;
-        tagBox.appendChild(thisTag);
-        const deleteButton = appendButton('', '', 'btn-smbtn-danger circleButts', tagBox);
-        deleteButton.innerHTML = '<i class="fas fa-trash">';
-        deleteButton.addEventListener('click', () => {
-          selectedTags.removeChild(tagBox);
-        });
-        selectedTags.appendChild(tagBox);
-      });
     }
   }
 }
+
 populateBulletTags();
+/** Adds a tag to a bullet.
+ *  NOTE: Before saving the bullet, clicking this button shows the user that they will be adding the tag they selected
+*/
+const confirmTagBtn = document.getElementById('confirmTag');
+confirmTagBtn.addEventListener('click', function() {
+  if (tagSelector.value !== 'Default') {
+    // Set up the DOM
+    const tagBox = document.createElement('div');
+    tagBox.style = 'display: flex';
+    const thisTag = document.createElement('li');
+    // Make sure we add the tag that is currently selected
+    thisTag.innerHTML = tagSelector.value;
+    tagBox.appendChild(thisTag);
+    // Make sure user can delete tags that they realize they don't want to add
+    const deleteButton = appendButton('', '', 'btn-smbtn-danger circleButts', tagBox);
+    deleteButton.innerHTML = '<i class="fas fa-trash">';
+    deleteButton.addEventListener('click', () => {
+      selectedTags.removeChild(tagBox);
+    });
+    // add the delete button and add the tag to the appropriate space
+    tagBox.appendChild(deleteButton);
+    selectedTags.appendChild(tagBox);
+  }
+});
+
 /** Opens the delete dialog box and listens for delete button to get clicked
  *  @param {bullet} elemEntry the bullet we want to delete
  *  @return null
@@ -350,32 +463,40 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
  */
 function createBulletEntryElem(objBullet) {
   const newEntry = document.createElement('li');
-  const div = document.createElement('div');
+  const bulletInfo = document.createElement('div');
+  const bulletTags = document.createElement('div');
+  const bulletTitle = document.createElement('h5');
 
   newEntry.id = objBullet.ID;
-  div.style = 'margin: 10px; padding: 5px; border: 5px solid black';
+  bulletInfo.style = 'margin: 10px; padding: 5px; border: 5px solid black';
 
-  newEntry.append(div);
-  div.append(document.createTextNode(objBullet.title));
-  div.append(document.createTextNode(objBullet.content));
-
-  // create and append edit button
-  const editButton = appendButton('', '', 'btn-sm btn-primary circleButts', div);
-  editButton.innerHTML = '<i class="fas fa-pen"></i>';
-  editButton.addEventListener('click', () => {
-    openEditDialog(newEntry);
-  });
-
-  // create and append delete button
-  const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', div);
-  deleteButton.innerHTML = '<i class="fas fa-trash">';
-  deleteButton.addEventListener('click', () => {
-    openDeleteDialog(newEntry);
-  });
-
+  if (objBullet.type === 'Task') {
+    const checkbox = document.createElement('INPUT');
+    checkbox.setAttribute('type', 'checkbox');
+    bulletInfo.appendChild(checkbox);
+  }
+  console.log(objBullet.title);
+  bulletTitle.innerHTML = objBullet.title;
+  bulletInfo.appendChild(bulletTitle);
+  createTagElements(bulletTags, objBullet);
+  // Can set class of bulletTags here for styling
+  bulletInfo.appendChild(bulletTags);
+  newEntry.appendChild(bulletInfo);
   return newEntry;
 }
-
+/**
+ * Adds all tags from a bullet as div objects into a div object for use
+ * @param {div} objTagDiv HTML div element object to add tags to
+ * @param {Bullet} objBullet bullet object to get tags from
+ */
+function createTagElements(objTagDiv, objBullet) {
+  for (const tag of objBullet.tags) {
+    const newTag = document.createElement('div');
+    newTag.innerHTML = tag;
+    // set class of tag div for styling of individual tag elements
+    objTagDiv.appendChild(newTag);
+  }
+}
 /**
  * Gets the hour in military time based on input hour and AMPM string
  * @param {Number} hour number of the hour from 0-11

@@ -85,7 +85,11 @@
 						<p id="date">april 1st</p>
 						<button class="btn-sm btn-primary circleButts" id="addBullet"><i
 							class="fas fa-plus"></i></button>
-						<button id="createtag" class="btn btn-primary">Edit Tags</button>
+						<label for="selecttag">Filter by Tag: </label>
+						<select id="selecttag">
+							<option value='ALL'>All</option>
+							<option id = 'edittags' value='edit'>Edit tags...</option>
+						</select>
 					</div>
 					<ul id="time_list">
 					</ul>
@@ -141,7 +145,7 @@
 						<form method="dialog">
 							<!--Is title a good name? Probably not-->
 							<label for="title">Title: </label>
-							<input type="text" id="title"><br>
+							<input type="text" id="title" type="reset"><br>
 
 							<label for="type">Type: </label>
 							<select name="bulletType" id="type">
@@ -157,14 +161,14 @@
 							</select><br>
 							<label for="tags">Tags: </label>
 							<select name="bulletTags" id="tags">
-								<option value="School">School</option>
-
+								<option value="Default">Select Tags: </option>
 							</select><br>
+							<button id = 'confirmTag'>Add this tag</button>
 							<div id="selected_tags">
 								<ul id="bullet_tags">
 
 								</ul>
-							</div>
+							</div> <br>
 							<textarea name="desc" rows="10" cols="30" placeholder="Notes"></textarea><br>
 						</form>
 					</div>
@@ -176,21 +180,47 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="viewBullet" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addBullet"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 id=viewtitle class="modal-title">Title of Bullet</h3>
+					<button id="editButton" class="btn-sm btn-primary circleButts"></button>
+					<button id="deleteButton" class="btn-sm btn-danger circleButts"></button>
+				</div>
+				<div class="modal-body">
+					<h4 id = "viewtype">Event</h4><br>	
+					<h5 id="viewdate">June 1, 2021</h5>
+						
+						<h5 id = "viewtime">9:00</h5><br>
+						<h5>Content: </h5>
+						<p id = viewdesc>Lorem ipsum</p>
 
+				</div>
+				<div class="modal-footer">
+					<h5>Tags:</h5>
+					<div id="viewtags">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 		<!--Modal option to create a tag-->
 		<div id="tagcreation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tagbox"
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h3 class="modal-title">Edit Tags</h3>
+						<h3 class="modal-title">Edit Tags: </h3>
 					</div>
 					<div class="modal-body">
-						<h4>Current Tags: </h4>
-						<ul id="taglist">
+						<ul id = 'taglist'>
+							<li></li>
 						</ul>
 						<form method="dialog">
-							<label for="tagname">Add a new tag: </label>
+							<label for="tagname">Title: </label>
 							<input type="text" id="tagname"><br>
 						</form>
 					</div>
