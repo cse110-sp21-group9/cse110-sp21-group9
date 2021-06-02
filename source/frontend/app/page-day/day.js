@@ -269,7 +269,7 @@ function loadTags() {
   }
 }
 /* tag filter selector */
-tagFilterSelect.addEventListener('change', function () {
+tagFilterSelect.addEventListener('change', function() {
   if (tagFilterSelect.value === 'edit') {
     $('#tagcreation').modal('toggle');
   } else if (tagFilterSelect.value === 'ALL') {
@@ -281,13 +281,13 @@ tagFilterSelect.addEventListener('change', function () {
 });
 
 /* if user confirms making new tag, add it to list */
-tagCloseBtn.addEventListener('click', function () {
+tagCloseBtn.addEventListener('click', function() {
   // add tag's string to list
   $('#tagcreation').modal('toggle');
   // maybe add a confirmation box
 });
 
-tagName.addEventListener('keypress', function (e) {
+tagName.addEventListener('keypress', function(e) {
   // Hit enter to actually save the thing. Is it intuitive enough?
   if (e.key === 'Enter') {
     // create the bullet element and destroy the input text + cancel button
@@ -326,7 +326,7 @@ function populateTagOptions(objSelect) {
  *  NOTE: Before saving the bullet, clicking this button shows the user that they will be adding the tag they selected
 */
 const confirmTagBtn = document.getElementById('confirmTag');
-confirmTagBtn.addEventListener('click', function () {
+confirmTagBtn.addEventListener('click', function() {
   if (tagSelector.value !== 'Default') {
     // Set up the DOM
     const tagBox = document.createElement('div');
@@ -353,7 +353,7 @@ confirmTagBtn.addEventListener('click', function () {
 */
 function openDeleteDialog(elemEntry) {
   $('#deleteBullet').modal('toggle');
-  confirmBtn.onclick = function () {
+  confirmBtn.onclick = function() {
     crud.deleteBulletById(elemEntry.id);
     elemEntry.remove();
     $('#deleteBullet').modal('toggle');
@@ -438,12 +438,12 @@ function createBulletEntryElem(objBullet) {
   });
 
   // show delete button when hover over event
-  bulletInfo.addEventListener('mouseover', function () {
+  bulletInfo.addEventListener('mouseover', function() {
     bulletInfo.style = 'margin: 10px; padding: 5px; background-color: rgba(161, 157, 157, 0.075); border-radius: 10px; display:flex; justify-content: space-between;';
     // bulletInfo.style.backgroundColor = "var(--nav-color-hover)";
     editButton.classList.remove('d-none');
   });
-  bulletInfo.addEventListener('mouseleave', function () {
+  bulletInfo.addEventListener('mouseleave', function() {
     bulletInfo.style = 'margin: 10px; padding: 5px;';
     editButton.classList.add('d-none');
   });
@@ -455,10 +455,10 @@ function createBulletEntryElem(objBullet) {
     openDeleteDialog(newEntry);
   });
   // show delete button when hover over event
-  bulletInfo.addEventListener('mouseover', function () {
+  bulletInfo.addEventListener('mouseover', function() {
     deleteButton.classList.remove('d-none');
   });
-  bulletInfo.addEventListener('mouseleave', function () {
+  bulletInfo.addEventListener('mouseleave', function() {
     deleteButton.classList.add('d-none');
   });
   createTagElements(bulletTags, objBullet);
@@ -503,7 +503,7 @@ function getHour(hour, AMPM) {
 
 // Open option to create a note bullet on the note space
 // if you click this button
-noteBtn.addEventListener('click', function () {
+noteBtn.addEventListener('click', function() {
   // Take things one at a time when creating note bullets
   noteBtn.disabled = true;
   const notespace = document.getElementById('noteSpace');
@@ -518,7 +518,7 @@ noteBtn.addEventListener('click', function () {
   cancel.classList = 'btn btn-sm btn-secondary';
   cancel.innerHTML = 'Cancel';
   notespace.appendChild(cancel);
-  cancel.addEventListener('click', function () {
+  cancel.addEventListener('click', function() {
     noteBtn.disabled = false;
     notespace.removeChild(note);
     notespace.removeChild(cancel);
@@ -527,7 +527,7 @@ noteBtn.addEventListener('click', function () {
   // Create note bullet
   let time = new Date();
   let date = new Date();
-  note.addEventListener('keypress', function (e) {
+  note.addEventListener('keypress', function(e) {
     // Hit enter to actually save the thing. Is it intuitive enough?
     if (e.key === 'Enter') {
       time = 'T01:00';
