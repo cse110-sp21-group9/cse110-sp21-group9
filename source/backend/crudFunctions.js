@@ -138,6 +138,33 @@ export function setBulletStatus(intID, strstatus, objOption = null) {
   return updateBullet(intID, 'status', strstatus);
 }
 
+export function setAttributes(intID, objAttributes) {
+  if (!(intID in runTimeBullets)) return null;
+  let bulletObj = runTimeBullets[intID];
+
+  if ("title" in objAttributes)
+    bulletObj.title = objAttributes.title;
+  if ("date" in objAttributes && objAttributes.date instanceof Date)
+    bulletObj.date = objAttributes.date;
+  if ("tags" in objAttributes)
+  {
+    objAttributes.tags.forEach((tag, index) => {
+      if (!(tag in runTimeTags)) return null;
+    });
+    bulletObj.tags = objAttributes.tags;
+  }
+  if ("content" in objAttributes)
+    bulletObj.content = objAttributes.content;
+  if ("dueDate" in objAttributes && objAttributes.dueDate instanceof Date)
+    bulletObj.dueDate = objAttributes.dueDate;
+  if ("status" in objAttributes)
+    bulletObj.status = objAttributes.status;
+  
+  runTimeBullets[intID] = bulletObj;
+  localStorage.setItem(intID, JSON.stringify(bulletObj));
+  return new Bullet(bulletObj);
+}
+
 export function getAvailableTags() {
   const tagsToReturn = [];
   for (const tag of Object.keys(runTimeTags)) {
