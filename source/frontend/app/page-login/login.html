@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
-  <link rel="stylesheet" href="/app/page-login/style.css">
+  <link rel="stylesheet" href="/source/frontend/app/page-login/style.css">
 
   <script src="https://kit.fontawesome.com/c7fe59e5a5.js" crossorigin="anonymous"></script>
 
@@ -102,3 +102,32 @@
       }
     </script>
 </body>
+  
+  <script>
+      const form = document.getElementById('login');
+      form.addEventListener('submit',registerUser);
+
+      async function registerUser(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const result = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username,
+            password
+          })
+        }).then((res) => res.json());
+
+        if (result.status === 'ok') {
+          // everything went fine
+          console.log('Got the token: ', result.data)
+        } else {
+          alert(result.error)
+        }
+      }
+    </script>                                                                                                                                                                  

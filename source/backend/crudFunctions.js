@@ -11,7 +11,7 @@ import { Bullet } from './bullet.js';
  *  Completed: Add type and tag functionality
  */
 
-const runTimeBullets = {};
+let runTimeBullets = {};
 let runTimeTags = {};
 let runTimeUpToDate = false;
 let lastID; // this is bad
@@ -83,17 +83,17 @@ export function getBulletsByTag(strTag, objOption = null) {
 
 export function getEventBulletsByTag(strTag, objOption = null) {
   const unfilteredBullets = getBulletsByTag(strTag);
-  return filterArray(unfilteredBullets, 'event');
+  return filterArray(unfilteredBullets, 'Event');
 }
 
 export function getNoteBulletsByTag(strTag, objOption = null) {
   const unfilteredBullets = getBulletsByTag(strTag);
-  return filterArray(unfilteredBullets, 'note');
+  return filterArray(unfilteredBullets, 'Note');
 }
 
 export function getTaskBulletsByTag(strTag, objOption = null) {
   const unfilteredBullets = getBulletsByTag(strTag);
-  return filterArray(unfilteredBullets, 'task');
+  return filterArray(unfilteredBullets, 'Task');
 }
 
 export function setBulletTitle(intID, strTitle, objOption = null) {

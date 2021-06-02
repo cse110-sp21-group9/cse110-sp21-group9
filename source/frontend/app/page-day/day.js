@@ -15,15 +15,17 @@
 /* get elements from html page */
 /* eslint-env jquery */
 // POTENTIALLY OLD
-import * as crud from '../page-journal/crudFunctions.js';
-import * as utils from '../../utils.js'
+import * as crud from '../../../backend/crudFunctions.js';
+import * as utils from '../../utils.js';
+import * as globals from '../../globals.js';
 
 const saveBtn = document.getElementById('saveAdd');
 
 // creation inputs
 const titleInput = document.getElementById('title');
-const descInput = document.querySelector('[name = "desc"]');
-
+const contentInput = document.querySelector('[name = "desc"]');
+const hourInput = document.getElementById('hour'); 
+const AMPMInput = document.getElementById('AMPM');
 // output of creation for note bullets
 const noteOut = document.getElementById('noteSpace');
 
@@ -40,7 +42,8 @@ const tagName = document.getElementById('tagname');
 const editBullet = document.getElementById('EditBullet');
 const editSave = document.getElementById('editSaveAdd');
 const editTitle = document.getElementById('edittitle');
-const editDate = document.getElementById('editdate');
+const editHour = document.getElementById('edithour'); 
+const editAMPM = document.getElementById('editAMPM');
 const editDesc = document.getElementById('editdesc');
 const editTags = document.getElementById('edittag');
 
@@ -50,57 +53,37 @@ const noteBtn = document.getElementById('addNote');
 // For creating the time table
 const timeSegments = document.getElementById('time_list');
 
-// Navigate back to month view
-const monthBtn = document.getElementById('curMonth');
+const createBulletButton = document.getElementById('addBullet');
+const tagSelectionOptions = document.getElementById('tagSelect');
+let timeSlots = [];
 
-const monthNames = {
-  1: 'January',
-  2: 'Feburuary',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'August',
-  9: 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December'
-};
-
-const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-// make sure this changes depending on the day you pick
-let defMonth = '04';
-let defYear = '2021';
-let defDay = '01';
-const timeStart = 'T00:00';
-const timeEnd = 'T23:59';
 // generate hash of the day we're in if we don't have one already
-generateHash();
-const date = utils.readHash(document.location.hash);
+if (!document.URL.includes('#'))
+{
+  const url = new URL(document.URL);
+  const date = new Date();
+  url.hash = utils.hashString('d', date.getFullYear(), date.getMonth() + 1, date.getDate());
+  document.location.href = url.href;
+}
 
-// update the date variables we have accordingly and the url
-defYear  = date.getFullYear();
-defMonth = date.getMonth();
-defDay   = date.getDate();
+//set date by url hash
+const pageDate = utils.readHash(document.location.hash);
+const monthName = globals.MONTH_NAMES_LONG[pageDate.getMonth()];
+const dayName = globals.DAY_NAMES_LONG[pageDate.getDay()];
 
-// set the UI to display the current day
-setDay([defMonth, defYear, defDay]);
-const curDay = defYear + '-' + defMonth + '-' + defDay;
-console.log('Current Day: ' + curDay);
+// Update date
+document.getElementById('date').innerHTML = monthName + " " + pageDate.getDate();
+document.getElementById('week_day').innerHTML = dayName;
 
-// generate date+time strings to load bullets from
-const loadStart = curDay + timeStart;
-const loadEnd = curDay + timeEnd;
-console.log('Bullet load time start: ' + loadStart);
-console.log('Bullet load time end: ' + loadEnd);
-
-// POTENTIALLY OLD
+//init crud
 crud.initCrudRuntime();
 
+//make timeslots
 for (let i = 0; i < 24; i++) {
-  timeSegments.appendChild(makeTimeSlotComponent(i));
+  const timeSlot = makeTimeSlotComponent(i);
+  timeSegments.appendChild(timeSlot);
+  
+  timeSlots.push(document.getElementById('time_slot'+String(i)));
 }
 
 function makeTimeSlotComponent(intTime) {
@@ -109,27 +92,71 @@ function makeTimeSlotComponent(intTime) {
   const timeSlot = document.createElement('div');
   const timeText = document.createTextNode(`${stringTime}:00`);
   const bulletList = document.createElement('ul');
-  const addBtn = document.createElement('button');
-  addBtn.classList = "btn btn-primary btn-sm circleButts";
+  bulletList.id = "time_slot" + String(intTime);
   
-  // TODO: Make this button have an icon. This is a failed attempt
-  addBtn.innerHTML = '<i class="fas fa-plus"></i>';
-  //addBtn.innerHTML = 'Add Bullet';
   timeSlot.appendChild(timeText);
   timeSlot.appendChild(bulletList);
-  timeSlot.appendChild(addBtn);
   timeSlot.className = 'time_slot';
-
-  // Performs same function as addBulletBut
-  addBtn.addEventListener('click', function() {
-    console.log('Add button was clicked');
-    openCreationDialog(stringTime, bulletList);
-    $('#bujoSpace').modal('toggle');
-  });
 
   return timeSlot;
 }
 
+// Populate time selectors 1- 12
+// 12:00 - 0, everything else is normal
+// Add 12 to final time if AMPM input is PM
+let opt = document.createElement('option');
+opt.value = 0;
+opt.innerHTML = '12:00'; 
+hourInput.appendChild(opt); 
+for (let i = 1; i < 12; i++) {
+  opt = document.createElement('option'); 
+  opt.value = i;
+  opt.innerHTML = i + ':00'; 
+  hourInput.appendChild(opt); 
+}
+
+opt = document.createElement('option');
+opt.value = 0;
+opt.innerHTML = '12:00'; 
+editHour.appendChild(opt); 
+for (let i = 1; i < 12; i++) {
+  opt = document.createElement('option'); 
+  opt.value = i;
+  opt.innerHTML = i + ':00'; 
+  editHour.appendChild(opt); 
+}
+
+//on create bullet, 
+createBulletButton.onclick = () => { $('#bujoSpace').modal('toggle'); };
+saveBtn.onclick = () => {
+  $('#bujoSpace').modal('toggle');
+  let bulletType = document.getElementById('type').value;
+  let hour = getHour(hourInput.value, AMPMInput.value);
+  let bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
+  let newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, [], contentInput.value);
+  console.log(newBullet);
+  let newElement = createBulletEntryElem(newBullet);
+  timeSlots[hour].append(newElement);
+};
+
+//load initial bullets from local storage
+const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
+  pageDate.getFullYear(), 
+  pageDate.getMonth(), 
+  pageDate.getDate() + 1
+  ));
+for (const bullet of bulletsToLoad)
+{
+  let hour = bullet.date.getHours();
+  if (bullet.type === 'Note')
+  {
+  }
+  else
+  {
+    timeSlots[hour].append(createBulletEntryElem(bullet));
+  }
+}
+/*
 // TODO: Write a date getter function to pass into here
 // TODO: Make sure the date here is all the bullets of the current day we're in
 // POTENTIALLY OLD
@@ -161,56 +188,7 @@ for (const bullet of bulletsToLoad) {
     }
   }
 }
-
-/** Opens create bullet dialog box and saves additions if associated event listener is
- *  triggered
- *  @param {string} timeStr string for the time we want to add the bullet in
- *  @param {ul element} bulletList the list where we want to append to
- *  @return the created bullet
- *  THEORY: Bullet-double add is there because saveBtn is the same across all addBtns.
- *  Potential fix: Create save button here for each and every add button on the time table
- */
-function openCreationDialog(timeStr, bulletList) {
-  console.log('Entering openCreationDialog');
-  const title = titleInput;
-  let time = new Date();
-  let date = new Date();
-  const desc = descInput;
-  saveBtn.addEventListener('click', function() {
-    console.log('hit the save button');
-    // make tag array for new bullet
-    // POTENTIALLY OLD
-    const newBulletTags = crud.getCheckBoxResults();
-    const newBulletType = crud.getType();
-    console.log(newBulletType);
-    // set date and time to be today's date and clicked time
-    // since this is a task/event, we
-    time = 'T' + timeStr + ':' + '00';
-    date = curDay + time;
-    // make a new bullet with the crud functions
-    // POTENTIALLY OLD
-    const newBulletID = crud.createBullet(
-      { title: titleInput.value, note: descInput.value },
-      newBulletType,
-      date,
-      newBulletTags
-    );
-
-    console.log('In appending mode');
-    // add the bullet to the DOM
-    if (newBulletType === 'Event') {
-    // paste onto specific hour
-      console.log('appending event');
-      bulletList.append(createBulletEntryElem(newBulletID));
-    } else if (newBulletType === 'Task') {
-    // paste onto specific hour
-      console.log('appending task');
-      bulletList.append(createBulletEntryElem(newBulletID));
-    }
-
-    $('#bujoSpace').modal('toggle');
-  });
-}
+*/
 
 /* on click show new tag box */
 tagBtn.addEventListener('click', function() {
@@ -226,34 +204,17 @@ tagAddBtn.addEventListener('click', function() {
   // maybe add a confirmation box
 });
 
-/* on click set confirm button to true */
-confirmBtn.addEventListener('click', function() {
-  confirmBtn.value = 'true';
-});
-
 /** Opens the delete dialog box and listens for delete button to get clicked
  *  @param {bullet} elemEntry the bullet we want to delete
  *  @return null
 */
 function openDeleteDialog(elemEntry) {
-  confirmBtn.addEventListener('click', function() {
-    deleteBulletEntry(elemEntry);
+  $('#deleteBullet').modal('toggle');
+  confirmBtn.onclick = function() {
+    crud.deleteBulletById(elemEntry.id);
+    elemEntry.remove();
     $('#deleteBullet').modal('toggle');
-  });
-}
-
-/** Companion function to openDeleteDialog. Removes the event listener and
- *  deletes entry if ok was clicked
- *  @param {bullet} elemEntry the bullet we want to delete
- *  @return null
- */
-function deleteBulletEntry(elemEntry) {
-  confirmBox.onclose = null;
-  if (confirmBtn.value === 'false') return;
-  confirmBtn.value = false;
-  // POTENTIALLY OLD
-  crud.deleteBulletById(elemEntry.id);
-  elemEntry.remove();
+  };
 }
 
 /** Opens edit dialog box and saves edits if the associated event listener is
@@ -262,49 +223,18 @@ function deleteBulletEntry(elemEntry) {
  *  @return a modal to edit a bullet.
 */
 function openEditDialog(elemEntry) {
-  // POTENTIALLY OLD
+  $('#EditBullet').modal('toggle');
   const entryBullet = crud.getBulletById(elemEntry.id);
 
-  editTitle.value = entryBullet.data.title;
-  editDate.value = entryBullet.date;
-  editDesc.value = entryBullet.data.note;
+  editTitle.value = entryBullet.title;
+  //editDate.value = entryBullet.date;
+  editDesc.value = entryBullet.content;
   editTags.value = entryBullet.tags;
 
-  editSave.addEventListener('click', function() {
-    editBulletEntry(elemEntry);
+  editSave.onclick = () => {
+    //elemEntry.parentNode.replaceChild(createBulletEntryElem(elemEntry.id), elemEntry);
     $('#EditBullet').modal('toggle');
-  });
-  // TODO:Add functionality to edit type and tags
-}
-
-/** Edits a bullet's information and replaces it on storage
- *  @param {bullet} elemEntry the bullet we want to edit
- *  @return the modified bullet in storage and the DOM
- */
-function editBulletEntry(elemEntry) {
-  // POTENTIALLY OLD
-  crud.setBulletAttributes(elemEntry.id, {
-    title: editTitle.value,
-    note: editDesc.value
-  }, null, editDate.value);
-
-  elemEntry.parentNode.replaceChild(createBulletEntryElem(elemEntry.id), elemEntry);
-
-  editBullet.onclose = null;
-}
-
-/** helper function to add text to bullet entry
- *  @param {string} strTitle the bullet's title
- *  @param {string} strText the bullet's text
- *  @param {bullet} elemParent tbh no idea what this one does
- *  @return null
- */
-function appendTextNode(strTitle, strText, elemParent) {
-  const elemBold = document.createElement('b');
-
-  elemBold.append(document.createTextNode(strTitle));
-  elemParent.append(elemBold);
-  elemParent.append(document.createTextNode(strText));
+  };
 }
 
 /** helper function to add buttons to bullet entry
@@ -330,34 +260,21 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
  *  @param {number} intBulletID - the bullet's numerical ID
  *  @return {li} a list (bullet) object
  */
-function createBulletEntryElem(intBulletID) {
+function createBulletEntryElem(objBullet) {
   const newEntry = document.createElement('li');
   const div = document.createElement('div');
-  // POTENTIALLY OLD
-  const bullet = crud.getBulletById(intBulletID);
 
-  newEntry.id = intBulletID;
+  newEntry.id = objBullet.ID;
   div.style = 'margin: 10px; padding: 5px; border: 5px solid black';
 
   newEntry.append(div);
-  if (bullet.type === 'note') {
-    div.style = 'border: 0px';
-    appendTextNode('', bullet.data.title, div);
-  } else {
-    // create and append title of bullet
-    appendTextNode('Title: ', bullet.data.title, div);
+  div.append(document.createTextNode(objBullet.title))
+  div.append(document.createTextNode(objBullet.content))
 
-    // create and append description for bullet
-    appendTextNode(' Note: ', bullet.data.note, div);
-
-    // create and append bullet's tags
-    appendTextNode(' Tags: ', bullet.tags, div);
-  }
   // create and append edit button
   const editButton = appendButton('', '', 'btn-sm btn-primary circleButts', div);
   editButton.innerHTML = '<i class="fas fa-pen"></i>'
   editButton.addEventListener('click', () => {
-    $('#EditBullet').modal('toggle');
     openEditDialog(newEntry);
   });
 
@@ -365,113 +282,23 @@ function createBulletEntryElem(intBulletID) {
   const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', div);
   deleteButton.innerHTML = '<i class="fas fa-trash">'
   deleteButton.addEventListener('click', () => {
-    $('#deleteBullet').modal('toggle');
     openDeleteDialog(newEntry);
   });
 
   return newEntry;
 }
 
-/** Generates a month, year, and day given a url hash
- *  @param {string} hash the url hash
- *  @return the month, year, and day that we're in
+/**
+ * Gets the hour in military time based on input hour and AMPM string
+ * @param {Number} hour number of the hour from 0-11
+ * @param {String} AMPM AM/PM of hour
+ * @return the correct hour in military time
  */
-function getCurrentDay(urlHash) {
-  let curMonth;
-  let curYear;
-  let curDay;
-
-  // parse the hash
-  const day = utils.readHash(urlHash);
-  curMonth = day.getMonth(); 
-  curYear  = day.getFullYear();
-  curDay   = day.getDate();
-
-  // return the date
-  console.log('Month: ' + curMonth + ' ' + 'Year: ' + curYear + ' ' + 'Day: ' + curDay);
-  return [curMonth, curYear, curDay];
-}
-
-/** TODO: Make this function work with new hash system
- *  Generates a hash based on either:
- *  1. The URL we inherited from
- *  2. Today's date
- *  3. A default date
- *  @param {boolean} onload tells us whether we are inheriting a URL or not
- *  @return a hash that tells us which month, year, and day we're in
- */
-function generateHash(onload = true) {
-  let currentURL = document.URL;
-  if (onload) 
-  {
-    if (!currentURL.includes('#')) //do nothing
-    {
-      const url = new URL(document.URL);
-      const date = new Date();
-      url.hash = utils.hashString('w', date.getFullYear(), date.getMonth(), date.getDate());
-      document.location.href = url.href;
-    }
-  }
-  else 
-  {
-    const url = new URL(document.URL);
-    url.hash = utils.hashString('m', defMonth, defYear);
-    document.location.href = url.href;
-  }
-}
-
-/** Updates the url of the page we are in based on the given hash
- *  @param {string} hash the hash we want to update our url with
- *  @return null
- */
-function updateURL(hash) {
-  const url = new URL(document.URL);
-  url.hash = hash;
-  document.location.href = url.href;
-}
-
-/** Sets the day view's date-related variables
- *  NOTE: params may actually be in string format rather than int
- *  @param {Number} month the month of the current day
- *  @param {Number} year the year of the current day
- *  @param {Number} day the day of the current day
- *  @param {Number} week the weekday of the current day
- *  @return null
- */
-function setDay([month, year, day]) {
-  const curMonth = month;
-  const curYear = year;
-  const curDay = day;
-
-  // Update month
-  const monthDisplay = document.getElementById('curMonth');
-  monthDisplay.innerHTML = monthNames[curMonth];
-
-  // Update date
-  const dateDisplay = document.getElementById('date');
-  dateDisplay.innerHTML = curMonth + '/' + curDay + '/' + curYear;
-
-  // Update weekday
-  const weekDisplay = document.getElementById('week_day');
-  let weekDay = getWeekday([curMonth, curYear, curDay]);
-  weekDay = Math.round(weekDay) % 7;
-  weekDisplay.innerHTML = week[weekDay];
-}
-
-/** Gets the current day of the week based on the day's month,
- *  day and year.
- *  Credit for week calculation formula:
- *  https://www.geeksforgeeks.org/find-day-of-the-week-for-a-given-date/
- *  @param {String} month the month of hte current day;
- *  @param {String} year the year of the current day
- *  @param {String} day the day of the current year
- *  @return the current weekday in number form
- */
-function getWeekday([month, year, day]) {
-  const t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
-  let y = year;
-  y -= (month < 3) ? 1 : 0;
-  return (y + y / 4 - y / 100 + y / 400 + t[month - 1] + day) % 7;
+function getHour(hour, AMPM) {
+  if(AMPM === 'PM') {
+    return Number(hour) + 12; 
+  } 
+  return Number(hour); 
 }
 
 // Open option to create a note bullet on the note space
@@ -488,6 +315,7 @@ noteBtn.addEventListener('click', function() {
 
   // Create a cancel button for when you realize note-taking is stupid
   const cancel = document.createElement('button');
+  cancel.classList = "btn btn-sm btn-secondary";
   cancel.innerHTML = 'Cancel';
   notespace.appendChild(cancel);
   cancel.addEventListener('click', function() {
@@ -519,12 +347,4 @@ noteBtn.addEventListener('click', function() {
       noteBtn.disabled = false;
     }
   });
-});
-
-// This button takes you back to the month calendar
-monthBtn.addEventListener('click', function() {
-  const root = document.URL.split('/')[2];
-  document.location.hash = utils.hashString('m', defYear, defMonth);
-  const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
-  document.location = path;
 });
