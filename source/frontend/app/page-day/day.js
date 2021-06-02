@@ -161,9 +161,9 @@ saveBulletBtn.onclick = () => {
   const newElement = createBulletEntryElem(newBullet);
   timeSlots[hour].append(newElement);
   newElement.querySelector('h5').onclick = () => {
-    let editButton = document.createElement('button');
+    const editButton = document.createElement('button');
     editButton.setAttribute('bulletID', newElement.id);
-    let deleteButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
     deleteButton.setAttribute('bulletID', newElement.id);
     $('#viewBullet').modal('toggle');
     showBulletInfo(newBullet);
@@ -233,9 +233,9 @@ for (const bullet of bulletsToLoad) {
     const curBullet = createBulletEntryElem(bullet);
     timeSlots[hour].append(curBullet);
     curBullet.onclick = () => {
-      let editButton = document.createElement('button');
+      const editButton = document.createElement('button');
       editButton.setAttribute('bulletID', curBullet.id);
-      let deleteButton = document.createAttribute('button');
+      const deleteButton = document.createAttribute('button');
       deleteButton.setAttribute('bulletID', curBullet.id);
       $('#viewBullet').modal('toggle');
       showBulletInfo(bullet);
