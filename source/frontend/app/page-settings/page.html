@@ -6,12 +6,59 @@
         <script type="module" src="script.js"></script>
 		<title>Settings</title>
 
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="https://kit.fontawesome.com/c7fe59e5a5.js" crossorigin="anonymous"></script>
+
+		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+
 	</head>
 
 	<body>
+		<div class="mySidebar">
+			<div class="d-flex flex-column flex-shrink-0 bg-light"
+				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;">
+				<a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
+					data-bs-placement="right" data-bs-original-title="Icon-only">
+					<span class="visually-hidden center-block"><img src="../../assets/nav-logo.svg" /></span>
+				</a>
+				<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+					<li class="nav-item">
+						<a href="/source/frontend/app/page-day/day.html" class="nav-link py-3 border-bottom" aria-current="page" title="Home"
+							data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+							<i class="fas fa-home fa-2x"></i>
+						</a>
+					</li>
+					<li>
+						<a href="/source/frontend/app/page-calendar-monthly/calendar.html"
+							class="nav-link  py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
+							data-bs-placement="right" data-bs-original-title="Month">
+							<i class="fas fa-calendar-alt fa-2x"></i>
+						</a>
+					</li>
+					<li>
+						<a href="/source/frontend/app/page-settings/page.html" class="nav-link activepy-3 border-bottom" title="Settings" data-bs-toggle="tooltip"
+							data-bs-placement="right" data-bs-original-title="Settings">
+							<i class="fas fa-user-cog fa-2x"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
 		<input type="file" id="input" multiple>
         <button type="button" id="exportData">Export Data</button>
         <p id="data"></p>
         <button type="button" id="modeChange">Change Mode</button>
+		
+		<!-- Light/Dark Mode-->
+		<div class="checkbox">
+			<label>
+			  <input type="checkbox" data-toggle="toggle">
+			  Dark Mode
+			</label>
+		  </div>
   </body>
 </html>
