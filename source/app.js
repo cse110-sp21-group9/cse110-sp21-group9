@@ -127,6 +127,7 @@ module.exports = router;
 
 //static folder
 app.use(express.static(path.join(__dirname, '/frontend')))
+app.use(express.static(path.join(__dirname, '/backend')))
 
 // app.use(express.static(__dirname));        // Add
 // app.use('/', router);                      // Add router to application
