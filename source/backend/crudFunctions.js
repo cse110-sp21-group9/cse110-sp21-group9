@@ -319,10 +319,8 @@ function fillRunTimeBullets() {
 
   lastID = Number(lastID);
   const bulletIDs = readArrayFromStorage('bulletIDs');
-  console.log('loaded bullet ids: ', bulletIDs);
   for (const ID of bulletIDs) {
     runTimeBullets[ID] = parseBullet(ID);
-    console.log('loaded bullet object: ', runTimeBullets[ID]);
   }
   runTimeTags = JSON.parse(localStorage.getItem('tags'));
   runTimeUpToDate = true;
