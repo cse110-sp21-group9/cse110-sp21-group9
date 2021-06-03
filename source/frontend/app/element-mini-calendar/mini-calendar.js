@@ -8,6 +8,15 @@ const ROWS = 6;
 * you can bind callbacks for when days and weeks are clicked
 * note: in order for call backs to work they must be bound before calling set calendar
 */
+function getMonthFromString(mon) {
+
+   var d = Date.parse(mon + "1, 2012");
+   if(!isNaN(d)){
+      return new Date(d).getMonth() + 1;
+   }
+   return -1;
+}
+
 class MiniCalendar extends HTMLElement {
   constructor() {
     super();
@@ -198,7 +207,16 @@ class MiniCalendar extends HTMLElement {
 
         dayElement.addEventListener('click', function() {
           this.classList.add('selected');
-
+          console.log(this.textContent);
+          let dateDay = this.textContent
+          let dateMonth = document.querySelector("mini-calendar").shadowRoot.getElementById("month");
+          dateMonth = dateMonth.textContent;
+          let dateYear = document.querySelector("mini-calendar").shadowRoot.getElementById("year");
+          dateYear = dateYear.textContent
+          dateMonth = getMonthFromString(dateMonth);
+          let routStr = "#d-" + dateYear + "-" + dateMonth + "-" + dateDay;
+          const currURL = new URL(document.URL);
+          document.location.href = currURL + routStr;
         });
 
         dayElement.innerHTML = currentDate.getDate();
@@ -276,6 +294,9 @@ class MiniCalendar extends HTMLElement {
   *   this.weekCallBack = callBack;
   * }
   */
+
+
 }
 
 customElements.define('mini-calendar', MiniCalendar);
+
