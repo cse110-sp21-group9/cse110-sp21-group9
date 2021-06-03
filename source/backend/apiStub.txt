@@ -50,6 +50,7 @@ function removeBulletTag(ID, tag, option){}         //=> returns updated bullet 
 function setBulletContent(ID, content, option){}    //=> returns updated bullet class
 function setBulletDueDate(ID, dueDate, option){}    //=> returns updated bullet class
 function setBulletStatus(ID, status, option){}      //=> returns updated bullet class
+function setAttributes(ID, objAttributes) {}        //=> returns updated bullet class
 
 function getAvailableTags(){}                       //=> returns a dict of all known tags
 function createTag(tag, option){}                   //=> adds tag to list of all known tags
