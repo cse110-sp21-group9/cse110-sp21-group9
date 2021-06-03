@@ -1,4 +1,14 @@
 
+#test{
+    width: 500px;
+    height: 500px;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+    border: 2px solid black;
+    border-radius: 40px;
+}
+
 #calendar{
     border-collapse: collapse;
     width: 100%;
