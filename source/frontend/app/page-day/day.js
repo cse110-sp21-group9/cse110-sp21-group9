@@ -530,7 +530,7 @@ function createBulletEntryElem(objBullet) {
     bulletInfo.appendChild(btnDiv);
 
     // Editing bullet functionality will be triggered by double clicking the bullet
-    bulletInfo.addEventListener('dblclick', function () {
+    bulletInfo.addEventListener('dblclick', function() {
       editNote(newEntry);
     });
 
@@ -671,7 +671,6 @@ noteBtn.addEventListener('click', function() {
       notespace.removeChild(save);
       notespace.removeChild(cancel);
       noteBtn.disabled = false;
-      return;
     } else {
       // Get the hour when the note was created
       const bulletType = 'Note';
@@ -698,7 +697,7 @@ noteBtn.addEventListener('click', function() {
       // reenable the create note button
       noteBtn.disabled = false;
     }
-  }
+  };
 
   // Alternatively, you can also hit enter key to save
   note.addEventListener('keypress', function(e) {
@@ -709,7 +708,6 @@ noteBtn.addEventListener('click', function() {
         notespace.removeChild(save);
         notespace.removeChild(cancel);
         noteBtn.disabled = false;
-        return;
       } else {
         // Get the current hour
         const bulletType = 'Note';
@@ -723,7 +721,7 @@ noteBtn.addEventListener('click', function() {
         const hour = getHour(time, ampm);
         console.log(hour);
         const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
-  
+
         // Make the bullet
         const newBullet = crud.createBullet(bulletType, note.value, bulletDate, [], contentInput.value);
         const newElement = createBulletEntryElem(newBullet);
@@ -733,7 +731,7 @@ noteBtn.addEventListener('click', function() {
         notespace.removeChild(note);
         notespace.removeChild(cancel);
         notespace.removeChild(save);
-  
+
         // reenable the create note button
         noteBtn.disabled = false;
       }
@@ -744,13 +742,13 @@ noteBtn.addEventListener('click', function() {
 /** Special Editing functionality for note bullets.
  *  It will replace the selected bullet with the desired edits
  *  @param {Note Bullet} elemEntry the entry we want to edit
- *  @return null 
+ *  @return null
  */
 function editNote(elemEntry) {
   const entryBullet = crud.getBulletById(elemEntry.id);
-  let editInput = document.createElement('input');
+  const editInput = document.createElement('input');
   editInput.type = 'text';
-  editInput.value = entryBullet.title
+  editInput.value = entryBullet.title;
   notespace.replaceChild(editInput, elemEntry);
 
   // Create a cancel button for when you realize note-taking is stupid
@@ -771,7 +769,7 @@ function editNote(elemEntry) {
   editInput.insertAdjacentElement('afterend', save);
   save.onclick = () => {
     if (editInput.value === '') {
-      //delete blyat
+      // delete blyat
       crud.deleteBulletById(elemEntry.id);
       notespace.removeChild(editInput);
     } else {
@@ -784,12 +782,12 @@ function editNote(elemEntry) {
     }
     notespace.removeChild(cancel);
     notespace.removeChild(save);
-  }
+  };
 
-  editInput.addEventListener('keypress', function (e) {
+  editInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
       if (editInput.value === '') {
-        //delete blyat
+        // delete blyat
         crud.deleteBulletById(elemEntry.id);
         notespace.removeChild(editInput);
       } else {
@@ -812,6 +810,6 @@ function editNote(elemEntry) {
  *  @return null
 */
 function deleteNote(elemEntry) {
-    crud.deleteBulletById(elemEntry.id);
-    elemEntry.remove();
+  crud.deleteBulletById(elemEntry.id);
+  elemEntry.remove();
 }
