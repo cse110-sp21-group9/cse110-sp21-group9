@@ -33,11 +33,12 @@ const tagName = document.getElementById('tagname');
 // edit inputs
 const editBullet = document.getElementById('EditBullet');
 const editSave = document.getElementById('editSaveAdd');
-const editTitle = document.getElementById('edittitle');
-const editHour = document.getElementById('edithour');
+const editTitle = document.getElementById('editTitle');
+const editHour = document.getElementById('editHour');
 const editAMPM = document.getElementById('editAMPM');
-const editDesc = document.getElementById('editdesc');
-const editTags = document.getElementById('edittag');
+const editContent = document.querySelector('[name = "editDesc"]');
+const editTagSelector = document.getElementById('editTags');
+const editSelectedTags = document.getElementById('editBulletTags');
 
 // for the note space box
 const noteBtn = document.getElementById('addNote');
@@ -46,7 +47,6 @@ const noteBtn = document.getElementById('addNote');
 const timeSegments = document.getElementById('time_list');
 
 const createBulletButton = document.getElementById('addBullet');
-const tagSelectionOptions = document.getElementById('tagSelect');
 const timeSlots = [];
 
 // generate hash of the day we're in if we don't have one already
@@ -82,7 +82,9 @@ for (let i = 0; i < 24; i++) {
 
   timeSlots.push(document.getElementById('time_slot' + String(i)));
 }
+// load in bullets into timeslots
 loadBullets();
+
 function makeTimeSlotComponent(intTime) {
   let stringTime = String(intTime);
   if (intTime < 10) stringTime = '0' + stringTime;
@@ -135,13 +137,22 @@ createBulletButton.onclick = () => {
 
   // refresh tags
   populateTagOptions(tagSelector);
+
+  // Remove previously selected tags
+  while (selectedTags.firstChild) {
+    selectedTags.removeChild(selectedTags.firstChild);
+  }
 };
+
+// When user confirms bullet
 saveBulletBtn.onclick = () => {
   $('#bujoSpace').modal('toggle');
+  // Get info from fields
   const bulletType = document.getElementById('type').value;
   const hour = getHour(hourInput.value, AMPMInput.value);
   const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
 
+  // Grab tags from selected list
   const bulletTags = [];
   const tagBoxes = selectedTags.querySelectorAll('div');
   if (tagBoxes !== null) {
@@ -152,12 +163,13 @@ saveBulletBtn.onclick = () => {
     }
   }
 
+  // Make the bullet
   const newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, bulletTags, contentInput.value);
   const newElement = createBulletEntryElem(newBullet);
   timeSlots[hour].append(newElement);
 };
 
-/** Displays the relevant information pertaining to the given bullet
+/** Displays the relevant information pertaining to the given bullet in view Modal
  * @param {bullet} curBullet the bullet we want to display information about
  * @return null
  */
@@ -201,6 +213,7 @@ function loadBullets(strTag = null) {
       timeSlot.removeChild(timeSlot.firstChild);
     }
   }
+  // Only load bullets from this page's day
   const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
     pageDate.getFullYear(),
     pageDate.getMonth(),
@@ -209,6 +222,7 @@ function loadBullets(strTag = null) {
   for (const bullet of bulletsToLoad) {
     const hour = bullet.date.getHours();
     if (bullet.type !== 'Note') {
+      // If strTag == null, we want all bullets, otherwise, only want bullets with tag strTag
       if (strTag === null || bullet.tags.indexOf(strTag) !== -1) {
         const curBullet = createBulletEntryElem(bullet);
         timeSlots[hour].append(curBullet);
@@ -287,6 +301,7 @@ tagCloseBtn.addEventListener('click', function() {
   // maybe add a confirmation box
 });
 
+/* add new tag when user presses enter on input */
 tagName.addEventListener('keypress', function(e) {
   // Hit enter to actually save the thing. Is it intuitive enough?
   if (e.key === 'Enter') {
@@ -299,13 +314,18 @@ tagName.addEventListener('keypress', function(e) {
 
 /**
  * Populates select element with options corresponding to tags
- * @param {HTMLSelectElement} objSelect
+ * @param {HTMLSelectElement} objSelect select element to add tags to
  */
 function populateTagOptions(objSelect) {
+  /* get tags from localstorage */
   const tagsToLoad = crud.getAvailableTags();
+
+  /* clear select element */
   while (objSelect.firstChild) {
     objSelect.removeChild(objSelect.firstChild);
   }
+
+  /* populate select element with inputs */
   const defaultopt = document.createElement('option');
   defaultopt.value = 'Default';
   defaultopt.innerHTML = 'Select tag:';
@@ -322,28 +342,64 @@ function populateTagOptions(objSelect) {
   }
 }
 
+/**
+ * Creates a new tag html element to add to list
+ * @param {HTMLUListElement} objUList the list we want to add tags to
+ * @param {String} strTag the tag we want to create
+ * @return {HTMLDivElement} div containing tag and delete button
+ */
+function addListTag(objUList, strTag) {
+  // Set up the DOM
+  const tagBox = document.createElement('div');
+  tagBox.style = 'display: flex';
+  const thisTag = document.createElement('li');
+  tagBox.appendChild(thisTag);
+
+  // Make sure we add the tag that is currently selected
+  tagBox.querySelector('li').innerHTML = strTag;
+  // Make sure user can delete tags that they realize they don't want to add
+  const deleteButton = appendButton('', '', 'btn-smbtn-danger circleButts', tagBox);
+  deleteButton.innerHTML = '<i class="fas fa-trash">';
+  deleteButton.addEventListener('click', () => {
+    objUList.removeChild(tagBox);
+  });
+  // add the delete button and add the tag to the appropriate space
+  // tagBox.appendChild(deleteButton);
+  objUList.appendChild(tagBox);
+}
+
 /** Adds a tag to a bullet.
  *  NOTE: Before saving the bullet, clicking this button shows the user that they will be adding the tag they selected
 */
-const confirmTagBtn = document.getElementById('confirmTag');
-confirmTagBtn.addEventListener('click', function() {
+// const confirmTagBtn = document.getElementById('confirmTag');
+tagSelector.addEventListener('change', function() {
   if (tagSelector.value !== 'Default') {
-    // Set up the DOM
-    const tagBox = document.createElement('div');
-    tagBox.style = 'display: flex';
-    const thisTag = document.createElement('li');
-    // Make sure we add the tag that is currently selected
-    thisTag.innerHTML = tagSelector.value;
-    tagBox.appendChild(thisTag);
-    // Make sure user can delete tags that they realize they don't want to add
-    const deleteButton = appendButton('', '', 'btn-smbtn-danger circleButts', tagBox);
-    deleteButton.innerHTML = '<i class="fas fa-trash">';
-    deleteButton.addEventListener('click', () => {
-      selectedTags.removeChild(tagBox);
-    });
-    // add the delete button and add the tag to the appropriate space
-    tagBox.appendChild(deleteButton);
-    selectedTags.appendChild(tagBox);
+    // Don't allow user to add duplicate tags
+    const currentTags = selectedTags.querySelectorAll('li');
+    for (const tag of currentTags) {
+      if (tag.innerHTML === tagSelector.value) {
+        tagSelector.value = 'Default';
+        return;
+      }
+    }
+
+    addListTag(selectedTags, tagSelector.value);
+    tagSelector.value = 'Default';
+  }
+});
+
+editTagSelector.addEventListener('change', function() {
+  if (editTagSelector.value !== 'Default') {
+    // Don't allow user to add duplicate tags
+    const currentTags = editSelectedTags.querySelectorAll('li');
+    for (const tag of currentTags) {
+      if (tag.innerHTML === editTagSelector.value) {
+        editTagSelector.value = 'Default';
+        return;
+      }
+    }
+
+    addListTag(editSelectedTags, editTagSelector.value);
   }
 });
 
@@ -368,14 +424,62 @@ function openDeleteDialog(elemEntry) {
 function openEditDialog(elemEntry) {
   $('#EditBullet').modal('toggle');
   const entryBullet = crud.getBulletById(elemEntry.id);
+  const oldHours = entryBullet.date.getHours();
 
   editTitle.value = entryBullet.title;
   // editDate.value = entryBullet.date;
-  editDesc.value = entryBullet.content;
-  editTags.value = entryBullet.tags;
+  editContent.value = entryBullet.content;
+  if (oldHours > 11) {
+    editHour.value = oldHours - 12;
+    editAMPM.value = 'PM';
+  } else {
+    editHour.value = oldHours;
+    editAMPM.value = 'AM';
+  }
+
+  // refresh tags
+  populateTagOptions(editTagSelector);
+
+  // Remove previously selected tags
+  while (editSelectedTags.firstChild) {
+    editSelectedTags.removeChild(editSelectedTags.firstChild);
+  }
+
+  // Add tags already on bullet
+  for (const tag of entryBullet.tags) {
+    addListTag(editSelectedTags, tag);
+  }
 
   editSave.onclick = () => {
     // elemEntry.parentNode.replaceChild(createBulletEntryElem(elemEntry.id), elemEntry);
+    // Get input fields
+    const newTitle = editTitle.value;
+    const newContent = editContent.value;
+    const newHours = getHour(editHour.value, editAMPM.value);
+    const newDate = new Date(entryBullet.date.getTime());
+    newDate.setHours(newHours);
+
+    // Get tags from selector list
+    const bulletTags = [];
+    const tagBoxes = editSelectedTags.querySelectorAll('div');
+    if (tagBoxes !== null) {
+      for (let i = 0; i < tagBoxes.length; i++) {
+        const curTag = tagBoxes[i].querySelector('li').innerHTML;
+        bulletTags.push(curTag);
+        tagBoxes[i].remove();
+      }
+    }
+
+    // Update fields in localStorage
+    const newBullet = crud.setAttributes(elemEntry.id, { title: newTitle, date: newDate, tags: bulletTags, content: newContent });
+
+    // Update bullet in schedule to reflect change in time
+    if (oldHours === newHours) {
+      timeSlots[oldHours].replaceChild(createBulletEntryElem(newBullet), elemEntry);
+    } else {
+      timeSlots[oldHours].removeChild(elemEntry);
+      timeSlots[newHours].appendChild(createBulletEntryElem(newBullet));
+    }
     $('#EditBullet').modal('toggle');
   };
 }
@@ -399,7 +503,7 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
   return elemButton;
 }
 
-/** Create a bullet entry element
+/** Create a entry element for a bullet to go on webpage
  *  @param {number} intBulletID - the bullet's numerical ID
  *  @return {li} a list (bullet) object
  */
@@ -480,6 +584,7 @@ function createTagElements(objTagDiv, objBullet) {
     objTagDiv.removeChild(objTagDiv.firstChild);
   }
 
+  //
   for (const tag of objBullet.tags) {
     const newTag = document.createElement('div');
     newTag.innerHTML = tag;
