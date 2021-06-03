@@ -10,7 +10,7 @@ const MAX_TAG_LENGTH = 15;
 
 const saveBulletBtn = document.getElementById('saveBullet');
 
-// creation inputs
+// Creation Modal Elements
 const addBtn = document.getElementById('addBulletBut');
 const titleInput = document.getElementById('title');
 const contentInput = document.querySelector('[name = "desc"]');
@@ -18,19 +18,20 @@ const hourInput = document.getElementById('hour');
 const AMPMInput = document.getElementById('AMPM');
 const tagSelector = document.getElementById('tags');
 const selectedTags = document.getElementById('bullet_tags');
-// output of creation for note bullets
+// Notespace Elements
+const noteBtn = document.getElementById('addNote');
 const noteOut = document.getElementById('noteSpace');
-
-// deletion stuff
+const notespace = document.getElementById('noteSpace');
+// Deletion Modal Elements
 const confirmBox = document.getElementById('deleteBullet');
 const confirmBtn = document.getElementById('okConfirm');
 
-// tag creation stuff
+// Tag Creation Modal Elements
 const tagFilterSelect = document.getElementById('selecttag');
 const tagCloseBtn = document.getElementById('saveTag');
 const tagName = document.getElementById('tagname');
 
-// edit inputs
+// Edit Modal Elements
 const editBullet = document.getElementById('EditBullet');
 const editSave = document.getElementById('editSaveAdd');
 const editTitle = document.getElementById('editTitle');
@@ -40,13 +41,9 @@ const editContent = document.querySelector('[name = "editDesc"]');
 const editTagSelector = document.getElementById('editTags');
 const editSelectedTags = document.getElementById('editBulletTags');
 
-// for the note space box
-const noteBtn = document.getElementById('addNote');
-
 // For creating the time table
 const timeSegments = document.getElementById('time_list');
 
-const createBulletButton = document.getElementById('addBullet');
 const timeSlots = [];
 
 // generate hash of the day we're in if we don't have one already
@@ -126,7 +123,7 @@ for (let i = 1; i < 12; i++) {
 }
 
 // on create bullet,
-createBulletButton.onclick = () => {
+addBtn.onclick = () => {
   $('#bujoSpace').modal('toggle');
   // clear settings for creation of new bullet
   titleInput.value = '';
@@ -227,6 +224,10 @@ function loadBullets(strTag = null) {
         const curBullet = createBulletEntryElem(bullet);
         timeSlots[hour].append(curBullet);
       }
+    } else {
+      // Add note bullets to the designated note writing space
+      const curBullet = createBulletEntryElem(bullet);
+      notespace.append(curBullet);
     }
   }
 }
@@ -522,7 +523,35 @@ function createBulletEntryElem(objBullet) {
     const checkbox = document.createElement('INPUT');
     checkbox.setAttribute('type', 'checkbox');
     bulletInfo.appendChild(checkbox);
+  } else if (objBullet.type === 'Note') {
+    // We only need the bullet's title to show
+    bulletTitle.innerHTML = objBullet.title;
+    bulletInfo.appendChild(bulletTitle);
+    bulletInfo.appendChild(btnDiv);
+
+    // Editing bullet functionality will be triggered by double clicking the bullet
+    bulletInfo.addEventListener('dblclick', function () {
+      editNote(newEntry);
+    });
+
+    // create and append delete button as that's all we need for notes
+    const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnDiv);
+    deleteButton.innerHTML = '<i class="fas fa-trash">';
+    deleteButton.addEventListener('click', () => {
+      deleteNote(newEntry);
+    });
+    // show delete button when hover over note
+    bulletInfo.addEventListener('mouseover', function() {
+      deleteButton.classList.remove('d-none');
+    });
+    bulletInfo.addEventListener('mouseleave', function() {
+      deleteButton.classList.add('d-none');
+    });
+
+    newEntry.appendChild(bulletInfo);
+    return newEntry;
   }
+
   console.log(objBullet.title);
   bulletTitle.innerHTML = objBullet.title;
   bulletTitle.onclick = () => {
@@ -573,6 +602,7 @@ function createBulletEntryElem(objBullet) {
 
   return newEntry;
 }
+
 /**
  * Adds all tags from a bullet as div objects into a div object for use
  * @param {div} objTagDiv HTML div element object to add tags to
@@ -611,7 +641,6 @@ function getHour(hour, AMPM) {
 noteBtn.addEventListener('click', function() {
   // Take things one at a time when creating note bullets
   noteBtn.disabled = true;
-  const notespace = document.getElementById('noteSpace');
 
   // Create a text input field to create bullet
   const note = document.createElement('input');
@@ -627,29 +656,162 @@ noteBtn.addEventListener('click', function() {
     noteBtn.disabled = false;
     notespace.removeChild(note);
     notespace.removeChild(cancel);
+    notespace.removeChild(save);
   });
 
-  // Create note bullet
-  let time = new Date();
-  let date = new Date();
-  note.addEventListener('keypress', function(e) {
-    // Hit enter to actually save the thing. Is it intuitive enough?
-    if (e.key === 'Enter') {
+  // Manual save button for those who want to double-check things
+  const save = document.createElement('button');
+  save.classList = 'btn btn-sm btn-primary';
+  save.innerHTML = 'Save';
+  note.insertAdjacentElement('afterend', save);
+  save.onclick = () => {
+    // This is basically like pressing the cancel button
+    if (note.value === '') {
+      notespace.removeChild(note);
+      notespace.removeChild(save);
+      notespace.removeChild(cancel);
+      noteBtn.disabled = false;
+      return;
+    } else {
+      // Get the hour when the note was created
+      const bulletType = 'Note';
+      let time = new Date().getHours();
+      let ampm = '';
+      if (time < '11') {
+        ampm = 'AM';
+      } else {
+        ampm = 'PM';
+      }
+      const hour = getHour(time, ampm);
+      console.log(hour);
+      const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
+
+      // Make the bullet
+      const newBullet = crud.createBullet(bulletType, note.value, bulletDate, [], contentInput.value);
+      const newElement = createBulletEntryElem(newBullet);
       time = 'T01:00';
-      date = pageDate + time;
-      const newBulletID = crud.createBullet(
-        { title: note.value, note: null },
-        'Note',
-        date,
-        null
-      );
-      // create the bullet element and destroy the input text + cancel button
-      notespace.append(createBulletEntryElem(newBulletID));
+      // create the bullet element and destroy the input form
+      notespace.append(newElement);
       notespace.removeChild(note);
       notespace.removeChild(cancel);
-
+      notespace.removeChild(save);
       // reenable the create note button
       noteBtn.disabled = false;
     }
+  }
+
+  // Alternatively, you can also hit enter key to save
+  note.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      // This basically works like canceling creation
+      if (note.value === '') {
+        notespace.removeChild(note);
+        notespace.removeChild(save);
+        notespace.removeChild(cancel);
+        noteBtn.disabled = false;
+        return;
+      } else {
+        // Get the current hour
+        const bulletType = 'Note';
+        let time = new Date().getHours();
+        let ampm = '';
+        if (time < '11') {
+          ampm = 'AM';
+        } else {
+          ampm = 'PM';
+        }
+        const hour = getHour(time, ampm);
+        console.log(hour);
+        const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
+  
+        // Make the bullet
+        const newBullet = crud.createBullet(bulletType, note.value, bulletDate, [], contentInput.value);
+        const newElement = createBulletEntryElem(newBullet);
+        time = 'T01:00';
+        // create the bullet element and destroy the input form
+        notespace.append(newElement);
+        notespace.removeChild(note);
+        notespace.removeChild(cancel);
+        notespace.removeChild(save);
+  
+        // reenable the create note button
+        noteBtn.disabled = false;
+      }
+    }
   });
 });
+
+/** Special Editing functionality for note bullets.
+ *  It will replace the selected bullet with the desired edits
+ *  @param {Note Bullet} elemEntry the entry we want to edit
+ *  @return null 
+ */
+function editNote(elemEntry) {
+  const entryBullet = crud.getBulletById(elemEntry.id);
+  let editInput = document.createElement('input');
+  editInput.type = 'text';
+  editInput.value = entryBullet.title
+  notespace.replaceChild(editInput, elemEntry);
+
+  // Create a cancel button for when you realize note-taking is stupid
+  const cancel = document.createElement('button');
+  cancel.classList = 'btn btn-sm btn-secondary';
+  cancel.innerHTML = 'Cancel';
+  editInput.insertAdjacentElement('afterend', cancel);
+  cancel.addEventListener('click', function() {
+    noteBtn.disabled = false;
+    notespace.replaceChild(elemEntry, editInput);
+    notespace.removeChild(cancel);
+    notespace.removeChild(save);
+  });
+
+  const save = document.createElement('button');
+  save.classList = 'btn btn-sm btn-primary';
+  save.innerHTML = 'Save';
+  editInput.insertAdjacentElement('afterend', save);
+  save.onclick = () => {
+    if (editInput.value === '') {
+      //delete blyat
+      crud.deleteBulletById(elemEntry.id);
+      notespace.removeChild(editInput);
+    } else {
+      // Get input fields
+      const newTitle = editInput.value;
+      // Update fields in localStorage
+      const newBullet = crud.setAttributes(elemEntry.id, { title: newTitle });
+      // Update bullet in schedule to reflect change in time
+      notespace.replaceChild(createBulletEntryElem(newBullet), editInput);
+    }
+    notespace.removeChild(cancel);
+    notespace.removeChild(save);
+  }
+
+  editInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      if (editInput.value === '') {
+        //delete blyat
+        crud.deleteBulletById(elemEntry.id);
+        notespace.removeChild(editInput);
+      } else {
+        // Get input fields
+        const newTitle = editInput.value;
+        // Update fields in localStorage
+        const newBullet = crud.setAttributes(elemEntry.id, { title: newTitle });
+
+        // Update bullet in schedule to reflect change in time
+        notespace.replaceChild(createBulletEntryElem(newBullet), editInput);
+      }
+      notespace.removeChild(cancel);
+      notespace.removeChild(save);
+    }
+  });
+}
+
+/** Deletes the note we want to the shadow realm
+ *  @param {bullet} elemEntry the bullet we want to delete
+ *  @return null
+*/
+function deleteNote(elemEntry) {
+    crud.deleteBulletById(elemEntry.id);
+    elemEntry.remove();
+}
