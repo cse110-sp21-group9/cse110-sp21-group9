@@ -145,7 +145,7 @@ addBtn.onclick = () => {
 // When user confirms bullet
 saveBulletBtn.onclick = () => {
   // Get info from fields
-  // Check if title is valid 
+  // Check if title is valid
   if (titleInput.value === '') {
     alert('Title required');
     return false;
@@ -301,7 +301,7 @@ function loadTags() {
   }
 }
 /* tag filter selector */
-tagFilterSelect.addEventListener('change', function () {
+tagFilterSelect.addEventListener('change', function() {
   if (tagFilterSelect.value === 'edit') {
     $('#tagcreation').modal('toggle');
   } else if (tagFilterSelect.value === 'ALL') {
@@ -313,14 +313,14 @@ tagFilterSelect.addEventListener('change', function () {
 });
 
 /* if user confirms making new tag, add it to list */
-tagCloseBtn.addEventListener('click', function () {
+tagCloseBtn.addEventListener('click', function() {
   // add tag's string to list
   $('#tagcreation').modal('toggle');
   // maybe add a confirmation box
 });
 
 /* add new tag when user presses enter on input */
-tagName.addEventListener('keypress', function (e) {
+tagName.addEventListener('keypress', function(e) {
   // Hit enter to actually save the thing. Is it intuitive enough?
   if (e.key === 'Enter') {
     // create the bullet element and destroy the input text + cancel button
@@ -390,7 +390,7 @@ function addListTag(objUList, strTag) {
  *  NOTE: Before saving the bullet, clicking this button shows the user that they will be adding the tag they selected
 */
 // const confirmTagBtn = document.getElementById('confirmTag');
-tagSelector.addEventListener('change', function () {
+tagSelector.addEventListener('change', function() {
   if (tagSelector.value !== 'Default') {
     // Don't allow user to add duplicate tags
     const currentTags = selectedTags.querySelectorAll('li');
@@ -406,7 +406,7 @@ tagSelector.addEventListener('change', function () {
   }
 });
 
-editTagSelector.addEventListener('change', function () {
+editTagSelector.addEventListener('change', function() {
   if (editTagSelector.value !== 'Default') {
     // Don't allow user to add duplicate tags
     const currentTags = editSelectedTags.querySelectorAll('li');
@@ -427,7 +427,7 @@ editTagSelector.addEventListener('change', function () {
 */
 function openDeleteDialog(elemEntry) {
   $('#deleteBullet').modal('toggle');
-  confirmBtn.onclick = function () {
+  confirmBtn.onclick = function() {
     crud.deleteBulletById(elemEntry.id);
     elemEntry.remove();
     $('#deleteBullet').modal('toggle');
@@ -564,7 +564,7 @@ function createBulletEntryElem(objBullet) {
   // Note bullet settings
   if (objBullet.type === 'Note') {
     // Editing bullet functionality will be triggered by double clicking the bullet
-    bulletInfo.addEventListener('dblclick', function () {
+    bulletInfo.addEventListener('dblclick', function() {
       editNote(newEntry);
     });
 
@@ -576,10 +576,10 @@ function createBulletEntryElem(objBullet) {
       deleteNote(newEntry);
     });
     // show delete button when hover over note
-    bulletInfo.addEventListener('mouseover', function () {
+    bulletInfo.addEventListener('mouseover', function() {
       deleteButton.classList.remove('d-none');
     });
-    bulletInfo.addEventListener('mouseleave', function () {
+    bulletInfo.addEventListener('mouseleave', function() {
       deleteButton.classList.add('d-none');
     });
     // Event/Task bullet settings
@@ -599,11 +599,11 @@ function createBulletEntryElem(objBullet) {
     });
 
     // show edit button when hover over event
-    bulletInfo.addEventListener('mouseover', function () {
+    bulletInfo.addEventListener('mouseover', function() {
       // bulletInfo.style.backgroundColor = "var(--nav-color-hover)";
       editButton.classList.remove('d-none');
     });
-    bulletInfo.addEventListener('mouseleave', function () {
+    bulletInfo.addEventListener('mouseleave', function() {
       editButton.classList.add('d-none');
     });
 
@@ -616,10 +616,10 @@ function createBulletEntryElem(objBullet) {
     });
 
     // show delete button when hover over event
-    bulletInfo.addEventListener('mouseover', function () {
+    bulletInfo.addEventListener('mouseover', function() {
       deleteButton.classList.remove('d-none');
     });
-    bulletInfo.addEventListener('mouseleave', function () {
+    bulletInfo.addEventListener('mouseleave', function() {
       deleteButton.classList.add('d-none');
     });
     bulletTags.id = objBullet.ID + '_tags';
@@ -669,7 +669,7 @@ function getHour(hour, AMPM) {
 
 // Open option to create a note bullet on the note space
 // if you click this button
-noteBtn.addEventListener('click', function () {
+noteBtn.addEventListener('click', function() {
   // Take things one at a time when creating note bullets
   noteBtn.disabled = true;
 
@@ -689,7 +689,7 @@ noteBtn.addEventListener('click', function () {
   cancel.classList = 'btn btn-sm btn-secondary';
   cancel.innerHTML = 'Cancel';
   noteDiv.appendChild(cancel);
-  cancel.addEventListener('click', function () {
+  cancel.addEventListener('click', function() {
     noteBtn.disabled = false;
     notespace.removeChild(noteDiv);
   });
@@ -715,7 +715,7 @@ noteBtn.addEventListener('click', function () {
   };
 
   // Alternatively, you can also hit enter key to save
-  note.addEventListener('keypress', function (e) {
+  note.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
       // This is basically like pressing the cancel button
       if (note.value !== '') {
@@ -755,7 +755,7 @@ function editNote(elemEntry) {
   cancel.classList = 'btn btn-sm btn-secondary';
   cancel.innerHTML = 'Cancel';
   editInput.insertAdjacentElement('afterend', cancel);
-  cancel.addEventListener('click', function () {
+  cancel.addEventListener('click', function() {
     noteBtn.disabled = false;
     notespace.replaceChild(elemEntry, editDiv);
   });
@@ -779,7 +779,7 @@ function editNote(elemEntry) {
     }
   };
 
-  editInput.addEventListener('keypress', function (e) {
+  editInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
       if (editInput.value === '') {
         // delete blyat
