@@ -5,6 +5,7 @@
   --accent-color1: #c7c7cc; 
   --nav-color: #fcfcfc; /* drop down box color */
   --nav-color-hover: #f2f2f7;
+  --modal-color: white;
 }  
 
 /* colors for dark-theme */
@@ -14,6 +15,8 @@
   --accent-color1: #8e8e93;
   --nav-color: #2c2c2e;
   --nav-color-hover: #48484a;
+  --modal-color: #2c2c2e;
+  --modal-color-background: rgba(199, 199, 204, 0.3);
 }
 
 /* styling for overall page */
@@ -24,6 +27,20 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
+  background-color: var(--background-color);
+}
+
+/* styling for modal dark mode*/
+.modal-content {
+  background-color: var(--modal-color);
+  color: var(--text-color);
+}
+#settingsModal, #bujoSpace, #viewBullet #tagcreation #deleteBullet #EditBullet {
+  background-color: var(--modal-color-background);
+}
+textarea, input, select {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 /* Styling for dropup menu */
@@ -58,7 +75,6 @@ body .mySidebar .dropdown .dropdown-menu li a:hover{
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: 0 auto;
-  background-color: white;
   gap: 20px;
   /* Probably put in calendar on the top two rows of the third column 
    and then have notespace on the bottom two rows */
@@ -117,6 +133,8 @@ header {
   padding: 20px;
   width: 95%;
   height: 100vh; 
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 
@@ -129,7 +147,8 @@ header {
   vertical-align: top;
   /* grid-area: ; */
   position: relative;
-  background-color: rgb(255, 255, 255);
+  /* background-color: var(--accent-color1); */
+  background-color: #29292c;
   margin: 4vw;
   border-radius: 5px;
   border: 1px solid var(--text-color);
@@ -139,13 +158,14 @@ header {
   overflow-y: hidden;
 }
 
+
 #date_container {
   margin: 1px;
   border-bottom: 1px solid var(--text-color);
   display: grid;
   grid-template-columns: 50% 25% 25%;
   grid-template-rows: 50% 50%;
-  background-color: white;
+  background-color: var(--background-color);
   gap: 1%;
   /* Probably put in calendar on the top two rows of the third column 
    and then have notespace on the bottom two rows */
@@ -181,6 +201,7 @@ header {
 }
 
 #time_list {
+  background-color: var(--background-color);
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -193,7 +214,7 @@ header {
   border: 1px solid var(--text-color);
   border-left: 5px solid var(--text-color);
   border-radius: 4px;
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
   margin: 5px;
   height: auto;
   min-height: 5em;
@@ -231,7 +252,7 @@ header {
 #undated_notes {
   vertical-align: top;
   position: relative;
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
   width: 40vw;
   height: 46%;
   margin: 4vw;
@@ -285,6 +306,7 @@ p {
     height: 100%;
     text-align: center;
     font-family: Arial, sans-serif;
+    background-color: var(--background-color);
 }
 
 td{

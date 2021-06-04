@@ -14,10 +14,13 @@
 	<script type="module" src="day.js"></script>
 	<script type="module" src="../../../backend/crudFunctions.js"></script>
 	<script type="module" src="../element-mini-calendar/mini-calendar.js"></script>
+	<!-- <script type="module" src=".sidebar.js"></script> -->
 
 	<!-- Nunito Font -->
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+
+	<script type="module" src="/source/frontend/app/sidebar/sidebar.js"></script>
 
 </head>
 
@@ -26,32 +29,60 @@
 		<!-- Source: https://getbootstrap.com/docs/5.0/examples/sidebars/# -->
 		<div class="mySidebar">
 			<div class="d-flex flex-column flex-shrink-0 bg-light"
-				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;">
+				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;" id="navbar">
 				<a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
 					data-bs-placement="right" data-bs-original-title="Icon-only">
-					<span class="visually-hidden center-block"><img src="../../assets/nav-logo.svg" /></span>
+					<span class="visually-hidden center-block"><img id="logo" src="../../assets/nav-logo.svg" /></span>
 				</a>
 				<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
 					<li class="nav-item">
-						<a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="Home"
-							data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+						<a href="/source/frontend/app/page-day/day.html" class="nav-link active py-3 border-bottom"
+							aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right"
+							data-bs-original-title="Home">
 							<i class="fas fa-home fa-2x"></i>
 						</a>
 					</li>
 					<li>
 						<a href="/source/frontend/app/page-calendar-monthly/calendar.html"
-							class="nav-link  py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
+							class="nav-link py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
 							data-bs-placement="right" data-bs-original-title="Month">
 							<i class="fas fa-calendar-alt fa-2x"></i>
 						</a>
 					</li>
 					<li>
-						<a href="/source/frontend/app/page-settings/page.html" class="nav-link py-3 border-bottom" title="Settings" data-bs-toggle="tooltip"
-							data-bs-placement="right" data-bs-original-title="Settings">
-							<i class="fas fa-user-cog fa-2x"></i>
+						<a href="#" id="settingsNav" class="nav-link py-3 border-bottom" title="Settings"
+							data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Settings">
+							<i class="fas fa-cog fa-2x"></i>
 						</a>
 					</li>
 				</ul>
+			</div>
+		</div>
+
+		<!-- Settings Modal-->
+		<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Settings</h4>
+					</div>
+					<div class="modal-body">
+						<input type="file" id="input" multiple>
+						<!-- <label for="input">Upload</label> -->
+
+						<button type="button" id="exportData">Download</button>
+						<br><br>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="customSwitch1">
+							<label class="custom-control-label" for="customSwitch1">Toggle Dark Mode</label>
+						</div>
+						<br>
+						<form method="dialog">
+							<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -62,8 +93,9 @@
 					<div id="date_container">
 						<h3 id="week_day">Thursday</h3>
 						<p id="date">april 1st</p>
-						<button class="btn-sm btn-primary circleButts" id="addBullet"><i
-							class="fas fa-plus"></i></button>
+
+						<button class="btn btn-primary" id="addBullet"><i
+								class="fas fa-plus"></i> Add Bullet</button>
 						<label for="selecttag">Filter by Tag: </label>
 						<select id="selecttag">
 							<option value='ALL'>All</option>

@@ -88,11 +88,9 @@ exportData.addEventListener('click', function() {
 getFiles.addEventListener('change', function() {
   function read(callback, file) {
     const reader = new FileReader();
-
     reader.onload = function() {
       callback(reader.result);
     };
-
     reader.readAsText(file);
   }
 
@@ -122,5 +120,3 @@ modeChange.addEventListener('click', function() {
     modeChange.setAttribute('data-theme', 'dark');
   }
 });
-
-/* Light/Dark Mode */
