@@ -170,9 +170,9 @@ header {
   grid-row-start: 2;
   align-self: center;
 }
-
-#createtag {
-  grid-row-start: 2;
+/* style tag input */ 
+#selecttag {
+  
 }
 
 #widgets_container {
@@ -238,6 +238,18 @@ header {
   border-radius: 15px;
   border: 1px solid var(--text-color);
   margin: 20px;
+}
+
+#addNote {
+	float: right;
+	margin-right: 1.5em;
+}
+
+#noteSpace {
+  margin: 5px;
+	margin-left: 20px;
+	height: auto;
+	padding: 5px;
 }
 
 .aspect-ratio-box-inside {
@@ -333,16 +345,40 @@ td.other-month{
     z-index: -1;
     content: '';
 }
-
 /* Style bullet entries */
-.bulletTag {
-  border-radius: 5;
-  border-width: 1px;
+.bulletInfo {
+	margin: 5px; 
+}
+
+.bulletInfo:hover {
+	margin: 5px; 
+	background-color: rgba(161, 157, 157, 0.075); 
+	border-radius: 10px; 
+	padding: 5px;
+}
+
+/* Style edit/delete buttons */
+.bulletBtns {
+	float: right;
+}
+
+/* Style task checkboxes */ 
+.bulletInfo > input {
+	margin-right: 5px;
 }
 
 /* Style tags in entries */
 .tag {
-  color: red;
+  color: #3399ff;
+	font-size: 12px;
+	border: 1px solid #3399ff;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+/* spacing between tags */ 
+.tag + .tag {
+	margin-left: 0.5em;
 }
 
 /* Style tag bar in modal */

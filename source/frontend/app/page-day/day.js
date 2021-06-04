@@ -11,7 +11,7 @@ const MAX_TAG_LENGTH = 15;
 const saveBulletBtn = document.getElementById('saveBullet');
 
 // Creation Modal Elements
-const addBtn = document.getElementById('addBulletBut');
+const addBtn = document.getElementById('addBullet');
 const titleInput = document.getElementById('title');
 const contentInput = document.querySelector('[name = "desc"]');
 const hourInput = document.getElementById('hour');
@@ -167,10 +167,11 @@ saveBulletBtn.onclick = () => {
 };
 
 /** Displays the relevant information pertaining to the given bullet in view Modal
- * @param {bullet} curBullet the bullet we want to display information about
+ * @param {bullet} elemEntry the bullet element we want to display information about
  * @return null
  */
-function showBulletInfo(curBullet) {
+function showBulletInfo(elemEntry) {
+	const curBullet = crud.getBulletById(elemEntry.id);
   const titleBar = document.getElementById('viewtitle');
   const dateBar = document.getElementById('viewdate');
   const timeBar = document.getElementById('viewtime');
@@ -182,7 +183,7 @@ function showBulletInfo(curBullet) {
   // Set bullet info on view modal
   titleBar.innerHTML = curBullet.title;
   dateBar.innerHTML = monthName + ' ' + pageDate.getDay() + ',' + pageDate.getFullYear();
-  timeBar.innerHTML = pageDate.getHours() + ':00';
+  timeBar.innerHTML = curBullet.date.getHours() + ':00';
   contentBar.innerHTML = curBullet.content;
   typeBar.innerHTML = curBullet.type;
   createTagElements(tagBar, curBullet);
@@ -191,10 +192,10 @@ function showBulletInfo(curBullet) {
   const editButton = document.getElementById('editButton');
   const deleteButton = document.getElementById('deleteButton');
   editButton.onclick = () => {
-    openEditDialog(curBullet);
+    openEditDialog(elemEntry);
   };
   deleteButton.onclick = () => {
-    openDeleteDialog(curBullet);
+    openDeleteDialog(elemEntry);
   };
 }
 
@@ -481,6 +482,10 @@ function openEditDialog(elemEntry) {
       timeSlots[oldHours].removeChild(elemEntry);
       timeSlots[newHours].appendChild(createBulletEntryElem(newBullet));
     }
+
+		// Update view modal if open
+		showBulletInfo(document.getElementById(elemEntry.id));
+
     $('#EditBullet').modal('toggle');
   };
 }
@@ -514,29 +519,36 @@ function createBulletEntryElem(objBullet) {
   const bulletTags = document.createElement('div');
   const bulletTitle = document.createElement('span');
 
-  const btnDiv = document.createElement('div'); // div for both edit and delete buttons
+  const btnSpan = document.createElement('span'); // div for both edit and delete buttons
+	btnSpan.className = 'bulletBtns';
 
   newEntry.id = objBullet.ID;
-  bulletInfo.style = 'margin: 10px; padding: 5px;';
+  bulletInfo.className = 'bulletInfo';
+
+	bulletTitle.innerHTML = objBullet.title;
+	bulletTitle.id = objBullet.ID + '_title';
 
   if (objBullet.type === 'Task') {
     const checkbox = document.createElement('INPUT');
     checkbox.setAttribute('type', 'checkbox');
     bulletInfo.appendChild(checkbox);
-  } else if (objBullet.type === 'Note') {
-    // We only need the bullet's title to show
-    bulletTitle.innerHTML = objBullet.title;
-    bulletInfo.appendChild(bulletTitle);
-    bulletInfo.appendChild(btnDiv);
+  } 
 
+	// Only show bullet title on all bullets 
+	bulletInfo.appendChild(bulletTitle);
+	bulletInfo.appendChild(btnSpan);
+
+	// Note bullet settings 
+	if (objBullet.type === 'Note') {
     // Editing bullet functionality will be triggered by double clicking the bullet
     bulletInfo.addEventListener('dblclick', function() {
       editNote(newEntry);
     });
 
     // create and append delete button as that's all we need for notes
-    const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnDiv);
+    const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnSpan);
     deleteButton.innerHTML = '<i class="fas fa-trash">';
+		deleteButton.id = objBullet.ID + "_delete";
     deleteButton.addEventListener('click', () => {
       deleteNote(newEntry);
     });
@@ -547,60 +559,56 @@ function createBulletEntryElem(objBullet) {
     bulletInfo.addEventListener('mouseleave', function() {
       deleteButton.classList.add('d-none');
     });
+	// Event/Task bullet settings 
+  } else {
+		// Bring up bullet view modal on title click
+		bulletTitle.onclick = () => {
+			$('#viewBullet').modal('toggle');
+			showBulletInfo(newEntry);
+		};
+	
+		// Create and append edit button
+		const editButton = appendButton('', '', 'btn-sm btn-primary circleButts d-none', btnSpan);
+		editButton.innerHTML = '<i class="fas fa-pen"></i>';
+		editButton.id = objBullet.ID + "_edit";
+		editButton.addEventListener('click', () => {
+			openEditDialog(newEntry);
+		});
+	
+		// show edit button when hover over event
+		bulletInfo.addEventListener('mouseover', function() {
+			// bulletInfo.style.backgroundColor = "var(--nav-color-hover)";
+			editButton.classList.remove('d-none');
+		});
+		bulletInfo.addEventListener('mouseleave', function() {
+			editButton.classList.add('d-none');
+		});
+	
+		// create and append delete button
+		const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnSpan);
+		deleteButton.innerHTML = '<i class="fas fa-trash">';
+		deleteButton.id = objBullet.ID + "_delete";
+		deleteButton.addEventListener('click', () => {
+			openDeleteDialog(newEntry);
+		});
 
-    newEntry.appendChild(bulletInfo);
-    return newEntry;
-  }
+		// show delete button when hover over event
+		bulletInfo.addEventListener('mouseover', function() {
+			deleteButton.classList.remove('d-none');
+		});
+		bulletInfo.addEventListener('mouseleave', function() {
+			deleteButton.classList.add('d-none');
+		});
+		bulletTags.id = objBullet.ID + '_tags'
 
-  console.log(objBullet.title);
-  bulletTitle.innerHTML = objBullet.title;
-  bulletTitle.onclick = () => {
-    $('#viewBullet').modal('toggle');
-    showBulletInfo(objBullet);
-  };
+		// create and append tags div
+		createTagElements(bulletTags, objBullet);
+		bulletTags.classList.add('bulletTags');
+		bulletInfo.appendChild(bulletTags);
+	}
 
-  bulletInfo.appendChild(bulletTitle);
-
-  // create and append edit button
-  bulletInfo.appendChild(btnDiv);
-
-  const editButton = appendButton('', '', 'btn-sm btn-primary circleButts d-none', btnDiv);
-  editButton.innerHTML = '<i class="fas fa-pen"></i>';
-  editButton.addEventListener('click', () => {
-    openEditDialog(newEntry);
-  });
-
-  // show delete button when hover over event
-  bulletInfo.addEventListener('mouseover', function() {
-    bulletInfo.style = 'margin: 10px; padding: 5px; background-color: rgba(161, 157, 157, 0.075); border-radius: 10px; display:flex; justify-content: space-between;';
-    // bulletInfo.style.backgroundColor = "var(--nav-color-hover)";
-    editButton.classList.remove('d-none');
-  });
-  bulletInfo.addEventListener('mouseleave', function() {
-    bulletInfo.style = 'margin: 10px; padding: 5px;';
-    editButton.classList.add('d-none');
-  });
-
-  // create and append delete button
-  const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnDiv);
-  deleteButton.innerHTML = '<i class="fas fa-trash">';
-  deleteButton.addEventListener('click', () => {
-    openDeleteDialog(newEntry);
-  });
-  // show delete button when hover over event
-  bulletInfo.addEventListener('mouseover', function() {
-    deleteButton.classList.remove('d-none');
-  });
-  bulletInfo.addEventListener('mouseleave', function() {
-    deleteButton.classList.add('d-none');
-  });
-  createTagElements(bulletTags, objBullet);
-  // Can set class of bulletTags here for styling
-  bulletTags.classList.add('bulletTag');
-  bulletInfo.appendChild(bulletTags);
-  newEntry.appendChild(bulletInfo);
-
-  return newEntry;
+	newEntry.appendChild(bulletInfo);
+	return newEntry;
 }
 
 /**
@@ -616,7 +624,7 @@ function createTagElements(objTagDiv, objBullet) {
 
   //
   for (const tag of objBullet.tags) {
-    const newTag = document.createElement('div');
+    const newTag = document.createElement('span');
     newTag.innerHTML = tag;
     // set class of tag div for styling of individual tag elements
     newTag.classList.add('tag');
@@ -642,21 +650,24 @@ noteBtn.addEventListener('click', function() {
   // Take things one at a time when creating note bullets
   noteBtn.disabled = true;
 
+	// Create a div to hold input elements
+	const noteDiv = document.createElement('div');
+	noteDiv.id = 'note_input'; 
+	notespace.appendChild(noteDiv); 
+
   // Create a text input field to create bullet
   const note = document.createElement('input');
   note.type = 'text';
-  notespace.appendChild(note);
+  noteDiv.appendChild(note);
 
   // Create a cancel button for when you realize note-taking is stupid
   const cancel = document.createElement('button');
   cancel.classList = 'btn btn-sm btn-secondary';
   cancel.innerHTML = 'Cancel';
-  notespace.appendChild(cancel);
+  noteDiv.appendChild(cancel);
   cancel.addEventListener('click', function() {
     noteBtn.disabled = false;
-    notespace.removeChild(note);
-    notespace.removeChild(cancel);
-    notespace.removeChild(save);
+    notespace.removeChild(noteDiv);
   });
 
   // Manual save button for those who want to double-check things
@@ -666,75 +677,34 @@ noteBtn.addEventListener('click', function() {
   note.insertAdjacentElement('afterend', save);
   save.onclick = () => {
     // This is basically like pressing the cancel button
-    if (note.value === '') {
-      notespace.removeChild(note);
-      notespace.removeChild(save);
-      notespace.removeChild(cancel);
-      noteBtn.disabled = false;
-    } else {
-      // Get the hour when the note was created
-      const bulletType = 'Note';
-      let time = new Date().getHours();
-      let ampm = '';
-      if (time < '11') {
-        ampm = 'AM';
-      } else {
-        ampm = 'PM';
-      }
-      const hour = getHour(time, ampm);
-      console.log(hour);
-      const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
+    if (note.value !== '') {
+			// Make the bullet
+			const bulletType = 'Note'; 
+			const newBullet = crud.createBullet(bulletType, note.value, pageDate, [], '');
+			const newElement = createBulletEntryElem(newBullet);
 
-      // Make the bullet
-      const newBullet = crud.createBullet(bulletType, note.value, bulletDate, [], contentInput.value);
-      const newElement = createBulletEntryElem(newBullet);
-      time = 'T01:00';
-      // create the bullet element and destroy the input form
-      notespace.append(newElement);
-      notespace.removeChild(note);
-      notespace.removeChild(cancel);
-      notespace.removeChild(save);
-      // reenable the create note button
-      noteBtn.disabled = false;
+			// create the bullet element and destroy the input form
+			notespace.append(newElement);
     }
+		notespace.removeChild(noteDiv);
+		noteBtn.disabled = false;
   };
 
   // Alternatively, you can also hit enter key to save
   note.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-      // This basically works like canceling creation
-      if (note.value === '') {
-        notespace.removeChild(note);
-        notespace.removeChild(save);
-        notespace.removeChild(cancel);
-        noteBtn.disabled = false;
-      } else {
-        // Get the current hour
-        const bulletType = 'Note';
-        let time = new Date().getHours();
-        let ampm = '';
-        if (time < '11') {
-          ampm = 'AM';
-        } else {
-          ampm = 'PM';
-        }
-        const hour = getHour(time, ampm);
-        console.log(hour);
-        const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
+			// This is basically like pressing the cancel button
+			if (note.value !== '') {
+				// Make the bullet
+				const bulletType = 'Note'; 
+				const newBullet = crud.createBullet(bulletType, note.value, pageDate, [], '');
+				const newElement = createBulletEntryElem(newBullet);
 
-        // Make the bullet
-        const newBullet = crud.createBullet(bulletType, note.value, bulletDate, [], contentInput.value);
-        const newElement = createBulletEntryElem(newBullet);
-        time = 'T01:00';
-        // create the bullet element and destroy the input form
-        notespace.append(newElement);
-        notespace.removeChild(note);
-        notespace.removeChild(cancel);
-        notespace.removeChild(save);
-
-        // reenable the create note button
-        noteBtn.disabled = false;
-      }
+				// create the bullet element and destroy the input form
+				notespace.append(newElement);
+			}
+			notespace.removeChild(noteDiv);
+			noteBtn.disabled = false;
     }
   });
 });
@@ -746,10 +716,14 @@ noteBtn.addEventListener('click', function() {
  */
 function editNote(elemEntry) {
   const entryBullet = crud.getBulletById(elemEntry.id);
+	const editDiv = document.createElement('div'); 
   const editInput = document.createElement('input');
+
   editInput.type = 'text';
   editInput.value = entryBullet.title;
-  notespace.replaceChild(editInput, elemEntry);
+	editDiv.appendChild(editInput); 
+	editDiv.id = entryBullet.ID + '_note_edit';
+  notespace.replaceChild(editDiv, elemEntry);
 
   // Create a cancel button for when you realize note-taking is stupid
   const cancel = document.createElement('button');
@@ -758,9 +732,7 @@ function editNote(elemEntry) {
   editInput.insertAdjacentElement('afterend', cancel);
   cancel.addEventListener('click', function() {
     noteBtn.disabled = false;
-    notespace.replaceChild(elemEntry, editInput);
-    notespace.removeChild(cancel);
-    notespace.removeChild(save);
+    notespace.replaceChild(elemEntry, editDiv);
   });
 
   const save = document.createElement('button');
@@ -771,17 +743,15 @@ function editNote(elemEntry) {
     if (editInput.value === '') {
       // delete blyat
       crud.deleteBulletById(elemEntry.id);
-      notespace.removeChild(editInput);
+      notespace.removeChild(editDiv);
     } else {
       // Get input fields
       const newTitle = editInput.value;
       // Update fields in localStorage
       const newBullet = crud.setAttributes(elemEntry.id, { title: newTitle });
       // Update bullet in schedule to reflect change in time
-      notespace.replaceChild(createBulletEntryElem(newBullet), editInput);
+      notespace.replaceChild(createBulletEntryElem(newBullet), editDiv);
     }
-    notespace.removeChild(cancel);
-    notespace.removeChild(save);
   };
 
   editInput.addEventListener('keypress', function(e) {
@@ -797,10 +767,8 @@ function editNote(elemEntry) {
         const newBullet = crud.setAttributes(elemEntry.id, { title: newTitle });
 
         // Update bullet in schedule to reflect change in time
-        notespace.replaceChild(createBulletEntryElem(newBullet), editInput);
+        notespace.replaceChild(createBulletEntryElem(newBullet), editDiv);
       }
-      notespace.removeChild(cancel);
-      notespace.removeChild(save);
     }
   });
 }
