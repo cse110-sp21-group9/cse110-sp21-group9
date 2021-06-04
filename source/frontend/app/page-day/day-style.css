@@ -189,6 +189,7 @@ header {
   grid-row-start: 2;
   align-self: center;
 }
+
 /* style tag input */ 
 #selecttag {
   margin-right: 10%
@@ -254,16 +255,32 @@ header {
   /* background-color: var(--background-color); */
   width: 40vw;
   height: 46%;
-  margin: 4vw;
+  margin: 20px;
   border-radius: 15px;
   border: 1px solid var(--text-color);
-  margin: 20px;
-	overflow: auto;
 }
 
 #addNote {
-	float: right;
-	margin-right: 1.5em;
+  grid-column-start: 2;
+  align-self: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#note_header {
+  display: grid;
+  gap: 1%;
+  grid-template-columns: 75% 25%; 
+}
+
+#note_title {
+  grid-column-start: 1;
+  padding-left: 10px;
+}
+
+#note_container {
+  height: 85%;
+  overflow: auto; 
 }
 
 #noteSpace {
