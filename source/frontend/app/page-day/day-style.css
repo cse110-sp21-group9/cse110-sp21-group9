@@ -23,7 +23,6 @@
 body {
   font-family: 'Nunito Sans', sans-serif;
   background-color: var(--background-color);
-  grid-area: content;
   margin: 0;
   width: 100%;
   height: 100%;
@@ -58,12 +57,11 @@ body .mySidebar .dropdown .dropdown-menu li a:hover{
 
 /* The sidebar menu */
 .mySidebar {
-  height: 100%;
+  height: 100vh;
   grid-area: sidebar;
-  position: fixed;
+  position: sticky;
   background-color: var(--nav-color);
-  width: 0;
-  position: fixed;
+  width: auto;
   /* display: flex; */
   z-index: 1;
   top: 0;
@@ -73,8 +71,8 @@ body .mySidebar .dropdown .dropdown-menu li a:hover{
 /* CSS Grid */
 .main-container {
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: 0 auto;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr;
   gap: 20px;
   /* Probably put in calendar on the top two rows of the third column 
    and then have notespace on the bottom two rows */
@@ -82,8 +80,7 @@ body .mySidebar .dropdown .dropdown-menu li a:hover{
 
    /* removed main temporarily*/
   grid-template-areas: 
-    'sidebar dayview mini-cal'
-    'sidebar dayview notespace';
+    'sidebar content'
 }
 
 /*  CSS Grid End*/
@@ -131,16 +128,18 @@ header {
   transition: margin-left .5s;
   /* If you want a transition effect */
   padding: 20px;
-  width: 95%;
+	width: 100%;
   height: 100vh; 
   background-color: var(--background-color);
   color: var(--text-color);
+	margin: 0 auto;
 }
 
 
-#main_container {
+#content_container {
   display: flex;
-  max-height: 100vh;
+  max-height: 90vh;
+	max-width: auto;
 }
 
 #calender_container {
@@ -149,12 +148,12 @@ header {
   position: relative;
   /* background-color: var(--accent-color1); */
   background-color: #29292c;
-  margin: 4vw;
+  margin: 5%;
   border-radius: 5px;
   border: 1px solid var(--text-color);
   margin: 20px;
-  width: 55vw;
-  height: 95vh;
+  width: 55%;
+  height: auto;
   overflow-y: hidden;
 }
 
@@ -192,7 +191,7 @@ header {
 }
 /* style tag input */ 
 #selecttag {
-  
+  margin-right: 10%
 }
 
 #widgets_container {
@@ -259,6 +258,7 @@ header {
   border-radius: 15px;
   border: 1px solid var(--text-color);
   margin: 20px;
+	overflow: auto;
 }
 
 #addNote {

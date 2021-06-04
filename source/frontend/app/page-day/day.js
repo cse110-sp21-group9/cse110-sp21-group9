@@ -206,11 +206,18 @@ function showBulletInfo(elemEntry) {
  */
 // load initial bullets from local storage
 function loadBullets(strTag = null) {
+	// Clear bullet schedule 
   for (const timeSlot of timeSlots) {
     while (timeSlot.firstChild) {
       timeSlot.removeChild(timeSlot.firstChild);
     }
   }
+
+	// Clear note space
+	while(notespace.firstChild) {
+		notespace.removeChild(notespace.firstChild); 
+	}
+
   // Only load bullets from this page's day
   const bulletsToLoad = crud.getBulletsByDateRange(pageDate, new Date(
     pageDate.getFullYear(),
@@ -659,6 +666,7 @@ noteBtn.addEventListener('click', function() {
   const note = document.createElement('input');
   note.type = 'text';
   noteDiv.appendChild(note);
+	note.focus(); 
 
   // Create a cancel button for when you realize note-taking is stupid
   const cancel = document.createElement('button');
@@ -724,6 +732,7 @@ function editNote(elemEntry) {
   editDiv.appendChild(editInput);
   editDiv.id = entryBullet.ID + '_note_edit';
   notespace.replaceChild(editDiv, elemEntry);
+	editInput.focus(); 
 
   // Create a cancel button for when you realize note-taking is stupid
   const cancel = document.createElement('button');
