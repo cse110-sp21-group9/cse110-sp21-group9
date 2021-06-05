@@ -83,10 +83,9 @@ for (let i = 0; i < 24; i++) {
 loadBullets();
 
 function makeTimeSlotComponent(intTime) {
-  let stringTime = String(intTime);
-  if (intTime < 10) stringTime = '0' + stringTime;
+  let stringTime = getTime(intTime);
   const timeSlot = document.createElement('div');
-  const timeText = document.createTextNode(`${stringTime}:00`);
+  const timeText = document.createTextNode(stringTime);
   const bulletList = document.createElement('ul');
   bulletList.id = 'time_slot' + String(intTime);
 
@@ -192,7 +191,7 @@ function showBulletInfo(elemEntry) {
   // Set bullet info on view modal
   titleBar.innerHTML = curBullet.title;
   dateBar.innerHTML = monthName + ' ' + pageDate.getDay() + ',' + pageDate.getFullYear();
-  timeBar.innerHTML = curBullet.date.getHours() + ':00';
+  timeBar.innerHTML = getTime(curBullet.date.getHours());
   contentBar.innerHTML = curBullet.content;
   typeBar.innerHTML = curBullet.type;
   createTagElements(tagBar, curBullet);
@@ -303,20 +302,22 @@ function loadTags() {
 /* tag filter selector */
 tagFilterSelect.addEventListener('change', function() {
   if (tagFilterSelect.value === 'edit') {
+		// Clear selector, tagname input
+		tagFilterSelect.value = '';
+		tagName.value='';
     $('#tagcreation').modal('toggle');
   } else if (tagFilterSelect.value === 'ALL') {
     loadBullets();
   } else if (tagFilterSelect.value !== '') {
     loadBullets(tagFilterSelect.value);
   }
-  tagFilterSelect.value = '';
+  // tagFilterSelect.value = '';
 });
 
 /* if user confirms making new tag, add it to list */
 tagCloseBtn.addEventListener('click', function() {
   // add tag's string to list
   $('#tagcreation').modal('toggle');
-  // maybe add a confirmation box
 });
 
 /* add new tag when user presses enter on input */
@@ -667,6 +668,24 @@ function getHour(hour, AMPM) {
   return Number(hour);
 }
 
+/**
+ * Get the time string in AMPM time based on hour in military time
+ * @param {Number} hour hour in military time
+ * @return time string containing hour in AMPM time (e.g. 10 -> 10:00 AM)
+ */
+function getTime(hour) {
+	let time = ''; 
+	if (hour === 0) {
+		time = "12:00 AM"
+	} else if (hour === 12) {
+		time = "12:00 PM"	
+	} else if (hour > 11) {
+		time += (hour - 12) + ':00 PM';
+  } else {
+    time += hour + ':00 AM';
+  }
+	return time; 
+}
 // Open option to create a note bullet on the note space
 // if you click this button
 noteBtn.addEventListener('click', function() {
