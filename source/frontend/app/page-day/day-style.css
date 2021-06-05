@@ -390,6 +390,7 @@ td.other-month{
 }
 
 .bulletInfo:hover {
+  cursor: pointer;
 	margin: 5px; 
 	background-color: rgba(161, 157, 157, 0.075); 
 	border-radius: 10px; 
@@ -423,4 +424,17 @@ td.other-month{
 /* Style tag bar in modal */
 .tagBar {
   background-color: yellow;
+}
+#titleDateShowCase {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+#tagShowCase {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }

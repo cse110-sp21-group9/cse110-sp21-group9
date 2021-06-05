@@ -197,14 +197,6 @@ function showBulletInfo(elemEntry) {
   createTagElements(tagBar, curBullet);
   // Can set class of tagBar here for styling
   tagBar.classList.add('tagBar');
-  const editButton = document.getElementById('editButton');
-  const deleteButton = document.getElementById('deleteButton');
-  editButton.onclick = () => {
-    openEditDialog(elemEntry);
-  };
-  deleteButton.onclick = () => {
-    openDeleteDialog(elemEntry);
-  };
 }
 
 /**
