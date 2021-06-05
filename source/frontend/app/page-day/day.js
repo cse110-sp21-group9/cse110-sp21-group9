@@ -83,7 +83,7 @@ for (let i = 0; i < 24; i++) {
 loadBullets();
 
 function makeTimeSlotComponent(intTime) {
-  let stringTime = getTime(intTime);
+  const stringTime = getTime(intTime);
   const timeSlot = document.createElement('div');
   const timeText = document.createTextNode(stringTime);
   const bulletList = document.createElement('ul');
@@ -302,9 +302,9 @@ function loadTags() {
 /* tag filter selector */
 tagFilterSelect.addEventListener('change', function() {
   if (tagFilterSelect.value === 'edit') {
-		// Clear selector, tagname input
-		tagFilterSelect.value = '';
-		tagName.value='';
+    // Clear selector, tagname input
+    tagFilterSelect.value = '';
+    tagName.value = '';
     $('#tagcreation').modal('toggle');
   } else if (tagFilterSelect.value === 'ALL') {
     loadBullets();
@@ -674,17 +674,17 @@ function getHour(hour, AMPM) {
  * @return time string containing hour in AMPM time (e.g. 10 -> 10:00 AM)
  */
 function getTime(hour) {
-	let time = ''; 
-	if (hour === 0) {
-		time = "12:00 AM"
-	} else if (hour === 12) {
-		time = "12:00 PM"	
-	} else if (hour > 11) {
-		time += (hour - 12) + ':00 PM';
+  let time = '';
+  if (hour === 0) {
+    time = '12:00 AM';
+  } else if (hour === 12) {
+    time = '12:00 PM';
+  } else if (hour > 11) {
+    time += (hour - 12) + ':00 PM';
   } else {
     time += hour + ':00 AM';
   }
-	return time; 
+  return time;
 }
 // Open option to create a note bullet on the note space
 // if you click this button
