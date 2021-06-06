@@ -190,7 +190,7 @@ function showBulletInfo(elemEntry) {
   console.log('title: ' + curBullet.title);
   // Set bullet info on view modal
   titleBar.innerHTML = curBullet.title;
-  dateBar.innerHTML = monthName + ' ' + pageDate.getDay() + ',' + pageDate.getFullYear();
+  dateBar.innerHTML = monthName + ' ' + pageDate.getDate() + ',' + pageDate.getFullYear();
   timeBar.innerHTML = getTime(curBullet.date.getHours());
   contentBar.innerHTML = curBullet.content;
   typeBar.innerHTML = curBullet.type;
@@ -438,7 +438,6 @@ function openEditDialog(elemEntry) {
   const oldHours = entryBullet.date.getHours();
 
   editTitle.value = entryBullet.title;
-  // editDate.value = entryBullet.date;
   editContent.value = entryBullet.content;
   if (oldHours > 11) {
     editHour.value = oldHours - 12;
@@ -497,10 +496,6 @@ function openEditDialog(elemEntry) {
       timeSlots[oldHours].removeChild(elemEntry);
       timeSlots[newHours].appendChild(createBulletEntryElem(newBullet));
     }
-
-    // Update view modal if open
-    const newEntry = document.getElementById(elemEntry.id);
-    showBulletInfo(newEntry);
 
     $('#EditBullet').modal('toggle');
   };
