@@ -2,7 +2,7 @@
 :root {
   --background-color: white;
   --text-color: #1c1c1e;
-  --accent-color1: #c7c7cc; 
+  --accent-color1: #c7c7cc81; 
   --nav-color: #fcfcfc; /* drop down box color */
   --nav-color-hover: #f2f2f7;
   --modal-color: white;
@@ -12,7 +12,7 @@
 [data-theme="dark"] { 
   --background-color: #1c1c1e;
   --text-color: #f2f2f7;
-  --accent-color1: #8e8e93;
+  --accent-color1: #8e8e937c;
   --nav-color: #2c2c2e;
   --nav-color-hover: #48484a;
   --modal-color: #2c2c2e;
@@ -176,6 +176,7 @@ header {
 #date {
   grid-row-start: 2;
   padding-left: 15px;
+	font-size: 1.5em;
 }
 
 #week_day {
@@ -222,7 +223,7 @@ header {
 }
 
 .time_slot:hover{
-  background-color: rgba(161, 157, 157, 0.075);;
+  background-color: rgba(161, 157, 157, 0.075);
 }
 
 /* Right hand widgets */
@@ -315,6 +316,7 @@ header {
 
 p {
   font-size: 18px;
+	white-space: pre-wrap;
 }
 
 #calendar{
@@ -397,6 +399,10 @@ td.other-month{
 	padding: 5px;
 }
 
+.bulletTitle:hover {
+	background-color: var(--accent-color1); 
+	border-radius: 5px;
+}
 /* Style edit/delete buttons */
 .bulletBtns {
 	float: right;
@@ -423,13 +429,15 @@ td.other-month{
 
 /* Style tag bar in modal */
 .tagBar {
-  background-color: yellow;
+
 }
+
 #titleDateShowCase {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+	gap: 1em;
   align-items: center;
 }
 #tagShowCase {
@@ -437,4 +445,10 @@ td.other-month{
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+}
+
+#viewdesc {
+	border: 1px solid var(--text-color);
+	background-color: rgba(161, 157, 157, 0.075);
+	min-height: 5em;
 }
