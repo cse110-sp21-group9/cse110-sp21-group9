@@ -173,6 +173,12 @@ class MiniCalendar extends HTMLElement {
   setCalendar(date = null, selectDay = true, selectWeek = false) {
 
     if (date == null) {
+      if (!document.URL.includes('#')) {
+        const url = new URL(document.URL);
+        const date = new Date();
+        url.hash = hashString('d', date.getFullYear(), date.getMonth() + 1, date.getDate());
+        document.location.href = url.href;
+      }
       // read the URL hash to get the date
       date = readHash(document.URL.split('#')[1]);
       //console.log(date);
