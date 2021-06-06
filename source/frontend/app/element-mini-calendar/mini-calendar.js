@@ -1,7 +1,7 @@
 // const calendarBody = document.getElementById('calendar-body');
 // console.log(calendarBody);
 
-import {hashString, readHash, daysInMonth, startDate, updateURL} from '../../utils.js';
+import { hashString, readHash, daysInMonth, startDate, updateURL } from '../../utils.js';
 
 const COLUMNS = 8;
 const ROWS = 6;
@@ -12,12 +12,11 @@ const ROWS = 6;
 * note: in order for call backs to work they must be bound before calling set calendar
 */
 function getMonthFromString(mon) {
-
-   var d = Date.parse(mon + "1, 2012");
-   if(!isNaN(d)){
-      return new Date(d).getMonth() + 1;
-   }
-   return -1;
+  const d = Date.parse(mon + '1, 2012');
+  if (!isNaN(d)) {
+    return new Date(d).getMonth() + 1;
+  }
+  return -1;
 }
 
 class MiniCalendar extends HTMLElement {
@@ -144,7 +143,7 @@ class MiniCalendar extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     const backMonth = this.shadowRoot.getElementById('backmonth');
-    const forwardMonth = this.shadowRoot.getElementById('forwardmonth');    
+    const forwardMonth = this.shadowRoot.getElementById('forwardmonth');
 
     // set up the forward and backward month buttons
     backMonth.innerHTML = '&#10094;';
@@ -159,7 +158,6 @@ class MiniCalendar extends HTMLElement {
       const newDate = new Date(miniCal.date.getYear() + 1900, miniCal.date.getMonth() + 1, 1);
       miniCal.setCalendar(newDate, false, false);
     });
-
   }
 
   /*
@@ -171,7 +169,6 @@ class MiniCalendar extends HTMLElement {
   * note: in order for callbacks to work the callbacks must be bound before calling setCalendar
   */
   setCalendar(date = null, selectDay = true, selectWeek = false) {
-
     if (date == null) {
       if (!document.URL.includes('#')) {
         const url = new URL(document.URL);
@@ -181,7 +178,7 @@ class MiniCalendar extends HTMLElement {
       }
       // read the URL hash to get the date
       date = readHash(document.URL.split('#')[1]);
-      //console.log(date);
+      // console.log(date);
     }
 
     const calendarBody = this.shadowRoot.getElementById('calendar-body');
@@ -190,20 +187,19 @@ class MiniCalendar extends HTMLElement {
     const yearText = this.shadowRoot.getElementById('year');
     let dateCounter = -startDay + 1;
     const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
     ];
-
 
     // first clear the calander
     while (calendarBody.firstChild) { calendarBody.removeChild(calendarBody.firstChild); }
@@ -215,7 +211,7 @@ class MiniCalendar extends HTMLElement {
     // make clicking on the month take you to the month view
     monthText.addEventListener('click', function() {
       const month = getMonthFromString(this.textContent);
-      const dateYear = document.querySelector("mini-calendar").shadowRoot.getElementById("year").textContent;
+      const dateYear = document.querySelector('mini-calendar').shadowRoot.getElementById('year').textContent;
       const hash = hashString('m', dateYear, month);
       const root = document.URL.split('/')[2];
       const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
@@ -256,8 +252,8 @@ class MiniCalendar extends HTMLElement {
           document.querySelector('mini-calendar').deselectAll();
           this.classList.add('selected');
           const dateDay = this.textContent;
-          const dateMonth = getMonthFromString(document.querySelector("mini-calendar").shadowRoot.getElementById("month").textContent);
-          const dateYear = document.querySelector("mini-calendar").shadowRoot.getElementById("year").textContent;
+          const dateMonth = getMonthFromString(document.querySelector('mini-calendar').shadowRoot.getElementById('month').textContent);
+          const dateYear = document.querySelector('mini-calendar').shadowRoot.getElementById('year').textContent;
           const hash = hashString('d', dateYear, dateMonth, dateDay);
           const root = document.URL.split('/')[2];
           const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
@@ -283,7 +279,7 @@ class MiniCalendar extends HTMLElement {
   // helper function to deselect all weeks and days
   deselectAll() {
     const weeksArr = this.shadowRoot.getElementById('calendar-body').childNodes;
-  
+
     for (let y = 0; y < ROWS; y++) {
       const weekElement = weeksArr[y];
       const daysArr = weekElement.childNodes;
@@ -320,8 +316,6 @@ class MiniCalendar extends HTMLElement {
   *   this.weekCallBack = callBack;
   * }
   */
-
-
 }
 
 customElements.define('mini-calendar', MiniCalendar);
