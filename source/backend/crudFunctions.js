@@ -83,17 +83,17 @@ export function getBulletsByTag(strTag, objOption = null) {
 
 export function getEventBulletsByTag(strTag, objOption = null) {
   const unfilteredBullets = getBulletsByTag(strTag);
-  return filterArray(unfilteredBullets, 'event');
+  return filterArray(unfilteredBullets, 'Event');
 }
 
 export function getNoteBulletsByTag(strTag, objOption = null) {
   const unfilteredBullets = getBulletsByTag(strTag);
-  return filterArray(unfilteredBullets, 'note');
+  return filterArray(unfilteredBullets, 'Note');
 }
 
 export function getTaskBulletsByTag(strTag, objOption = null) {
   const unfilteredBullets = getBulletsByTag(strTag);
-  return filterArray(unfilteredBullets, 'task');
+  return filterArray(unfilteredBullets, 'Task');
 }
 
 export function setBulletTitle(intID, strTitle, objOption = null) {
@@ -136,6 +136,27 @@ export function setBulletDueDate(intID, dateDueDate, objOption = null) {
 }
 export function setBulletStatus(intID, strstatus, objOption = null) {
   return updateBullet(intID, 'status', strstatus);
+}
+
+export function setAttributes(intID, objAttributes) {
+  if (!(intID in runTimeBullets)) return null;
+  const bulletObj = runTimeBullets[intID];
+
+  if ('title' in objAttributes) { bulletObj.title = objAttributes.title; }
+  if ('date' in objAttributes && objAttributes.date instanceof Date) { bulletObj.date = objAttributes.date; }
+  if ('tags' in objAttributes) {
+    objAttributes.tags.forEach((tag, index) => {
+      if (!(tag in runTimeTags)) return null;
+    });
+    bulletObj.tags = objAttributes.tags;
+  }
+  if ('content' in objAttributes) { bulletObj.content = objAttributes.content; }
+  if ('dueDate' in objAttributes && objAttributes.dueDate instanceof Date) { bulletObj.dueDate = objAttributes.dueDate; }
+  if ('status' in objAttributes) { bulletObj.status = objAttributes.status; }
+
+  runTimeBullets[intID] = bulletObj;
+  localStorage.setItem(intID, JSON.stringify(bulletObj));
+  return new Bullet(bulletObj);
 }
 
 export function getAvailableTags() {
