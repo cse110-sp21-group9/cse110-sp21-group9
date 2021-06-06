@@ -7,4 +7,5 @@ const forwardmonth = miniCal.shadowRoot.getElementById('forwardmonth');
 
 calDiv.appendChild(miniCal);
 
-miniCal.setCalendar(new Date(), true, true);
+//miniCal.setCalendar(new Date(), true, false);
+miniCal.setCalendar();
