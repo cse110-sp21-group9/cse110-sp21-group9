@@ -1,6 +1,6 @@
-//todo propper utils usage
+// todo propper utils usage
 
-import {hashString, readHash, daysInMonth, startDate, updateURL} from '../../utils.js';
+import { hashString, readHash, daysInMonth, startDate, updateURL } from '../../utils.js';
 import * as utils from '../../utils.js';
 
 const calendar = document.getElementById('calendar');
@@ -197,11 +197,15 @@ function populateCalendar(month, year, data) {
         url.hash = hash;
         window.location.href = url.href;
       });
-      date.addEventListener("mouseover", function(){
-        date.style.border= '3px solid #333'; 
+      // hover over date cells in calendar
+      date.addEventListener('mouseover', function() {
+        // date.style.border= '3px solid #333';
+        date.style.backgroundColor = 'var(--accent-color1)';
+        date.style.cursor = 'pointer';
       });
-      date.addEventListener("mouseleave", function(){
-        date.style.border= '1px solid #333'; 
+      date.addEventListener('mouseleave', function() {
+        // date.style.border= '1px solid #333';
+        date.style.backgroundColor = 'var(--background-color)';
       });
       counter++;
       element.appendChild(date);
@@ -276,33 +280,31 @@ function getNotes(bullets) {
 }
 
 function generateHash(onload = true) {
-  let curr = document.URL;
+  const curr = document.URL;
 
-  if (onload){
+  if (onload) {
     let month;
     let year;
-    if(curr.includes('#')) {
-      var date = readHash(curr.split('#')[1]);
+    if (curr.includes('#')) {
+      let date = readHash(curr.split('#')[1]);
       date = date.toISOString().split('T')[0].split('-');
       month = parseInt(date[1]);
       year = parseInt(date[0]);
-    }
-    else{
+    } else {
       let date = new Date();
       date = date.toISOString().split('T')[0].split('-');
       month = parseInt(date[1]);
       year = parseInt(date[0]);
     }
     return hashString('m', year, month);
-  }
-  else {
+  } else {
     return hashString('m', yearIn, monthIn);
   }
 }
 
 const hashed = generateHash();
 
-var date = readHash(hashed);
+let date = readHash(hashed);
 date = date.toISOString().split('T')[0].split('-');
 
 yearIn = parseInt(date[0]);
