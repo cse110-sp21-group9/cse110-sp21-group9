@@ -13,6 +13,7 @@ const saveBulletBtn = document.getElementById('saveBullet');
 // Creation Modal Elements
 const addBtn = document.getElementById('addBullet');
 const titleInput = document.getElementById('title');
+const typeInput = document.getElementById('type');
 const contentInput = document.querySelector('[name = "desc"]');
 const hourInput = document.getElementById('hour');
 const AMPMInput = document.getElementById('AMPM');
@@ -127,7 +128,6 @@ addBtn.onclick = () => {
   // clear settings for creation of new bullet
   titleInput.value = '';
   titleInput.className = '';
-  const typeInput = document.getElementById('type');
   typeInput.value = 'Event';
   hourInput.value = '0';
   AMPMInput.value = 'AM';
@@ -150,7 +150,7 @@ saveBulletBtn.onclick = () => {
     return false;
   }
 
-  const bulletType = document.getElementById('type').value;
+  const bulletType = typeInput.value;
   const hour = getHour(hourInput.value, AMPMInput.value);
   const bulletDate = new Date(pageDate.getFullYear(), pageDate.getMonth(), pageDate.getDate(), hour);
 
@@ -190,7 +190,7 @@ function showBulletInfo(elemEntry) {
   console.log('title: ' + curBullet.title);
   // Set bullet info on view modal
   titleBar.innerHTML = curBullet.title;
-  dateBar.innerHTML = monthName + ' ' + pageDate.getDate() + ',' + pageDate.getFullYear();
+  dateBar.innerHTML = monthName + ' ' + pageDate.getDate() + ', ' + pageDate.getFullYear();
   timeBar.innerHTML = getTime(curBullet.date.getHours());
   contentBar.innerHTML = curBullet.content;
   typeBar.innerHTML = curBullet.type;
