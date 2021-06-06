@@ -543,8 +543,8 @@ function createBulletEntryElem(objBullet) {
 
   bulletTitle.innerHTML = objBullet.title;
   bulletTitle.id = objBullet.ID + '_title';
-	bulletTitle.className = 'bulletTitle';
-	
+  bulletTitle.className = 'bulletTitle';
+
   if (objBullet.type === 'Task') {
     const checkbox = document.createElement('INPUT');
     checkbox.setAttribute('type', 'checkbox');
