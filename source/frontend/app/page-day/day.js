@@ -814,6 +814,6 @@ function deleteNote(elemEntry) {
   elemEntry.remove();
 }
 
-let cal = document.createElement('mini-calendar');
-document.getElementById("miniCalendar").appendChild(cal);
+const cal = document.createElement('mini-calendar');
+document.getElementById('miniCalendar').appendChild(cal);
 cal.setCalendar();

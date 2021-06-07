@@ -2,7 +2,7 @@ import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
 
 const DAY_PATH = '/source/frontend/app/page-day/day.html';
-const MONTH_PATH = '/source/frontend/app/page-calendar-monthly/calendar.html'
+const MONTH_PATH = '/source/frontend/app/page-calendar-monthly/calendar.html';
 
 const COLUMNS = 8;
 const ROWS = 6;
@@ -20,8 +20,7 @@ function getMonthFromString(mon) {
   return -1;
 }
 
-function monthYearEqual(date1, date2)
-{
+function monthYearEqual(date1, date2) {
   return date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
 }
 
@@ -154,25 +153,19 @@ export class MiniCalendar extends HTMLElement {
     const backMonth = this.shadowRoot.getElementById('backmonth');
     const forwardMonth = this.shadowRoot.getElementById('forwardmonth');
 
-    const miniCal = this; //scoping hack
+    const miniCal = this; // scoping hack
     // set up the forward and backward month buttons
     backMonth.innerHTML = '&#10094;';
     forwardMonth.innerHTML = '&#10095;';
     backMonth.addEventListener('click', function() {
       const newDate = new Date(miniCal.internalDate.getFullYear(), miniCal.internalDate.getMonth() - 1, 1);
       const urlDate = utils.readHash(document.URL.split('#')[1]);
-      if (monthYearEqual(newDate, urlDate))
-        miniCal.setCalendar(urlDate, true);
-      else
-        miniCal.setCalendar(newDate, false);
+      if (monthYearEqual(newDate, urlDate)) { miniCal.setCalendar(urlDate, true); } else { miniCal.setCalendar(newDate, false); }
     });
     forwardMonth.addEventListener('click', function() {
       const newDate = new Date(miniCal.internalDate.getFullYear(), miniCal.internalDate.getMonth() + 1, 1);
       const urlDate = utils.readHash(document.URL.split('#')[1]);
-      if (monthYearEqual(newDate, urlDate))
-        miniCal.setCalendar(urlDate, true);
-      else
-        miniCal.setCalendar(newDate, false);
+      if (monthYearEqual(newDate, urlDate)) { miniCal.setCalendar(urlDate, true); } else { miniCal.setCalendar(newDate, false); }
     });
   }
 
