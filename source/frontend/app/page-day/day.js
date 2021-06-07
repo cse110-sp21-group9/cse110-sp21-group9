@@ -4,6 +4,7 @@
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
+import '../element-mini-calendar/mini-calendar.js';
 
 const MAX_TITLE_LENGTH = 35;
 const MAX_TAG_LENGTH = 15;
@@ -247,7 +248,6 @@ function loadTags() {
   // Grab tags saved in storage, and the part of the modal to paste them in
   const tagsToLoad = crud.getAvailableTags();
   const loadingBay = document.getElementById('taglist');
-  console.log(loadingBay);
 
   // Grab the tags already pasted onto the modal
   const loadedTags = loadingBay.querySelectorAll('li');
@@ -813,3 +813,7 @@ function deleteNote(elemEntry) {
   crud.deleteBulletById(elemEntry.id);
   elemEntry.remove();
 }
+
+let cal = document.createElement('mini-calendar');
+document.getElementById("miniCalendar").appendChild(cal);
+cal.setCalendar();

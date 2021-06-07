@@ -1,7 +1,8 @@
-// const calendarBody = document.getElementById('calendar-body');
-// console.log(calendarBody);
+import * as utils from '../../utils.js';
+import * as globals from '../../globals.js';
 
-import { hashString, readHash, daysInMonth, startDate, updateURL } from '../../utils.js';
+const DAY_PATH = '/source/frontend/app/page-day/day.html';
+const MONTH_PATH = '/source/frontend/app/page-calendar-monthly/calendar.html'
 
 const COLUMNS = 8;
 const ROWS = 6;
@@ -19,12 +20,15 @@ function getMonthFromString(mon) {
   return -1;
 }
 
-class MiniCalendar extends HTMLElement {
+function monthYearEqual(date1, date2)
+{
+  return date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
+}
+
+export class MiniCalendar extends HTMLElement {
   constructor() {
     super();
-    // this.dayCallBack = null;
-    // this.weekCallBack = null;
-    this.date = null;
+    this.internalDate = null;
     const template = document.createElement('template');
     template.innerHTML = `
       <style>
@@ -40,6 +44,10 @@ class MiniCalendar extends HTMLElement {
           font-weight: bold;
           font-size: 24px;
           cursor: pointer;
+        }
+
+        .monthButton:hover{
+          border: 1px solid black;
         }
 
         #year{
@@ -75,6 +83,7 @@ class MiniCalendar extends HTMLElement {
 
         .week:hover:after{
           background-color: lightseagreen;
+          cursor: default;
         }
 
         .week.selected::after{
@@ -118,9 +127,9 @@ class MiniCalendar extends HTMLElement {
         <thead>
           <tr class="monthyear">
             <td colspan="2" style="height:50px;"></td>
-            <td id="backmonth"></td>
-            <td id="month" colspan="2"></td>
-            <td id="forwardmonth"></td>
+            <td class="monthButton" id="backmonth"></td>
+            <td class="monthButton" id="month" colspan="2"></td>
+            <td class="monthButton" id="forwardmonth"></td>
             <td></td>
             <td id="year"></td>
           </tr>
@@ -145,18 +154,25 @@ class MiniCalendar extends HTMLElement {
     const backMonth = this.shadowRoot.getElementById('backmonth');
     const forwardMonth = this.shadowRoot.getElementById('forwardmonth');
 
+    const miniCal = this; //scoping hack
     // set up the forward and backward month buttons
     backMonth.innerHTML = '&#10094;';
     forwardMonth.innerHTML = '&#10095;';
     backMonth.addEventListener('click', function() {
-      const miniCal = document.querySelector('mini-calendar');
-      const newDate = new Date(miniCal.date.getYear() + 1900, miniCal.date.getMonth() - 1, 1);
-      miniCal.setCalendar(newDate, false, false);
+      const newDate = new Date(miniCal.internalDate.getFullYear(), miniCal.internalDate.getMonth() - 1, 1);
+      const urlDate = utils.readHash(document.URL.split('#')[1]);
+      if (monthYearEqual(newDate, urlDate))
+        miniCal.setCalendar(urlDate, true);
+      else
+        miniCal.setCalendar(newDate, false);
     });
     forwardMonth.addEventListener('click', function() {
-      const miniCal = document.querySelector('mini-calendar');
-      const newDate = new Date(miniCal.date.getYear() + 1900, miniCal.date.getMonth() + 1, 1);
-      miniCal.setCalendar(newDate, false, false);
+      const newDate = new Date(miniCal.internalDate.getFullYear(), miniCal.internalDate.getMonth() + 1, 1);
+      const urlDate = utils.readHash(document.URL.split('#')[1]);
+      if (monthYearEqual(newDate, urlDate))
+        miniCal.setCalendar(urlDate, true);
+      else
+        miniCal.setCalendar(newDate, false);
     });
   }
 
@@ -168,53 +184,32 @@ class MiniCalendar extends HTMLElement {
   *
   * note: in order for callbacks to work the callbacks must be bound before calling setCalendar
   */
-  setCalendar(date = null, selectDay = true, selectWeek = false) {
+  setCalendar(date = null, selectDay = true) {
     if (date == null) {
-      if (!document.URL.includes('#')) {
-        const url = new URL(document.URL);
-        const date = new Date();
-        url.hash = hashString('d', date.getFullYear(), date.getMonth() + 1, date.getDate());
-        document.location.href = url.href;
-      }
-      // read the URL hash to get the date
-      date = readHash(document.URL.split('#')[1]);
-      // console.log(date);
+      date = utils.readHash(document.URL.split('#')[1]);
     }
+    this.internalDate = date;
 
     const calendarBody = this.shadowRoot.getElementById('calendar-body');
-    const startDay = new Date(date.getYear() + 1900, date.getMonth(), 1).getDay();
+    const startDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     const monthText = this.shadowRoot.getElementById('month');
     const yearText = this.shadowRoot.getElementById('year');
     let dateCounter = -startDay + 1;
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
 
     // first clear the calander
     while (calendarBody.firstChild) { calendarBody.removeChild(calendarBody.firstChild); }
 
     // write in the month name and year number
-    monthText.textContent = months[date.getMonth()];
-    yearText.textContent = date.getYear() + 1900;
+    monthText.textContent = globals.MONTH_NAMES_LONG[date.getMonth()];
+    yearText.textContent = date.getFullYear();
 
     // make clicking on the month take you to the month view
     monthText.addEventListener('click', function() {
       const month = getMonthFromString(this.textContent);
       const dateYear = document.querySelector('mini-calendar').shadowRoot.getElementById('year').textContent;
-      const hash = hashString('m', dateYear, month);
+      const hash = utils.hashString('m', dateYear, month);
       const root = document.URL.split('/')[2];
-      const path = 'http://' + root + '/source/frontend/app/page-calendar-monthly/calendar.html';
+      const path = 'http://' + root + MONTH_PATH;
       const url = new URL(path);
       url.hash = hash;
       window.location.href = url.href;
@@ -227,39 +222,27 @@ class MiniCalendar extends HTMLElement {
         const dayElement = document.createElement('td');
         weekElement.appendChild(dayElement);
 
-        const currentDate = new Date(date.getYear() + 1900, date.getMonth(), dateCounter);
+        const currentDate = new Date(date.getFullYear(), date.getMonth(), dateCounter);
 
         if (x === 0) {
           dayElement.className = 'week';
-
-          // I'm going to disable selecting weeks for now, because I don't know
-          // if we are actually going to have a week view in the MVP
-          /*
-          dayElement.addEventListener('click', function() {
-            if (!this.parentElement.childNodes[0].classList.contains('selected')) {
-              // we have to deselect all other weeks and days
-              document.querySelector('mini-calendar').deselectAll();
-              this.parentElement.childNodes[0].classList.add('selected');
-            }
-          });
-          */
           continue;
         }
 
-        // if (this.dayCallBack !== null) dayElement.onclick = () => { this.dayCallBack(currentDate); };
-
+        const miniCal = this;
         dayElement.addEventListener('click', function() {
-          document.querySelector('mini-calendar').deselectAll();
+          miniCal.deselectAll();
           this.classList.add('selected');
           const dateDay = this.textContent;
-          const dateMonth = getMonthFromString(document.querySelector('mini-calendar').shadowRoot.getElementById('month').textContent);
-          const dateYear = document.querySelector('mini-calendar').shadowRoot.getElementById('year').textContent;
-          const hash = hashString('d', dateYear, dateMonth, dateDay);
+          const dateMonth = getMonthFromString(miniCal.shadowRoot.getElementById('month').textContent);
+          const dateYear = miniCal.shadowRoot.getElementById('year').textContent;
+          const hash = utils.hashString('d', dateYear, dateMonth, dateDay);
           const root = document.URL.split('/')[2];
-          const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
+          const path = 'http://' + root + DAY_PATH;
           const url = new URL(path);
           url.hash = hash;
           window.location.href = url.href;
+          window.location.reload();
         });
 
         dayElement.innerHTML = currentDate.getDate();
@@ -268,7 +251,6 @@ class MiniCalendar extends HTMLElement {
 
         if (dateCounter === date.getDate()) {
           if (selectDay) dayElement.classList.add('selected');
-          if (selectWeek) weekElement.childNodes[0].classList.add('selected');
         }
         dateCounter++;
       }
@@ -294,28 +276,6 @@ class MiniCalendar extends HTMLElement {
       }
     }
   }
-
-  // the two below functions to add callbacks when clicking on days or weeks are likely unnecessary
-  // if we need them then we can uncomment them and also uncomment lines 138 and 142
-
-  /*
-  * takes a function with a single input
-  * the input will be a date object and represents the day that was clicked
-  * note: if you wish to unbind the day call back you can pass null into this function, and then call setCalendar
-  *
-  * bindDayCallBack(callBack) {
-  *   this.dayCallBack = callBack;
-  * }
-  *
-  *
-  * takes a function with a single input
-  * the input will be a date object and represents the first day of the week that was clicked
-  * note: if you wish to unbind the day call back you can pass null into this function, and then call setCalendar
-  *
-  * bindWeekCallBack(callBack) {
-  *   this.weekCallBack = callBack;
-  * }
-  */
 }
 
 customElements.define('mini-calendar', MiniCalendar);

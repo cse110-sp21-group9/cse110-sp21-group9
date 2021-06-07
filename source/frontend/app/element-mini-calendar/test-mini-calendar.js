@@ -9,3 +9,5 @@ calDiv.appendChild(miniCal);
 
 //miniCal.setCalendar(new Date(), true, false);
 miniCal.setCalendar();
+console.log(miniCal);
+console.log(miniCal.setCalendar)
