@@ -255,33 +255,29 @@ class sidebar extends HTMLElement {
 </div>
 </div>`;
 
-
     // create a shadow root for this web component
     this.attachShadow({ mode: 'open' });
     // attach cloned content of template to shadow DOM
- 
 
-    let script2 = document.createElement('script');
-    script2.src = "https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    script2.crossorigin = "anonymous";
+    const script2 = document.createElement('script');
+    script2.src = 'https://code.jquery.com/jquery-3.3.1.slim.min.js';
+    script2.crossorigin = 'anonymous';
     this.shadowRoot.appendChild(script2);
 
-    let script3 = document.createElement('script');
-    script3.src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    script3.crossorigin = "anonymous";
+    const script3 = document.createElement('script');
+    script3.src = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js';
+    script3.crossorigin = 'anonymous';
     this.shadowRoot.appendChild(script3);
 
-    let script4 = document.createElement('script');
-    script4.src = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    script4.crossorigin = "anonymous";
+    const script4 = document.createElement('script');
+    script4.src = 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js';
+    script4.crossorigin = 'anonymous';
     this.shadowRoot.appendChild(script4);
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-    let script1 = document.createElement('script');
-    script1.src = "https://kit.fontawesome.com/c7fe59e5a5.js"
-    script1.crossorigin = "anonymous";
+    const script1 = document.createElement('script');
+    script1.src = 'https://kit.fontawesome.com/c7fe59e5a5.js';
+    script1.crossorigin = 'anonymous';
     this.shadowRoot.appendChild(script1);
-
-
   }
 }
 window.customElements.define('side-bar', sidebar);

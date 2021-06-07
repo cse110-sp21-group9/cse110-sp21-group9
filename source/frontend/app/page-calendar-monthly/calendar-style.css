@@ -9,6 +9,7 @@
   --accent-color1: #c7c7cc; 
   --nav-color: #fcfcfc; /* drop down box color */
   --nav-color-hover: #f2f2f7;
+  --modal-color: white;
 }  
 
 /* colors for dark-theme */
@@ -18,6 +19,8 @@
   --accent-color1: #8e8e93;
   --nav-color: #2c2c2e;
   --nav-color-hover: #48484a;
+  --modal-color: #2c2c2e;
+  --modal-color-background: rgba(199, 199, 204, 0.3);
 }
 
 body {
@@ -50,8 +53,6 @@ body {
 }
 
 /*  CSS Grid End*/
-
-
 .dropdown-menu {
   background-color: var(--nav-color);
 }
@@ -69,7 +70,6 @@ body .main-container table{
   background-color: #1c1c1e;
 }
 
-
 table {
   margin-left: auto;
   margin-right: auto;
@@ -79,8 +79,6 @@ table {
   color: var(--text-color);
 }
 
-
-
 tbody td {
   vertical-align: top;
   text-align: left;
@@ -89,13 +87,10 @@ tbody td {
   height: 8rem;
 }
 
-
 tbody tr th {
   border: 1px solid var(--accent-color1);
   color: var(--text-color);
 }
-
-
 
 thead {
   /* background-color: #333; */
@@ -154,4 +149,13 @@ thead {
 
 .fas {
   color: var(#007aff);
+}
+
+.modal-content {
+  background-color: var(--modal-color);
+  color: var(--text-color);
+}
+
+#settingsModal {
+  background-color: var(--modal-color-background);
 }

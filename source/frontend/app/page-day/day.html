@@ -12,10 +12,15 @@
 	<script src="https://kit.fontawesome.com/c7fe59e5a5.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="day-style.css">
 	<script type="module" src="day.js"></script>
+	<script type="module" src="../../../backend/crudFunctions.js"></script>
+	<script type="module" src="../element-mini-calendar/mini-calendar.js"></script>
+	<!-- <script type="module" src=".sidebar.js"></script> -->
 
 	<!-- Nunito Font -->
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+
+	<script type="module" src="/source/frontend/app/sidebar/sidebar.js"></script>
 
 </head>
 
@@ -24,88 +29,101 @@
 		<!-- Source: https://getbootstrap.com/docs/5.0/examples/sidebars/# -->
 		<div class="mySidebar">
 			<div class="d-flex flex-column flex-shrink-0 bg-light"
-				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;">
+				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;" id="navbar">
 				<a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
 					data-bs-placement="right" data-bs-original-title="Icon-only">
-					<span class="visually-hidden center-block"><img src="../../assets/nav-logo.svg" /></span>
+					<span class="visually-hidden center-block"><img id="logo" src="../../assets/nav-logo.svg" /></span>
 				</a>
 				<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
 					<li class="nav-item">
-						<a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="Home"
-							data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+						<a href="/source/frontend/app/page-day/day.html" class="nav-link active py-3 border-bottom"
+							aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right"
+							data-bs-original-title="Home">
 							<i class="fas fa-home fa-2x"></i>
 						</a>
 					</li>
 					<li>
 						<a href="/source/frontend/app/page-calendar-monthly/calendar.html"
-							class="nav-link  py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
+							class="nav-link py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
 							data-bs-placement="right" data-bs-original-title="Month">
 							<i class="fas fa-calendar-alt fa-2x"></i>
 						</a>
 					</li>
 					<li>
-						<a href="#" class="nav-link py-3 border-bottom" title="Settings" data-bs-toggle="tooltip"
-							data-bs-placement="right" data-bs-original-title="Settings">
-							<i class="fas fa-user-cog fa-2x"></i>
+						<a href="#" id="settingsNav" class="nav-link py-3 border-bottom" title="Settings"
+							data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Settings">
+							<i class="fas fa-cog fa-2x"></i>
 						</a>
 					</li>
 				</ul>
+			</div>
+		</div>
 
-				<!-- <div class="dropdown border-top">
-					<button type="button" class="btn" data-toggle="dropdown">
-						<a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
-							data-bs-toggle="dropdown-menu">
-							<i class="fas fa-user-circle fa-2x" id="avatar" aria-hidden="true"></i>
-						</a>
-						<div class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Settings</a></li>
-							<li><a class="dropdown-item" href="#">Profile</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="#">Sign out</a></li>
+		<!-- Settings Modal-->
+		<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Settings</h4>
+					</div>
+					<div class="modal-body">
+						<input type="file" id="input" multiple>
+						<!-- <label for="input">Upload</label> -->
+
+						<button type="button" id="exportData">Download</button>
+						<br><br>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="customSwitch1">
+							<label class="custom-control-label" for="customSwitch1">Toggle Dark Mode</label>
 						</div>
-					</button>
-				</div> -->
+						<br>
+						<form method="dialog">
+							<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<div id="main">
-			<!--<header>-->
-				<!--TODO: Remember to paste user icon right next to name-->
-				<!--TODO: Change name according to each user-->
-			<!--</header-->
-			<h1 class="mb-3">Daily Calendar</h1>
-			<div id="main_container">
+			<h1 class="mb-3 data-mdb-ripple-color='light'">Daily Calendar</h1>
+			<div id="content_container">
 				<div id="calender_container">
 					<div id="date_container">
 						<h3 id="week_day">Thursday</h3>
 						<p id="date">april 1st</p>
-						<button class="btn-sm btn-primary circleButts" id="addBullet"><i
-							class="fas fa-plus"></i></button>
-						<button id="createtag" class="btn btn-primary">Tags</button>
+
+						<button class="btn btn-primary" id="addBullet"><i
+								class="fas fa-plus"></i> Add Bullet</button>
+						<label for="selecttag">Filter by Tag: </label>
+						<select id="selecttag">
+							<option value='ALL'>All</option>
+							<option id='edittags' value='edit'>Edit tags...</option>
+						</select>
 					</div>
 					<ul id="time_list">
 					</ul>
 				</div>
-				<div id="widgets_container">
-					<div id="minicalendar">
-						
+				<div id="right-side">
+					<div id="miniCalendar">
 					</div>
 					<div id="undated_notes">
-						<div class="aspect-ratio-box-inside">
-							<h2>Notespace</h2>
+						<div id="note_header">
+							<h2 id="note_title">Notespace</h2>
+							<button class="btn-sm btn-primary" id="addNote"><i
+								class="fas fa-plus"></i> Add Note</button>
+						</div>
+						<div id="note_container">
 							<ul id="noteSpace">
-								<li>A note</li>
 							</ul>
-							<button class="btn-sm btn-primary circleButts" id="addNote"><i
-									class="fas fa-plus"></i></button>
 						</div>
 					</div>
 				</div>
 			</div>
 
 		</div>
+
 
 		<div id="bujoSpace" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addBullet"
 			aria-hidden="true">
@@ -118,7 +136,7 @@
 						<form method="dialog">
 							<!--Is title a good name? Probably not-->
 							<label for="title">Title: </label>
-							<input type="text" id="title"><br>
+							<input type="text" id="title" type="reset"><br>
 
 							<label for="type">Type: </label>
 							<select name="bulletType" id="type">
@@ -126,44 +144,74 @@
 								<option value="Task">Task</option>
 							</select> <br>
 							<label for="time">Hour: </label>
-							<select name=bulletHour" id="hour">
+							<select name="bulletHour" id="hour">
 							</select>
 							<select name="bulletAMPM" id="AMPM">
 								<option value="AM">AM</option>
 								<option value="PM">PM</option>
 							</select><br>
-							<div id="tags">
-								<label for="tags">Tag: </label>
-							</select>
-							</div>
-							<textarea name="desc" rows="10" cols="30" placeholder="Notes"></textarea><br>
+							<label for="tags">Tags: </label>
+							<select name="bulletTags" id="tags">
+								<option value="Default">Select Tags: </option>
+							</select><br>
+							<!--<button id='confirmTag'>Add this tag</button>-->
+							<div id="selected_tags">
+								<ul id="bullet_tags">
+
+								</ul>
+							</div> <br>
+							<textarea name="desc" rows="10" cols="30" placeholder="Bullet content"></textarea><br>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button id="canceladd" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button id="saveAdd" class="btn btn-primary" value="false">Save</button>
+						<button id="saveBullet" class="btn btn-primary" value="false">Save</button>
+						<!--<button id="createtag" class="btn btn-primary">Tags</button>-->
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<div id="viewBullet" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addBullet"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header" id='titleDateShowCase'>
+							<h3 id="viewtype">Event</h3><br>
+							<h5 id="viewdate">June 1, 2021</h5>
+							<h5 id="viewtime">9:00</h5><br>					
+					</div>
+					<div class="modal-body">
+						<h3 id=viewtitle class="modal-title">Title of Bullet</h3><br>
+						<h5>Content: </h5>
+						<p id=viewdesc>Lorem ipsum</p>
+					</div>
+					<div class="modal-footer" id="tagShowCase">
+						<h5 id="tagTitle">Tags:</h5>
+						<div id="viewtags">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--Modal option to create a tag-->
 		<div id="tagcreation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tagbox"
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h3 class="modal-title">Tags</h3>
+						<h3 class="modal-title">Edit Tags: </h3>
 					</div>
 					<div class="modal-body">
 						<form method="dialog">
-							<label for="tagname">Title: </label>
+							<label for="tagname">Add tag(enter to save): </label>
 							<input type="text" id="tagname"><br>
 						</form>
+						<ul id='taglist'>
+						</ul>
 					</div>
 					<div class="modal-footer">
-						<button id="tagcancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button id="saveTag" class="btn btn-primary" value="false">Save</button>
+						<button id="saveTag" class="btn btn-primary" value="false">Done</button>
 					</div>
 				</div>
 			</div>
@@ -196,21 +244,29 @@
 					</div>
 					<div class="modal-body">
 						<form method="dialog">
-							<label for="edittitle">Title: </label>
-							<input type="text" id="edittitle"><br>
-							<select name="editHour" id="edithour">
+							<label for="editTitle">Title: </label>
+							<input type="text" id="editTitle"><br>
+							<label for="editHour">Hour: </label>
+							<select name="editHour" id="editHour">
 							</select>
 							<select name="editAMPM" id="editAMPM">
 								<option value="AM">AM</option>
 								<option value="PM">PM</option>
 							</select><br>
-							<input type="text" id="editdate"><br>
-							<label for="editdesc">Content: </label>
-							<input type="text" id="editdesc">
+							<!--<input type="text" id="editDate"><br>-->
+							<!--<label for="editDesc">Content: </label>-->
+							<!--<input type="text" id="editDesc">-->
 
-							<div id="edittag">
-								<label for="edittag">Tag: </label>
-							</div>
+							<label for="editTags">Tags: </label>
+							<select name="editBulletTags" id="editTags">
+								<option value="Default">Select Tags: </option>
+							</select><br>
+							<!--<button id='confirmTag'>Add this tag</button>-->
+							<div id="editSelectedTags">
+								<ul id="editBulletTags">
+								</ul>
+							</div> <br>
+							<textarea name="editDesc" rows="10" cols="30" placeholder="Bullet content"></textarea><br>
 
 						</form>
 					</div>

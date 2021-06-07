@@ -14,7 +14,7 @@ describe('Basic unit tests for monthly calendar ', () => {
     contentHtml = fs.readFileSync(path.resolve(__dirname, '../../source/frontend/app/page-calendar-monthly/calendar.html'), 'utf-8');
     document.documentElement.innerHTML = contentHtml;
     require('../../source/frontend/app/page-calendar-monthly/calendar.js');
-		require('../../source/frontend/app/page-calendar-monthly/sidebar.js');
+		require('../../source/frontend/app/sidebar/sidebar.js');
 		require('../../source/frontend/utils.js');
   });
 
