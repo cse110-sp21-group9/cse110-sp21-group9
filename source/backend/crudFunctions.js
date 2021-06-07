@@ -11,7 +11,7 @@ import { Bullet } from './bullet.js';
  *  Completed: Add type and tag functionality
  */
 
-let runTimeBullets = {};
+const runTimeBullets = {};
 let runTimeTags = {};
 let runTimeUpToDate = false;
 let lastID; // this is bad
@@ -264,7 +264,7 @@ export function getLocalStorageData() {
     bullets: runTimeBullets,
     tags: runTimeTags,
     ids: readArrayFromStorage('bulletIDs')
-  }
+  };
 }
 
 // ----------------helpers----------------
