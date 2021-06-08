@@ -276,7 +276,7 @@ export function loadDataToLocalStorage(objData) {
   localStorage.clear();
   localStorage.setItem('lastID', objData.lastID);
   localStorage.setItem('tags', JSON.stringify(objData.tags));
-  writeArrayToStorage('bulletIDs', objData.bulletIDs);
+  writeArrayToStorage('bulletIDs', objData.ids);
   for (const bulletID of Object.keys(objData.bullets)) { localStorage.setItem(bulletID, JSON.stringify(objData.bullets[bulletID])); }
 }
 

@@ -1,5 +1,5 @@
 /* eslint-env jquery */
-import { getLocalStorageData, loadLocalStorageData } from '../../../backend/crudFunctions.js';
+import { getLocalStorageData, loadDataToLocalStorage } from '../../../backend/crudFunctions.js';
 
 const settingsModel = document.getElementById('settingsNav');
 
@@ -28,9 +28,11 @@ const getFiles = document.getElementById('input');
 
 getFiles.addEventListener('change', function() {
   const reader = new FileReader();
+  reader.onload = () => {
+    loadDataToLocalStorage(JSON.parse(reader.result));
+    location.reload();
+  };
   reader.readAsText(this.files[0]);
-  loadLocalStorageData(reader.result);
-  location.reload();
 });
 
 function setTheme(strTheme) {
