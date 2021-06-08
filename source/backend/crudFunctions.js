@@ -267,6 +267,19 @@ export function getLocalStorageData() {
   };
 }
 
+export function loadDataToLocalStorage(objData) {
+  if (!('lastID' in objData) || !('bullets' in objData) || !('tags' in objData) || !('ids' in objData)) {
+    console.error("could not understand file");
+    return; 
+  }
+
+  localStorage.clear();
+  localStorage.setItem('lastID', objData.lastID);
+  localStorage.setItem('tags', JSON.stringify(objData.tags));
+  writeArrayToStorage('bulletIDs', objData.bulletIDs);
+  for (const bulletID of Object.keys(objData.bullets)) { localStorage.setItem(bulletID, JSON.stringify(objData.bullets[bulletID])); }
+}
+
 // ----------------helpers----------------
 function dateEquals(date1, date2) {
   return (
