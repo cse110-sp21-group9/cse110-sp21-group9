@@ -146,7 +146,7 @@ addBtn.onclick = () => {
 // Create note subbullets
 contentAdd.onclick = () => {
   addSubbullet();
-}
+};
 
 // When user confirms bullet
 saveBulletBtn.onclick = () => {
@@ -453,7 +453,7 @@ function openEditDialog(elemEntry) {
   const oldHours = entryBullet.date.getHours();
 
   editTitle.value = entryBullet.title;
-  if(entryBullet.content === null) {
+  if (entryBullet.content === null) {
     editContent.value = '';
   } else {
     editContent.value = entryBullet.content;
