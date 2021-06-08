@@ -1,8 +1,8 @@
-// todo propper utils usage
-
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
+
+const DAY_PATH = '/source/frontend/app/page-day/day.html';
 
 const calendar = document.getElementById('calendar');
 const month = document.getElementById('month');
@@ -145,7 +145,7 @@ function populateCalendar(month, year, data) {
       date.addEventListener('click', function() {
         const hash = utils.hashString('d', yearIn, monthIn, date.childNodes[0].nodeValue);
         const root = document.URL.split('/')[2];
-        const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
+        const path = 'http://' + root + DAY_PATH;
         const url = new URL(path);
         url.hash = hash;
         window.location.href = url.href;
@@ -202,9 +202,9 @@ function resetCalendar() {
 }
 
 // for a specific month only
-// TO DO make a filter per month or something
 function bulletAppend(bullets) {
  
+  //what is temp?
   for (const temp of bullets) {
     const date = temp.date.toJSON().split('T')[0].split('-')[2];
     const curr = document.getElementById(parseInt(date));
@@ -212,6 +212,7 @@ function bulletAppend(bullets) {
     if (curr.childNodes.length === 1) {
       curr.appendChild(document.createElement('ul'));
     }
+    //could be done wiht a css tag
     var chars = 10-Math.max(0,Math.floor((1300-window.screen.width)/80)+1); // to calculate number of characters to display
 
     event.innerHTML = temp.title.substring(0,Math.min(temp.title.length, chars));

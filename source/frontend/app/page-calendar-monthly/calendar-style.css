@@ -71,6 +71,7 @@ body .main-container table{
 }
 
 table {
+  table-layout: fixed;
   margin-left: auto;
   margin-right: auto;
   height: 80%;
@@ -82,13 +83,15 @@ table {
   border-radius: 20px;
 }
 
-
 tbody tr td {
-
   vertical-align: top;
   text-align: left;
+  white-space: nowrap;
+  word-wrap: break-word;
   border: 1px solid var(--accent-color1);
-  height: 15%;
+  overflow: hidden;
+  width: 130px;
+  height: 130px;
 }
 
 tbody tr th {
