@@ -269,8 +269,8 @@ export function getLocalStorageData() {
 
 export function loadDataToLocalStorage(objData) {
   if (!('lastID' in objData) || !('bullets' in objData) || !('tags' in objData) || !('ids' in objData)) {
-    console.error("could not understand file");
-    return; 
+    console.error('could not understand file');
+    return;
   }
 
   localStorage.clear();
