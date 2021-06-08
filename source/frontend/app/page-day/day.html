@@ -181,7 +181,15 @@
 
 								</ul>
 							</div> <br>
-							<textarea name="desc" rows="10" cols="30" placeholder="Bullet content"></textarea><br>
+							<div name="desc">
+								<h4 id="subBullet_start">Extra Notes:</h4>
+								<button class="btn-sm btn-primary" id="addSubBullet"><i class="fas fa-plus"></i> Add Note</button>
+							</div><br>
+							<div>
+								<ul id="subBullets">
+
+								</ul>
+							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -199,12 +207,12 @@
 				<div class="modal-content">
 					<div class="modal-header" id='titleDateShowCase'>
 							<h3 id="viewtype">Event</h3><br>
-							<h5 id="viewdate">June 1, 2021</h5>
-							<h5 id="viewtime">9:00</h5><br>					
+							<h4 id="viewdate">June 1, 2021</h4>
+							<h4 id="viewtime">9:00</h4><br>					
 					</div>
 					<div class="modal-body">
 						<h3 id=viewtitle class="modal-title">Title of Bullet</h3><br>
-						<h5>Content: </h5>
+						<h4>Content: </h4>
 						<p id=viewdesc>Lorem ipsum</p>
 					</div>
 					<div class="modal-footer" id="tagShowCase">
@@ -215,6 +223,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!--Modal option to create a tag-->
 		<div id="tagcreation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tagbox"
 			aria-hidden="true">
@@ -225,14 +234,16 @@
 					</div>
 					<div class="modal-body">
 						<form method="dialog">
-							<label for="tagname">Add tag(enter to save): </label>
+							<div>
+							<label for="tagname">Add tag: </label>
 							<input type="text" id="tagname"><br>
+							<button id="saveTag" class="btn btn-primary" value="false">Save</button>
 						</form>
 						<ul id='taglist'>
 						</ul>
 					</div>
 					<div class="modal-footer">
-						<button id="saveTag" class="btn btn-primary" value="false">Done</button>
+						<button id="doneTag" class="btn btn-primary" value="false">Done</button>
 					</div>
 				</div>
 			</div>
@@ -267,7 +278,6 @@
 						<form method="dialog">
 							<label for="editTitle">Title: </label>
 							<input type="text" id="editTitle"><br>
-							<label for="editHour">Hour: </label>
 							<select name="editHour" id="editHour">
 							</select>
 							<select name="editAMPM" id="editAMPM">
@@ -287,8 +297,15 @@
 								<ul id="editBulletTags">
 								</ul>
 							</div> <br>
-							<textarea name="editDesc" rows="10" cols="30" placeholder="Bullet content"></textarea><br>
+							<div name="desc">
+								<h4 id="subBullet_start">Extra Notes:</h4>
+								<button class="btn-sm btn-primary" id="editSubBullet"><i class="fas fa-plus"></i> Add Note</button>
+							</div><br>
+							<div>
+								<ul id="editSubBullets">
 
+								</ul>
+							</div><br>
 						</form>
 					</div>
 					<div class="modal-footer">
