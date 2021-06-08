@@ -11,7 +11,7 @@ export const MONTH_NAMES_LONG = {
     10: 'October',
     11: 'November',
     12: 'December'
-  };
+};
 
 export const WEEK_NAMES_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export const WEEK_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

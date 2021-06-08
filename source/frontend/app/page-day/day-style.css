@@ -237,15 +237,15 @@ header {
 }
 
 /* Widgets on the dashboard */
-#mini-calendar {
+#miniCalendar {
   vertical-align: top;
   position: relative; 
-  background-color:rgb(255, 255, 255);
+  background-color: var(--background-color);
   width: 40vw;
   height: 46%;
   margin: 4vw;
   border-radius: 15px;
-  border: 1px solid black;
+  border: 1px solid var(--text-color);
   margin: 20px;
 }
 
