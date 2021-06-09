@@ -1,7 +1,7 @@
 /* eslint-env jquery */
 import { getLocalStorageData, loadDataToLocalStorage } from '../../../backend/crudFunctions.js';
-const LIGHT_LOGO_PATH = '../assets/nav-logo.svg';
-const DARK_LOGO_PATH = '../assets/dark-logo.svg';
+const LIGHT_LOGO_PATH = '../../assets/nav-logo.svg';
+const DARK_LOGO_PATH = '../../assets/dark-logo.svg';
 
 const settingsModel = document.getElementById('settingsNav');
 

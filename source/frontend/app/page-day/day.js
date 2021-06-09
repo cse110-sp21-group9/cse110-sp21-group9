@@ -50,7 +50,7 @@ const timeSegments = document.getElementById('time_list');
 const timeSlots = [];
 
 // generate hash of the day we're in if we don't have one already
-if (!document.URL.includes('#')) {
+if (!document.URL.includes('#') || document.location.hash.length === 0) {
   const url = new URL(document.URL);
   const date = new Date();
   url.hash = utils.hashString('d', date.getFullYear(), date.getMonth() + 1, date.getDate());
