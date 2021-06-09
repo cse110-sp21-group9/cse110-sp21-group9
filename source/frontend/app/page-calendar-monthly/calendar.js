@@ -69,10 +69,8 @@ filter.addEventListener('mouseover', function() {
 
 today.addEventListener('click', function() {
   let checker = new Date();
-  checker = checker.toISOString().split('T')[0].split('-');
-
-  monthIn = parseInt(checker[1]);
-  yearIn = parseInt(checker[0]);
+  monthIn = checker.getMonth() + 1;
+  yearIn = checker.getFullYear();
 
   resetCalendar();
   const start = new Date(yearIn, monthIn - 1);
@@ -88,10 +86,8 @@ filter.addEventListener('mouseover', function() {
 
 today.addEventListener('click', function() {
   let checker = new Date();
-  checker = checker.toISOString().split('T')[0].split('-');
-
-  monthIn = parseInt(checker[1]);
-  yearIn = parseInt(checker[0]);
+  monthIn = checker.getMonth() + 1;
+  yearIn = checker.getFullYear();
 
   resetCalendar();
   const start = new Date(yearIn, monthIn - 1);
@@ -129,15 +125,14 @@ function populateCalendar(month, year, data) {
     }
     const day = i % 7;
     if (day === utils.startDate(month, year) && start === false &&
-    counter < utils.daysInMonth(month, year) + 1) {
+      counter < utils.daysInMonth(month, year) + 1) {
       start = true;
     }
     if (start) {
       let checker = new Date();
-      checker = checker.toISOString().split('T')[0].split('-');
-      const monthC = parseInt(checker[1]);
-      const yearC = parseInt(checker[0]);
-      const dayC = parseInt(checker[2]);
+      const monthC = checker.getMonth() + 1;
+      const yearC = checker.getFullYear();
+      const dayC = checker.getDate();
 
       const date = document.createElement('td');
       date.setAttribute('id', counter);
@@ -211,8 +206,8 @@ function resetCalendar() {
 // for a specific month only
 function bulletAppend(bullets) {
   for (const temp of bullets) {
-    const date = temp.date.toJSON().split('T')[0].split('-')[2];
-    const curr = document.getElementById(parseInt(date));
+    const date = temp.date.getDate();
+    const curr = document.getElementById(date);
     const event = document.createElement('li');
     if (curr.childNodes.length === 1) {
       curr.appendChild(document.createElement('ul'));
@@ -234,14 +229,12 @@ function generateHash(onload = true) {
     let year;
     if (curr.includes('#') && curr.split('#')[1] !== '') {
       let date = utils.readHash(curr.split('#')[1]);
-      date = date.toISOString().split('T')[0].split('-');
-      month = parseInt(date[1]);
-      year = parseInt(date[0]);
+      month = date.getMonth() + 1;
+      year = date.getFullYear();
     } else {
       let date = new Date();
-      date = date.toISOString().split('T')[0].split('-');
-      month = parseInt(date[1]);
-      year = parseInt(date[0]);
+      month = date.getMonth() + 1;
+      year = date.getFullYear();
     }
     return utils.hashString('m', year, month);
   } else {
@@ -249,14 +242,16 @@ function generateHash(onload = true) {
   }
 }
 
+window.addEventListener("pageshow", () => {
+  filter.value = 'All Bullets';
+});
+
 crud.initCrudRuntime();
 const hashed = generateHash();
 
 let date = utils.readHash(hashed);
-date = date.toISOString().split('T')[0].split('-');
-
-yearIn = parseInt(date[0]);
-monthIn = parseInt(date[1]);
+monthIn = date.getMonth() + 1;
+yearIn = date.getFullYear();
 
 utils.updateURL(hashed);
 
@@ -264,6 +259,6 @@ const start = new Date(yearIn, monthIn - 1);
 const end = new Date(yearIn, monthIn);
 
 const data = onlyThese(start, end);
-
 resetCalendar();
 populateCalendar(monthIn, yearIn, data);
+

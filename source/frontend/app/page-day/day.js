@@ -49,6 +49,11 @@ const timeSegments = document.getElementById('time_list');
 
 const timeSlots = [];
 
+// Reset tag selector on window load
+window.addEventListener("pageshow", () => {
+  tagFilterSelect.value = 'ALL';
+});
+
 // generate hash of the day we're in if we don't have one already
 if (!document.URL.includes('#') || document.location.hash.length === 0) {
   const url = new URL(document.URL);
