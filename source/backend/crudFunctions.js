@@ -351,7 +351,7 @@ function fillRunTimeBullets() {
 function parseBullet(intID) {
   const bullet = JSON.parse(localStorage.getItem(intID));
   bullet.date = new Date(bullet.date);
-	if (bullet.dueDate !== null) { bullet.dueDate = new Date(bullet.dueDate); }
+  if (bullet.dueDate !== null) { bullet.dueDate = new Date(bullet.dueDate); }
   return bullet;
 }
 
