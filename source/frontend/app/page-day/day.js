@@ -143,9 +143,9 @@ addBtn.onclick = () => {
   }
 };
 
-// Create note subbullets
+// Create subbullets on event/task bullets
 contentAdd.onclick = () => {
-  addSubbullet();
+  addSubbulletonAddModal();
 };
 
 // When user confirms bullet
@@ -172,8 +172,17 @@ saveBulletBtn.onclick = () => {
     }
   }
 
+  // Grab bullets established in content box
+  const subBulletArray = [];
+  let subBulletsToAdd = contentInput.querySelectorAll('li');
+  for (let i = 0; i < subBulletsToAdd.length; i++) {
+    subBulletArray[i] = subBulletsToAdd[i].innerHTML;
+    console.log('query selected array elem: ' + subBulletsToAdd[i].innerHTML)
+    console.log('stored array elem: ' + subBulletArray[i]);
+  }
+  console.log(subBulletArray);
   // Make the bullet
-  const newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, bulletTags, contentInput.value);
+  const newBullet = crud.createBullet(bulletType, titleInput.value, bulletDate, bulletTags, subBulletArray);
   const newElement = createBulletEntryElem(newBullet);
   timeSlots[hour].append(newElement);
 
@@ -199,7 +208,15 @@ function showBulletInfo(elemEntry) {
   titleBar.innerHTML = curBullet.title;
   dateBar.innerHTML = monthName + ' ' + pageDate.getDate() + ', ' + pageDate.getFullYear();
   timeBar.innerHTML = getTime(curBullet.date.getHours());
-  contentBar.innerHTML = curBullet.content;
+  console.log('loaded content: ' + curBullet.content);
+  // clear all subbullets loaded onto this bullet modal
+  $(contentBar).empty();
+  // load subbullets fresh from the content storage
+  for(let i = 0; i < curBullet.content.length; i++) {
+    let subBullet = document.createElement('li');
+    subBullet.innerHTML = curBullet.content[i];
+    contentBar.appendChild(subBullet);
+  }
   typeBar.innerHTML = curBullet.type;
   createTagElements(tagBar, curBullet);
   // Can set class of tagBar here for styling
@@ -453,11 +470,15 @@ function openEditDialog(elemEntry) {
   const oldHours = entryBullet.date.getHours();
 
   editTitle.value = entryBullet.title;
-  if (entryBullet.content === null) {
-    editContent.value = '';
-  } else {
-    editContent.value = entryBullet.content;
+  
+  // For loading content subbullets
+  for(let i = 0; i < entryBullet.content.length; i++) {
+    let subBullet = document.createElement('li');
+    subBullet.innerHTML = entryBullet.content[i];
+    console.log(subBullet);
+    editContent.appendChild(subBullet);  
   }
+  
   if (oldHours > 11) {
     editHour.value = oldHours - 12;
     editAMPM.value = 'PM';
@@ -840,11 +861,11 @@ function deleteNote(elemEntry) {
   elemEntry.remove();
 }
 
-/** Creates note subbullets
+/** Creates note subbullets on the add modal
  *  @return a note subbullet
  */
-function addSubbullet() {
-  // Take things one at a time when creating note bullets
+function addSubbulletonAddModal() {
+  // Take things one at a time when creating subbullets
   contentAdd.disabled = true;
 
   // Create a div to hold input elements
@@ -873,16 +894,16 @@ function addSubbullet() {
   save.classList = 'btn btn-sm btn-primary';
   save.innerHTML = 'Save';
   subBulletInput.insertAdjacentElement('afterend', save);
+  const bullet = document.createElement('li');
   save.onclick = () => {
     // This is basically like pressing the cancel button
     if (subBulletInput.value !== '') {
       // Make the bullet
       const bulletType = 'Note';
-      const newBullet = crud.createBullet(bulletType, subBulletInput.value, pageDate, [], '');
-      const newElement = createBulletEntryElem(newBullet);
+      bullet.innerHTML = subBulletInput.value;
 
       // create the bullet element and destroy the input form
-      contentInput.append(newElement);
+      contentInput.append(bullet);
     }
     contentInput.removeChild(noteDiv);
     contentAdd.disabled = false;
@@ -895,32 +916,32 @@ function addSubbullet() {
       if (subBulletInput.value !== '') {
         // Make the bullet
         const bulletType = 'Note';
-        const newBullet = crud.createBullet(bulletType, subBulletInput.value, pageDate, [], '');
-        const newElement = createBulletEntryElem(newBullet);
+        bullet.innerHTML = subBulletInput.value;
 
         // create the bullet element and destroy the input form
-        contentInput.append(newElement);
+        contentInput.append(bullet);
       }
       contentInput.removeChild(noteDiv);
       contentAdd.disabled = false;
     }
   });
+  bullet.addEventListener('dblclick', function() {
+    editSubbulletOnAdd(bullet);
+  });
 }
 
-/** Special Editing functionality for subbullets.
+/** Special Editing functionality for subbullets. Only works on bullet creation modal
  *  It will replace the selected bullet with the desired edits
  *  @param {Note Bullet} elemEntry the entry we want to edit
  *  @return null
  */
-function editSubbullet(elemEntry) {
-  const entryBullet = crud.getBulletById(elemEntry.id);
+function editSubbulletOnAdd(elemEntry) {
   const editDiv = document.createElement('div');
   const editInput = document.createElement('input');
 
   editInput.type = 'text';
-  editInput.value = entryBullet.title;
+  editInput.value = elemEntry.innerHTML;
   editDiv.appendChild(editInput);
-  editDiv.id = entryBullet.ID + '_note_edit';
   contentInput.replaceChild(editDiv, elemEntry);
   editInput.focus();
 
@@ -938,18 +959,16 @@ function editSubbullet(elemEntry) {
   save.classList = 'btn btn-sm btn-primary';
   save.innerHTML = 'Save';
   editInput.insertAdjacentElement('afterend', save);
+  const editedBullet = document.createElement('li');
   save.onclick = () => {
     if (editInput.value === '') {
       // delete blyat
-      crud.deleteBulletById(elemEntry.id);
       contentInput.removeChild(editDiv);
     } else {
       // Get input fields
-      const newTitle = editInput.value;
-      // Update fields in localStorage
-      const newBullet = crud.setAttributes(elemEntry.id, { title: newTitle });
-      // Update bullet in schedule to reflect change in time
-      contentInput.replaceChild(createBulletEntryElem(newBullet), editDiv);
+      editedBullet.innerHTML = editInput.value;
+      // replace input box with new subbullet
+      contentInput.replaceChild(editedBullet, editDiv);
     }
   };
 
@@ -957,16 +976,12 @@ function editSubbullet(elemEntry) {
     if (e.key === 'Enter') {
       if (editInput.value === '') {
         // delete blyat
-        crud.deleteBulletById(elemEntry.id);
         contentInput.removeChild(editDiv);
       } else {
         // Get input fields
-        const newTitle = editInput.value;
-        // Update fields in localStorage
-        const newBullet = crud.setAttributes(elemEntry.id, { title: newTitle });
-
-        // Update bullet in schedule to reflect change in time
-        contentInput.replaceChild(createBulletEntryElem(newBullet), editDiv);
+        editedBullet.innerHTML = editInput.value;
+        // replace input box with new subbullet
+        contentInput.replaceChild(editedBullet, editDiv);
       }
     }
   });
