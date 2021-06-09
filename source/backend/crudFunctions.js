@@ -258,6 +258,28 @@ export function initCrudRuntime() {
   fillRunTimeBullets();
 }
 
+export function getLocalStorageData() {
+  return {
+    lastID: lastID,
+    bullets: runTimeBullets,
+    tags: runTimeTags,
+    ids: readArrayFromStorage('bulletIDs')
+  };
+}
+
+export function loadDataToLocalStorage(objData) {
+  if (!('lastID' in objData) || !('bullets' in objData) || !('tags' in objData) || !('ids' in objData)) {
+    console.error('could not understand file');
+    return;
+  }
+
+  localStorage.clear();
+  localStorage.setItem('lastID', objData.lastID);
+  localStorage.setItem('tags', JSON.stringify(objData.tags));
+  writeArrayToStorage('bulletIDs', objData.ids);
+  for (const bulletID of Object.keys(objData.bullets)) { localStorage.setItem(bulletID, JSON.stringify(objData.bullets[bulletID])); }
+}
+
 // ----------------helpers----------------
 function dateEquals(date1, date2) {
   return (
@@ -319,10 +341,8 @@ function fillRunTimeBullets() {
 
   lastID = Number(lastID);
   const bulletIDs = readArrayFromStorage('bulletIDs');
-  console.log('loaded bullet ids: ', bulletIDs);
   for (const ID of bulletIDs) {
     runTimeBullets[ID] = parseBullet(ID);
-    console.log('loaded bullet object: ', runTimeBullets[ID]);
   }
   runTimeTags = JSON.parse(localStorage.getItem('tags'));
   runTimeUpToDate = true;
