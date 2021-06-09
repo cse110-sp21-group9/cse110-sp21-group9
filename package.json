@@ -47,8 +47,5 @@
   "jest": {
     "preset": "jest-puppeteer",
     "verbose": true
-  },
-	"engines": {
-    "node": "14.16.1"
   }
 }

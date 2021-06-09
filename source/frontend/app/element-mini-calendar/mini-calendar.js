@@ -4,7 +4,7 @@ import * as globals from '../../globals.js';
 const DAY_PATH = '/source/frontend/app/page-day/day.html';
 const MONTH_PATH = '/source/frontend/app/page-calendar-monthly/calendar.html';
 
-const COLUMNS = 7;
+const COLUMNS = 8;
 const ROWS = 6;
 
 /*
@@ -65,15 +65,40 @@ export class MiniCalendar extends HTMLElement {
         td{
           position: relative;
           z-index: 0;
-          width: 14.3%;
+          width: 12.5%;
         }
 
         td.day{
           cursor: pointer;
         }
 
+        td.week{
+          cursor: pointer;
+        }
+
         td.other-month{
           color: grey;
+        }
+
+        .week:hover:after{
+          background-color: lightseagreen;
+          cursor: default;
+        }
+
+        .week.selected::after{
+          background: lightblue;
+        }
+
+        .week::after{
+          position: absolute;
+          top: 0;
+          left: 0%;
+          bottom: 0;
+          width: 800%;
+          height: 100%;
+          border-radius: 10px;
+          z-index: -2;
+          content: '';
         }
 
         .day:hover::after{
@@ -86,8 +111,8 @@ export class MiniCalendar extends HTMLElement {
 
         .day::after{
           position: absolute;
-          top: 14.3%;
-          left: 14.3%;
+          top: 12.5%;
+          left: 12.5%;
           right: 0;
           bottom: 0;
           width: 75%;
@@ -100,13 +125,15 @@ export class MiniCalendar extends HTMLElement {
       <table id = "calendar">
         <thead>
           <tr class="monthyear">
-            <td colspan="1" style="height:50px;"></td>
+            <td colspan="2" style="height:50px;"></td>
             <td class="monthButton" id="backmonth"></td>
             <td class="monthButton" id="month" colspan="2"></td>
             <td class="monthButton" id="forwardmonth"></td>
+            <td></td>
             <td id="year"></td>
           </tr>
           <tr>
+            <th></th>
             <th>Sun</th>
             <th>Mon</th>
             <th>Tue</th>
@@ -146,6 +173,7 @@ export class MiniCalendar extends HTMLElement {
   * @param date = null: a date object that will be used to build the calendar
   *                     if it is left out, then we read off the date from the URL hash
   * @param selectDay = true: if true the day that was passed in by date will start selected
+  * @param selectWeek = true: if true the week that the day from the date object that was passed in will be selected
   *
   * note: in order for callbacks to work the callbacks must be bound before calling setCalendar
   */
@@ -189,6 +217,11 @@ export class MiniCalendar extends HTMLElement {
 
         const currentDate = new Date(date.getFullYear(), date.getMonth(), dateCounter);
 
+        if (x === 0) {
+          dayElement.className = 'week';
+          continue;
+        }
+
         const miniCal = this;
         dayElement.addEventListener('click', function() {
           miniCal.deselectAll();
@@ -218,7 +251,7 @@ export class MiniCalendar extends HTMLElement {
     }
   }
 
-  // helper function to deselect all days
+  // helper function to deselect all weeks and days
   deselectAll() {
     const weeksArr = this.shadowRoot.getElementById('calendar-body').childNodes;
 

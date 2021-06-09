@@ -20,7 +20,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
 
-	<script type="module" src="../sidebar/sidebar.js"></script>
+	<script type="module" src="/source/frontend/app/sidebar/sidebar.js"></script>
 
 </head>
 
@@ -36,14 +36,14 @@
 				</a>
 				<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
 					<li class="nav-item">
-						<a href="./day.html" class="nav-link active py-3 border-bottom"
+						<a href="/source/frontend/app/page-day/day.html" class="nav-link active py-3 border-bottom"
 							aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right"
 							data-bs-original-title="Home">
 							<i class="fas fa-home fa-2x"></i>
 						</a>
 					</li>
 					<li>
-						<a href="../page-calendar-monthly/calendar.html"
+						<a href="/source/frontend/app/page-calendar-monthly/calendar.html"
 							class="nav-link py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
 							data-bs-placement="right" data-bs-original-title="Month">
 							<i class="fas fa-calendar-alt fa-2x"></i>
@@ -205,14 +205,13 @@
 					<div class="modal-body">
 						<form method="dialog">
 							<label for="tagname">Add tag(enter to save): </label>
-							<button id="saveTag" class="btn btn-primary" value="false">Save</button>
 							<input type="text" id="tagname"><br>
 						</form>
 						<ul id='taglist'>
 						</ul>
 					</div>
 					<div class="modal-footer">
-						<button id="doneTag" class="btn btn-primary" value="false">Done</button>
+						<button id="saveTag" class="btn btn-primary" value="false">Done</button>
 					</div>
 				</div>
 			</div>

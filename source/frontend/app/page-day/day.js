@@ -30,8 +30,7 @@ const confirmBtn = document.getElementById('okConfirm');
 
 // Tag Creation Modal Elements
 const tagFilterSelect = document.getElementById('selecttag');
-const tagSaveBtn = document.getElementById('saveTag');
-const tagCloseBtn = document.getElementById('doneTag');
+const tagCloseBtn = document.getElementById('saveTag');
 const tagName = document.getElementById('tagname');
 
 // Edit Modal Elements
@@ -322,14 +321,6 @@ tagName.addEventListener('keypress', function(e) {
     loadTags();
     tagName.value = '';
   }
-});
-
-// Add the new tag when the user presses the save button
-tagSaveBtn.addEventListener('click', function() {
-  // create bullet element and destroy the input text
-  crud.createTag(tagName.value);
-  loadTags();
-  tagName.value = '';
 });
 
 /**

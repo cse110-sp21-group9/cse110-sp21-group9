@@ -71,33 +71,25 @@ body .main-container table{
 }
 
 table {
-  table-layout: fixed;
   margin-left: auto;
   margin-right: auto;
-  height: 80%;
-  width: 70%;
+  height: auto;
+  width: auto;
   border-collapse: collapse;
   color: var(--text-color);
-  table-layout: fixed;
-  border-spacing: 0;
-  border-radius: 20px;
 }
 
-tbody tr td {
+tbody td {
   vertical-align: top;
   text-align: left;
-  white-space: nowrap;
-  word-wrap: break-word;
   border: 1px solid var(--accent-color1);
-  overflow: hidden;
-  width: 130px;
-  height: 130px;
+  width: 10rem;
+  height: 8rem;
 }
 
 tbody tr th {
   border: 1px solid var(--accent-color1);
   color: var(--text-color);
-  height: 5%;
 }
 
 thead {
@@ -109,7 +101,7 @@ thead {
 }
 
 .monthyear {
-  height: 5%;
+  height: 3rem;
 }
 
 /* The sidebar menu */
@@ -139,11 +131,11 @@ thead {
 
 /* Style month and year title*/
 #monthTitle {
-  font-size: 200%;
+  font-size: 30px;
 }
 
 #yearTitle {
-  font-size: 100%;
+  font-size: 20px;
 }
 
 /* Pointer on buttons back/forward buttons*/
@@ -166,17 +158,4 @@ thead {
 
 #settingsModal {
   background-color: var(--modal-color-background);
-}
-
-.main-calendar{
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-}
-
-#filter {
-  background-color: #007aff;
-  color: white;
-  border-color: #007aff;
 }
