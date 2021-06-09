@@ -174,10 +174,10 @@ saveBulletBtn.onclick = () => {
 
   // Grab bullets established in content box
   const subBulletArray = [];
-  let subBulletsToAdd = contentInput.querySelectorAll('li');
+  const subBulletsToAdd = contentInput.querySelectorAll('li');
   for (let i = 0; i < subBulletsToAdd.length; i++) {
     subBulletArray[i] = subBulletsToAdd[i].innerHTML;
-    console.log('query selected array elem: ' + subBulletsToAdd[i].innerHTML)
+    console.log('query selected array elem: ' + subBulletsToAdd[i].innerHTML);
     console.log('stored array elem: ' + subBulletArray[i]);
   }
   console.log(subBulletArray);
@@ -212,8 +212,8 @@ function showBulletInfo(elemEntry) {
   // clear all subbullets loaded onto this bullet modal
   $(contentBar).empty();
   // load subbullets fresh from the content storage
-  for(let i = 0; i < curBullet.content.length; i++) {
-    let subBullet = document.createElement('li');
+  for (let i = 0; i < curBullet.content.length; i++) {
+    const subBullet = document.createElement('li');
     subBullet.innerHTML = curBullet.content[i];
     contentBar.appendChild(subBullet);
   }
@@ -470,15 +470,15 @@ function openEditDialog(elemEntry) {
   const oldHours = entryBullet.date.getHours();
 
   editTitle.value = entryBullet.title;
-  
+
   // For loading content subbullets
-  for(let i = 0; i < entryBullet.content.length; i++) {
-    let subBullet = document.createElement('li');
+  for (let i = 0; i < entryBullet.content.length; i++) {
+    const subBullet = document.createElement('li');
     subBullet.innerHTML = entryBullet.content[i];
     console.log(subBullet);
-    editContent.appendChild(subBullet);  
+    editContent.appendChild(subBullet);
   }
-  
+
   if (oldHours > 11) {
     editHour.value = oldHours - 12;
     editAMPM.value = 'PM';
