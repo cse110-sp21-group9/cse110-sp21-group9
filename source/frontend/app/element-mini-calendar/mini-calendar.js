@@ -1,10 +1,9 @@
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
 
-const DAY_PATH = '/source/frontend/app/page-day/day.html';
-const MONTH_PATH = '/source/frontend/app/page-calendar-monthly/calendar.html';
+const MONTH_PATH = '../page-calendar-monthly/calendar.html';
 
-const COLUMNS = 8;
+const COLUMNS = 7;
 const ROWS = 6;
 
 /*
@@ -65,14 +64,10 @@ export class MiniCalendar extends HTMLElement {
         td{
           position: relative;
           z-index: 0;
-          width: 12.5%;
+          width: 14.3%;
         }
 
         td.day{
-          cursor: pointer;
-        }
-
-        td.week{
           cursor: pointer;
         }
 
@@ -100,7 +95,6 @@ export class MiniCalendar extends HTMLElement {
           z-index: -2;
           content: '';
         }
-
         .day:hover::after{
           background: plum;
         }
@@ -111,8 +105,8 @@ export class MiniCalendar extends HTMLElement {
 
         .day::after{
           position: absolute;
-          top: 12.5%;
-          left: 12.5%;
+          top: 14.3%;
+          left: 14.3%;
           right: 0;
           bottom: 0;
           width: 75%;
@@ -133,7 +127,6 @@ export class MiniCalendar extends HTMLElement {
             <td id="year"></td>
           </tr>
           <tr>
-            <th></th>
             <th>Sun</th>
             <th>Mon</th>
             <th>Tue</th>
@@ -173,7 +166,6 @@ export class MiniCalendar extends HTMLElement {
   * @param date = null: a date object that will be used to build the calendar
   *                     if it is left out, then we read off the date from the URL hash
   * @param selectDay = true: if true the day that was passed in by date will start selected
-  * @param selectWeek = true: if true the week that the day from the date object that was passed in will be selected
   *
   * note: in order for callbacks to work the callbacks must be bound before calling setCalendar
   */
@@ -201,11 +193,7 @@ export class MiniCalendar extends HTMLElement {
       const month = getMonthFromString(this.textContent);
       const dateYear = document.querySelector('mini-calendar').shadowRoot.getElementById('year').textContent;
       const hash = utils.hashString('m', dateYear, month);
-      const root = document.URL.split('/')[2];
-      const path = 'http://' + root + MONTH_PATH;
-      const url = new URL(path);
-      url.hash = hash;
-      window.location.href = url.href;
+      window.location.href = MONTH_PATH + '#' + hash;
     });
 
     // now build new elements
@@ -216,12 +204,6 @@ export class MiniCalendar extends HTMLElement {
         weekElement.appendChild(dayElement);
 
         const currentDate = new Date(date.getFullYear(), date.getMonth(), dateCounter);
-
-        if (x === 0) {
-          dayElement.className = 'week';
-          continue;
-        }
-
         const miniCal = this;
         dayElement.addEventListener('click', function() {
           miniCal.deselectAll();
@@ -230,11 +212,7 @@ export class MiniCalendar extends HTMLElement {
           const dateMonth = getMonthFromString(miniCal.shadowRoot.getElementById('month').textContent);
           const dateYear = miniCal.shadowRoot.getElementById('year').textContent;
           const hash = utils.hashString('d', dateYear, dateMonth, dateDay);
-          const root = document.URL.split('/')[2];
-          const path = 'http://' + root + DAY_PATH;
-          const url = new URL(path);
-          url.hash = hash;
-          window.location.href = url.href;
+          window.location.hash = hash;
           window.location.reload();
         });
 
@@ -251,7 +229,7 @@ export class MiniCalendar extends HTMLElement {
     }
   }
 
-  // helper function to deselect all weeks and days
+  // helper function to deselect all days
   deselectAll() {
     const weeksArr = this.shadowRoot.getElementById('calendar-body').childNodes;
 

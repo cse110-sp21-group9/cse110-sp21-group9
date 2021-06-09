@@ -1,4 +1,32 @@
-/* get elements from html page */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: frontend/app/page-day/day.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: frontend/app/page-day/day.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* get elements from html page */
 /* eslint-env jquery */
 // POTENTIALLY OLD
 import * as crud from '../../../backend/crudFunctions.js';
@@ -76,7 +104,7 @@ crud.initCrudRuntime();
 loadTags();
 
 // make timeslots
-for (let i = 0; i < 24; i++) {
+for (let i = 0; i &lt; 24; i++) {
   const timeSlot = makeTimeSlotComponent(i);
   timeSegments.appendChild(timeSlot);
 
@@ -106,7 +134,7 @@ let opt = document.createElement('option');
 opt.value = 0;
 opt.innerHTML = '12:00';
 hourInput.appendChild(opt);
-for (let i = 1; i < 12; i++) {
+for (let i = 1; i &lt; 12; i++) {
   opt = document.createElement('option');
   opt.value = i;
   opt.innerHTML = i + ':00';
@@ -117,7 +145,7 @@ opt = document.createElement('option');
 opt.value = 0;
 opt.innerHTML = '12:00';
 editHour.appendChild(opt);
-for (let i = 1; i < 12; i++) {
+for (let i = 1; i &lt; 12; i++) {
   opt = document.createElement('option');
   opt.value = i;
   opt.innerHTML = i + ':00';
@@ -160,7 +188,7 @@ saveBulletBtn.onclick = () => {
   const bulletTags = [];
   const tagBoxes = selectedTags.querySelectorAll('div');
   if (tagBoxes !== null) {
-    for (let i = 0; i < tagBoxes.length; i++) {
+    for (let i = 0; i &lt; tagBoxes.length; i++) {
       const curTag = tagBoxes[i].querySelector('li').innerHTML;
       bulletTags.push(curTag);
       tagBoxes[i].remove();
@@ -252,10 +280,10 @@ function loadTags() {
 
   // Grab the tags already pasted onto the modal
   const loadedTags = loadingBay.querySelectorAll('li');
-  for (let i = 0; i < tagsToLoad.length; i++) {
+  for (let i = 0; i &lt; tagsToLoad.length; i++) {
     let curTag = tagsToLoad[i];
     // check if the tag we're putting in is already pasted if so, set our current tag to null
-    for (let j = 0; j < loadedTags.length; j++) {
+    for (let j = 0; j &lt; loadedTags.length; j++) {
       if (loadedTags[j].innerHTML === curTag) {
         curTag = null;
       }
@@ -281,7 +309,7 @@ function loadTags() {
       // create and append delete button
       // NOTE FOR DESIGN TEAM: Make this into a little x maybe
       const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts', tagBox);
-      deleteButton.innerHTML = '<i class="fas fa-trash">';
+      deleteButton.innerHTML = '&lt;i class="fas fa-trash">';
       deleteButton.addEventListener('click', () => {
         crud.removeTagGlobally(tag.innerHTML);
         tagFilterSelect.removeChild(option);
@@ -351,7 +379,7 @@ function populateTagOptions(objSelect) {
   defaultopt.innerHTML = 'Select tag:';
   objSelect.appendChild(defaultopt);
   console.log(objSelect);
-  for (let i = 0; i < tagsToLoad.length; i++) {
+  for (let i = 0; i &lt; tagsToLoad.length; i++) {
     const curTag = tagsToLoad[i];
     // create an option box for the tag and add it to the selector
     const option = document.createElement('option');
@@ -379,7 +407,7 @@ function addListTag(objUList, strTag) {
   tagBox.querySelector('li').innerHTML = strTag;
   // Make sure user can delete tags that they realize they don't want to add
   const deleteButton = appendButton('', '', 'btn-smbtn-danger circleButts', tagBox);
-  deleteButton.innerHTML = '<i class="fas fa-trash">';
+  deleteButton.innerHTML = '&lt;i class="fas fa-trash">';
   deleteButton.addEventListener('click', () => {
     objUList.removeChild(tagBox);
   });
@@ -488,7 +516,7 @@ function openEditDialog(elemEntry) {
     const bulletTags = [];
     const tagBoxes = editSelectedTags.querySelectorAll('div');
     if (tagBoxes !== null) {
-      for (let i = 0; i < tagBoxes.length; i++) {
+      for (let i = 0; i &lt; tagBoxes.length; i++) {
         const curTag = tagBoxes[i].querySelector('li').innerHTML;
         bulletTags.push(curTag);
         tagBoxes[i].remove();
@@ -568,7 +596,7 @@ function createBulletEntryElem(objBullet) {
 
     // create and append delete button as that's all we need for notes
     const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnSpan);
-    deleteButton.innerHTML = '<i class="fas fa-trash">';
+    deleteButton.innerHTML = '&lt;i class="fas fa-trash">';
     deleteButton.id = objBullet.ID + '_delete';
     deleteButton.addEventListener('click', () => {
       deleteNote(newEntry);
@@ -590,7 +618,7 @@ function createBulletEntryElem(objBullet) {
 
     // Create and append edit button
     const editButton = appendButton('', '', 'btn-sm btn-primary circleButts d-none', btnSpan);
-    editButton.innerHTML = '<i class="fas fa-pen"></i>';
+    editButton.innerHTML = '&lt;i class="fas fa-pen">&lt;/i>';
     editButton.id = objBullet.ID + '_edit';
     editButton.addEventListener('click', () => {
       openEditDialog(newEntry);
@@ -607,7 +635,7 @@ function createBulletEntryElem(objBullet) {
 
     // create and append delete button
     const deleteButton = appendButton('', '', 'btn-sm btn-danger circleButts d-none', btnSpan);
-    deleteButton.innerHTML = '<i class="fas fa-trash">';
+    deleteButton.innerHTML = '&lt;i class="fas fa-trash">';
     deleteButton.id = objBullet.ID + '_delete';
     deleteButton.addEventListener('click', () => {
       openDeleteDialog(newEntry);
@@ -826,3 +854,26 @@ function deleteNote(elemEntry) {
 const cal = document.createElement('mini-calendar');
 document.getElementById('miniCalendar').appendChild(cal);
 cal.setCalendar();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Bullet.html">Bullet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addListTag">addListTag</a></li><li><a href="global.html#appendButton">appendButton</a></li><li><a href="global.html#appendTextNode">appendTextNode</a></li><li><a href="global.html#closeSidebar">closeSidebar</a></li><li><a href="global.html#createBullet">createBullet</a></li><li><a href="global.html#createBulletEntryElem">createBulletEntryElem</a></li><li><a href="global.html#createTag">createTag</a></li><li><a href="global.html#createTagElements">createTagElements</a></li><li><a href="global.html#deleteBulletById">deleteBulletById</a></li><li><a href="global.html#deleteBulletEntry">deleteBulletEntry</a></li><li><a href="global.html#deleteBulletFromStorage">deleteBulletFromStorage</a></li><li><a href="global.html#deleteNote">deleteNote</a></li><li><a href="global.html#editBulletEntry">editBulletEntry</a></li><li><a href="global.html#editNote">editNote</a></li><li><a href="global.html#editTags">editTags</a></li><li><a href="global.html#fillRunTimeBullets">fillRunTimeBullets</a></li><li><a href="global.html#fillRunTimeTags">fillRunTimeTags</a></li><li><a href="global.html#filterArray">filterArray</a></li><li><a href="global.html#getBulletById">getBulletById</a></li><li><a href="global.html#getBulletsByDateRange">getBulletsByDateRange</a></li><li><a href="global.html#getCheckBoxResults">getCheckBoxResults</a></li><li><a href="global.html#getEventBulletsByDateRange">getEventBulletsByDateRange</a></li><li><a href="global.html#getHour">getHour</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#initCrudRuntime">initCrudRuntime</a></li><li><a href="global.html#loadBullets">loadBullets</a></li><li><a href="global.html#loadTags">loadTags</a></li><li><a href="global.html#openDeleteDialog">openDeleteDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openSidebar">openSidebar</a></li><li><a href="global.html#populateTagOptions">populateTagOptions</a></li><li><a href="global.html#readArrayFromStorage">readArrayFromStorage</a></li><li><a href="global.html#runTimeBullets">runTimeBullets</a></li><li><a href="global.html#showBulletInfo">showBulletInfo</a></li><li><a href="global.html#updateTags">updateTags</a></li><li><a href="global.html#writeArrayToStorage">writeArrayToStorage</a></li><li><a href="global.html#writeBulletToStorage">writeBulletToStorage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed Jun 09 2021 06:03:04 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -155,7 +155,8 @@ describe('Unit Tests for CRUD Backend API', () => {
   // getEventBulletsByTag
   test(`Test${counter()}: getEventBulletsByTag() returns events with correct tags`, () => {
     const arrBullets = crud.getEventBulletsByTag(strTestTag);
-    for (bulletObj of arrBullets) {
+		expect(arrBullets.length).toBe(1);
+    for (let bulletObj of arrBullets) {
       expect(bulletObj.type).toMatch('Event');
       expect(bulletObj.tags).toContain(strTestTag);
     }
@@ -164,7 +165,8 @@ describe('Unit Tests for CRUD Backend API', () => {
   // getNoteBulletsByTag
   test(`Test${counter()}: getNoteBulletsByTag() returns events with correct tags`, () => {
     const arrBullets = crud.getNoteBulletsByTag(strTestTag);
-    for (bulletObj in arrBullets) {
+		expect(arrBullets.length).toBe(1);
+    for (let bulletObj of arrBullets) {
       expect(bulletObj.type).toMatch('Note');
       expect(bulletObj.tags).toContain(strTestTag);
     }
@@ -173,7 +175,8 @@ describe('Unit Tests for CRUD Backend API', () => {
   // getTaskBulletsByTag
   test(`Test${counter()}: getTaskBulletsByTag() returns events with correct tags`, () => {
     const arrBullets = crud.getTaskBulletsByTag(strTestTag);
-    for (bulletObj in arrBullets) {
+		expect(arrBullets.length).toBe(1);
+    for (let bulletObj of arrBullets) {
       expect(bulletObj.type).toMatch('Task');
       expect(bulletObj.tags).toContain(strTestTag);
     }
@@ -184,6 +187,7 @@ describe('Unit Tests for CRUD Backend API', () => {
     const arrBullets = crud.getBulletsByDateRange(objStartDate, objEndDate);
     let startTime = objStartDate.getTime();
     let endTime = objEndDate.getTime();
+		expect(arrBullets.length).toBe(2);
     for (let bulletObj of arrBullets) {
       expect(bulletObj.date.getTime()).toBeGreaterThanOrEqual(startTime);
       expect(bulletObj.date.getTime()).toBeLessThanOrEqual(endTime);
@@ -196,6 +200,7 @@ describe('Unit Tests for CRUD Backend API', () => {
     const arrBullets = crud.getBulletsByDateSpan(objEventDate, objDueDate);
     let startTime = objEventDate.getTime();
     let endTime = objDueDate.getTime();
+		expect(arrBullets.length).toBe(1);
     for (let bulletObj of arrBullets) {
       expect(bulletObj.date.getTime()).toBe(startTime);
       expect(bulletObj.dueDate.getTime()).toBe(endTime);
@@ -207,6 +212,7 @@ describe('Unit Tests for CRUD Backend API', () => {
     const arrBullets = crud.getEventBulletsByDateRange(objStartDate, objEndDate);
     let startTime = objStartDate.getTime();
     let endTime = objEndDate.getTime();
+		expect(arrBullets.length).toBe(1);
     for (let bulletObj of arrBullets) {
       expect(bulletObj.type).toMatch('Event');
       expect(bulletObj.date.getTime()).toBeGreaterThanOrEqual(startTime);
@@ -216,9 +222,10 @@ describe('Unit Tests for CRUD Backend API', () => {
 
   // getNoteBulletsByDateRange
   test(`Test${counter()}: getNoteBulletsByDateRange() returns notes with correct dates`, () => {
-    const arrBullets = crud.getNoteBulletsByDateRange(objStartDate, objEndDate);
-    let startTime = objStartDate.getTime();
+    const arrBullets = crud.getNoteBulletsByDateRange(objNoteDate, objEndDate);
+    let startTime = objNoteDate.getTime();
     let endTime = objEndDate.getTime();
+		expect(arrBullets.length).toBe(1);
     for (let bulletObj of arrBullets) {
       expect(bulletObj.type).toMatch('Note');
       expect(bulletObj.date.getTime()).toBeGreaterThanOrEqual(startTime);
@@ -228,10 +235,11 @@ describe('Unit Tests for CRUD Backend API', () => {
 
   // getTaskBulletsByDateRange
   test(`Test${counter()}: getTaskBulletsByDateRange() returns tasks with correct dates`, () => {
-    const arrBullets = crud.getEventBulletsByDateRange(objStartDate, objEndDate);
+    const arrBullets = crud.getTaskBulletsByDateRange(objStartDate, objEndDate);
     let startTime = objStartDate.getTime();
     let endTime = objEndDate.getTime();
-    for (bulletObj of arrBullets) {
+		expect(arrBullets.length).toBe(1);
+    for (let bulletObj of arrBullets) {
       expect(bulletObj.type).toMatch('Task');
       expect(bulletObj.date.getTime()).toBeGreaterThanOrEqual(startTime);
       expect(bulletObj.date.getTime()).toBeLessThanOrEqual(endTime);

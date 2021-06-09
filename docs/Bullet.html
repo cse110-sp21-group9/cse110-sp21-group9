@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: frontend/app/page-journal/bullet.js</title>
+    <title>JSDoc: Class: Bullet</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,67 +17,146 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: frontend/app/page-journal/bullet.js</h1>
+    <h1 class="page-title">Class: Bullet</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * &lt;bullet-entry> custom component
- * to be subclassed later by notes, tasks, events, etc.
- * It uses the template with id="bulletTemplate" in crud.html
- */
-export class Bullet {
-  constructor(objBullet) {
-    this.ID = objBullet.ID; // automatic generation up to nearest second, hidden from user
-    this.title = objBullet.title; // user selection
-    this.type = objBullet.type; // user selection, this is the specific type of bullet
-    this.date = objBullet.date; // user selected date, the one actually displayed to the user
-    this.tags = objBullet.tags; // user selection
-    this.content = objBullet.content; // user input
-    this.dueDate = objBullet.dueDate;
-    this.status = objBullet.status;
-  }
+        <h2><span class="attribs"><span class="type-signature"></span></span>Bullet<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description"><bullet-entry> custom component
+to be subclassed later by notes, tasks, events, etc.
+It uses the template with id="bulletTemplate" in crud.html</div>
+        
+    
+</header>
 
-  get ID() {
-    return this.ID;
-  }
+<article>
+    <div class="container-overview">
+    
+        
 
-  get title() {
-    return this.title;
-  }
+    
+    <h2>Constructor</h2>
+    
 
-  get type() {
-    return this.type;
-  }
+    
+    <h4 class="name" id="Bullet"><span class="type-signature"></span>new Bullet<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-  get date() {
-    return this.date;
-  }
+    
 
-  get tags() {
-    return this.tags;
-  }
 
-  get content() {
-    return this.content;
-  }
 
-  get dueDate() {
-    return this.dueDate;
-  }
 
-  get status() {
-    return this.status;
-  }
-}
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_bullet.js.html">frontend/app/page-journal/bullet.js</a>, <a href="frontend_app_page-journal_bullet.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="Bullet.html">Bullet</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

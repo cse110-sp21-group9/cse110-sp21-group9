@@ -25,22 +25,3 @@ jobs:
           npm test -- integration
         env:
           CI: true
-  e2e-test: #Run automated end-to-end tests
-    name: Automated end-to-end tests
-    needs: integration-test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-
-      - name: npm install, and test
-        run: |
-          npm install
-          npm test -- e2e
-        env:
-          CI: true

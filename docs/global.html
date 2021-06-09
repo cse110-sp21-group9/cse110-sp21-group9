@@ -98,7 +98,7 @@
 
         
             
-<h4 class="name" id="runTimeBullets"><span class="type-signature"></span>runTimeBullets<span class="type-signature"></span></h4>
+<h4 class="name" id="runTimeBullets"><span class="type-signature">(constant) </span>runTimeBullets<span class="type-signature"></span></h4>
 
 
 
@@ -149,7 +149,76 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line12">line 12</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="runTimeBullets"><span class="type-signature">(constant) </span>runTimeBullets<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Handles the backend of creating and editing bullet objects and tags and
+ making sure they're properly stored.
+ most of the code in here should be considered wip
+ TODO: Create more comprehensive ID system
+ Extend created bullet object to do events and tasks on top of the currently available notes
+   Be able to edit and delete tags
+ Change storage from local to the external database
+ Completed: Add type and tag functionality
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -170,6 +239,404 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addListTag"><span class="type-signature"></span>addListTag<span class="signature">(objUList, strTag)</span><span class="type-signature"> &rarr; {HTMLDivElement}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Creates a new tag html element to add to list
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>objUList</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLUListElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the list we want to add tags to</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strTag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the tag we want to create</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line371">line 371</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    div containing tag and delete button
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTMLDivElement</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="appendButton"><span class="type-signature"></span>appendButton<span class="signature">(strDisp, strStyle, strClass, elemParent)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    helper function to add buttons to bullet entry
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>strDisp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">what we want the bullet to read on the DOM</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strStyle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the style we want the button in</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strClass</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">what kind of button</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>elemParent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the bullet we want to tie the button to</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line520">line 520</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a button
+</div>
+
+
+
+    
+
+
+
+
 
         
             
@@ -347,7 +814,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line165">line 165</a>
+        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line164">line 164</a>
     </li></ul></dd>
     
 
@@ -540,7 +1007,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line150">line 150</a>
+        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -638,7 +1105,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-calendar_sidebar.js.html">frontend/app/page-calendar/sidebar.js</a>, <a href="frontend_app_page-calendar_sidebar.js.html#line30">line 30</a>
+        <a href="frontend_app_page-dashboard_script.js.html">frontend/app/page-dashboard/script.js</a>, <a href="frontend_app_page-dashboard_script.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -736,7 +1203,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-dashboard_sidebar.js.html">frontend/app/page-dashboard/sidebar.js</a>, <a href="frontend_app_page-dashboard_sidebar.js.html#line30">line 30</a>
+        <a href="frontend_components_script.js.html">frontend/components/script.js</a>, <a href="frontend_components_script.js.html#line31">line 31</a>
     </li></ul></dd>
     
 
@@ -782,105 +1249,7 @@
     
 
     
-    <h4 class="name" id="closeSidebar"><span class="type-signature"></span>closeSidebar<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Visually closes the sidebar
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_sidebar.js.html">frontend/app/page-journal/sidebar.js</a>, <a href="frontend_app_page-journal_sidebar.js.html#line30">line 30</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    null
-</div>
-
-
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="createBullet"><span class="type-signature"></span>createBullet<span class="signature">(objData, strType, dateDate, intID)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="createBullet"><span class="type-signature"></span>createBullet<span class="signature">(strType, strTitle, strDate, strContent, lstTags, option)</span><span class="type-signature"></span></h4>
     
 
     
@@ -924,29 +1293,6 @@
 
         <tr>
             
-                <td class="name"><code>objData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Bullet description</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>strType</code></td>
             
 
@@ -963,20 +1309,20 @@
 
             
 
-            <td class="description last">The bullet's type</td>
+            <td class="description last">bullet type</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>dateDate</code></td>
+                <td class="name"><code>strTitle</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">date</span>
+<span class="param-type">string</span>
 
 
             
@@ -986,20 +1332,20 @@
 
             
 
-            <td class="description last">Date bullet was created</td>
+            <td class="description last">bullet title</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>intID</code></td>
+                <td class="name"><code>strDate</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">string</span>
 
 
             
@@ -1009,7 +1355,77 @@
 
             
 
-            <td class="description last">Bullet's ID</td>
+            <td class="description last">bullet date</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strContent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">bullet content</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lstTags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">list</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">list of bullet tags</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>option</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSONObject</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">defulats to null, one or more extra feilds based on bullet type
+ eg:{dueDate: strDueDate, status: strStatus}</td>
         </tr>
 
     
@@ -1050,7 +1466,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line77">line 77</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line198">line 198</a>
     </li></ul></dd>
     
 
@@ -1079,10 +1495,432 @@
 
         
 <div class="param-desc">
-    the created bullet object's ID
+    the created bullet object
 </div>
 
 
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createBullet"><span class="type-signature"></span>createBullet<span class="signature">(strType, strTitle, strDate, strContent, lstTags, option)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Creates a bullet object
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>strType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">bullet type</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strTitle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">bullet title</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strDate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">bullet date</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strContent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">bullet content</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lstTags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">list</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">list of bullet tags</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>option</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSONObject</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">defulats to null, one or more extra feilds based on bullet type 
+ eg:{dueDate: strDueDate, status: strStatus}</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    the created bullet object
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createBulletEntryElem"><span class="type-signature"></span>createBulletEntryElem<span class="signature">(intBulletID)</span><span class="type-signature"> &rarr; {HTMLLIElement}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Create a entry element for a bullet to go on webpage
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>intBulletID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the bullet's numerical ID</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line536">line 536</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a list (bullet) object
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTMLLIElement</span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -1197,7 +2035,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line181">line 181</a>
+        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line180">line 180</a>
     </li></ul></dd>
     
 
@@ -1356,7 +2194,314 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line354">line 354</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line281">line 281</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    null
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createTagElements"><span class="type-signature"></span>createTagElements<span class="signature">(objTagDiv, objBullet)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Adds all tags from a bullet as div objects into a div object for use
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>objTagDiv</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLDivElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">HTML div element object to add tags to</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>objBullet</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Bullet.html">Bullet</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">bullet object to get tags from</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line640">line 640</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="deleteBulletById"><span class="type-signature"></span>deleteBulletById<span class="signature">(intID)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Deletes a bullet by the specified ID
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>intID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the bullet's ID</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line246">line 246</a>
     </li></ul></dd>
     
 
@@ -1503,7 +2648,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line106">line 106</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -1651,7 +2796,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line101">line 101</a>
+        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -1798,7 +2943,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line200">line 200</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line317">line 317</a>
     </li></ul></dd>
     
 
@@ -1823,6 +2968,290 @@
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="deleteBulletFromStorage"><span class="type-signature"></span>deleteBulletFromStorage<span class="signature">(intID)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Deletes a bullet from storage
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>intID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">ID of the bullet we want to delet</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line147">line 147</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="deleteNote"><span class="type-signature"></span>deleteNote<span class="signature">(elemEntry)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Deletes the note we want to the shadow realm
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>elemEntry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLLIElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the bullet we want to delete</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line821">line 821</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    null
+</div>
+
+
+
+    
 
 
 
@@ -1935,7 +3364,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line133">line 133</a>
+        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line132">line 132</a>
     </li></ul></dd>
     
 
@@ -1965,6 +3394,154 @@
         
 <div class="param-desc">
     the modified bullet in storage and the DOM
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="editNote"><span class="type-signature"></span>editNote<span class="signature">(elemEntry)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Special Editing functionality for note bullets.
+ It will replace the selected bullet with the desired edits
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>elemEntry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLLIElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entry we want to edit</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line757">line 757</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    null
 </div>
 
 
@@ -2034,7 +3611,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line318">line 318</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line245">line 245</a>
     </li></ul></dd>
     
 
@@ -2133,7 +3710,106 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line215">line 215</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line332">line 332</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    null
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="fillRunTimeBullets"><span class="type-signature"></span>fillRunTimeBullets<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    TODO: should populate the runtime list from local storage
+ Renders bullets from storage into runtime.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -2231,7 +3907,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line240">line 240</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -2261,6 +3937,346 @@
         
 <div class="param-desc">
     null
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="filterArray"><span class="type-signature"></span>filterArray<span class="signature">(arrayIn, bulletFilter)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Helper function to filter array of bullets
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arrayIn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bulletFilter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line363">line 363</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a filtered list according to the bullet type filter
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="filterArray"><span class="type-signature"></span>filterArray<span class="signature">(arrayIn, bulletFilter)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Helper function to filter array of bullets
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arrayIn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bulletFilter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line295">line 295</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a filtered list according to the bullet type filter
 </div>
 
 
@@ -2378,7 +4394,154 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line65">line 65</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    the bullet we were looking for
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getBulletById"><span class="type-signature"></span>getBulletById<span class="signature">(intID)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets a bullet by the specified ID
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>intID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the bullet's ID</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -2548,7 +4711,177 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line50">line 50</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a list of bullets that should be returned
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getBulletsByDateRange"><span class="type-signature"></span>getBulletsByDateRange<span class="signature">(dateStart, dateEnd)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets all bullets within the specified date range
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dateStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the beginning date to query from</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dateEnd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the end date to query from</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -2646,7 +4979,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line301">line 301</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line228">line 228</a>
     </li></ul></dd>
     
 
@@ -2676,6 +5009,663 @@
         
 <div class="param-desc">
     an array containing the names of all tags that the user selected
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getEventBulletsByDateRange"><span class="type-signature"></span>getEventBulletsByDateRange<span class="signature">(dateStart, dateEnd)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets all event bullets within the specified date range
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dateStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the beginning date to query from</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dateEnd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the end date to query from</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a list of bullets that should be returned
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getEventBulletsByDateRange"><span class="type-signature"></span>getEventBulletsByDateRange<span class="signature">(dateStart, dateEnd)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets all event bullets within the specified date range
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dateStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the beginning date to query from</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dateEnd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the end date to query from</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a list of bullets that should be returned
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getHour"><span class="type-signature"></span>getHour<span class="signature">(hour, AMPM)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets the hour in military time based on input hour and AMPM string
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>hour</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of the hour from 0-11</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>AMPM</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">AM/PM of hour</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line661">line 661</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    the correct hour in military time
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getTime"><span class="type-signature"></span>getTime<span class="signature">(hour)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get the time string in AMPM time based on hour in military time
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>hour</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">hour in military time</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line673">line 673</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    time string containing hour in AMPM time (e.g. 10 -> 10:00 AM)
 </div>
 
 
@@ -2744,7 +5734,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line345">line 345</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line272">line 272</a>
     </li></ul></dd>
     
 
@@ -2842,7 +5832,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line114">line 114</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -2888,7 +5878,7 @@
     
 
     
-    <h4 class="name" id="makeEventBullet"><span class="type-signature"></span>makeEventBullet<span class="signature">(objData, dateDate, lstTags, intID)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="initCrudRuntime"><span class="type-signature"></span>initCrudRuntime<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -2896,8 +5886,106 @@
 
 
 <div class="description">
-    TODO: Might need more parameters
-Helper function for creating Event Bullets
+    Renders all bullets and tags onto the DOM
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line124">line 124</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    null
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="loadBullets"><span class="type-signature"></span>loadBullets<span class="signature">(strTag)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Loads bullets from local storage
+Can load bullets by a specific tag with tag parameter
 </div>
 
 
@@ -2923,6 +6011,8 @@ Helper function for creating Event Bullets
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -2933,13 +6023,13 @@ Helper function for creating Event Bullets
 
         <tr>
             
-                <td class="name"><code>objData</code></td>
+                <td class="name"><code>strTag</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -2948,77 +6038,14 @@ Helper function for creating Event Bullets
             
 
             
-
-            <td class="description last">Bullet description</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dateDate</code></td>
-            
-
-            <td class="type">
-            
+                <td class="default">
                 
-<span class="param-type">date</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date bullet was created</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lstTags</code></td>
-            
-
-            <td class="type">
-            
+                    null
                 
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
+                </td>
             
 
-            
-
-            <td class="description last">List of tags associated with bullet</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>intID</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Bullet's ID</td>
+            <td class="description last">Can specify a tag to only load bullets of that tag</td>
         </tr>
 
     
@@ -3059,7 +6086,96 @@ Helper function for creating Event Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line146">line 146</a>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line210">line 210</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="loadTags"><span class="type-signature"></span>loadTags<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Loads new tags from runtime to display on tag modal
+ Doesn't load in tags we already loaded in once
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line248">line 248</a>
     </li></ul></dd>
     
 
@@ -3088,7 +6204,7 @@ Helper function for creating Event Bullets
 
         
 <div class="param-desc">
-    An Event Bullet object containing all param info
+    null
 </div>
 
 
@@ -3105,7 +6221,7 @@ Helper function for creating Event Bullets
     
 
     
-    <h4 class="name" id="makeNoteBullet"><span class="type-signature"></span>makeNoteBullet<span class="signature">(objData, dateDate, lstTags, intID)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="openDeleteDialog"><span class="type-signature"></span>openDeleteDialog<span class="signature">(elemEntry)</span><span class="type-signature"></span></h4>
     
 
     
@@ -3113,7 +6229,7 @@ Helper function for creating Event Bullets
 
 
 <div class="description">
-    Helper function for creating Note Bullets
+    Opens the delete dialog box and listens for delete button to get clicked
 </div>
 
 
@@ -3149,13 +6265,13 @@ Helper function for creating Event Bullets
 
         <tr>
             
-                <td class="name"><code>objData</code></td>
+                <td class="name"><code>elemEntry</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">HTMLLIElement</span>
 
 
             
@@ -3165,76 +6281,7 @@ Helper function for creating Event Bullets
 
             
 
-            <td class="description last">Bullet description</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dateDate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">date</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date bullet was created</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lstTags</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">List of tags associated with bullet</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>intID</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Bullet's ID</td>
+            <td class="description last">the bullet we want to delete</td>
         </tr>
 
     
@@ -3275,7 +6322,7 @@ Helper function for creating Event Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line128">line 128</a>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line430">line 430</a>
     </li></ul></dd>
     
 
@@ -3304,224 +6351,7 @@ Helper function for creating Event Bullets
 
         
 <div class="param-desc">
-    A Note Bullet object containing all param info
-</div>
-
-
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="makeTaskBullet"><span class="type-signature"></span>makeTaskBullet<span class="signature">(objData, dateDate, lstTags, intID)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    TODO: Might need more parameters
-Helper function for creating Task Bullets
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>objData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Bullet Description</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dateDate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">date</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date bullet was created</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lstTags</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">List of tags associated with bullet</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>intID</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Bullet's ID</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line164">line 164</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    A Task Bullet object containing all param info
+    null
 </div>
 
 
@@ -3639,7 +6469,7 @@ Helper function for creating Task Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line89">line 89</a>
+        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line88">line 88</a>
     </li></ul></dd>
     
 
@@ -3669,6 +6499,154 @@ Helper function for creating Task Bullets
         
 <div class="param-desc">
     null
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="openEditDialog"><span class="type-signature"></span>openEditDialog<span class="signature">(elemEntry)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Opens edit dialog box and saves edits if the associated event listener is
+ triggered
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>elemEntry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLLIElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the bullet we want to edit</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line444">line 444</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a modal to edit a bullet.
 </div>
 
 
@@ -3787,7 +6765,7 @@ Helper function for creating Task Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line114">line 114</a>
+        <a href="frontend_app_page-journal_blog.js.html">frontend/app/page-journal/blog.js</a>, <a href="frontend_app_page-journal_blog.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -3885,7 +6863,7 @@ Helper function for creating Task Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-calendar_sidebar.js.html">frontend/app/page-calendar/sidebar.js</a>, <a href="frontend_app_page-calendar_sidebar.js.html#line22">line 22</a>
+        <a href="frontend_app_page-dashboard_script.js.html">frontend/app/page-dashboard/script.js</a>, <a href="frontend_app_page-dashboard_script.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -3983,7 +6961,7 @@ Helper function for creating Task Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-dashboard_sidebar.js.html">frontend/app/page-dashboard/sidebar.js</a>, <a href="frontend_app_page-dashboard_sidebar.js.html#line22">line 22</a>
+        <a href="frontend_components_script.js.html">frontend/components/script.js</a>, <a href="frontend_components_script.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -4029,7 +7007,7 @@ Helper function for creating Task Bullets
     
 
     
-    <h4 class="name" id="openSidebar"><span class="type-signature"></span>openSidebar<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="populateTagOptions"><span class="type-signature"></span>populateTagOptions<span class="signature">(objSelect)</span><span class="type-signature"></span></h4>
     
 
     
@@ -4037,7 +7015,7 @@ Helper function for creating Task Bullets
 
 
 <div class="description">
-    Visually opens the sidebar
+    Populates select element with options corresponding to tags
 </div>
 
 
@@ -4046,6 +7024,55 @@ Helper function for creating Task Bullets
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>objSelect</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLSelectElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">select element to add tags to</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -4081,7 +7108,144 @@ Helper function for creating Task Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_sidebar.js.html">frontend/app/page-journal/sidebar.js</a>, <a href="frontend_app_page-journal_sidebar.js.html#line22">line 22</a>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line339">line 339</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="readArrayFromStorage"><span class="type-signature"></span>readArrayFromStorage<span class="signature">(strArrayKey)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Reads an array given an associated key
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>strArrayKey</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the array's key</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line387">line 387</a>
     </li></ul></dd>
     
 
@@ -4110,7 +7274,7 @@ Helper function for creating Task Bullets
 
         
 <div class="param-desc">
-    null
+    the array we want to read
 </div>
 
 
@@ -4228,7 +7392,7 @@ Helper function for creating Task Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line263">line 263</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line319">line 319</a>
     </li></ul></dd>
     
 
@@ -4274,7 +7438,7 @@ Helper function for creating Task Bullets
     
 
     
-    <h4 class="name" id="setBulletAttributes"><span class="type-signature"></span>setBulletAttributes<span class="signature">(intID, objData, strType, dateDate, lstTags)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="showBulletInfo"><span class="type-signature"></span>showBulletInfo<span class="signature">(elemEntry)</span><span class="type-signature"></span></h4>
     
 
     
@@ -4282,7 +7446,7 @@ Helper function for creating Task Bullets
 
 
 <div class="description">
-    Sets the attributes of a bullet object
+    Displays the relevant information pertaining to the given bullet in view Modal
 </div>
 
 
@@ -4318,13 +7482,13 @@ Helper function for creating Task Bullets
 
         <tr>
             
-                <td class="name"><code>intID</code></td>
+                <td class="name"><code>elemEntry</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">HTMLLIElement</span>
 
 
             
@@ -4334,99 +7498,7 @@ Helper function for creating Task Bullets
 
             
 
-            <td class="description last">the bullet's ID</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>objData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the bullet's data</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>strType</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the bullet's type</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dateDate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Date</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the bullet's date</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lstTags</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the tags associated to the bullet</td>
+            <td class="description last">the bullet element we want to display information about</td>
         </tr>
 
     
@@ -4467,337 +7539,7 @@ Helper function for creating Task Bullets
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line27">line 27</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    null
-</div>
-
-
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="sum"><span class="type-signature"></span>sum<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {number}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Example function to test CI/CD pipeline
-Source: https://jestjs.io/docs/getting-started
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>a</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">operand 1 to sum</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">operand 2 to sum</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sum.js.html">sum.js</a>, <a href="sum.js.html#line8">line 8</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Sum of a and b
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">number</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="updateBulletInStorage"><span class="type-signature"></span>updateBulletInStorage<span class="signature">(objBullet)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Updates bullets in the storage
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>objBullet</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Bullet</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the bullet we want to update</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line178">line 178</a>
+        <a href="frontend_app_page-day_day.js.html">frontend/app/page-day/day.js</a>, <a href="frontend_app_page-day_day.js.html#line183">line 183</a>
     </li></ul></dd>
     
 
@@ -4895,7 +7637,7 @@ Source: https://jestjs.io/docs/getting-started
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line272">line 272</a>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line199">line 199</a>
     </li></ul></dd>
     
 
@@ -5066,7 +7808,178 @@ Source: https://jestjs.io/docs/getting-started
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line255">line 255</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line379">line 379</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    null
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="writeArrayToStorage"><span class="type-signature"></span>writeArrayToStorage<span class="signature">(strKey, lstArray)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    NOTE: Can be made more efficient or just outsource to API
+ Writes an array to storage with an associated key
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>strKey</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the array's key</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lstArray</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the array we want to store</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line311">line 311</a>
     </li></ul></dd>
     
 
@@ -5162,7 +8075,7 @@ Source: https://jestjs.io/docs/getting-started
             <td class="type">
             
                 
-<span class="param-type">Bullet</span>
+<span class="param-type"><a href="Bullet.html">Bullet</a></span>
 
 
             
@@ -5213,7 +8126,154 @@ Source: https://jestjs.io/docs/getting-started
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_app_page-journal_crudFunctions.js.html">frontend/app/page-journal/crudFunctions.js</a>, <a href="frontend_app_page-journal_crudFunctions.js.html#line187">line 187</a>
+        <a href="backend_crudFunctions.js.html">backend/crudFunctions.js</a>, <a href="backend_crudFunctions.js.html#line305">line 305</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    null
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="writeBulletToStorage"><span class="type-signature"></span>writeBulletToStorage<span class="signature">(objBullet)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Writes bullet to local storage and runtime
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>objBullet</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Bullet.html">Bullet</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the bullet we want to write into storage</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_app_page-journal_crudFunctions.depricated.js.html">frontend/app/page-journal/crudFunctions.depricated.js</a>, <a href="frontend_app_page-journal_crudFunctions.depricated.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -5269,13 +8329,13 @@ Source: https://jestjs.io/docs/getting-started
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BulletEntry.html">BulletEntry</a></li></ul><h3>Global</h3><ul><li><a href="global.html#appendButton">appendButton</a></li><li><a href="global.html#appendTextNode">appendTextNode</a></li><li><a href="global.html#closeSidebar">closeSidebar</a></li><li><a href="global.html#createBullet">createBullet</a></li><li><a href="global.html#createBulletEntryElem">createBulletEntryElem</a></li><li><a href="global.html#createTag">createTag</a></li><li><a href="global.html#deleteBulletById">deleteBulletById</a></li><li><a href="global.html#deleteBulletEntry">deleteBulletEntry</a></li><li><a href="global.html#deleteBulletFromStorage">deleteBulletFromStorage</a></li><li><a href="global.html#editBulletEntry">editBulletEntry</a></li><li><a href="global.html#editTags">editTags</a></li><li><a href="global.html#fillRunTimeBullets">fillRunTimeBullets</a></li><li><a href="global.html#fillRunTimeTags">fillRunTimeTags</a></li><li><a href="global.html#getBulletById">getBulletById</a></li><li><a href="global.html#getBulletsByDateRange">getBulletsByDateRange</a></li><li><a href="global.html#getCheckBoxResults">getCheckBoxResults</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#initCrudRuntime">initCrudRuntime</a></li><li><a href="global.html#makeEventBullet">makeEventBullet</a></li><li><a href="global.html#makeNoteBullet">makeNoteBullet</a></li><li><a href="global.html#makeTaskBullet">makeTaskBullet</a></li><li><a href="global.html#openDeleteDialog">openDeleteDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openSidebar">openSidebar</a></li><li><a href="global.html#readArrayFromStorage">readArrayFromStorage</a></li><li><a href="global.html#runTimeBullets">runTimeBullets</a></li><li><a href="global.html#setBulletAttributes">setBulletAttributes</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#updateBulletInStorage">updateBulletInStorage</a></li><li><a href="global.html#updateTags">updateTags</a></li><li><a href="global.html#writeArrayToStorage">writeArrayToStorage</a></li><li><a href="global.html#writeBulletToStorage">writeBulletToStorage</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Bullet.html">Bullet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addListTag">addListTag</a></li><li><a href="global.html#appendButton">appendButton</a></li><li><a href="global.html#appendTextNode">appendTextNode</a></li><li><a href="global.html#closeSidebar">closeSidebar</a></li><li><a href="global.html#createBullet">createBullet</a></li><li><a href="global.html#createBulletEntryElem">createBulletEntryElem</a></li><li><a href="global.html#createTag">createTag</a></li><li><a href="global.html#createTagElements">createTagElements</a></li><li><a href="global.html#deleteBulletById">deleteBulletById</a></li><li><a href="global.html#deleteBulletEntry">deleteBulletEntry</a></li><li><a href="global.html#deleteBulletFromStorage">deleteBulletFromStorage</a></li><li><a href="global.html#deleteNote">deleteNote</a></li><li><a href="global.html#editBulletEntry">editBulletEntry</a></li><li><a href="global.html#editNote">editNote</a></li><li><a href="global.html#editTags">editTags</a></li><li><a href="global.html#fillRunTimeBullets">fillRunTimeBullets</a></li><li><a href="global.html#fillRunTimeTags">fillRunTimeTags</a></li><li><a href="global.html#filterArray">filterArray</a></li><li><a href="global.html#getBulletById">getBulletById</a></li><li><a href="global.html#getBulletsByDateRange">getBulletsByDateRange</a></li><li><a href="global.html#getCheckBoxResults">getCheckBoxResults</a></li><li><a href="global.html#getEventBulletsByDateRange">getEventBulletsByDateRange</a></li><li><a href="global.html#getHour">getHour</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#initCrudRuntime">initCrudRuntime</a></li><li><a href="global.html#loadBullets">loadBullets</a></li><li><a href="global.html#loadTags">loadTags</a></li><li><a href="global.html#openDeleteDialog">openDeleteDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openSidebar">openSidebar</a></li><li><a href="global.html#populateTagOptions">populateTagOptions</a></li><li><a href="global.html#readArrayFromStorage">readArrayFromStorage</a></li><li><a href="global.html#runTimeBullets">runTimeBullets</a></li><li><a href="global.html#showBulletInfo">showBulletInfo</a></li><li><a href="global.html#updateTags">updateTags</a></li><li><a href="global.html#writeArrayToStorage">writeArrayToStorage</a></li><li><a href="global.html#writeBulletToStorage">writeBulletToStorage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sun May 23 2021 10:25:51 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed Jun 09 2021 06:03:05 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>

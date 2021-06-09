@@ -1,95 +1,23 @@
-// todo propper utils usage
-
-import { hashString, readHash, daysInMonth, startDate, updateURL } from '../../utils.js';
+import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
+
+const DAY_PATH = '../page-day/day.html';
 
 const calendar = document.getElementById('calendar');
 const month = document.getElementById('month');
 const year = document.getElementById('year');
 const backmonth = document.getElementById('backmonth');
 const forwardmonth = document.getElementById('forwardmonth');
-const backyear = document.getElementById('backyear');
-const forwardyear = document.getElementById('forwardyear');
+const filter = document.getElementById('filter');
+const today = document.getElementById('today');
 
-let monthIn = 5;
+let monthIn = 6;
 let yearIn = 2021;
+let onlyBuls = 'All Events';
 
 backmonth.innerHTML = '&#10094;';
-backyear.innerHTML = '<img src="back.png" alt="back" width="32" height="32"/>';
 
 forwardmonth.innerHTML = '&#10095;';
-forwardyear.innerHTML = '<img src="forward.png" alt="forward" width="32" height="32"/>';
-
-// Date MM/DD/YYYY/X:  Bullet name
-// X is some random identifier
-const testData = {
-  id_1: {
-    type: 'task', // task, event, note
-    title: 'Walk Dog',
-    date: '2021-05-07T20:00'
-  },
-  id_2: {
-    type: 'task',
-    title: 'Feed Dog',
-    date: '2021-05-08T20:00'
-  },
-  id_3: {
-    type: 'event',
-    title: 'Test',
-    date: '2021-05-10T20:00'
-  },
-  id_4: {
-    type: 'event',
-    title: 'Eat',
-    date: '2021-05-07T20:00'
-  },
-  id_5: {
-    type: 'note',
-    title: 'Hi Edmund',
-    date: '2021-05-10T20:00'
-  },
-  id_6: {
-    type: 'note',
-    title: 'heuhuehue',
-    date: '2021-04-28T20:00'
-  },
-  id_7: {
-    type: 'note',
-    title: 'heuhuehue2',
-    date: '2021-05-01T20:00'
-  },
-  id_8: {
-    type: 'note',
-    title: 'mwahahaaha',
-    date: '2021-05-30T20:00'
-  },
-  id_9: {
-    type: 'note',
-    title: 'mwahahaaha2',
-    date: '2021-06-04T20:00'
-  },
-  id_10: {
-    type: 'event',
-    title: 'Walk',
-    date: '2021-05-07T20:00'
-  },
-  id_11: {
-    type: 'event',
-    title: 'Walk2',
-    date: '2021-05-07T20:00'
-  },
-  id_12: {
-    type: 'event',
-    title: 'Walk3',
-    date: '2021-05-07T20:00'
-  },
-  id_13: {
-    type: 'event',
-    title: 'Walk4',
-    date: '2021-05-07T20:00'
-  }
-
-};
 
 backmonth.addEventListener('click', function() {
   monthIn--;
@@ -99,19 +27,13 @@ backmonth.addEventListener('click', function() {
   }
 
   resetCalendar();
-  const data = getDataLocal(monthIn, yearIn);
-  populateCalendar(monthIn, yearIn, data);
-  const hashed = generateHash(false);
-  updateURL(hashed);
-});
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
 
-backyear.addEventListener('click', function() {
-  yearIn--;
-  resetCalendar();
-  const data = getDataLocal(monthIn, yearIn);
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
   const hashed = generateHash(false);
-  updateURL(hashed);
+  utils.updateURL(hashed);
 });
 
 forwardmonth.addEventListener('click', function() {
@@ -121,51 +43,77 @@ forwardmonth.addEventListener('click', function() {
     yearIn++;
   }
   resetCalendar();
-  const data = getDataLocal(monthIn, yearIn);
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
+
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
   const hashed = generateHash(false);
-  updateURL(hashed);
+  utils.updateURL(hashed);
 });
 
-forwardyear.addEventListener('click', function() {
-  yearIn++;
+filter.addEventListener('change', (e) => {
+  onlyBuls = e.target.value;
+
   resetCalendar();
-  const data = getDataLocal(monthIn, yearIn);
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
+
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
-  const hashed = generateHash(false);
-  updateURL(hashed);
 });
 
-// updates local storage if there is nothing in it
-function updateLocalStorage() {
-  if (localStorage.getItem('bulletIDs') === null) {
-    const array = [];
-    for (const [key, value] of Object.entries(testData)) {
-      localStorage.setItem(key, JSON.stringify(value));
-      array.push(key);
-    }
-    localStorage.setItem('bulletIDs', array);
-  }
-}
+filter.addEventListener('mouseover', function() {
+  filter.style.cursor = 'pointer';
+});
 
-// gets month + - 1 information
-function getDataLocal(month, year) {
-  const data = {};
-  if (localStorage.getItem('bulletIDs') === null) {
-    return data;
+today.addEventListener('click', function() {
+  let checker = new Date();
+  checker = checker.toISOString().split('T')[0].split('-');
+
+  monthIn = parseInt(checker[1]);
+  yearIn = parseInt(checker[0]);
+
+  resetCalendar();
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
+
+  const data = onlyThese(start, end);
+  populateCalendar(monthIn, yearIn, data);
+});
+
+filter.addEventListener('mouseover', function() {
+  filter.style.cursor = 'pointer';
+});
+
+today.addEventListener('click', function() {
+  let checker = new Date();
+  checker = checker.toISOString().split('T')[0].split('-');
+
+  monthIn = parseInt(checker[1]);
+  yearIn = parseInt(checker[0]);
+
+  resetCalendar();
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
+
+  const data = onlyThese(start, end);
+  populateCalendar(monthIn, yearIn, data);
+  const hashed = generateHash(false);
+  utils.updateURL(hashed);
+});
+
+function onlyThese(start, end) {
+  const type = onlyBuls;
+  if (type === 'Task') {
+    return crud.getTaskBulletsByDateRange(start, end);
+  } else if (type === 'Event') {
+    return crud.getEventBulletsByDateRange(start, end);
+  } else if (type === 'Note') {
+    return crud.getNoteBulletsByDateRange(start, end);
+  } else {
+    return crud.getBulletsByDateRange(start, end);
   }
-  const bulletIds = localStorage.getItem('bulletIDs').split(',');
-  for (let i = 0; i < bulletIds.length; i++) {
-    const item = JSON.parse(localStorage.getItem(bulletIds[i]));
-    if (item == null) {
-      continue;
-    }
-    const date = item.date.split('T')[0].split('-');
-    if (parseInt(date[0]) === year && parseInt(date[1]) === month) {
-      data[bulletIds[i]] = item;
-    }
-  }
-  return data;
 }
 
 // populates calender with all of the days of the associated month and year
@@ -180,22 +128,36 @@ function populateCalendar(month, year, data) {
       element = document.createElement('tr');
     }
     const day = i % 7;
-    if (day === startDate(month, year) && start === false &&
-    counter < daysInMonth(month, year) + 1) {
+    if (day === utils.startDate(month, year) && start === false &&
+    counter < utils.daysInMonth(month, year) + 1) {
       start = true;
     }
     if (start) {
+      let checker = new Date();
+      checker = checker.toISOString().split('T')[0].split('-');
+      const monthC = parseInt(checker[1]);
+      const yearC = parseInt(checker[0]);
+      const dayC = parseInt(checker[2]);
+
       const date = document.createElement('td');
       date.setAttribute('id', counter);
+
+      if (monthC === monthIn && yearIn === yearC && dayC === counter) {
+        date.classList.add('today');
+      }
+
+      if (date.classList[0] === 'today') {
+        date.style.backgroundColor = 'rgba(255,214,10,0.5)';
+      }
+
       date.innerHTML = counter;
       date.addEventListener('click', function() {
-        console.log(date.childNodes[0]);
-        const hash = hashString('d', yearIn, monthIn, date.childNodes[0].nodeValue);
-        const root = document.URL.split('/')[2];
-        const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
-        const url = new URL(path);
-        url.hash = hash;
-        window.location.href = url.href;
+        const hash = utils.hashString('d', yearIn, monthIn, date.childNodes[0].nodeValue);
+        // const root = document.URL.split('/')[2];
+        // const path = 'http://' + root + DAY_PATH;
+        // const url = new URL(path);
+        // window.location.hash = hash;
+        window.location.href = DAY_PATH + '#' + hash;
       });
       // hover over date cells in calendar
       date.addEventListener('mouseover', function() {
@@ -205,7 +167,11 @@ function populateCalendar(month, year, data) {
       });
       date.addEventListener('mouseleave', function() {
         // date.style.border= '1px solid #333';
-        date.style.backgroundColor = 'var(--background-color)';
+        if (date.classList[0] === 'today') {
+          date.style.backgroundColor = 'rgba(255,214,10,0.5)';
+        } else {
+          date.style.backgroundColor = 'var(--background-color)';
+        }
       });
       counter++;
       element.appendChild(date);
@@ -213,12 +179,12 @@ function populateCalendar(month, year, data) {
       const date = document.createElement('td');
       element.appendChild(date);
     }
-    if (counter === daysInMonth(month, year) + 1) {
+    if (counter === utils.daysInMonth(month, year) + 1) {
       start = false;
     }
     if (i % 7 === 6) {
       calendar.appendChild(element);
-      if (counter === daysInMonth(month, year) + 1) {
+      if (counter === utils.daysInMonth(month, year) + 1) {
         break;
       }
     }
@@ -243,40 +209,21 @@ function resetCalendar() {
 }
 
 // for a specific month only
-// TO DO make a filter per month or something
 function bulletAppend(bullets) {
-  for (const [key, value] of Object.entries(bullets)) {
-    const date = value.date.split('T')[0].split('-')[2];
-    const temp = document.getElementById(parseInt(date));
+  for (const temp of bullets) {
+    const date = temp.date.toJSON().split('T')[0].split('-')[2];
+    const curr = document.getElementById(parseInt(date));
     const event = document.createElement('li');
-    if (temp.childNodes.length === 1) {
-      temp.appendChild(document.createElement('ul'));
+    if (curr.childNodes.length === 1) {
+      curr.appendChild(document.createElement('ul'));
     }
-    event.innerHTML = value.title;
-    if (temp.childNodes[1].childNodes.length < 5) {
-      temp.childNodes[1].appendChild(event);
-    }
-  }
-}
+    const chars = 10 - Math.max(0, Math.floor((1300 - window.screen.width) / 80) + 1); // to calculate number of characters to display
 
-function getTasks(bullets) {
-  const tasks = [];
-  for (const [key, value] of Object.entries(bullets)) {
-    if (value.type === 'task' && value.tag === 'monthly') {
-      tasks.push(key);
+    event.innerHTML = temp.title.substring(0, Math.min(temp.title.length, chars));
+    if (curr.childNodes[1].childNodes.length < 5) {
+      curr.childNodes[1].appendChild(event);
     }
   }
-  return tasks;
-}
-
-function getNotes(bullets) {
-  const notes = [];
-  for (const [key, value] of Object.entries(bullets)) {
-    if (value.type === 'note' && value.tag === 'monthly') {
-      notes.push(key);
-    }
-  }
-  return notes;
 }
 
 function generateHash(onload = true) {
@@ -285,8 +232,8 @@ function generateHash(onload = true) {
   if (onload) {
     let month;
     let year;
-    if (curr.includes('#')) {
-      let date = readHash(curr.split('#')[1]);
+    if (curr.includes('#') && curr.split('#')[1] !== '') {
+      let date = utils.readHash(curr.split('#')[1]);
       date = date.toISOString().split('T')[0].split('-');
       month = parseInt(date[1]);
       year = parseInt(date[0]);
@@ -296,26 +243,27 @@ function generateHash(onload = true) {
       month = parseInt(date[1]);
       year = parseInt(date[0]);
     }
-    return hashString('m', year, month);
+    return utils.hashString('m', year, month);
   } else {
-    return hashString('m', yearIn, monthIn);
+    return utils.hashString('m', yearIn, monthIn);
   }
 }
 
+crud.initCrudRuntime();
 const hashed = generateHash();
 
-let date = readHash(hashed);
+let date = utils.readHash(hashed);
 date = date.toISOString().split('T')[0].split('-');
 
 yearIn = parseInt(date[0]);
 monthIn = parseInt(date[1]);
 
-updateURL(hashed);
+utils.updateURL(hashed);
 
-updateLocalStorage();
-const data = getDataLocal(monthIn, yearIn);
+const start = new Date(yearIn, monthIn - 1);
+const end = new Date(yearIn, monthIn);
+
+const data = onlyThese(start, end);
+
 resetCalendar();
 populateCalendar(monthIn, yearIn, data);
-
-console.log(getTasks(data));
-console.log(getNotes(data));
