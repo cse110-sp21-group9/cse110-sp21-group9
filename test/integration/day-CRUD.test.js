@@ -1,9 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-/**
- * @jest-environment jsdom
- */
  import * as testUtils from '../testutils.js'
 
  let counter = testUtils.makeTestCounter(1);
