@@ -2,7 +2,7 @@ import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
 
 const DAY_PATH = './source/frontend/app/page-day/day.html';
-const MONTH_PATH = './source/frontend/app/page-calendar-monthly/calendar.html';
+const MONTH_PATH = '../page-calendar-monthly/calendar.html';
 
 const COLUMNS = 7;
 const ROWS = 6;
@@ -202,7 +202,7 @@ export class MiniCalendar extends HTMLElement {
           // const url = new URL(path);
           // url.hash = hash;
           window.location.href = DAY_PATH;
-          window.location.hash = hash
+          window.location.hash = hash;
           window.location.reload();
         });
 
