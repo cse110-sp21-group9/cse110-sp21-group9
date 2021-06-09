@@ -50,7 +50,7 @@ const timeSegments = document.getElementById('time_list');
 const timeSlots = [];
 
 // Reset tag selector on window load
-window.addEventListener("pageshow", () => {
+window.addEventListener('pageshow', () => {
   tagFilterSelect.value = 'ALL';
 });
 

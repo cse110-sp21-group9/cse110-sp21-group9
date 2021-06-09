@@ -68,7 +68,7 @@ filter.addEventListener('mouseover', function() {
 });
 
 today.addEventListener('click', function() {
-  let checker = new Date();
+  const checker = new Date();
   monthIn = checker.getMonth() + 1;
   yearIn = checker.getFullYear();
 
@@ -85,7 +85,7 @@ filter.addEventListener('mouseover', function() {
 });
 
 today.addEventListener('click', function() {
-  let checker = new Date();
+  const checker = new Date();
   monthIn = checker.getMonth() + 1;
   yearIn = checker.getFullYear();
 
@@ -129,7 +129,7 @@ function populateCalendar(month, year, data) {
       start = true;
     }
     if (start) {
-      let checker = new Date();
+      const checker = new Date();
       const monthC = checker.getMonth() + 1;
       const yearC = checker.getFullYear();
       const dayC = checker.getDate();
@@ -228,11 +228,11 @@ function generateHash(onload = true) {
     let month;
     let year;
     if (curr.includes('#') && curr.split('#')[1] !== '') {
-      let date = utils.readHash(curr.split('#')[1]);
+      const date = utils.readHash(curr.split('#')[1]);
       month = date.getMonth() + 1;
       year = date.getFullYear();
     } else {
-      let date = new Date();
+      const date = new Date();
       month = date.getMonth() + 1;
       year = date.getFullYear();
     }
@@ -242,14 +242,14 @@ function generateHash(onload = true) {
   }
 }
 
-window.addEventListener("pageshow", () => {
+window.addEventListener('pageshow', () => {
   filter.value = 'All Bullets';
 });
 
 crud.initCrudRuntime();
 const hashed = generateHash();
 
-let date = utils.readHash(hashed);
+const date = utils.readHash(hashed);
 monthIn = date.getMonth() + 1;
 yearIn = date.getFullYear();
 
@@ -261,4 +261,3 @@ const end = new Date(yearIn, monthIn);
 const data = onlyThese(start, end);
 resetCalendar();
 populateCalendar(monthIn, yearIn, data);
-
