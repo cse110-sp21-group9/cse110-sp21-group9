@@ -1,8 +1,8 @@
-// todo propper utils usage
-
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
+
+const DAY_PATH = '/source/frontend/app/page-day/day.html';
 
 const calendar = document.getElementById('calendar');
 const month = document.getElementById('month');
@@ -56,6 +56,28 @@ forwardmonth.addEventListener('click', function() {
 
 filter.addEventListener('change', (e) =>{
   onlyBuls = e.target.value;
+
+  resetCalendar();
+  var start = new Date(yearIn, monthIn-1);
+  var end = new Date(yearIn,monthIn);
+
+  var data = onlyThese(start, end);
+  populateCalendar(monthIn, yearIn, data);
+});
+
+filter.addEventListener('mouseover', function() {
+  filter.style.cursor = 'pointer';
+});
+
+
+today.addEventListener('click', function() {
+
+  
+  let checker = new Date();
+  checker = checker.toISOString().split('T')[0].split('-');
+
+  monthIn = parseInt(checker[1]);
+  yearIn = parseInt(checker[0]);
 
   resetCalendar();
   var start = new Date(yearIn, monthIn-1);
@@ -145,7 +167,7 @@ function populateCalendar(month, year, data) {
       date.addEventListener('click', function() {
         const hash = utils.hashString('d', yearIn, monthIn, date.childNodes[0].nodeValue);
         const root = document.URL.split('/')[2];
-        const path = 'http://' + root + '/source/frontend/app/page-day/day.html';
+        const path = 'http://' + root + DAY_PATH;
         const url = new URL(path);
         url.hash = hash;
         window.location.href = url.href;
@@ -202,7 +224,6 @@ function resetCalendar() {
 }
 
 // for a specific month only
-// TO DO make a filter per month or something
 function bulletAppend(bullets) {
  
   for (const temp of bullets) {
