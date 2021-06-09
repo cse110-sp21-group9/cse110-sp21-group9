@@ -67,7 +67,6 @@ const tagName = document.getElementById('tagname');
 
 // edit inputs
 const editBullet = document.getElementById('EditBullet');
-const editSave = document.getElementById('editSaveAdd');
 const editTitle = document.getElementById('edittitle');
 const editDate = document.getElementById('editdate');
 const editDesc = document.getElementById('editdesc');
@@ -76,7 +75,7 @@ const editTags = document.getElementById('edittag');
 
 crud.initCrudRuntime();
 // TODO: Write a date getter function to pass into here
-let bulletsToLoad = crud.getBulletsByDateRange('2020-06-12T19:00', '2020-06-12T20:00');
+const bulletsToLoad = crud.getBulletsByDateRange('2020-06-12T19:00', '2020-06-12T20:00');
 for (const bullet of bulletsToLoad) {
   if (bullet.type === 'note') {
     noteOut.append(createBulletEntryElem(bullet.ID));
@@ -140,7 +139,7 @@ function deleteBulletEntry(elemEntry) {
  *  @return a modal to edit a bullet.
 */
 function openEditDialog(elemEntry) {
-  let entryBullet = crud.getBulletById(elemEntry.id);
+  const entryBullet = crud.getBulletById(elemEntry.id);
 
   editTitle.value = entryBullet.data.title;
   editDate.value = entryBullet.date;
@@ -176,7 +175,7 @@ function editBulletEntry(elemEntry) {
  *  @return null
  */
 function appendTextNode(strTitle, strText, elemParent) {
-  let elemBold = document.createElement('b');
+  const elemBold = document.createElement('b');
 
   elemBold.append(document.createTextNode(strTitle));
   elemParent.append(elemBold);
@@ -191,8 +190,8 @@ function appendTextNode(strTitle, strText, elemParent) {
  *  @return a button
  */
 function appendButton(strDisp, strStyle, strClass, elemParent) {
-  let elemButton = document.createElement('BUTTON');
-  let elemText = document.createTextNode(strDisp);
+  const elemButton = document.createElement('BUTTON');
+  const elemText = document.createTextNode(strDisp);
 
   elemButton.style = strStyle;
   elemButton.className = strClass;
@@ -207,9 +206,9 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
  *  @return {li} a list (bullet) object
  */
 function createBulletEntryElem(intBulletID) {
-  let newEntry = document.createElement('li');
-  let div = document.createElement('div');
-  let bullet = crud.getBulletById(intBulletID);
+  const newEntry = document.createElement('li');
+  const div = document.createElement('div');
+  const bullet = crud.getBulletById(intBulletID);
 
   newEntry.id = intBulletID;
   div.style = 'margin: 10px; padding: 5px; border: 5px solid black';
@@ -232,14 +231,14 @@ function createBulletEntryElem(intBulletID) {
   appendTextNode(' Tags: ', bullet.tags, div);
 
   // create and append edit button
-  let editButton = appendButton('Edit', '', 'btn btn-secondary', div);
+  const editButton = appendButton('Edit', '', 'btn btn-secondary', div);
   editButton.addEventListener('click', () => {
     $('#EditBullet').modal('toggle');
     openEditDialog(newEntry);
   });
 
   // create and append delete button
-  let deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
+  const deleteButton = appendButton('Delete', '', 'btn btn-secondary', div);
   deleteButton.addEventListener('click', () => {
     $('#deleteBullet').modal('toggle');
     openDeleteDialog(newEntry);
@@ -251,12 +250,12 @@ function createBulletEntryElem(intBulletID) {
 /* if user confirms make new bullet and add it to page */
 saveBtn.addEventListener('click', function() {
   // make tag array for new bullet
-  let newBulletTags = crud.getCheckBoxResults();
-  let newBulletType = crud.getType();
+  const newBulletTags = crud.getCheckBoxResults();
+  const newBulletType = crud.getType();
 
   console.log(newBulletType);
   // make a new bullet with the crud functions
-  let newBulletID = crud.createBullet(
+  const newBulletID = crud.createBullet(
     { title: titleInput.value, note: descInput.value },
     newBulletType,
     dateInput.value,
@@ -284,13 +283,13 @@ saveBtn.addEventListener('click', function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BulletEntry.html">BulletEntry</a></li></ul><h3>Global</h3><ul><li><a href="global.html#appendButton">appendButton</a></li><li><a href="global.html#appendTextNode">appendTextNode</a></li><li><a href="global.html#closeSidebar">closeSidebar</a></li><li><a href="global.html#createBullet">createBullet</a></li><li><a href="global.html#createBulletEntryElem">createBulletEntryElem</a></li><li><a href="global.html#createTag">createTag</a></li><li><a href="global.html#deleteBulletById">deleteBulletById</a></li><li><a href="global.html#deleteBulletEntry">deleteBulletEntry</a></li><li><a href="global.html#deleteBulletFromStorage">deleteBulletFromStorage</a></li><li><a href="global.html#editBulletEntry">editBulletEntry</a></li><li><a href="global.html#editTags">editTags</a></li><li><a href="global.html#fillRunTimeBullets">fillRunTimeBullets</a></li><li><a href="global.html#fillRunTimeTags">fillRunTimeTags</a></li><li><a href="global.html#getBulletById">getBulletById</a></li><li><a href="global.html#getBulletsByDateRange">getBulletsByDateRange</a></li><li><a href="global.html#getCheckBoxResults">getCheckBoxResults</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#initCrudRuntime">initCrudRuntime</a></li><li><a href="global.html#makeEventBullet">makeEventBullet</a></li><li><a href="global.html#makeNoteBullet">makeNoteBullet</a></li><li><a href="global.html#makeTaskBullet">makeTaskBullet</a></li><li><a href="global.html#openDeleteDialog">openDeleteDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openSidebar">openSidebar</a></li><li><a href="global.html#readArrayFromStorage">readArrayFromStorage</a></li><li><a href="global.html#runTimeBullets">runTimeBullets</a></li><li><a href="global.html#setBulletAttributes">setBulletAttributes</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#updateBulletInStorage">updateBulletInStorage</a></li><li><a href="global.html#updateTags">updateTags</a></li><li><a href="global.html#writeArrayToStorage">writeArrayToStorage</a></li><li><a href="global.html#writeBulletToStorage">writeBulletToStorage</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Bullet.html">Bullet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addListTag">addListTag</a></li><li><a href="global.html#appendButton">appendButton</a></li><li><a href="global.html#appendTextNode">appendTextNode</a></li><li><a href="global.html#closeSidebar">closeSidebar</a></li><li><a href="global.html#createBullet">createBullet</a></li><li><a href="global.html#createBulletEntryElem">createBulletEntryElem</a></li><li><a href="global.html#createTag">createTag</a></li><li><a href="global.html#createTagElements">createTagElements</a></li><li><a href="global.html#deleteBulletById">deleteBulletById</a></li><li><a href="global.html#deleteBulletEntry">deleteBulletEntry</a></li><li><a href="global.html#deleteBulletFromStorage">deleteBulletFromStorage</a></li><li><a href="global.html#deleteNote">deleteNote</a></li><li><a href="global.html#editBulletEntry">editBulletEntry</a></li><li><a href="global.html#editNote">editNote</a></li><li><a href="global.html#editTags">editTags</a></li><li><a href="global.html#fillRunTimeBullets">fillRunTimeBullets</a></li><li><a href="global.html#fillRunTimeTags">fillRunTimeTags</a></li><li><a href="global.html#filterArray">filterArray</a></li><li><a href="global.html#getBulletById">getBulletById</a></li><li><a href="global.html#getBulletsByDateRange">getBulletsByDateRange</a></li><li><a href="global.html#getCheckBoxResults">getCheckBoxResults</a></li><li><a href="global.html#getEventBulletsByDateRange">getEventBulletsByDateRange</a></li><li><a href="global.html#getHour">getHour</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#initCrudRuntime">initCrudRuntime</a></li><li><a href="global.html#loadBullets">loadBullets</a></li><li><a href="global.html#loadTags">loadTags</a></li><li><a href="global.html#openDeleteDialog">openDeleteDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openSidebar">openSidebar</a></li><li><a href="global.html#populateTagOptions">populateTagOptions</a></li><li><a href="global.html#readArrayFromStorage">readArrayFromStorage</a></li><li><a href="global.html#runTimeBullets">runTimeBullets</a></li><li><a href="global.html#showBulletInfo">showBulletInfo</a></li><li><a href="global.html#updateTags">updateTags</a></li><li><a href="global.html#writeArrayToStorage">writeArrayToStorage</a></li><li><a href="global.html#writeBulletToStorage">writeBulletToStorage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sun May 23 2021 10:25:51 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed Jun 09 2021 05:20:14 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
