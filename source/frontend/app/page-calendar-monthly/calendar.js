@@ -85,6 +85,28 @@ today.addEventListener('click', function() {
 
   var data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
+});
+
+filter.addEventListener('mouseover', function() {
+  filter.style.cursor = 'pointer';
+});
+
+
+today.addEventListener('click', function() {
+
+  
+  let checker = new Date();
+  checker = checker.toISOString().split('T')[0].split('-');
+
+  monthIn = parseInt(checker[1]);
+  yearIn = parseInt(checker[0]);
+
+  resetCalendar();
+  var start = new Date(yearIn, monthIn-1);
+  var end = new Date(yearIn,monthIn);
+
+  var data = onlyThese(start, end);
+  populateCalendar(monthIn, yearIn, data);
   const hashed = generateHash(false);
   utils.updateURL(hashed);
 
@@ -204,7 +226,6 @@ function resetCalendar() {
 // for a specific month only
 function bulletAppend(bullets) {
  
-  //what is temp?
   for (const temp of bullets) {
     const date = temp.date.toJSON().split('T')[0].split('-')[2];
     const curr = document.getElementById(parseInt(date));
@@ -212,7 +233,6 @@ function bulletAppend(bullets) {
     if (curr.childNodes.length === 1) {
       curr.appendChild(document.createElement('ul'));
     }
-    //could be done wiht a css tag
     var chars = 10-Math.max(0,Math.floor((1300-window.screen.width)/80)+1); // to calculate number of characters to display
 
     event.innerHTML = temp.title.substring(0,Math.min(temp.title.length, chars));
