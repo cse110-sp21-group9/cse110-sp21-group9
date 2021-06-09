@@ -1,8 +1,8 @@
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
 
-const DAY_PATH = '/source/frontend/app/page-day/day.html';
-const MONTH_PATH = '/source/frontend/app/page-calendar-monthly/calendar.html';
+const DAY_PATH = './source/frontend/app/page-day/day.html';
+const MONTH_PATH = './source/frontend/app/page-calendar-monthly/calendar.html';
 
 const COLUMNS = 7;
 const ROWS = 6;

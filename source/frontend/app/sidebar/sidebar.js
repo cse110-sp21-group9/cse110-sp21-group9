@@ -1,5 +1,8 @@
 /* eslint-env jquery */
 import { getLocalStorageData, loadDataToLocalStorage } from '../../../backend/crudFunctions.js';
+const LIGHT_LOGO_PATH = './source/frontend/assets/nav-logo.svg';
+const DARK_LOGO_PATH = './source/frontend/assets/dark-logo.svg';
+
 
 const settingsModel = document.getElementById('settingsNav');
 
@@ -45,8 +48,7 @@ function setTheme(strTheme) {
   // switching to dark mode
   if (strTheme === 'dark') {
     // switch logo
-    document.getElementById('logo').src =
-      '/source/frontend/assets/dark-logo.svg';
+    document.getElementById('logo').src = './source/frontend/assets/dark-logo.svg';
 
     // switch navbar
     document.getElementById('navbar').className =
@@ -55,8 +57,7 @@ function setTheme(strTheme) {
     themeSwitch.checked = true;
   } else {
     // switch logo
-    document.getElementById('logo').src =
-      '/source/frontend/assets/nav-logo.svg';
+    document.getElementById('logo').src = LIGHT_LOGO_PATH;
 
     // switch navbar
     document.getElementById('navbar').className =
