@@ -53,6 +53,6 @@ function getAvailableTags(){}                       //=> returns a list of all k
 function removeTagGlobably(tag){}                   //=> removes tag from the global tag table, and removes it from all bullets
 
 //note due date and status will be taken as an option Object if the type requires them
-function createBullet(strType, strTitle, strDate, lstTags, strContent, option) //=> returns the created bullet class
+function createBullet(strType, strTitle, strDate, lstTags, strContent, option){} //=> returns the created bullet class
 
 function deleteBulletById(ID){}                     //=> return null or throw exception if id not found

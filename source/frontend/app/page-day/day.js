@@ -177,7 +177,7 @@ saveBulletBtn.onclick = () => {
 };
 
 /** Displays the relevant information pertaining to the given bullet in view Modal
- * @param {bullet} elemEntry the bullet element we want to display information about
+ * @param {HTMLLIElement} elemEntry the bullet element we want to display information about
  * @return null
  */
 function showBulletInfo(elemEntry) {
@@ -204,7 +204,7 @@ function showBulletInfo(elemEntry) {
 /**
  * Loads bullets from local storage
  * Can load bullets by a specific tag with tag parameter
- * @param strTag Can specify a tag to only load bullets of that tag
+ * @param {String} strTag Can specify a tag to only load bullets of that tag
  */
 // load initial bullets from local storage
 function loadBullets(strTag = null) {
@@ -424,7 +424,7 @@ editTagSelector.addEventListener('change', function() {
 });
 
 /** Opens the delete dialog box and listens for delete button to get clicked
- *  @param {bullet} elemEntry the bullet we want to delete
+ *  @param {HTMLLIElement} elemEntry the bullet we want to delete
  *  @return null
 */
 function openDeleteDialog(elemEntry) {
@@ -438,7 +438,7 @@ function openDeleteDialog(elemEntry) {
 
 /** Opens edit dialog box and saves edits if the associated event listener is
  *  triggered
- *  @param {bullet} elemEntry the bullet we want to edit
+ *  @param {HTMLLIElement} elemEntry the bullet we want to edit
  *  @return a modal to edit a bullet.
 */
 function openEditDialog(elemEntry) {
@@ -511,10 +511,10 @@ function openEditDialog(elemEntry) {
 }
 
 /** helper function to add buttons to bullet entry
- *  @param {string} strDisp what we want the bullet to read on the DOM
- *  @param {string} strStyle the style we want the button in
- *  @param {string} strClass what kind of button
- *  @param {bullet} elemParent the bullet we want to tie the button to
+ *  @param {String} strDisp what we want the bullet to read on the DOM
+ *  @param {String} strStyle the style we want the button in
+ *  @param {String} strClass what kind of button
+ *  @param {HTMLElement} elemParent the bullet we want to tie the button to
  *  @return a button
  */
 function appendButton(strDisp, strStyle, strClass, elemParent) {
@@ -530,8 +530,8 @@ function appendButton(strDisp, strStyle, strClass, elemParent) {
 }
 
 /** Create a entry element for a bullet to go on webpage
- *  @param {number} intBulletID - the bullet's numerical ID
- *  @return {li} a list (bullet) object
+ *  @param {Number} intBulletID - the bullet's numerical ID
+ *  @return {HTMLLIElement} a list (bullet) object
  */
 function createBulletEntryElem(objBullet) {
   const newEntry = document.createElement('li');
@@ -634,7 +634,7 @@ function createBulletEntryElem(objBullet) {
 
 /**
  * Adds all tags from a bullet as div objects into a div object for use
- * @param {div} objTagDiv HTML div element object to add tags to
+ * @param {HTMLDivElement} objTagDiv HTML div element object to add tags to
  * @param {Bullet} objBullet bullet object to get tags from
  */
 function createTagElements(objTagDiv, objBullet) {
@@ -751,7 +751,7 @@ noteBtn.addEventListener('click', function() {
 
 /** Special Editing functionality for note bullets.
  *  It will replace the selected bullet with the desired edits
- *  @param {Note Bullet} elemEntry the entry we want to edit
+ *  @param {HTMLLIElement} elemEntry the entry we want to edit
  *  @return null
  */
 function editNote(elemEntry) {
@@ -815,7 +815,7 @@ function editNote(elemEntry) {
 }
 
 /** Deletes the note we want to the shadow realm
- *  @param {bullet} elemEntry the bullet we want to delete
+ *  @param {HTMLLIElement} elemEntry the bullet we want to delete
  *  @return null
 */
 function deleteNote(elemEntry) {

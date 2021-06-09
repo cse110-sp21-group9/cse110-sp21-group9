@@ -11,7 +11,7 @@ import { Bullet } from './bullet.js';
  *  Completed: Add type and tag functionality
  */
 
-let runTimeBullets = {};
+const runTimeBullets = {};
 let runTimeTags = {};
 let runTimeUpToDate = false;
 let lastID; // this is bad
@@ -351,7 +351,7 @@ function fillRunTimeBullets() {
 function parseBullet(intID) {
   const bullet = JSON.parse(localStorage.getItem(intID));
   bullet.date = new Date(bullet.date);
-  if ('dueDate' in bullet) { bullet.dueDate = new Date(bullet.dueDate); }
+	if (bullet.dueDate !== null) { bullet.dueDate = new Date(bullet.dueDate); }
   return bullet;
 }
 
@@ -362,7 +362,7 @@ function parseBullet(intID) {
  */
 function filterArray(arrayIn, bulletFilter) {
   const arrayOut = [];
-  for (const bullet of arrayIn) {
+  for (const bullet in arrayIn) {
     if (bullet.type === bulletFilter) {
       arrayOut.push(bullet);
     }
