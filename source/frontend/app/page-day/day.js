@@ -30,7 +30,7 @@ const confirmBtn = document.getElementById('okConfirm');
 
 // Tag Creation Modal Elements
 const tagFilterSelect = document.getElementById('selecttag');
-const tagSaveBtn = document.getElementById('saveTag');
+const tagSaveBtn = document.getElementById('saveTag')
 const tagCloseBtn = document.getElementById('doneTag');
 const tagName = document.getElementById('tagname');
 
