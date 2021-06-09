@@ -4,6 +4,7 @@
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
+import '../element-mini-calendar/mini-calendar.js';
 
 const MAX_TITLE_LENGTH = 35;
 const MAX_TAG_LENGTH = 15;
@@ -29,7 +30,8 @@ const confirmBtn = document.getElementById('okConfirm');
 
 // Tag Creation Modal Elements
 const tagFilterSelect = document.getElementById('selecttag');
-const tagCloseBtn = document.getElementById('saveTag');
+const tagSaveBtn = document.getElementById('saveTag');
+const tagCloseBtn = document.getElementById('doneTag');
 const tagName = document.getElementById('tagname');
 
 // Edit Modal Elements
@@ -247,7 +249,6 @@ function loadTags() {
   // Grab tags saved in storage, and the part of the modal to paste them in
   const tagsToLoad = crud.getAvailableTags();
   const loadingBay = document.getElementById('taglist');
-  console.log(loadingBay);
 
   // Grab the tags already pasted onto the modal
   const loadedTags = loadingBay.querySelectorAll('li');
@@ -321,6 +322,14 @@ tagName.addEventListener('keypress', function(e) {
     loadTags();
     tagName.value = '';
   }
+});
+
+// Add the new tag when the user presses the save button
+tagSaveBtn.addEventListener('click', function() {
+  // create bullet element and destroy the input text
+  crud.createTag(tagName.value);
+  loadTags();
+  tagName.value = '';
 });
 
 /**
@@ -813,3 +822,7 @@ function deleteNote(elemEntry) {
   crud.deleteBulletById(elemEntry.id);
   elemEntry.remove();
 }
+
+const cal = document.createElement('mini-calendar');
+document.getElementById('miniCalendar').appendChild(cal);
+cal.setCalendar();
