@@ -3,7 +3,6 @@ import { getLocalStorageData, loadDataToLocalStorage } from '../../../backend/cr
 const LIGHT_LOGO_PATH = './source/frontend/assets/nav-logo.svg';
 const DARK_LOGO_PATH = './source/frontend/assets/dark-logo.svg';
 
-
 const settingsModel = document.getElementById('settingsNav');
 
 /* Open settings modal */
