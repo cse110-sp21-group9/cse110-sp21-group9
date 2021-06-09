@@ -362,7 +362,7 @@ function parseBullet(intID) {
  */
 function filterArray(arrayIn, bulletFilter) {
   const arrayOut = [];
-  for (const bullet in arrayIn) {
+  for (const bullet of arrayIn) {
     if (bullet.type === bulletFilter) {
       arrayOut.push(bullet);
     }
