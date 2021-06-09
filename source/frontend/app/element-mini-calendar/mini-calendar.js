@@ -173,11 +173,11 @@ export class MiniCalendar extends HTMLElement {
       const month = getMonthFromString(this.textContent);
       const dateYear = document.querySelector('mini-calendar').shadowRoot.getElementById('year').textContent;
       const hash = utils.hashString('m', dateYear, month);
-      const root = document.URL.split('/')[2];
-      const path = 'http://' + root + MONTH_PATH;
-      const url = new URL(path);
-      url.hash = hash;
-      window.location.href = url.href;
+      // const root = document.URL.split('/')[2];
+      // const path = 'http://' + root + MONTH_PATH;
+      // const url = new URL(path);
+      window.location.hash = hash;
+      window.location.href = MONTH_PATH;
     });
 
     // now build new elements
@@ -197,11 +197,12 @@ export class MiniCalendar extends HTMLElement {
           const dateMonth = getMonthFromString(miniCal.shadowRoot.getElementById('month').textContent);
           const dateYear = miniCal.shadowRoot.getElementById('year').textContent;
           const hash = utils.hashString('d', dateYear, dateMonth, dateDay);
-          const root = document.URL.split('/')[2];
-          const path = 'http://' + root + DAY_PATH;
-          const url = new URL(path);
-          url.hash = hash;
-          window.location.href = url.href;
+          // const root = document.URL.split('/')[2];
+          // const path = 'http://' + root + DAY_PATH;
+          // const url = new URL(path);
+          // url.hash = hash;
+          window.location.href = DAY_PATH;
+          window.location.hash = hash
           window.location.reload();
         });
 

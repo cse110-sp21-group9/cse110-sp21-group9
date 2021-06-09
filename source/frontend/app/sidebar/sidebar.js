@@ -47,7 +47,7 @@ function setTheme(strTheme) {
   // switching to dark mode
   if (strTheme === 'dark') {
     // switch logo
-    document.getElementById('logo').src = './source/frontend/assets/dark-logo.svg';
+    document.getElementById('logo').src = DARK_LOGO_PATH;
 
     // switch navbar
     document.getElementById('navbar').className =
