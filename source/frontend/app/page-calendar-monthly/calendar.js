@@ -157,7 +157,7 @@ function populateCalendar(month, year, data) {
         // const root = document.URL.split('/')[2];
         // const path = 'http://' + root + DAY_PATH;
         // const url = new URL(path);
-        //window.location.hash = hash;
+        // window.location.hash = hash;
         window.location.href = DAY_PATH + '#' + hash;
       });
       // hover over date cells in calendar

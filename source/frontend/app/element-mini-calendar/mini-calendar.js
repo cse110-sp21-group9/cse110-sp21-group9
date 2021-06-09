@@ -1,7 +1,6 @@
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
 
-const DAY_PATH = './';
 const MONTH_PATH = '../page-calendar-monthly/calendar.html';
 
 const COLUMNS = 7;
@@ -176,8 +175,8 @@ export class MiniCalendar extends HTMLElement {
       // const root = document.URL.split('/')[2];
       // const path = 'http://' + root + MONTH_PATH;
       // const url = new URL(path);
-      window.location.hash = hash;
-      window.location.href = MONTH_PATH;
+      //window.location.hash = hash;
+      window.location.href = MONTH_PATH + '#' + hash;
     });
 
     // now build new elements
