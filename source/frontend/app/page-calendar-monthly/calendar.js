@@ -1,6 +1,5 @@
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
-import * as globals from '../../globals.js';
 
 const DAY_PATH = '../page-day/day.html';
 

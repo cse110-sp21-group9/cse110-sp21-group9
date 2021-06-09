@@ -175,7 +175,7 @@ export class MiniCalendar extends HTMLElement {
       // const root = document.URL.split('/')[2];
       // const path = 'http://' + root + MONTH_PATH;
       // const url = new URL(path);
-      //window.location.hash = hash;
+      // window.location.hash = hash;
       window.location.href = MONTH_PATH + '#' + hash;
     });
 
