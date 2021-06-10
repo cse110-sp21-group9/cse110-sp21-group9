@@ -1,4 +1,4 @@
-# Meeting Minutes ~ 051921-meetingTA
+# Meeting Minutes ~ 052621-meetingTA
 ## I. Meeting Information
 **Meeting Purpose:** Weekly Meeting with TA  
 **Meeting Date/Time:** May 26th, 2021, 3:00pm - 3:45pm  
