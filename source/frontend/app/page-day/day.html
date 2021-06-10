@@ -4,7 +4,8 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Calendar Demo</title>
+	<title>Bujo Studio</title>
+	<link rel="icon" type="image/jpeg" href="../../assets/mini-logo.svg">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -20,8 +21,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
 
-	<script type="module" src="/source/frontend/app/sidebar/sidebar.js"></script>
-
+	<script type="module" src="../sidebar/sidebar.js"></script>
 </head>
 
 <body>
@@ -30,20 +30,20 @@
 		<div class="mySidebar">
 			<div class="d-flex flex-column flex-shrink-0 bg-light"
 				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;" id="navbar">
-				<a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
+				<a href="../../../../index.html" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
 					data-bs-placement="right" data-bs-original-title="Icon-only">
 					<span class="visually-hidden center-block"><img id="logo" src="../../assets/nav-logo.svg" /></span>
 				</a>
 				<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
 					<li class="nav-item">
-						<a href="/source/frontend/app/page-day/day.html" class="nav-link active py-3 border-bottom"
+						<a href="./day.html" class="nav-link active py-3 border-bottom"
 							aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right"
 							data-bs-original-title="Home">
 							<i class="fas fa-home fa-2x"></i>
 						</a>
 					</li>
 					<li>
-						<a href="/source/frontend/app/page-calendar-monthly/calendar.html"
+						<a href="../page-calendar-monthly/calendar.html"
 							class="nav-link py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
 							data-bs-placement="right" data-bs-original-title="Month">
 							<i class="fas fa-calendar-alt fa-2x"></i>
@@ -106,28 +106,7 @@
 					</ul>
 				</div>
 				<div id="right-side">
-					<div id="mini-calendar">
-						<table id="calendar">
-							<thead>
-								<tr class="monthyear">
-									<td id="backmonth"></td>
-									<td id="month" colspan="7"></td>
-									<td id="forwardmonth"></td>
-								</tr>
-								<tr>
-									<th></th>
-									<th>Sun</th>
-									<th>Mon</th>
-									<th>Tue</th>
-									<th>Wed</th>
-									<th>Thu</th>
-									<th>Fri</th>
-									<th>Sat</th>
-								</tr>
-							</thead>
-							<tbody id="calendar-body">
-							</tbody>
-						</table>
+					<div id="miniCalendar">
 					</div>
 					<div id="undated_notes">
 						<div id="note_header">
@@ -226,13 +205,14 @@
 					<div class="modal-body">
 						<form method="dialog">
 							<label for="tagname">Add tag(enter to save): </label>
+							<button id="saveTag" class="btn btn-primary" value="false">Save</button>
 							<input type="text" id="tagname"><br>
 						</form>
 						<ul id='taglist'>
 						</ul>
 					</div>
 					<div class="modal-footer">
-						<button id="saveTag" class="btn btn-primary" value="false">Done</button>
+						<button id="doneTag" class="btn btn-primary" value="false">Done</button>
 					</div>
 				</div>
 			</div>

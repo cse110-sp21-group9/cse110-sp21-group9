@@ -11,7 +11,7 @@ import { Bullet } from './bullet.js';
  *  Completed: Add type and tag functionality
  */
 
-let runTimeBullets = {};
+const runTimeBullets = {};
 let runTimeTags = {};
 let runTimeUpToDate = false;
 let lastID; // this is bad
@@ -163,6 +163,27 @@ export function removeTagGlobally(strTag, objOption = null) {
   }
 }
 
+export function setAttributes(intID, objAttributes) {
+  if (!(intID in runTimeBullets)) return null;
+  const bulletObj = runTimeBullets[intID];
+
+  if ('title' in objAttributes) { bulletObj.title = objAttributes.title; }
+  if ('date' in objAttributes && objAttributes.date instanceof Date) { bulletObj.date = objAttributes.date; }
+  if ('tags' in objAttributes) {
+    objAttributes.tags.forEach((tag, index) => {
+      if (!(tag in runTimeTags)) return null;
+    });
+    bulletObj.tags = objAttributes.tags;
+  }
+  if ('content' in objAttributes) { bulletObj.content = objAttributes.content; }
+  if ('dueDate' in objAttributes && objAttributes.dueDate instanceof Date) { bulletObj.dueDate = objAttributes.dueDate; }
+  if ('status' in objAttributes) { bulletObj.status = objAttributes.status; }
+
+  runTimeBullets[intID] = bulletObj;
+  localStorage.setItem(intID, JSON.stringify(bulletObj));
+  return new Bullet(bulletObj);
+}
+
 /**
  * Creates a bullet object
  * @param {string} strType    - bullet type
@@ -237,6 +258,28 @@ export function initCrudRuntime() {
   fillRunTimeBullets();
 }
 
+export function getLocalStorageData() {
+  return {
+    lastID: lastID,
+    bullets: runTimeBullets,
+    tags: runTimeTags,
+    ids: readArrayFromStorage('bulletIDs')
+  };
+}
+
+export function loadDataToLocalStorage(objData) {
+  if (!('lastID' in objData) || !('bullets' in objData) || !('tags' in objData) || !('ids' in objData)) {
+    console.error('could not understand file');
+    return;
+  }
+
+  localStorage.clear();
+  localStorage.setItem('lastID', objData.lastID);
+  localStorage.setItem('tags', JSON.stringify(objData.tags));
+  writeArrayToStorage('bulletIDs', objData.ids);
+  for (const bulletID of Object.keys(objData.bullets)) { localStorage.setItem(bulletID, JSON.stringify(objData.bullets[bulletID])); }
+}
+
 // ----------------helpers----------------
 function dateEquals(date1, date2) {
   return (
@@ -298,10 +341,8 @@ function fillRunTimeBullets() {
 
   lastID = Number(lastID);
   const bulletIDs = readArrayFromStorage('bulletIDs');
-  console.log('loaded bullet ids: ', bulletIDs);
   for (const ID of bulletIDs) {
     runTimeBullets[ID] = parseBullet(ID);
-    console.log('loaded bullet object: ', runTimeBullets[ID]);
   }
   runTimeTags = JSON.parse(localStorage.getItem('tags'));
   runTimeUpToDate = true;
@@ -310,7 +351,7 @@ function fillRunTimeBullets() {
 function parseBullet(intID) {
   const bullet = JSON.parse(localStorage.getItem(intID));
   bullet.date = new Date(bullet.date);
-  if ('dueDate' in bullet) { bullet.dueDate = new Date(bullet.dueDate); }
+  if (bullet.dueDate !== null) { bullet.dueDate = new Date(bullet.dueDate); }
   return bullet;
 }
 

@@ -2,11 +2,13 @@
 
 <head>
   <title>BuJo Studio</title>
-  <link rel="icon" type="image/jpeg" href="assets/mini-logo.svg">
+  <link rel="icon" type="image/jpeg" href="/source/frontend/assets/mini-logo.svg">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
+  <link rel="stylesheet" href="homepage.css">
+
 
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -14,54 +16,32 @@
 
   <style>
     body {
-        font-family: 'Nunito';
+      font-family: 'Nunito';
     }
   </style>
 </head>
 
-<body>
+<body style="background-image: url('https://images.pexels.com/photos/8251106/pexels-photo-8251106.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');">
 
   <!-- source\frontend\app\page-homepage\homepage.html -->
   <nav class="navbar navbar-expand-sm bg-light navbar-light">
-    <a class="navbar-brand" href="/app/page-homepage/homepage.html"> <img
+    <a class="navbar-brand" href="/source/frontend/app/page-homepage/homepage.html"> <img
         src="../../assets/bujo-logo.svg" /></a>
 
-
-    <div class="ml-auto">
-      <a href="/app/page-login/login.html"><button type="submit" class="btn btn-primary btn-sm mr-1">Login</button></a>
-      <a href="/app/page-signup/signup.html"> <button type="submit" class="btn btn-primary btn-sm mr-1">Sign
-          up</button></a>
-    </div>
-
   </nav>
+  <div class="position-relative overflow-hidden p-5 p-md-5 m-md-3 text-center align-items-center justify-content-center" id="cover" style="background-color: rgba(1, 1, 1, 0.219);">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 font-weight-normal">BuJo Studio</h1>
+      <p class="lead font-weight-normal">
+        Traditional bullet journaling can be time-consuming and overwhelming.
+        With BuJo Studio, you can enjoy all of the benefits that bullet journaling has to offer with ease.</p>
+        <br>
+      <a class="btn-lg btn-primary" href="../page-day/day.html">Lets get started!</a>
+    </div>
+    <div class="product-device box-shadow d-none d-md-block"></div>
+    <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+  </div>
 
-  <div class="row h-100 text-center">
-    <div class="col-4 align-self-center">
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h1 class="display-5">Welcome to BuJo Studio!</h1>
-          <div class="badge text-wrap col-12">
-            <p class="lead text-center">Developed by designer Ryder Caroll, bullet journaling is a method of personal organization that 
-              allows a person to keep track of a daily to-do list, keep a monthly calendar, record goals, and write down notes in a single notebook. 
-              Traditional bullet journaling can be time-consuming and overwhelming. 
-              With BuJo Studio, you can enjoy all of the benefits that bullet journaling has to offer with ease. 
-            </p>
-          </div>
-          <p class="lead">
-            <a href="/app/page-signup/signup.html" class="btn btn-lg btn-secondary">Let's Get Started!</a>
-          </p>
-        </div>
-        <div class="col-md-8">
-          <!-- screen template not loading idk why -->
-          <img src="assets/screen-template.png"/>
-          image of laptop/phone screen here
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
 </body>
 
 </html>
