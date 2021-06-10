@@ -1,0 +1,182 @@
+/**
+ * Stylesheet for calendar.html
+ */
+
+/* colors for light-theme */
+:root {
+  --background-color: white;
+  --text-color: #1c1c1e;
+  --accent-color1: #c7c7cc; 
+  --nav-color: #fcfcfc; /* drop down box color */
+  --nav-color-hover: #f2f2f7;
+  --modal-color: white;
+}  
+
+/* colors for dark-theme */
+[data-theme="dark"] { 
+  --background-color: #1c1c1e;
+  --text-color: #f2f2f7;
+  --accent-color1: #8e8e93;
+  --nav-color: #2c2c2e;
+  --nav-color-hover: #48484a;
+  --modal-color: #2c2c2e;
+  --modal-color-background: rgba(199, 199, 204, 0.3);
+}
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--background-color);
+
+
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 100px);
+  gap: 10px;
+  grid-template-areas:
+    'sidebar content content'
+    'sidebar content content'
+    'sidebar content content'
+    'sidebar content content' */
+}
+
+/* CSS Grid */
+.main-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 100px);
+  gap: 10px;
+  grid-template-areas:
+    'sidebar top-nav top-nav'
+    'sidebar content content'
+    'sidebar content content'
+    'sidebar content content';
+}
+
+/*  CSS Grid End*/
+.dropdown-menu {
+  background-color: var(--nav-color);
+}
+
+
+.dropdown-menu a {
+  color: var(--text-color);
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--nav-color-hover);
+}
+
+body .main-container table{
+  background-color: #1c1c1e;
+}
+
+table {
+  table-layout: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  height: 80%;
+  width: 70%;
+  border-collapse: collapse;
+  color: var(--text-color);
+  table-layout: fixed;
+  border-spacing: 0;
+  border-radius: 20px;
+}
+
+tbody tr td {
+  vertical-align: top;
+  text-align: left;
+  white-space: nowrap;
+  word-wrap: break-word;
+  border: 1px solid var(--accent-color1);
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+}
+
+tbody tr th {
+  border: 1px solid var(--accent-color1);
+  color: var(--text-color);
+  height: 5%;
+}
+
+thead {
+  /* background-color: #333; */
+  border: 1px solid var(--accent-color1);
+  background-color: #007aff;
+  color: white;
+  text-align: center;
+}
+
+.monthyear {
+  height: 5%;
+}
+
+/* The sidebar menu */
+.mySidebar {
+  height: 100%;
+  grid-area: sidebar;
+  position: fixed;
+  background-color: var(--nav-color);
+}
+
+.main-container {
+  grid-area: content;
+  justify-content: center;
+}
+
+#logo {
+  display: inline-block;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  /* grid-area: content; */
+  transition: margin-left .5s;
+  /* If you want a transition effect */
+  padding: 20px;
+}
+
+/* Style month and year title*/
+#monthTitle {
+  font-size: 200%;
+}
+
+#yearTitle {
+  font-size: 100%;
+}
+
+/* Pointer on buttons back/forward buttons*/
+#backmonth:hover {
+  cursor: pointer;
+}
+
+#forwardmonth:hover {
+  cursor: pointer;
+}
+
+.fas {
+  color: var(#007aff);
+}
+
+.modal-content {
+  background-color: var(--modal-color);
+  color: var(--text-color);
+}
+
+#settingsModal {
+  background-color: var(--modal-color-background);
+}
+
+.main-calendar{
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+#filter {
+  background-color: #007aff;
+  color: white;
+  border-color: #007aff;
+}

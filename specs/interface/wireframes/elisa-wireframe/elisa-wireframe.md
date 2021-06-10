@@ -5,8 +5,15 @@
 ## Register/Login ##
 ![Login](screenshots/login.png)
 ## Dashboard ##
+Clicking on the calendar, tracker, or notes widgets will redirect the user to the corresponding full page views
 ![Dashboard](screenshots/dashboard.png)
-## Calendar View ##
-![Calendar](screenshots/calendar.png)
+## Calendar Weekly View ##
+![Calendar](screenshots/calendar-week.png)
+## Calendar Daily View ##
+![Calendar](screenshots/calendar-daily.png)
+## Calendar Monthly View ##
+![Calendar](screenshots/calendar-monthly.png)
+## Add Event Form ##
+![Add](screenshots/add.png)
 ## Journal ##
 ![Journal](screenshots/journal.png)

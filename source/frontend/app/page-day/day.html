@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Bujo Studio</title>
+	<link rel="icon" type="image/jpeg" href="../../assets/mini-logo.svg">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://kit.fontawesome.com/c7fe59e5a5.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="day-style.css">
+	<script type="module" src="day.js"></script>
+	<script type="module" src="../../../backend/crudFunctions.js"></script>
+	<script type="module" src="../element-mini-calendar/mini-calendar.js"></script>
+	<!-- <script type="module" src=".sidebar.js"></script> -->
+
+	<!-- Nunito Font -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+
+	<script type="module" src="../sidebar/sidebar.js"></script>
+</head>
+
+<body>
+	<div class="main-container">
+		<!-- Source: https://getbootstrap.com/docs/5.0/examples/sidebars/# -->
+		<div class="mySidebar">
+			<div class="d-flex flex-column flex-shrink-0 bg-light"
+				style="width: 4.5rem;  display: flex; height: 100%; align-items: stretch;" id="navbar">
+				<a href="../../../../index.html" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
+					data-bs-placement="right" data-bs-original-title="Icon-only">
+					<span class="visually-hidden center-block"><img id="logo" src="../../assets/nav-logo.svg" /></span>
+				</a>
+				<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+					<li class="nav-item">
+						<a href="./day.html" class="nav-link active py-3 border-bottom"
+							aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right"
+							data-bs-original-title="Home">
+							<i class="fas fa-home fa-2x"></i>
+						</a>
+					</li>
+					<li>
+						<a href="../page-calendar-monthly/calendar.html"
+							class="nav-link py-3 border-bottom" title="Month" data-bs-toggle="tooltip"
+							data-bs-placement="right" data-bs-original-title="Month">
+							<i class="fas fa-calendar-alt fa-2x"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" id="settingsNav" class="nav-link py-3 border-bottom" title="Settings"
+							data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Settings">
+							<i class="fas fa-cog fa-2x"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Settings Modal-->
+		<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Settings</h4>
+					</div>
+					<div class="modal-body">
+						<input type="file" id="input" multiple>
+						<!-- <label for="input">Upload</label> -->
+
+						<button type="button" id="exportData">Download</button>
+						<br><br>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="customSwitch1">
+							<label class="custom-control-label" for="customSwitch1">Toggle Dark Mode</label>
+						</div>
+						<br>
+						<form method="dialog">
+							<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="main">
+			<h1 class="mb-3 data-mdb-ripple-color='light'">Daily Calendar</h1>
+			<div id="content_container">
+				<div id="calender_container">
+					<div id="date_container">
+						<h3 id="week_day">Thursday</h3>
+						<p id="date">april 1st</p>
+
+						<button class="btn btn-primary" id="addBullet"><i
+								class="fas fa-plus"></i> Add Bullet</button>
+						<label for="selecttag">Filter by Tag: </label>
+						<select id="selecttag">
+							<option value='ALL'>All</option>
+							<option id='edittags' value='edit'>Edit tags...</option>
+						</select>
+					</div>
+					<ul id="time_list">
+					</ul>
+				</div>
+				<div id="right-side">
+					<div id="miniCalendar">
+					</div>
+					<div id="undated_notes">
+						<div id="note_header">
+							<h2 id="note_title">Notespace</h2>
+							<button class="btn-sm btn-primary" id="addNote"><i
+								class="fas fa-plus"></i> Add Note</button>
+						</div>
+						<div id="note_container">
+							<ul id="noteSpace">
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div id="bujoSpace" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addBullet"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Bullet</h4>
+					</div>
+					<div class="modal-body">
+						<form method="dialog">
+							<!--Is title a good name? Probably not-->
+							<label for="title">Title: </label>
+							<input type="text" id="title" type="reset"><br>
+
+							<label for="type">Type: </label>
+							<select name="bulletType" id="type">
+								<option value="Event">Event</option>
+								<option value="Task">Task</option>
+							</select> <br>
+							<label for="time">Hour: </label>
+							<select name="bulletHour" id="hour">
+							</select>
+							<select name="bulletAMPM" id="AMPM">
+								<option value="AM">AM</option>
+								<option value="PM">PM</option>
+							</select><br>
+							<label for="tags">Tags: </label>
+							<select name="bulletTags" id="tags">
+								<option value="Default">Select Tags: </option>
+							</select><br>
+							<!--<button id='confirmTag'>Add this tag</button>-->
+							<div id="selected_tags">
+								<ul id="bullet_tags">
+
+								</ul>
+							</div> <br>
+							<textarea name="desc" rows="10" cols="30" placeholder="Bullet content"></textarea><br>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button id="canceladd" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button id="saveBullet" class="btn btn-primary" value="false">Save</button>
+						<!--<button id="createtag" class="btn btn-primary">Tags</button>-->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="viewBullet" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addBullet"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header" id='titleDateShowCase'>
+							<h3 id="viewtype">Event</h3><br>
+							<h5 id="viewdate">June 1, 2021</h5>
+							<h5 id="viewtime">9:00</h5><br>					
+					</div>
+					<div class="modal-body">
+						<h3 id=viewtitle class="modal-title">Title of Bullet</h3><br>
+						<h5>Content: </h5>
+						<p id=viewdesc>Lorem ipsum</p>
+					</div>
+					<div class="modal-footer" id="tagShowCase">
+						<h5 id="tagTitle">Tags:</h5>
+						<div id="viewtags">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Modal option to create a tag-->
+		<div id="tagcreation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tagbox"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title">Edit Tags: </h3>
+					</div>
+					<div class="modal-body">
+						<form method="dialog">
+							<label for="tagname">Add tag: </label><br>
+							<input type="text" id="tagname">
+							<button id="saveTag" class="btn btn-primary" value="false">Save</button>
+						</form>
+						<ul id='taglist'>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button id="doneTag" class="btn btn-primary" value="false">Done</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Modal option to delete a bullet-->
+		<div class="modal fade" id="deleteBullet" tabindex="-1" role="dialog" aria-labelledby="bulletDelete"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Bullet?</h4>
+					</div>
+					<div class="modal-body">
+						<form method="dialog">
+							<button id="canceldelete" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button id="okConfirm" class="btn btn-primary" value="false">Ok</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Dialog option to edit a bullet-->
+		<div class="modal fade" id="EditBullet" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="editBulletTitle">Edit Bullet</h4>
+					</div>
+					<div class="modal-body">
+						<form method="dialog">
+							<label for="editTitle">Title: </label>
+							<input type="text" id="editTitle"><br>
+							<label for="editHour">Hour: </label>
+							<select name="editHour" id="editHour">
+							</select>
+							<select name="editAMPM" id="editAMPM">
+								<option value="AM">AM</option>
+								<option value="PM">PM</option>
+							</select><br>
+							<!--<input type="text" id="editDate"><br>-->
+							<!--<label for="editDesc">Content: </label>-->
+							<!--<input type="text" id="editDesc">-->
+
+							<label for="editTags">Tags: </label>
+							<select name="editBulletTags" id="editTags">
+								<option value="Default">Select Tags: </option>
+							</select><br>
+							<!--<button id='confirmTag'>Add this tag</button>-->
+							<div id="editSelectedTags">
+								<ul id="editBulletTags">
+								</ul>
+							</div> <br>
+							<textarea name="editDesc" rows="10" cols="30" placeholder="Bullet content"></textarea><br>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button id="canceledit" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button id="editSaveAdd" class="btn btn-primary" value="false">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<template id="time_slot">
+	<span>
+		<h4 id="time">day</h3>
+			<ul id="bullet_list">
+			</ul>
+	</span>
+</template>
+
+</html>

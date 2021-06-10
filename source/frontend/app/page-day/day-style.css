@@ -1,0 +1,453 @@
+/* colors for light-theme */
+:root {
+  --background-color: white;
+  --text-color: #1c1c1e;
+  --accent-color1: #c7c7cc81; 
+  --nav-color: #fcfcfc; /* drop down box color */
+  --nav-color-hover: #f2f2f7;
+  --modal-color: white;
+}  
+
+/* colors for dark-theme */
+[data-theme="dark"] { 
+  --background-color: #1c1c1e;
+  --text-color: #f2f2f7;
+  --accent-color1: #8e8e937c;
+  --nav-color: #2c2c2e;
+  --nav-color-hover: #48484a;
+  --modal-color: #2c2c2e;
+  --modal-color-background: rgba(199, 199, 204, 0.3);
+}
+
+/* styling for overall page */
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--background-color);
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* styling for modal dark mode*/
+.modal-content {
+  background-color: var(--modal-color);
+  color: var(--text-color);
+}
+#settingsModal, #bujoSpace, #viewBullet #tagcreation #deleteBullet #EditBullet {
+  background-color: var(--modal-color-background);
+}
+textarea, input, select {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Styling for dropup menu */
+/* body .mySidebar .dropdown .dropdown-menu{
+  background-color: var(--nav-color);
+}
+
+body .mySidebar .dropdown .dropdown-menu li a{
+  color: var(--text-color);
+}
+
+body .mySidebar .dropdown .dropdown-menu li a:hover{
+  background-color: var(--nav-color-hover);
+} */
+
+/* The sidebar menu */
+.mySidebar {
+  height: 100vh;
+  grid-area: sidebar;
+  position: sticky;
+  background-color: var(--nav-color);
+  width: auto;
+  /* display: flex; */
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+/* CSS Grid */
+.main-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr;
+  gap: 20px;
+  /* Probably put in calendar on the top two rows of the third column 
+   and then have notespace on the bottom two rows */
+
+
+   /* removed main temporarily*/
+  grid-template-areas: 
+    'sidebar content'
+}
+
+/*  CSS Grid End*/
+/** All the stuff that goes to the header
+ * Includes searchbars, welcome text, and hamburger menu
+ */
+header {
+  /* grid-area: top-nav;  */
+  transition: margin-left .5s;
+  padding: 10px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+#searchbar {
+  /* grid-area: top-nav;  */
+  display: inline-block;
+  position: relative;
+  width: 45%;
+  margin-left: 3%;
+  border-radius: 4px;
+}
+
+#welcome {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  margin-left: 5%;
+  flex-grow: 2;
+}
+
+
+/* End of header stuff */
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  display: inline-block;
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-area: content; 
+  transition: margin-left .5s;
+  /* If you want a transition effect */
+  padding: 20px;
+	width: 100%;
+  height: 100vh; 
+  background-color: var(--background-color);
+  color: var(--text-color);
+	margin: 0 auto;
+}
+
+
+#content_container {
+  display: flex;
+  max-height: 90vh;
+	max-width: auto;
+}
+
+#calender_container {
+  vertical-align: top;
+  /* grid-area: ; */
+  position: relative;
+  /* background-color: var(--accent-color1); */
+  background-color: #29292c;
+  margin: 5%;
+  border-radius: 5px;
+  border: 1px solid var(--accent-color1);
+  margin: 20px;
+  width: 55%;
+  height: auto;
+  overflow-y: hidden;
+}
+
+
+#date_container {
+  margin: 1px;
+  border-bottom: 1px solid var(--accent-color1);
+  display: grid;
+  grid-template-columns: 50% 25% 25%;
+  grid-template-rows: 50% 50%;
+  background-color: var(--background-color);
+  gap: 1%;
+  /* Probably put in calendar on the top two rows of the third column 
+   and then have notespace on the bottom two rows */
+  grid-template-areas: 
+    'week_day '
+    'date addBullet createtag';
+}
+
+#date {
+  grid-row-start: 2;
+  padding-left: 15px;
+	font-size: 1.5em;
+}
+
+#week_day {
+  grid-row-start: 1;
+  padding-left: 10px;
+}
+
+/* TODO: Style this button to be smaller */
+#addBullet {
+  /* size: 15px; */
+  grid-row-start: 2;
+  align-self: center;
+}
+
+/* style tag input */ 
+#selecttag {
+  margin-right: 10%
+}
+
+#widgets_container {
+  /*border: 5px solid blue;*/
+  width: 50%;
+}
+
+#time_list {
+  background-color: var(--background-color);
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  height: 90%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.time_slot {
+  border: 1px solid var(--accent-color1);
+  border-left: 5px solid var(--text-color);
+  border-radius: 4px;
+  /* background-color: var(--background-color); */
+  margin: 5px;
+  height: auto;
+  min-height: 5em;
+  padding: 5px;
+}
+
+.time_slot:hover{
+  background-color: rgba(161, 157, 157, 0.075);
+}
+
+/* Right hand widgets */
+#right-side {
+  vertical-align: top;
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-items: flex-end;
+}
+
+/* Widgets on the dashboard */
+#miniCalendar {
+  vertical-align: top;
+  position: relative; 
+  background-color: var(--background-color);
+  width: 40vw;
+  height: 46%;
+  margin: 4vw;
+  border-radius: 15px;
+  border: 1px solid var(--accent-color1);
+  margin: 20px;
+}
+
+/* Not going to be used, probably */
+#undated_notes {
+  vertical-align: top;
+  position: relative;
+  /* background-color: var(--background-color); */
+  width: 40vw;
+  height: 46%;
+  margin: 20px;
+  border-radius: 15px;
+  border: 1px solid var(--accent-color1);
+}
+
+#addNote {
+  grid-column-start: 2;
+  align-self: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#note_header {
+  display: grid;
+  gap: 1%;
+  grid-template-columns: 75% 25%; 
+}
+
+#note_title {
+  grid-column-start: 1;
+  padding-left: 10px;
+}
+
+#note_container {
+  height: 85%;
+  overflow: auto; 
+}
+
+#noteSpace {
+  margin: 5px;
+	margin-left: 20px;
+	height: auto;
+	padding: 5px;
+}
+
+.aspect-ratio-box-inside {
+  position: absolute;
+  margin: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+#tags {
+  border: 1px solid var(--text-color);
+}
+
+/* style add,edit,delete buttons*/
+.circleButts {
+  border-radius: 30px;
+}
+#curMonth {
+  display: inline-block;
+}
+
+#curMonth:hover {
+  color: rgb(255, 255, 255);
+}
+
+p {
+  font-size: 18px;
+	white-space: pre-wrap;
+}
+
+#calendar{
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+}
+
+td{
+    position: relative;
+    z-index: 0;
+    width: 12.5%;
+}
+
+td.day{
+    cursor: pointer;
+}
+
+td.week{
+    cursor: pointer;
+}
+
+td.other-month{
+    color: grey;
+}
+
+.week:hover:after{
+    background-color: lightseagreen;
+}
+
+.week.selected::after{
+    background: lightblue;
+}
+
+.week::after{
+    position: absolute;
+    top: 0;
+    left: 0%;
+    bottom: 0;
+    width: 800%;
+    height: 100%;
+    border-radius: 10px;
+    z-index: -2;
+    content: '';
+}
+
+.day:hover::after{
+    background: plum;
+}
+
+.day.selected::after{
+    background: lightpink;
+}
+
+.day::after{
+    position: absolute;
+    top: 12.5%;
+    left: 12.5%;
+    right: 0;
+    bottom: 0;
+    width: 75%;
+    height: 75%;
+    border-radius: 10%;
+    z-index: -1;
+    content: '';
+}
+/* Style bullet entries */
+.bulletInfo {
+	margin: 5px; 
+}
+
+.bulletInfo:hover {
+  cursor: pointer;
+	margin: 5px; 
+	background-color: rgba(161, 157, 157, 0.075); 
+	border-radius: 10px; 
+	padding: 5px;
+}
+
+.bulletTitle:hover {
+	background-color: var(--accent-color1); 
+	border-radius: 5px;
+}
+/* Style edit/delete buttons */
+.bulletBtns {
+	float: right;
+}
+
+/* Style task checkboxes */ 
+.bulletInfo > input {
+	margin-right: 5px;
+}
+
+/* Style tags in entries */
+.tag {
+  color: #3399ff;
+	font-size: 12px;
+	border: 1px solid #3399ff;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+/* spacing between tags */ 
+.tag + .tag {
+	margin-left: 0.5em;
+}
+
+/* Style tag bar in modal */
+.tagBar {
+
+}
+
+#titleDateShowCase {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+	gap: 1em;
+  align-items: center;
+}
+#tagShowCase {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+#viewdesc {
+	border: 1px solid var(--text-color);
+	background-color: rgba(161, 157, 157, 0.075);
+	min-height: 5em;
+}

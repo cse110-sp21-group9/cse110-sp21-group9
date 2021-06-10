@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar Demo</title>
+    <link rel="stylesheet" href="calendar-style.css">
+    <script type="module" src="calendar.js"></script>
+
+    <!-- Nunito Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/%22%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <table>
+
+        <thead>
+            <tr class="monthweek">
+                <td id="backmonth">Button</td>
+                <td id="month" colspan="5">Month</td>
+                <td id="forwardmonth">Button</td>
+            </tr>
+
+            <tr class="monthweek">
+                <td id="backweek">Button</td>
+                <td id="week" colspan="5">Week</td>
+                <td id="forwardweek">Button</td>
+            </tr>
+
+            <tr id="weekdayheader">
+                <td>Sunday</td>
+                <td>Monday</td>
+                <td>Tuesday</td>
+                <td>Wednesday</td>
+                <td>Thursday</td>
+                <td>Friday</td>
+                <td>Saturday</td>
+            </tr>
+        </thead>
+
+        <tbody id="weeklycalendar">
+           
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>
