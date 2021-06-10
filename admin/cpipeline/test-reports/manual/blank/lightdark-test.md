@@ -1,6 +1,6 @@
 # Manual Tests for Light/Dark mode feature
 ## I. Test Information
-**Tester:** 
+**Tester:**  
 **Test Date:**  
 
 ## II. Test cases

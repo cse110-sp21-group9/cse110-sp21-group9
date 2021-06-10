@@ -1,7 +1,7 @@
 # Manual Tests for Backup/Load feature
 ## I. Test Information
-**Tester:** 
-**Test Date:**   
+**Tester:**  
+**Test Date:**     
 
 ## II. Test cases
 | Test # | Test Description           | Test Steps                                                                                                                                                                                                    | Expected Results                                                                                                 | Actual Results | P/F? |
