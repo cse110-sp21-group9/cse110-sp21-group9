@@ -194,7 +194,6 @@ function showBulletInfo(elemEntry) {
   const contentBar = document.getElementById('viewdesc');
   const tagBar = document.getElementById('viewtags');
 
-  console.log('title: ' + curBullet.title);
   // Set bullet info on view modal
   titleBar.innerHTML = curBullet.title;
   dateBar.innerHTML = monthName + ' ' + pageDate.getDate() + ', ' + pageDate.getFullYear();
@@ -270,7 +269,6 @@ function loadTags() {
       continue;
     } else {
       // otherwise, paste the tag onto the modal
-      console.log(curTag);
       // Add to tagbox in edit tag modal
       const tagBox = document.createElement('div');
       tagBox.style = 'display: flex';
@@ -355,14 +353,12 @@ function populateTagOptions(objSelect) {
   defaultopt.value = 'Default';
   defaultopt.innerHTML = 'Select tag:';
   objSelect.appendChild(defaultopt);
-  console.log(objSelect);
   for (let i = 0; i < tagsToLoad.length; i++) {
     const curTag = tagsToLoad[i];
     // create an option box for the tag and add it to the selector
     const option = document.createElement('option');
     option.innerHTML = curTag;
     option.value = curTag;
-    console.log(option);
     objSelect.appendChild(option);
   }
 }
