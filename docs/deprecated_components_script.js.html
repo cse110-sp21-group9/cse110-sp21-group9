@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Bullet</title>
+    <title>JSDoc: Source: deprecated/components/script.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,146 +17,63 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Bullet</h1>
+    <h1 class="page-title">Source: deprecated/components/script.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Bullet<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description"><bullet-entry> custom component
-to be subclassed later by notes, tasks, events, etc.
-It uses the template with id="bulletTemplate" in crud.html</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="Bullet"><span class="type-signature"></span>new Bullet<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="deprecated_page-journal_bullet.js.html">deprecated/page-journal/bullet.js</a>, <a href="deprecated_page-journal_bullet.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="Bullet.html">Bullet</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** This file creates, opens, and closes the sidebar in the dashboard
+ *  Credit to: w3schools for a demo on this functionality
+*/
+// Buttons to open/close sidebar
+const sideBar = document.querySelector('side-bar');
+const docBar = document.querySelector('[class = "sidebar"]');
+const sideBarOpener = document.getElementById('openbtn');
+const sideBarCloser = sideBar.shadowRoot.getElementById('closebtn');
+
+// Open sidebar when you click this button
+sideBarOpener.addEventListener('click', function() {
+  openSidebar();
+});
+
+// Close sidebar when you click this button
+sideBarCloser.addEventListener('click', function() {
+  closeSidebar();
+});
+
+/** Visually opens the sidebar
+ * @return null
+ */
+function openSidebar() {
+  docBar.style.width = '250px';
+  document.getElementById('main').style.marginLeft = '250px';
+}
+
+/** Visually closes the sidebar
+ * @return null
+ */
+function closeSidebar() {
+  docBar.style.width = '0';
+  document.getElementById('main').style.marginLeft = '0';
+}
+
+function setCalendar() {
+  console.log('setting calendar hash');
+  const curDate = new Date();
+  const month = curDate.getMonth();
+  const year = curDate.getFullYear();
+  const hash = '#month=' + month + '?year=' + year + '?day=1';
+  // sideBar.calendar = hash;
+}
+
+setCalendar();
+</code></pre>
+        </article>
+    </section>
 
 
 
