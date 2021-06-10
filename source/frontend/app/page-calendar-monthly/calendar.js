@@ -1,8 +1,7 @@
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
-import * as globals from '../../globals.js';
 
-const DAY_PATH = '/source/frontend/app/page-day/day.html';
+const DAY_PATH = '../page-day/day.html';
 
 const calendar = document.getElementById('calendar');
 const month = document.getElementById('month');
@@ -14,8 +13,7 @@ const today = document.getElementById('today');
 
 let monthIn = 6;
 let yearIn = 2021;
-let onlyBuls = "All Events";
-
+let onlyBuls = 'All Events';
 
 backmonth.innerHTML = '&#10094;';
 
@@ -29,10 +27,10 @@ backmonth.addEventListener('click', function() {
   }
 
   resetCalendar();
-  var start = new Date(yearIn, monthIn-1);
-  var end = new Date(yearIn,monthIn);
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
 
-  var data = onlyThese(start, end);
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
   const hashed = generateHash(false);
   utils.updateURL(hashed);
@@ -45,23 +43,23 @@ forwardmonth.addEventListener('click', function() {
     yearIn++;
   }
   resetCalendar();
-  var start = new Date(yearIn, monthIn-1);
-  var end = new Date(yearIn,monthIn);
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
 
-  var data = onlyThese(start, end);
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
   const hashed = generateHash(false);
   utils.updateURL(hashed);
 });
 
-filter.addEventListener('change', (e) =>{
+filter.addEventListener('change', (e) => {
   onlyBuls = e.target.value;
 
   resetCalendar();
-  var start = new Date(yearIn, monthIn-1);
-  var end = new Date(yearIn,monthIn);
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
 
-  var data = onlyThese(start, end);
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
 });
 
@@ -69,21 +67,16 @@ filter.addEventListener('mouseover', function() {
   filter.style.cursor = 'pointer';
 });
 
-
 today.addEventListener('click', function() {
-
-  
-  let checker = new Date();
-  checker = checker.toISOString().split('T')[0].split('-');
-
-  monthIn = parseInt(checker[1]);
-  yearIn = parseInt(checker[0]);
+  const checker = new Date();
+  monthIn = checker.getMonth() + 1;
+  yearIn = checker.getFullYear();
 
   resetCalendar();
-  var start = new Date(yearIn, monthIn-1);
-  var end = new Date(yearIn,monthIn);
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
 
-  var data = onlyThese(start, end);
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
 });
 
@@ -91,40 +84,31 @@ filter.addEventListener('mouseover', function() {
   filter.style.cursor = 'pointer';
 });
 
-
 today.addEventListener('click', function() {
-
-  
-  let checker = new Date();
-  checker = checker.toISOString().split('T')[0].split('-');
-
-  monthIn = parseInt(checker[1]);
-  yearIn = parseInt(checker[0]);
+  const checker = new Date();
+  monthIn = checker.getMonth() + 1;
+  yearIn = checker.getFullYear();
 
   resetCalendar();
-  var start = new Date(yearIn, monthIn-1);
-  var end = new Date(yearIn,monthIn);
+  const start = new Date(yearIn, monthIn - 1);
+  const end = new Date(yearIn, monthIn);
 
-  var data = onlyThese(start, end);
+  const data = onlyThese(start, end);
   populateCalendar(monthIn, yearIn, data);
   const hashed = generateHash(false);
   utils.updateURL(hashed);
-
 });
 
-function onlyThese(start, end){
-  var type = onlyBuls;
-  if(type=="Task"){
+function onlyThese(start, end) {
+  const type = onlyBuls;
+  if (type === 'Task') {
     return crud.getTaskBulletsByDateRange(start, end);
-  }
-  else if(type=="Event"){
+  } else if (type === 'Event') {
     return crud.getEventBulletsByDateRange(start, end);
-  }
-  else if(type=="Note"){
+  } else if (type === 'Note') {
     return crud.getNoteBulletsByDateRange(start, end);
-  }
-  else{
-    return crud.getBulletsByDateRange(start,end);
+  } else {
+    return crud.getBulletsByDateRange(start, end);
   }
 }
 
@@ -141,36 +125,34 @@ function populateCalendar(month, year, data) {
     }
     const day = i % 7;
     if (day === utils.startDate(month, year) && start === false &&
-    counter < utils.daysInMonth(month, year) + 1) {
+      counter < utils.daysInMonth(month, year) + 1) {
       start = true;
     }
     if (start) {
-
-      let checker = new Date();
-      checker = checker.toISOString().split('T')[0].split('-');
-      var monthC = parseInt(checker[1]);
-      var yearC = parseInt(checker[0]);
-      var dayC = parseInt(checker[2]);
+      const checker = new Date();
+      const monthC = checker.getMonth() + 1;
+      const yearC = checker.getFullYear();
+      const dayC = checker.getDate();
 
       const date = document.createElement('td');
       date.setAttribute('id', counter);
 
-      if(monthC==monthIn  && yearIn== yearC && dayC==counter){
-        date.classList.add("today");
+      if (monthC === monthIn && yearIn === yearC && dayC === counter) {
+        date.classList.add('today');
       }
 
-      if(date.classList[0]=="today"){
+      if (date.classList[0] === 'today') {
         date.style.backgroundColor = 'rgba(255,214,10,0.5)';
       }
-      
+
       date.innerHTML = counter;
       date.addEventListener('click', function() {
         const hash = utils.hashString('d', yearIn, monthIn, date.childNodes[0].nodeValue);
-        const root = document.URL.split('/')[2];
-        const path = 'http://' + root + DAY_PATH;
-        const url = new URL(path);
-        url.hash = hash;
-        window.location.href = url.href;
+        // const root = document.URL.split('/')[2];
+        // const path = 'http://' + root + DAY_PATH;
+        // const url = new URL(path);
+        // window.location.hash = hash;
+        window.location.href = DAY_PATH + '#' + hash;
       });
       // hover over date cells in calendar
       date.addEventListener('mouseover', function() {
@@ -180,13 +162,11 @@ function populateCalendar(month, year, data) {
       });
       date.addEventListener('mouseleave', function() {
         // date.style.border= '1px solid #333';
-        if(date.classList[0]=="today"){
+        if (date.classList[0] === 'today') {
           date.style.backgroundColor = 'rgba(255,214,10,0.5)';
-        }
-        else{
+        } else {
           date.style.backgroundColor = 'var(--background-color)';
         }
-        
       });
       counter++;
       element.appendChild(date);
@@ -225,22 +205,21 @@ function resetCalendar() {
 
 // for a specific month only
 function bulletAppend(bullets) {
- 
   for (const temp of bullets) {
-    const date = temp.date.toJSON().split('T')[0].split('-')[2];
-    const curr = document.getElementById(parseInt(date));
+    const date = temp.date.getDate();
+    const curr = document.getElementById(date);
     const event = document.createElement('li');
     if (curr.childNodes.length === 1) {
       curr.appendChild(document.createElement('ul'));
     }
-    var chars = 10-Math.max(0,Math.floor((1300-window.screen.width)/80)+1); // to calculate number of characters to display
+    // const chars = 10 - Math.max(0, Math.floor((1300 - window.screen.width) / 80) + 1); // to calculate number of characters to display
 
-    event.innerHTML = temp.title.substring(0,Math.min(temp.title.length, chars));
+    // event.innerHTML = temp.title.substring(0, Math.min(temp.title.length, chars));
+    event.innerHTML = temp.title;
     if (curr.childNodes[1].childNodes.length < 5) {
       curr.childNodes[1].appendChild(event);
     }
-  }  
-  
+  }
 }
 
 function generateHash(onload = true) {
@@ -249,17 +228,14 @@ function generateHash(onload = true) {
   if (onload) {
     let month;
     let year;
-    if (curr.includes('#') && curr.split('#')[1]!="") {
-
-      let date = utils.readHash(curr.split('#')[1]);
-      date = date.toISOString().split('T')[0].split('-');
-      month = parseInt(date[1]);
-      year = parseInt(date[0]);
+    if (curr.includes('#') && curr.split('#')[1] !== '') {
+      const date = utils.readHash(curr.split('#')[1]);
+      month = date.getMonth() + 1;
+      year = date.getFullYear();
     } else {
-      let date = new Date();
-      date = date.toISOString().split('T')[0].split('-');
-      month = parseInt(date[1]);
-      year = parseInt(date[0]);
+      const date = new Date();
+      month = date.getMonth() + 1;
+      year = date.getFullYear();
     }
     return utils.hashString('m', year, month);
   } else {
@@ -267,21 +243,22 @@ function generateHash(onload = true) {
   }
 }
 
+window.addEventListener('pageshow', () => {
+  filter.value = 'All Bullets';
+});
+
 crud.initCrudRuntime();
 const hashed = generateHash();
 
-let date = utils.readHash(hashed);
-date = date.toISOString().split('T')[0].split('-');
-
-yearIn = parseInt(date[0]);
-monthIn = parseInt(date[1]);
+const date = utils.readHash(hashed);
+monthIn = date.getMonth() + 1;
+yearIn = date.getFullYear();
 
 utils.updateURL(hashed);
 
-var start = new Date(yearIn, monthIn-1);
-var end = new Date(yearIn,monthIn);
+const start = new Date(yearIn, monthIn - 1);
+const end = new Date(yearIn, monthIn);
 
-var data = onlyThese(start, end);
-
+const data = onlyThese(start, end);
 resetCalendar();
 populateCalendar(monthIn, yearIn, data);

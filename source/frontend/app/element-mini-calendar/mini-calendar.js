@@ -1,8 +1,7 @@
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
 
-const DAY_PATH = '/source/frontend/app/page-day/day.html';
-const MONTH_PATH = '/source/frontend/app/page-calendar-monthly/calendar.html';
+const MONTH_PATH = '../page-calendar-monthly/calendar.html';
 
 const COLUMNS = 7;
 const ROWS = 6;
@@ -76,6 +75,26 @@ export class MiniCalendar extends HTMLElement {
           color: grey;
         }
 
+        .week:hover:after{
+          background-color: lightseagreen;
+          cursor: default;
+        }
+
+        .week.selected::after{
+          background: lightblue;
+        }
+
+        .week::after{
+          position: absolute;
+          top: 0;
+          left: 0%;
+          bottom: 0;
+          width: 800%;
+          height: 100%;
+          border-radius: 10px;
+          z-index: -2;
+          content: '';
+        }
         .day:hover::after{
           background: plum;
         }
@@ -100,10 +119,11 @@ export class MiniCalendar extends HTMLElement {
       <table id = "calendar">
         <thead>
           <tr class="monthyear">
-            <td colspan="1" style="height:50px;"></td>
+            <td colspan="2" style="height:50px;"></td>
             <td class="monthButton" id="backmonth"></td>
             <td class="monthButton" id="month" colspan="2"></td>
             <td class="monthButton" id="forwardmonth"></td>
+            <td></td>
             <td id="year"></td>
           </tr>
           <tr>
@@ -173,11 +193,7 @@ export class MiniCalendar extends HTMLElement {
       const month = getMonthFromString(this.textContent);
       const dateYear = document.querySelector('mini-calendar').shadowRoot.getElementById('year').textContent;
       const hash = utils.hashString('m', dateYear, month);
-      const root = document.URL.split('/')[2];
-      const path = 'http://' + root + MONTH_PATH;
-      const url = new URL(path);
-      url.hash = hash;
-      window.location.href = url.href;
+      window.location.href = MONTH_PATH + '#' + hash;
     });
 
     // now build new elements
@@ -188,7 +204,6 @@ export class MiniCalendar extends HTMLElement {
         weekElement.appendChild(dayElement);
 
         const currentDate = new Date(date.getFullYear(), date.getMonth(), dateCounter);
-
         const miniCal = this;
         dayElement.addEventListener('click', function() {
           miniCal.deselectAll();
@@ -197,11 +212,7 @@ export class MiniCalendar extends HTMLElement {
           const dateMonth = getMonthFromString(miniCal.shadowRoot.getElementById('month').textContent);
           const dateYear = miniCal.shadowRoot.getElementById('year').textContent;
           const hash = utils.hashString('d', dateYear, dateMonth, dateDay);
-          const root = document.URL.split('/')[2];
-          const path = 'http://' + root + DAY_PATH;
-          const url = new URL(path);
-          url.hash = hash;
-          window.location.href = url.href;
+          window.location.hash = hash;
           window.location.reload();
         });
 

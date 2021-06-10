@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: frontend/app/page-dashboard/script.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,54 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: frontend/app/page-dashboard/script.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** This file creates, opens, and closes the sidebar in the dashboard
+ *  Credit to: w3schools for a demo on this functionality
+*/
+// Buttons to open/close sidebar
+const sideBar = document.querySelector('side-bar');
+console.log(sideBar);
+const docBar = document.querySelector('[class = "sidebar"]');
+const sideBarOpener = document.getElementById('openbtn');
+const sideBarCloser = sideBar.shadowRoot.getElementById('closebtn');
+console.log(sideBarCloser);
 
+// Open sidebar when you click this button
+sideBarOpener.addEventListener('click', function() {
+  openSidebar();
+});
 
-    <h3> </h3>
+// Close sidebar when you click this button
+sideBarCloser.addEventListener('click', function() {
+  closeSidebar();
+});
 
+/** Visually opens the sidebar
+ * @return null
+ */
+function openSidebar() {
+  docBar.style.width = '250px';
+  document.getElementById('main').style.marginLeft = '250px';
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/** Visually closes the sidebar
+ * @return null
+ */
+function closeSidebar() {
+  docBar.style.width = '0';
+  document.getElementById('main').style.marginLeft = '0';
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
