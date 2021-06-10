@@ -27,13 +27,15 @@ The admin/ directory contains all the group artifacts for this project
  	Sprint materials
 		Sprint 1
 		Sprint 2
-Design documents(specs)
+		
+## Design documents
 	ADRs
 	brainstorming
 	Design diagrams (interface)
 	pitch
 	user profiles 
-Source code
+	
+## Source code
 	frontend
 		app - pages for our app
 			each page has its own folder with the HTML/CSS/JS
@@ -41,7 +43,8 @@ Source code
 		contains backend functions for managing CRUD operations
 	deprecated
 		contains files for pages/features that were scrapped/didn't get completed
-Testing
+		
+# Testing
 	dev
 	tester
 	integration
