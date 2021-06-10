@@ -57,11 +57,11 @@ describe('Test overall user flow for app', () => {
 			width: 1366,
 			height: 768
 		})
-    await page.goto('http://127.0.0.1:5501');
+    await page.goto('http://127.0.0.1:5500');
 		await page.evaluate(() => {
 			localStorage.clear(); 
 		});
-    await page.goto('http://127.0.0.1:5501');
+    await page.goto('http://127.0.0.1:5500');
 		await page.waitForSelector('.btn-lg');
 
   });

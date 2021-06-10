@@ -63,9 +63,9 @@ describe('End-to-end tests for calendar month view', () => {
 			width: 1366,
 			height: 768
 		})
-    await page.goto('http://127.0.0.1:5501');
+    await page.goto('http://127.0.0.1:5500');
 		await page.evaluate(setLocalStorage, [objTestEvent.ID, objTestNote.ID, objTestTask.ID], [objTestEvent, objTestNote, objTestTask], objTestTask.ID, {[strTestTag]: true});
-    await page.goto('http://127.0.0.1:5501');
+    await page.goto('http://127.0.0.1:5500');
 		await page.waitForTimeout(1000);
 
   });
