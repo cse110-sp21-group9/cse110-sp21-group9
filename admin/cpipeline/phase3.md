@@ -7,7 +7,7 @@
 To set up a local copy of our repo to follow this pipeline, follow these steps:  
 1. Clone the repo from main
 2. Install Node.js and npm
-3. Run **npm install** to install the dev dependencies/set up pre-commit hook for linter 
+3. Run `npm install` to install the dev dependencies/set up pre-commit hook for linter 
   
 ### Feature Dev branch (-dev)
 The first branch in our pipeline are the dev branches for each person in our group (`feature-[name of feature]`). These branches are where new features for our web app are first created by developers. ESLint Style/Linting checks occur on this branch.  
