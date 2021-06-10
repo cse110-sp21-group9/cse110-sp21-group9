@@ -90,8 +90,8 @@ tbody tr td {
   word-wrap: break-word;
   border: 1px solid var(--accent-color1);
   overflow: hidden;
-  width: 130px;
-  height: 130px;
+  width: 100px;
+  height: 100px;
 }
 
 tbody tr th {

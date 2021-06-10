@@ -19,6 +19,24 @@ backmonth.innerHTML = '&#10094;';
 
 forwardmonth.innerHTML = '&#10095;';
 
+window.addEventListener("hashchange", function(){
+  const hashed = generateHash();
+
+  let date = utils.readHash(hashed);
+  date = date.toISOString().split('T')[0].split('-');
+
+  yearIn = parseInt(date[0]);
+  monthIn = parseInt(date[1]);
+
+  var start = new Date(yearIn, monthIn-1);
+  var end = new Date(yearIn,monthIn);
+
+  var data = onlyThese(start, end);
+
+  resetCalendar();
+  populateCalendar(monthIn, yearIn, data);
+});
+
 backmonth.addEventListener('click', function() {
   monthIn--;
   if (monthIn < 1) {
@@ -212,11 +230,10 @@ function bulletAppend(bullets) {
     if (curr.childNodes.length === 1) {
       curr.appendChild(document.createElement('ul'));
     }
-    // const chars = 10 - Math.max(0, Math.floor((1300 - window.screen.width) / 80) + 1); // to calculate number of characters to display
+    const chars = 10 - Math.max(0, Math.floor((1300 - window.screen.width) / 80) + 1); // to calculate number of characters to display
 
-    // event.innerHTML = temp.title.substring(0, Math.min(temp.title.length, chars));
-    event.innerHTML = temp.title;
-    if (curr.childNodes[1].childNodes.length < 5) {
+    event.innerHTML = temp.title.substring(0,Math.min(temp.title.length, chars));
+    if (curr.childNodes[1].childNodes.length < 4) {
       curr.childNodes[1].appendChild(event);
     }
   }
