@@ -14,4 +14,4 @@ We decided on deploying our app through GitHub pages because we ran into issues 
 
 ### Homepage
 - We had to create a homepage which also served as a welcome page for the user when they visited our BuJo Studio app. The button labeled "Let's Get Started" brings the user to the relative link `../page-day/day.html`, which brings the user to the day view, which is where most of the bullet journaling happens.
-- We also added buttons to every page in our app that would take you to the homepage, which had the relative link `../../../../index.html`.
+- We also added our BuJo logo link in the top-left corner of every page in our app that would take you to the homepage, which had the relative link `../../../../index.html`.
