@@ -9,7 +9,7 @@ Our bullet journal app, Bujo Studio, can be accessed [here](https://cse110-sp21-
 ## Setup
 To set up a local copy of this repo, follow these steps:   
 1. Clone this repo to your local machine
-2. Install Node.js and npm
+2. Install [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm)
 3. In your local copy, run `npm install` to install the dev dependencies and set up the pre-commit hook for the linter 
 
 ## CI/CD pipeline/Documentation
