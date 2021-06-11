@@ -1,4 +1,3 @@
-/* get elements from html page */
 /* eslint-env jquery */
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
@@ -8,6 +7,7 @@ import '../element-mini-calendar/mini-calendar.js';
 const MAX_TITLE_LENGTH = 35;
 const MAX_TAG_LENGTH = 15;
 
+/* get elements from html page */
 const saveBulletBtn = document.getElementById('saveBullet');
 
 // Creation Modal Elements
