@@ -5,8 +5,8 @@
 ## Overview
 ### Setup
 To set up a local copy of our repo to follow this pipeline, follow these steps:  
-1. Clone the repo from main
-2. Install Node.js and npm
+1. Clone the repo to your local machine
+2. Install [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm)
 3. Run `npm install` to install the dev dependencies/set up pre-commit hook for linter 
   
 ### Feature Dev branch (-dev)
@@ -58,12 +58,12 @@ This step is implemented using Github Actions and is the first job defined in th
 #### End to End testing
 The next step in our pipeline is to run end-to-end tests on the pushed code, so that we can test user flows for the app.  
 
-These tests are conducted by manually running the command `npm test -- e2e --runInBand` on a local copy of the staging branch. This will run our Jest Puppeteer end-to-end tests (located in `test/e2e`) serially on the source code. This step in our pipeline is currently functional and will continue to work as we add more end-to-end tests. End-to-End test reports are stored at [this folder](https://github.com/cse110-sp21-group9/cse110-sp21-group9/tree/main/admin/test-reports/e2e) and the latest end-to-end test report can be found [here](https://github.com/cse110-sp21-group9/cse110-sp21-group9/blob/main/admin/test-reports/e2e/061021-e2e-test-results.PNG).  
+These tests are conducted by hosting a local copy of the staging branch using the [VSCode Liveserver Extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) and manually running the command `npm test -- e2e --runInBand` on this local copy. This will run our Jest Puppeteer end-to-end tests (located in `test/e2e`) serially on the source code. This step in our pipeline is currently functional and will continue to work as we add more end-to-end tests. End-to-End test reports are stored at [this folder](../test-reports/e2e) and the latest end-to-end test report can be found [here](../test-reports/e2e/061021-e2e-test-results.PNG).  
 
 **Note:** If some of the tests fail, puppeteer may need to be manually set to not headless mode (set `headless: false` in `jest-puppeteer.config.js`).
 
 #### Manual testing/approval
-After the code goes through the integration and end-to-end testing, we then conduct manual testing/review of features that were more difficult to test and not related to overall flow of the app, such as light/dark theme, backup/upload, and mini calendar. This step is currently functional and will continue to work as we add more manual test cases. Manual test cases can be found [here](https://github.com/cse110-sp21-group9/cse110-sp21-group9/tree/main/admin/test-reports/manual/completed).
+After the code goes through the integration and end-to-end testing, we then conduct manual testing/review of features that were more difficult to test and not related to overall flow of the app, such as light/dark theme, backup/upload, and mini calendar. This step is currently functional and will continue to work as we add more manual test cases. Manual test cases can be found [here](../test-reports/manual/completed).
 
 ### Main/Production Branch (main)
 After the code passes the integration, end-to-end, and manual tests, the new pull request can be merged to the main branch. 
