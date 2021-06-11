@@ -47,7 +47,7 @@ The [source](source) directory contains the source code for our app. It is broke
 - [backend](source/backend) - contains backend API/functions for managing CRUD operations
 - [deprecated](source/deprecated) - contains files for pages/features that were scrapped/didn't get completed
 		
-# Testing
+## Testing
 The [test](test) directory contains the test files for the automated unit and manual end-to-end tests. It is broken up into these folders:
 - [dev](test/dev) - contains developer-generated Jest unit tests (basic function returns)
 - [tester](test/tester) - contains tester-generated Jest unit tests (DOM manipulation)
