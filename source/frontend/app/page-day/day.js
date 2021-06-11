@@ -1,6 +1,5 @@
 /* get elements from html page */
 /* eslint-env jquery */
-// POTENTIALLY OLD
 import * as crud from '../../../backend/crudFunctions.js';
 import * as utils from '../../utils.js';
 import * as globals from '../../globals.js';
