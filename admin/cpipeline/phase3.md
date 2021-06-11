@@ -31,7 +31,7 @@ This step is implemented using Github Actions and is the first job defined in th
 #### Automated Jest unit tests (developer only)
 After the code passes the Codacy code quality check, we then run our automated developer generated unit tests on the code using Jest. 
 
-This step is implemented using Github Actions and is the second job defined in the workflow at `.github/workflows/release-workflow.yml`. This job checks out a copy of the code and runs the command `npm test -- dev`, which runs only our developer-generated Jest tests (located in `test/dev` folder) on the source code. This step in our pipeline is currently functional and will continue to work as we add new source code and tests. The latest coverage report for our automated tests can be found here.
+This step is implemented using Github Actions and is the second job defined in the workflow at `.github/workflows/release-workflow.yml`. This job checks out a copy of the code and runs the command `npm test -- dev`, which runs only our developer-generated Jest tests (located in `test/dev` folder) on the source code. This step in our pipeline is currently functional and will continue to work as we add new source code and tests. The latest coverage report for our automated tests can be found [here](https://cse110-sp21-group9.github.io/cse110-sp21-group9/admin/test-reports/coverage/lcov-report/index.html).
 
 ### Staging/Release branch (staging)
 After the code passes the code quality scan and developer-generated unit tests, the new pull request will then be merged to the staging branch.  
@@ -40,10 +40,10 @@ This branch is where new features are collectively tested together with the enti
 #### Automated Jest unit tests (developer and tester only)
 When the code is merged to the staging branch, the next step in our pipeline is to run all our unit tests (developer and tester generated) on the pushed code. 
 
-This step is implemented using Github Actions and is the first job defined in the workflow at `.github/workflows/staging-workflow.yml`. The workflow is triggered when anything new is pushed/merged to the `source` folder in the staging branch. This job checks out a copy of the code and runs the commands `npm test -- dev` and `npm test -- tester`, which runs all our developer and tester Jest unit tests (located in the `test/dev` and `test/tester` folders) on the source code. This step in our pipeline is currently functional and will continue to work as we add new source code and tests. The latest coverage report for our automated tests can be found here.
+This step is implemented using Github Actions and is the first job defined in the workflow at `.github/workflows/staging-workflow.yml`. The workflow is triggered when anything new is pushed/merged to the `source` folder in the staging branch. This job checks out a copy of the code and runs the commands `npm test -- dev` and `npm test -- tester`, which runs all our developer and tester Jest unit tests (located in the `test/dev` and `test/tester` folders) on the source code. This step in our pipeline is currently functional and will continue to work as we add new source code and tests. The latest coverage report for our automated tests can be found [here](https://cse110-sp21-group9.github.io/cse110-sp21-group9/admin/test-reports/coverage/lcov-report/index.html).
 
 #### Generate JSDocs 
-After the code passes both the developer and tester unit tests, the next step in our pipeline involves automatically generate documentation from the code. 
+After the code passes both the developer and tester unit tests, the next step in our pipeline involves automatically generating documentation from the code. 
 
 This step is implemented using Github Actions and is the second job defined in the workflow at `.github/workflows/staging-workflow.yml`.  After checking out a copy of the code, this workflow runs this [action](https://github.com/marketplace/actions/jsdoc-action), which uses JSDoc to generate Javscript documentation. The workflow then pushes this documentation to the `docs/` folder in our repo. This step in our pipeline is currently functional and will continue to work as we add new source code. 
 
@@ -53,17 +53,17 @@ Once a feature has passed the developer and tester generated unit tests, develop
 #### Automated Jest integration tests
 After a pull request is made to main, the first step is to run our automated integration tests to make sure the feature works correctly with the overall app.  
 
-This step is implemented using Github Actions and is the first job defined in the workflow at `.github/workflows/integration-workflow.yml`. This job checks out a copy of the code and runs the command `npm test -- integration`, which runs only our integration Jest tests (located in `test/integration` folder) on the source code. This step in our pipeline is currently functional and will continue to work as we add new source code and tests. The latest coverage report for our automated tests can be found here.
+This step is implemented using Github Actions and is the first job defined in the workflow at `.github/workflows/integration-workflow.yml`. This job checks out a copy of the code and runs the command `npm test -- integration`, which runs only our integration Jest tests (located in `test/integration` folder) on the source code. This step in our pipeline is currently functional and will continue to work as we add new source code and tests. The latest coverage report for our automated tests can be found [here](https://cse110-sp21-group9.github.io/cse110-sp21-group9/admin/test-reports/coverage/lcov-report/index.html).
 
 #### End to End testing
 The next step in our pipeline is to run end-to-end tests on the pushed code, so that we can test user flows for the app.  
 
-These tests are conducted by manually running the command `npm test -- e2e --runInBand` on a local copy of the staging branch. This will run our Jest Puppeteer end-to-end tests (located in `test/e2e`) serially on the source code. This step in our pipeline is currently functional and will continue to work as we add more end-to-end tests. End-to-End test reports are stored at this folder and the latest end-to-end test report can be found here.  
+These tests are conducted by manually running the command `npm test -- e2e --runInBand` on a local copy of the staging branch. This will run our Jest Puppeteer end-to-end tests (located in `test/e2e`) serially on the source code. This step in our pipeline is currently functional and will continue to work as we add more end-to-end tests. End-to-End test reports are stored at [this folder](https://github.com/cse110-sp21-group9/cse110-sp21-group9/tree/main/admin/test-reports/e2e) and the latest end-to-end test report can be found [here](https://github.com/cse110-sp21-group9/cse110-sp21-group9/blob/main/admin/test-reports/e2e/061021-e2e-test-results.PNG).  
 
 **Note:** If some of the tests fail, puppeteer may need to be manually set to not headless mode (set `headless: false` in `jest-puppeteer.config.js`).
 
 #### Manual testing/approval
-After the code goes through the integration and end-to-end testing, we then conduct manual testing/review of features that were more difficult to test and not related to overall flow of the app, such as light/dark theme, backup/upload, and mini calendar. This step is currently functional and will continue to work as we add more manual test cases. Manual test cases can be found here.
+After the code goes through the integration and end-to-end testing, we then conduct manual testing/review of features that were more difficult to test and not related to overall flow of the app, such as light/dark theme, backup/upload, and mini calendar. This step is currently functional and will continue to work as we add more manual test cases. Manual test cases can be found [here](https://github.com/cse110-sp21-group9/cse110-sp21-group9/tree/main/admin/test-reports/manual/completed).
 
 ### Main/Production Branch (main)
 After the code passes the integration, end-to-end, and manual tests, the new pull request can be merged to the main branch. 
@@ -71,7 +71,7 @@ This final branch in our pipeline is the main/production branch, which stores th
 
 #### Deployment
 The final step in our pipeline is deployment, which occurs after the code has arrived at the production/main branch and passed all tests.  
-This step is handled by Github Pages, which automatically deploys code pushed to main to the Github page for our app, located here. 
+This step is handled by Github Pages, which automatically deploys code pushed to main to the Github page for our app, located [here](https://cse110-sp21-group9.github.io/cse110-sp21-group9/). 
 
 ## Demo video
-Final video demo of our phase 3 pipeline can be found [here](https://www.youtube.com/watch?v=YNwufPw2_48)
+Final video demo of our phase 3 pipeline can be found [here](https://youtu.be/mG6NFSDRwn8)
