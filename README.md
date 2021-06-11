@@ -52,5 +52,6 @@ The [test](test) directory contains the test files for the automated unit and ma
 - [dev](test/dev) - contains developer-generated Jest unit tests (basic function returns)
 - [tester](test/tester) - contains tester-generated Jest unit tests (DOM manipulation)
 - [integration](test/integration) - contains Jest integration tests (Frontend DOM with backend)
-- [e2e](test/e2e) - contains manual Jest puppeteer end to end tests (user flows)   
-- Coverage report for automated tests and reports for end-to-end/manual tests are stored in [admin/test-reports](admin/test-reports). 
+- [e2e](test/e2e) - contains manual Jest puppeteer end to end tests (user flows)
+- The latest coverage report for our automated tests can be found [here](https://cse110-sp21-group9.github.io/cse110-sp21-group9/admin/test-reports/coverage/lcov-report/index.html)   
+- Reports for end-to-end/manual tests are stored in [admin/test-reports](admin/test-reports). 
