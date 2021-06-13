@@ -16,7 +16,7 @@ let myBullet3 = crud.createBullet('task', 'title', new Date(), ['todo', 'otherTa
 console.log(myBullet3.title);
 myBullet3 = crud.addBulletTag(myBullet3.ID, 'newTag');
 myBullet3 = crud.deleteBullet(myBullet3.ID);
-
+console.log('Testing Build through staging')
 //getting bullets
 let someBullets = crud.getBulletsByDateRange(new Date(year, month, day), new Date(year, month, day+1));
 someBullets = crud.getEventBulletsByDateRange(new Date(year, month, day), new Date(year, month, day+1));
